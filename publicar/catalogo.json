@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-12T03:27:33.386Z",
+ "generado": "2026-09-12T03:33:46.900Z",
  "productos": [
   {
    "id": "labial",
@@ -28,7 +28,7 @@
    "stock": 4,
    "descripcion": "Dulce, firme y de piel brillante. Se cosecha en racimo y se empaca el mismo día. Va directo a la ensalada o al horno con aceite de oliva.",
    "imagenes": [
-    "costemicos1.jpg"
+    "cosmeticos1.jpg"
    ],
    "destacado": false,
    "referencia": "",
@@ -190,6 +190,11 @@
  },
  "fotos": {
   "labial.jpg": [
+   160,
+   600,
+   900
+  ],
+  "cosmeticos1.jpg": [
    160,
    600,
    900
