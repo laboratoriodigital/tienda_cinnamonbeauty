@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-12T03:33:46.900Z",
+ "generado": "2026-09-12T04:05:47.963Z",
  "productos": [
   {
    "id": "labial",
@@ -127,8 +127,8 @@
  "envios": [
   {
    "id": "finca",
-   "nombre": "Recoger en finca (Rionegro)",
-   "valor": 0
+   "nombre": "Contraentrega Medellín - Bello",
+   "valor": 15000
   },
   {
    "id": "medellin",
@@ -138,7 +138,7 @@
   {
    "id": "oriente",
    "nombre": "Rionegro y Oriente antioqueño",
-   "valor": 6000
+   "valor": 10000
   },
   {
    "id": "principal",
