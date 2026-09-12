@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tu tienda en una página</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='40' r='23' fill='%23D0211C'/%3E%3Cpath d='M32 17V7' stroke='%231B5E3A' stroke-width='5.5' stroke-linecap='round'/%3E%3Cpath d='M32 18c-5-6-13-5-16-2 3 4 9 6 14 4 5 3 11 2 15-3-3-3-10-4-13 1z' fill='%231B5E3A'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* UNA PÁGINA. UNA DE VERDAD.
+   Esto se imprime y se deja al lado del computador, así que cabe en una hoja
+   A4 y no en una y cuarto: lo que no cabe, no está. El manual largo existe
+   para lo demás.
+   Mismos colores y misma tipografía que los manuales, para que se reconozca
+   como parte del mismo juego. */
+:root{
+  --rojo:#D0211C; --verde:#1B5E3A; --tinta:#161616; --tenue:#6B6B6B;
+  --linea:#E3E3E0; --papel:#FFFFFF; --suave:#F7F7F5;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:#EFEFEC;color:var(--tinta);
+  font:400 13px/1.5 "Source Sans 3",-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+.hoja{
+  max-width:210mm;min-height:297mm;margin:18px auto;background:var(--papel);
+  padding:13mm 14mm 10mm;
+}
+
+/* ---------- Cabecera ---------- */
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+  border-bottom:2.5px solid var(--verde);padding-bottom:9px;margin-bottom:13px}
+header h1{margin:0;font-size:1.62rem;line-height:1.05;letter-spacing:-.03em;font-weight:700}
+header p{margin:3px 0 0;color:var(--tenue);font-size:.8rem}
+header svg{display:block;flex:none}
+
+/* ---------- La idea única ---------- */
+.clave{background:var(--suave);border-left:3px solid var(--rojo);
+  border-radius:0 8px 8px 0;padding:11px 14px;margin:0 0 14px}
+.clave h2{margin:0 0 5px;font-size:.94rem;font-weight:700}
+.clave p{margin:0 0 6px}
+.clave p:last-child{margin-bottom:0}
+.flujo{font-weight:700;color:var(--verde);font-size:.95rem}
+
+/* ---------- Rejilla ---------- */
+.rejilla{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+h2.sec{font:700 9.5px/1 -apple-system,sans-serif;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--verde);margin:14px 0 7px;
+  border-bottom:1px solid var(--linea);padding-bottom:5px}
+h3{margin:9px 0 2px;font-size:.9rem;font-weight:700}
+h3:first-of-type{margin-top:0}
+p{margin:0 0 5px}
+.aviso{color:var(--rojo);font-weight:600}
+
+/* ---------- Menú ---------- */
+table{border-collapse:collapse;width:100%;font-size:.83rem}
+td{padding:3.5px 0;vertical-align:top;border-bottom:1px solid var(--linea)}
+td:first-child{white-space:nowrap;padding-right:11px;font-weight:600}
+tr:last-child td{border-bottom:0}
+.destaca td{color:var(--rojo)}
+
+/* ---------- Lo que no se hace ---------- */
+ul{margin:0;padding-left:1.05em}
+li{margin:0 0 4px}
+.si{background:var(--suave);border-radius:7px;padding:8px 11px;margin-top:9px;font-size:.85rem}
+
+footer{margin-top:14px;border-top:1px solid var(--linea);padding-top:8px;
+  color:var(--tenue);font-size:.76rem}
+
+@media print{
+  body{background:#fff}
+  .hoja{margin:0;min-height:0;padding:9mm 10mm;max-width:none}
+  @page{size:A4;margin:0}
+}
+@media (max-width:640px){ .rejilla{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="hoja">
+
+<header>
+  <div>
+    <h1>Tu tienda en una página</h1>
+    <p>Déjala al lado del computador. Todo lo demás está en el manual del dueño.</p>
+  </div>
+  <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+    <circle cx="32" cy="40" r="23" fill="#D0211C"/>
+    <path d="M32 17V7" stroke="#1B5E3A" stroke-width="5.5" stroke-linecap="round"/>
+    <path d="M32 18c-5-6-13-5-16-2 3 4 9 6 14 4 5 3 11 2 15-3-3-3-10-4-13 1z" fill="#1B5E3A"/>
+  </svg>
+</header>
+
+<div class="clave">
+  <h2>Lo único que hay que entender</h2>
+  <p><strong>Tu tienda no lee la hoja en vivo.</strong> Lleva dentro una copia de
+  tu catálogo, y por eso abre rápido. Esa copia se rehace cuando tú publicas.</p>
+  <p class="flujo">Cambias algo en la hoja → menú → Publicar ahora → unos minutos → la tienda lo muestra.</p>
+  <p>Si te saltas el segundo paso, la hoja dice una cosa y tu tienda otra. Sola
+  se pone al día cada cuatro horas.</p>
+</div>
+
+<div class="rejilla">
+  <div>
+    <h2 class="sec">Las tres cosas del día a día</h2>
+
+    <h3>Cambiar un precio o el stock</h3>
+    <p>Pestaña <strong>Catálogo</strong>, escribe el número, <strong>Publicar ahora</strong>.</p>
+    <p><span class="aviso">Escribe 8900, no $8.900 ni 8,900.</span> Con símbolos
+    la hoja no lo lee como número y el producto <strong>desaparece</strong> de la
+    tienda, en vez de salir barato.</p>
+
+    <h3>Agregar un producto</h3>
+    <p>Fila nueva en <strong>Catálogo</strong> con ID, Nombre, Precio y
+    <strong>Activo = Sí</strong>. La foto va a tu carpeta de Drive con
+    <strong>el nombre exacto</strong> que escribas en la columna Imágenes,
+    mayúsculas incluidas. Después, <strong>Publicar ahora</strong>.</p>
+
+    <h3>Llegó un pedido</h3>
+    <p>Te llega por WhatsApp y queda en la pestaña <strong>Pedidos</strong>.
+    Cambia <strong>Estado</strong> a <strong>Confirmado</strong>: eso descuenta
+    el inventario. No hay que hacer nada más.</p>
+
+    <h2 class="sec">Cuando algo no aparece en la tienda</h2>
+    <p>Abre <strong>Diagnóstico</strong>. Revisa nueve cosas y arriba te dice
+    cuáles están bien.</p>
+    <ul>
+      <li>Si un punto dice <strong>PROBLEMA</strong> o <strong>REVISAR</strong>,
+      abajo está el detalle con la <strong>celda exacta</strong> —«Catálogo E7
+      dice "$9.000"»— o el <strong>nombre</strong> de la foto que falta.
+      Arréglalo y publica.</li>
+      <li>Si el punto 8 dice que tu tienda muestra algo viejo, falta publicar.</li>
+      <li>Si no entiendes lo que dice: <strong>copia el cuadro de abajo del todo
+      y mándalo por WhatsApp</strong> a quien te montó la tienda. Ahí va todo lo
+      que hace falta.</li>
+    </ul>
+  </div>
+
+  <div>
+    <h2 class="sec">El menú de tu hoja</h2>
+    <table>
+      <tr class="destaca"><td>Publicar ahora</td><td>Manda a la tienda lo que cambiaste. La más importante</td></tr>
+      <tr><td>Ver mi tienda</td><td>La abre como la ve un comprador</td></tr>
+      <tr><td>Actualizar tablero e inventario</td><td>Recalcula ya, sin esperar la hora</td></tr>
+      <tr><td>Enviarme el resumen ahora</td><td>Manda el correo del día en el momento</td></tr>
+      <tr><td>Diagnóstico</td><td>Revisa todo y dice qué está mal y <strong>dónde</strong></td></tr>
+      <tr><td>Ayuda</td><td>Las preguntas de siempre, contestadas</td></tr>
+    </table>
+    <p style="margin-top:6px;font-size:.82rem;color:var(--tenue)">Si el menú no
+    se ve, recarga la página de la hoja.</p>
+
+    <h2 class="sec">Lo que no hay que hacer nunca</h2>
+    <ul>
+      <li><strong>No cambiarle el nombre a una pestaña ni a una columna.</strong>
+      Se rompe todo, y no avisa.</li>
+      <li><strong>No borrar filas de Pedidos.</strong> Son tu historial de ventas.</li>
+      <li><strong>No escribir en Tablero ni en Más vendidos:</strong> se
+      reescriben solas cada hora y se pierde lo que pongas.</li>
+      <li><strong>No tocar el código</strong> (Extensiones → Apps Script). Si
+      algo hay que cambiar ahí, lo hace quien te montó la tienda.</li>
+    </ul>
+    <div class="si">Lo que <strong>sí</strong> puedes tocar sin miedo: Catálogo,
+    Configuración, Envíos, Cupones y la columna Estado de Pedidos.</div>
+  </div>
+</div>
+
+<footer><strong>Para quien entrega la tienda:</strong> si explicar esto toma más
+de 30 minutos, el hallazgo es de diseño, no del comerciante. Anótalo.</footer>
+
+</div>
+</body>
+</html>

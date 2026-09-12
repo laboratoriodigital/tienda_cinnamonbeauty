@@ -1,0 +1,2424 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- Seguridad. La lista blanca es exactamente lo que la tienda usa hoy: sus propios
+     estilos, las fuentes de Google, imágenes data: (los marcadores SVG) y el Apps
+     Script. Si mañana cargas fotos desde otro dominio, agrégalo a img-src o no se ven.
+     frame-ancestors NO va aquí: el navegador lo ignora en <meta> y solo ensucia la
+     consola. Vive en el archivo _headers, que es donde Cloudflare sí lo aplica.
+
+     Los tres hosts de imagen están autorizados de antemano a propósito: así
+     cambiar de proveedor de transformación es cambiar UNA celda de la hoja, sin
+     volver a generar ni republicar nada. Solo son orígenes de imagen, no de
+     código: lo peor que puede hacer un tercero de esa lista es no responder. -->
+
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://ik.imagekit.io https://imagedelivery.net; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'none'; base-uri 'none'">
+<!-- ═══ CONFIGURACIÓN DE ESTA TIENDA ═══
+     Generado por generarConfiguracion() en el Apps Script.
+     No lo edites a mano: cambia la pestaña Configuración y vuelve a generarlo. -->
+<title>Orgánico — Tomate y sus derivados</title>
+<meta name="description" content="Tomate fresco y procesados de tomate cultivados sin químicos. Pide por WhatsApp y recibe en tu casa.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Orgánico">
+<meta property="og:locale" content="es_CO">
+<meta property="og:title" content="Orgánico — Tomate y sus derivados">
+<meta property="og:description" content="Tomate fresco y procesados de tomate cultivados sin químicos. Pide por WhatsApp y recibe en tu casa.">
+<meta property="og:url" content="https://organico.laboratoriodigital-la.workers.dev/">
+<meta property="og:image" content="https://organico.laboratoriodigital-la.workers.dev/compartir.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Orgánico — Tomate y sus derivados">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://organico.laboratoriodigital-la.workers.dev/">
+<meta name="theme-color" content="#D0211C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='40' r='23' fill='%23D0211C'/%3E%3Cpath d='M32 17V7' stroke='%231B5E3A' stroke-width='5.5' stroke-linecap='round'/%3E%3Cpath d='M32 18c-5-6-13-5-16-2 3 4 9 6 14 4 5 3 11 2 15-3-3-3-10-4-13 1z' fill='%231B5E3A'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='40' r='23' fill='%23D0211C'/%3E%3Cpath d='M32 17V7' stroke='%231B5E3A' stroke-width='5.5' stroke-linecap='round'/%3E%3Cpath d='M32 18c-5-6-13-5-16-2 3 4 9 6 14 4 5 3 11 2 15-3-3-3-10-4-13 1z' fill='%231B5E3A'/%3E%3C/svg%3E">
+<!-- ═══ FIN DE LA CONFIGURACIÓN ═══ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ORGÁNICO — hoja de estilos
+   Paleta: rojo tomate, verde hoja, blanco, negro.
+   ============================================================ */
+:root{
+  --rojo:#D0211C;
+  --acento:#14472B;
+  --verde:#1B5E3A;
+  --blanco:#FFFFFF;
+  --negro:#000000;
+  --linea:#E4E4E4;
+  --tenue:#6E6E6E;
+  --max:1180px;
+  --radio:2px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:var(--blanco);color:var(--negro);
+  line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--verde);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.envoltura{max-width:var(--max);margin:0 auto;padding:0 20px}
+@media(min-width:768px){.envoltura{padding:0 32px}}
+
+/* ---------- Barra superior ---------- */
+.barra{
+  position:sticky;top:0;z-index:60;background:var(--blanco);
+  border-bottom:1px solid var(--linea);
+}
+.barra-int{display:flex;align-items:center;justify-content:space-between;height:62px}
+.marca{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.035em;font-size:1.28rem}
+.marca svg,.marca img{width:22px;height:22px;flex:none;object-fit:contain}
+.btn-carrito{
+  display:flex;align-items:center;gap:8px;background:var(--negro);color:var(--blanco);
+  padding:9px 16px;border-radius:var(--radio);font-weight:600;font-size:.9rem;
+}
+.btn-carrito:hover{background:var(--rojo)}
+.contador{
+  background:var(--rojo);color:var(--blanco);min-width:20px;height:20px;border-radius:10px;
+  display:inline-grid;place-items:center;font-size:.72rem;font-weight:700;padding:0 6px;
+}
+.btn-carrito .contador{background:var(--blanco);color:var(--negro)}
+
+/* ---------- Portada ---------- */
+.portada{background:var(--rojo);color:var(--blanco);padding:64px 0 60px}
+@media(min-width:768px){.portada{padding:104px 0 96px}}
+.portada h1{
+  font-size:clamp(2.6rem,10vw,6.4rem);font-weight:800;letter-spacing:-.05em;
+  line-height:.92;max-width:11ch;
+}
+.portada p{
+  margin-top:22px;max-width:38ch;font-size:clamp(1rem,2.4vw,1.2rem);
+  color:rgba(255,255,255,.9);
+}
+ /* En móvil van una debajo de otra, con una línea fina que las separa: se leen
+    como una lista y no como texto suelto. Antes se acomodaban solas con
+    flex-wrap y quedaban tres líneas a 375px, dos a 414px y una en escritorio;
+    ese salto es lo que se veía descuidado. A partir de 768px sí caben las tres
+    en fila y ahí vuelven a la fila. */
+.portada-datos{
+  display:flex;flex-direction:column;margin-top:28px;
+  font-size:.92rem;color:rgba(255,255,255,.9);
+  border-top:1px solid rgba(255,255,255,.22);
+}
+.portada-datos span{
+  display:flex;align-items:center;gap:10px;padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.22);
+}
+@media(min-width:768px){
+  .portada-datos{
+    flex-direction:row;flex-wrap:wrap;gap:10px 26px;margin-top:34px;
+    font-size:.9rem;color:rgba(255,255,255,.85);border-top:none;
+  }
+  .portada-datos span{padding:0;border-bottom:none;gap:7px}
+}
+.punto{width:6px;height:6px;background:var(--blanco);border-radius:50%;flex:none}
+
+/* ---------- Controles ---------- */
+.controles{padding:30px 0 20px;border-bottom:1px solid var(--linea)}
+.buscador{position:relative;max-width:420px}
+.buscador input{
+  width:100%;padding:12px 14px 12px 40px;border:1px solid var(--linea);
+  border-radius:var(--radio);background:var(--blanco);
+}
+.buscador input:focus{border-color:var(--negro);outline:none}
+.buscador svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--tenue)}
+.filtros{display:flex;gap:8px;margin-top:16px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.filtros::-webkit-scrollbar{display:none}
+.chip{
+  border:1px solid var(--linea);padding:8px 15px;border-radius:var(--radio);
+  white-space:nowrap;font-size:.88rem;font-weight:500;
+}
+.chip:hover{border-color:var(--negro)}
+.chip[aria-pressed="true"]{background:var(--negro);color:var(--blanco);border-color:var(--negro)}
+
+/* ---------- Rejilla de productos ---------- */
+.rejilla{
+  display:grid;grid-template-columns:1fr;gap:1px;background:var(--linea);
+  border:1px solid var(--linea);margin:28px 0 0;
+}
+main.envoltura{padding-bottom:60px}
+@media(min-width:600px){.rejilla{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.rejilla{grid-template-columns:repeat(3,1fr)}}
+.tarjeta{background:var(--blanco);padding:16px;display:flex;flex-direction:column;text-align:left}
+.tarjeta-img{width:100%;aspect-ratio:1;background:#FAFAFA;position:relative;overflow:hidden}
+.tarjeta-img img{width:100%;height:100%;object-fit:cover}
+.destacado{
+  position:absolute;left:9px;top:9px;background:var(--acento);color:var(--blanco);
+  font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:var(--radio);
+  letter-spacing:.02em;text-transform:uppercase;
+}
+.mas-fotos{
+  position:absolute;right:9px;bottom:9px;background:rgba(0,0,0,.72);color:var(--blanco);
+  font-size:.7rem;font-weight:600;padding:3px 8px;border-radius:var(--radio);
+}
+.tarjeta h3{font-size:1.02rem;font-weight:600;letter-spacing:-.015em;margin-top:14px}
+.formato{font-size:.84rem;color:var(--tenue);margin-top:3px}
+.fila-precio{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:12px}
+.precio{font-size:1.18rem;font-weight:700;letter-spacing:-.02em}
+.disponible{font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:6px}
+.disponible.ok{color:var(--verde)}
+.disponible.poco{color:var(--rojo)}
+.disponible.cero{color:var(--tenue)}
+.marcador{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.acciones{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:stretch}
+.acciones .btn-solido{min-width:100px}
+.acciones .btn-linea{flex:none}
+.btn{
+  padding:11px 16px;border-radius:var(--radio);font-weight:600;font-size:.88rem;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.btn-solido{background:var(--negro);color:var(--blanco);flex:1}
+.btn-solido:hover{background:var(--rojo)}
+.btn-solido:disabled{background:#F0F0F0;color:#A5A5A5;cursor:not-allowed}
+.btn-linea{border:1px solid var(--linea);background:var(--blanco)}
+.btn-linea:hover{border-color:var(--negro)}
+.vacio{padding:70px 20px;text-align:center;color:var(--tenue);background:var(--blanco);grid-column:1/-1}
+
+/* ---------- Paginación ---------- */
+.paginacion{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  margin-top:26px;padding-top:24px;border-top:1px solid var(--linea);
+}
+.paginacion[hidden]{display:none}   /* sin esto, el display:flex le gana a hidden */
+@media(min-width:768px){
+  .paginacion{flex-direction:row;justify-content:space-between}
+}
+.paginacion .conteo{font-size:.85rem;color:var(--tenue)}
+.paginacion .paginas{display:flex;align-items:center;gap:10px}
+.paginacion .donde{font-size:.85rem;font-weight:600;white-space:nowrap;min-width:11ch;text-align:center}
+.paginacion .btn{padding:9px 15px}
+.paginacion .por-pagina{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--tenue)}
+.paginacion .por-pagina .chip{padding:6px 12px;font-size:.82rem}
+.btn-linea:disabled{color:#B5B5B5;background:#FAFAFA;border-color:var(--linea);cursor:not-allowed}
+
+/* ---------- Pie ---------- */
+.pie{border-top:1px solid var(--linea);padding:44px 0;font-size:.88rem;color:var(--tenue)}
+.pie-grid{display:grid;gap:26px}
+@media(min-width:768px){.pie-grid{grid-template-columns:1.4fr 1fr 1fr}}
+.pie h4{color:var(--negro);font-size:.9rem;font-weight:600;margin-bottom:9px}
+.pie a{text-decoration:none}
+.pie a:hover{color:var(--negro)}
+.pie ul{list-style:none;display:grid;gap:5px}
+
+/* ---------- Capa oscura ---------- */
+.capa{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;
+  opacity:0;visibility:hidden;transition:opacity .22s,visibility .22s;
+}
+.capa.activa{opacity:1;visibility:visible}
+
+/* ---------- Panel del carrito ---------- */
+.panel{
+  position:fixed;top:0;right:0;bottom:0;width:100%;max-width:440px;background:var(--blanco);
+  z-index:80;transform:translateX(101%);transition:transform .26s ease;
+  display:flex;flex-direction:column;
+}
+.panel.abierto{transform:translateX(0)}
+.panel-top{
+  display:flex;align-items:center;justify-content:space-between;padding:18px 20px;
+  border-bottom:1px solid var(--linea);flex:none;
+}
+.panel-top h2{font-size:1.1rem;font-weight:700;letter-spacing:-.02em}
+.cerrar{width:34px;height:34px;display:grid;place-items:center;border-radius:var(--radio)}
+.cerrar:hover{background:#F3F3F3}
+.panel-cuerpo{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
+.panel-pie{border-top:1px solid var(--linea);padding:16px 20px;flex:none;background:var(--blanco)}
+.panel-pie{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+
+.linea-item{display:flex;gap:13px;padding:14px 0;border-bottom:1px solid var(--linea)}
+.linea-item:first-child{padding-top:0}
+.linea-item img{width:66px;height:66px;object-fit:cover;background:#FAFAFA;flex:none}
+.linea-info{flex:1;min-width:0}
+.linea-info h4{font-size:.93rem;font-weight:600;line-height:1.3}
+.linea-info .formato{font-size:.78rem;margin-top:2px}
+.cantidad{display:flex;align-items:center;gap:0;border:1px solid var(--linea);width:fit-content;margin-top:9px}
+.cantidad button{width:30px;height:30px;display:grid;place-items:center;font-weight:600}
+.cantidad button:hover:not(:disabled){background:#F3F3F3}
+.cantidad button:disabled{color:#C8C8C8;cursor:not-allowed}
+.cantidad span{min-width:32px;text-align:center;font-size:.9rem;font-weight:600}
+/* Selector de cantidad de la tarjeta y de la ficha: mismo bloque del carrito,
+   pero estirado a la altura del botón que tiene al lado. */
+.cantidad-elegir{margin-top:0;flex:none;align-items:stretch;background:var(--blanco)}
+.cantidad-elegir button{height:auto;align-self:stretch;padding:0}
+.cantidad-elegir span{display:grid;place-items:center;min-width:30px}
+.ficha-agregar{display:flex;gap:10px;align-items:stretch}
+.ficha-agregar .btn-solido{flex:1;padding:14px}
+.ficha-agregar .cantidad-elegir button{width:38px}
+.ficha-compartir{width:100%;margin-top:10px;justify-content:center;gap:8px;font-size:.88rem;color:#3A3A3A}
+.ficha-compartir svg{flex:none}
+/* Va ARRIBA a propósito: abajo tapaba justo "Agregar al carrito" en el celular. */
+.brindis{position:fixed;left:50%;top:74px;transform:translate(-50%,-14px);z-index:80;
+  max-width:min(92vw,420px);padding:12px 18px;border-radius:10px;background:var(--negro);
+  color:var(--blanco);font-size:.88rem;line-height:1.35;text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.28);opacity:0;pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;overflow-wrap:anywhere}
+.brindis.visible{opacity:1;transform:translate(-50%,0)}
+.linea-der{text-align:right;display:flex;flex-direction:column;justify-content:space-between;flex:none}
+.linea-der strong{font-size:.95rem;font-weight:700;white-space:nowrap}
+.quitar{font-size:.8rem;color:var(--tenue);text-decoration:underline}
+.quitar:hover{color:var(--rojo)}
+
+.bloque{margin-top:24px}
+.bloque > label,.bloque > p.titulo{display:block;font-size:.88rem;font-weight:600;margin-bottom:8px}
+.campo{
+  width:100%;padding:11px 13px;border:1px solid var(--linea);border-radius:var(--radio);
+  background:var(--blanco);
+}
+.campo:focus{border-color:var(--negro);outline:none}
+textarea.campo{resize:vertical;min-height:64px}
+.cupon-fila{display:flex;gap:8px}
+.cupon-fila .campo{flex:1;text-transform:uppercase}
+.aviso{font-size:.82rem;margin-top:7px;display:none}
+.aviso.bien{color:var(--verde);display:block}
+.aviso.mal{color:var(--rojo);display:block}
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.totales{display:grid;gap:7px;font-size:.9rem;margin-bottom:14px}
+.totales div{display:flex;justify-content:space-between}
+.totales .descuento{color:var(--verde)}
+.totales .granTotal{
+  border-top:1px solid var(--linea);padding-top:9px;margin-top:3px;
+  font-size:1.15rem;font-weight:700;letter-spacing:-.02em;
+}
+.sello{font-size:.79rem;margin-top:9px;padding-top:8px;border-top:1px solid var(--linea);display:block}
+.sello.confirmado{color:var(--verde);font-weight:600}
+.sello.esperando{color:var(--tenue)}
+.sello.aviso-stock{color:var(--rojo)}
+/* El aviso de catálogo del archivo. Tiene que verse sin asustar: la tienda
+   funciona, y lo que se está diciendo es que los precios podrían no estar al
+   día. Amarillo de advertencia, no rojo de error. */
+/* El precio tachado va DESPUÉS del vigente y más pequeño: lo que el comprador
+   tiene que leer primero es lo que va a pagar. */
+.precio s.antes{margin-left:7px;font-size:.8em;font-weight:400;color:var(--tenue)}
+.aviso-archivo{margin:0 0 18px;padding:11px 14px;border-radius:8px;
+  background:#FFF8E1;border:1px solid #F0D48A;color:#6B4E00;
+  font-size:.86rem;line-height:1.5}
+.faltan{display:block;width:100%;text-align:left;margin:0 0 11px;padding:10px 12px;
+  border:1px solid #EBD9AE;border-radius:9px;background:#FFF8EA;color:#7A5200;
+  font:inherit;font-size:.82rem;line-height:1.45;cursor:pointer}
+.faltan:active{background:#FCEFD5}
+.faltan-ir{display:block;margin-top:3px;font-weight:700}
+.consentimiento{display:flex;gap:9px;align-items:flex-start;font-size:.79rem;color:var(--tenue);margin-bottom:12px;line-height:1.45}
+.consentimiento input{width:16px;height:16px;flex:none;margin-top:2px;accent-color:var(--verde)}
+.btn-whatsapp{
+  width:100%;background:var(--verde);color:var(--blanco);padding:15px;border-radius:var(--radio);
+  font-weight:700;font-size:1rem;display:flex;align-items:center;justify-content:center;gap:9px;
+}
+.btn-whatsapp{text-decoration:none}
+.btn-whatsapp:hover:not([aria-disabled="true"]){background:#154A2D}
+.btn-whatsapp[aria-disabled="true"]{background:#DFDFDF;color:#9A9A9A;cursor:not-allowed}
+.carrito-vacio{text-align:center;padding:70px 20px;color:var(--tenue)}
+
+/* El pedido ya salió. Al volver de WhatsApp el cliente cae aquí y no en el
+   carrito lleno, que era lo que lo dejaba dudando si había enviado algo. */
+.enviado{text-align:center;padding:44px 22px 26px;color:var(--tenue)}
+.enviado-marca{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;
+  display:grid;place-items:center;background:var(--verde);color:#fff}
+.enviado h3{font-size:20px;font-weight:800;color:#000;margin:0 0 6px}
+.enviado p{margin:0 0 12px;line-height:1.55}
+.enviado-codigo{font:700 15px/1 ui-monospace,Menlo,Consolas,monospace;
+  color:#000;letter-spacing:.06em;background:#F3F3F1;border-radius:2px;
+  display:inline-block;padding:9px 14px;margin-bottom:14px}
+.enviado-nota{font-size:13px;padding-top:6px;border-top:1px solid var(--linea);
+  margin-top:20px}
+.enviado .btn-whatsapp{margin-top:4px}
+.enviado-otro{margin-top:14px;background:none;border:0;color:var(--tenue);
+  font:600 14px inherit;text-decoration:underline;cursor:pointer;padding:8px}
+
+/* ---------- Ficha de producto ---------- */
+.ficha{
+  position:fixed;inset:0;z-index:80;display:none;align-items:flex-end;justify-content:center;
+}
+.ficha.abierta{display:flex}
+@media(min-width:768px){.ficha{align-items:center}}
+.ficha-caja{
+  background:var(--blanco);width:100%;max-width:880px;max-height:92vh;overflow-y:auto;
+  border-radius:12px 12px 0 0;
+}
+@media(min-width:768px){.ficha-caja{border-radius:var(--radio);max-height:88vh}}
+.ficha-grid{display:grid;grid-template-columns:1fr}
+@media(min-width:768px){.ficha-grid{grid-template-columns:1fr 1fr}}
+.galeria{background:#FAFAFA;position:relative}
+.galeria-principal{aspect-ratio:1;overflow:hidden}
+.galeria-principal img{width:100%;height:100%;object-fit:cover}
+.miniaturas{display:flex;gap:8px;padding:12px;overflow-x:auto}
+.miniaturas button{
+  width:58px;height:58px;flex:none;border:1px solid var(--linea);overflow:hidden;background:var(--blanco);
+}
+.miniaturas button[aria-current="true"]{border-color:var(--negro);border-width:2px}
+.miniaturas img{width:100%;height:100%;object-fit:cover}
+.flecha{
+  position:absolute;top:calc(50% - 40px);transform:translateY(-50%);width:38px;height:38px;
+  background:rgba(255,255,255,.94);border-radius:50%;display:grid;place-items:center;
+  box-shadow:0 1px 4px rgba(0,0,0,.16);
+}
+.flecha.izq{left:10px}
+.flecha.der{right:10px}
+.ficha-texto{padding:24px}
+@media(min-width:768px){.ficha-texto{padding:34px}}
+.ficha-texto h2{font-size:1.55rem;font-weight:700;letter-spacing:-.03em;line-height:1.15}
+.ficha-texto .formato{margin-top:5px}
+.ficha-precio{font-size:1.7rem;font-weight:800;letter-spacing:-.03em;margin:18px 0 10px}
+.ficha-desc{font-size:.94rem;color:#3A3A3A;margin:16px 0 22px;max-width:60ch}
+.ficha-cerrar{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.94);border-radius:50%;width:34px;height:34px;display:grid;place-items:center;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.16)}
+
+/* ---------- Ventana legal ---------- */
+#legal{z-index:90}
+.legal-caja{max-width:760px;position:relative}
+.legal-texto{padding:26px 22px 36px}
+@media(min-width:768px){.legal-texto{padding:38px 40px 48px}}
+.legal-texto h2{font-size:1.4rem;font-weight:700;letter-spacing:-.03em;line-height:1.2;padding-right:44px}
+.legal-texto h3{font-size:.97rem;font-weight:600;margin:24px 0 0}
+.legal-texto p,.legal-texto li{font-size:.9rem;color:#3A3A3A;margin-top:8px;max-width:70ch}
+.legal-texto ul{margin-left:18px}
+.legal-texto strong{color:var(--negro)}
+.legal-fecha{font-size:.8rem;color:var(--tenue);margin-top:8px}
+.legal-cerrar{
+  position:absolute;top:12px;right:12px;background:var(--blanco);border:1px solid var(--linea);
+  border-radius:50%;width:34px;height:34px;display:grid;place-items:center;z-index:2;
+}
+
+/* ---------- Botón flotante ---------- */
+.flotante{
+  position:fixed;left:18px;bottom:18px;bottom:calc(18px + env(safe-area-inset-bottom));
+  z-index:55;width:52px;height:52px;border-radius:50%;background:var(--verde);
+  display:grid;place-items:center;box-shadow:0 3px 12px rgba(0,0,0,.22);
+}
+.flotante svg{width:27px;height:27px;fill:var(--blanco)}
+.flotante.oculto{display:none}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- ============================ BARRA ============================ -->
+<header class="barra">
+  <div class="envoltura barra-int">
+    <div class="marca" id="marca">
+      <svg viewBox="0 0 24 24" aria-hidden="true" id="marcaSigno">
+        <circle cx="12" cy="14.5" r="7.5" fill="var(--rojo)"/>
+        <path d="M12 7V3.5M12 7c-1.6-1.6-3.4-2-5-1.6.6 1.7 2 2.9 3.6 3.2M12 7c1.6-1.6 3.4-2 5-1.6-.6 1.7-2 2.9-3.6 3.2"
+              stroke="var(--verde)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span id="marcaNombre">Orgánico</span>
+    </div>
+    <button class="btn-carrito" onclick="abrirPanel()">
+      Carrito <span class="contador" id="contador">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ============================ PORTADA ============================ -->
+<section class="portada">
+  <div class="envoltura">
+    <h1 id="portadaTitulo">Tomate que sabe a tomate.</h1>
+    <p id="portadaTexto">Cultivamos y procesamos en finca propia, sin químicos de síntesis. Del corte a tu cocina en menos de 48 horas.</p>
+    <div class="portada-datos" id="portadaDatos">
+      <span><i class="punto"></i> Cosecha de la semana</span>
+      <span><i class="punto"></i> Entregas a todo el país</span>
+      <span><i class="punto"></i> Pides y confirmas por WhatsApp</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CONTROLES ============================ -->
+<section class="controles">
+  <div class="envoltura">
+    <div class="buscador">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="search" id="buscar" placeholder="Buscar en el catálogo" aria-label="Buscar productos" oninput="buscar()">
+    </div>
+    <div class="filtros" id="filtros" role="group" aria-label="Filtrar por categoría"></div>
+  </div>
+</section>
+
+<!-- ============================ CATÁLOGO ============================ -->
+<main class="envoltura">
+  <!-- Sale solo cuando la tienda está sirviendo su propio catálogo porque la
+       hoja no contestó. Vacío y oculto el resto del tiempo. -->
+  <p class="aviso-archivo" id="avisoArchivo" hidden></p>
+  <div class="rejilla" id="rejilla"></div>
+  <nav class="paginacion" id="paginacion" aria-label="Paginación del catálogo" hidden></nav>
+</main>
+
+<!-- ============================ PIE ============================ -->
+<footer class="pie">
+  <div class="envoltura pie-grid">
+    <div>
+      <h4 id="pieNombre">Orgánico</h4>
+      <p id="pieDescripcion">Tomate fresco y derivados de finca. Rionegro, Antioquia.</p>
+      <p style="margin-top:8px">Pedidos: <a id="pieTelefono" href="https://wa.me/573008610480">300 861 0480</a></p>
+    </div>
+    <div>
+      <h4>Cómo compras</h4>
+      <ul id="comoCompras">
+        <li>Armas tu carrito aquí</li>
+        <li>Confirmas por WhatsApp</li>
+        <li>Pagas por Nequi, llave o Bre-B</li>
+        <li>Recibes en 24 a 72 horas</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#" onclick="abrirLegal('datos');return false">Política de tratamiento de datos</a></li>
+        <li><a href="#" onclick="abrirLegal('retracto');return false">Derecho de retracto</a></li>
+        <li><a href="#" onclick="abrirLegal('terminos');return false">Términos y condiciones</a></li>
+      </ul>
+      <p style="margin-top:10px;font-size:.8rem">Tienes 5 días hábiles para retractarte de tu compra (Ley 1480 de 2011).</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================ CAPA ============================ -->
+<div class="capa" id="capa" onclick="clicCapa()"></div>
+
+<!-- ============================ PANEL CARRITO ============================ -->
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Carrito de compras">
+  <div class="panel-top">
+    <h2>Tu pedido</h2>
+    <button class="cerrar" onclick="cerrarTodo()" aria-label="Cerrar carrito">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <div class="panel-cuerpo" id="panelCuerpo"></div>
+
+  <div class="panel-pie" id="panelPie" style="display:none">
+    <div class="totales" id="totales"></div>
+    <!-- EL BOTÓN APAGADO NO DECÍA POR QUÉ. En un teléfono los datos de entrega
+         quedan más abajo del pliegue: el cliente llena el carrito, ve el total
+         y el botón, lo toca, y no pasa nada. Esto va DENTRO del pie fijo, que
+         es lo único que se ve siempre. -->
+    <button type="button" class="faltan" id="faltan" hidden onclick="irADatos()">
+      <span id="faltanTexto"></span>
+      <span class="faltan-ir">Completar ahora ›</span>
+    </button>
+    <label class="consentimiento">
+      <input type="checkbox" id="consiento" onchange="revisarFormulario()">
+      <span>Autorizo a <span id="consientoNombre">la tienda</span> a usar mis datos para
+        gestionar este pedido, según su
+        <a href="#" style="text-decoration:underline"
+           onclick="event.preventDefault();event.stopPropagation();abrirLegal('datos')">política de tratamiento de datos personales</a>.</span>
+    </label>
+    <a class="btn-whatsapp" id="btnFinalizar" href="#" target="_blank" rel="noopener"
+       aria-disabled="true" onclick="return alEnviar(event)">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+        <path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3z"/>
+        <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2z"/>
+      </svg>
+      Enviar pedido por WhatsApp
+    </a>
+  </div>
+</aside>
+
+<!-- ============================ FICHA PRODUCTO ============================ -->
+<div class="ficha" id="ficha" role="dialog" aria-modal="true" aria-label="Detalle del producto">
+  <div class="ficha-caja" id="fichaCaja"></div>
+</div>
+
+<!-- ============================ LEGAL ============================ -->
+<div class="ficha" id="legal" role="dialog" aria-modal="true" aria-label="Información legal">
+  <div class="ficha-caja legal-caja" id="legalCaja"></div>
+</div>
+
+<!-- ============================ AVISO CORTO ============================ -->
+<div class="brindis" id="brindis" role="status" aria-live="polite"></div>
+
+<!-- ============================ FLOTANTE ============================ -->
+<a class="flotante" id="flotante" href="https://wa.me/573008610480?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20sus%20productos." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.5 12.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3z"/>
+  </svg>
+</a>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════════
+// CONFIGURACIÓN
+// Solo estas dos líneas se escriben a mano; el resto sale de la hoja.
+// ══════════════════════════════════════════════════════════════════════════
+
+// La URL de tu Apps Script publicado (Implementar > Aplicación web).
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwSDQEloo_tlSOCXrkZEETcvGhFlyxIlAB7wpUg_XiJxSRB8hjXjyZvy-1KyA5hNfx1w/exec";
+
+// Debe coincidir con la constante VERSION de apps-script.gs. Si no coincide, la
+// tienda deja de sellar los pedidos y avisa por consola.
+const SCRIPT_VERSION = "2026-09-11-1";
+
+// Los hosts de imagen que permite la política de seguridad de arriba. Si la
+// hoja pide otro, las fotos se sirven directo del origen y se avisa por
+// consola, en vez de quedar bloqueadas sin explicación.
+const FOTOS_HOSTS = ["res.cloudinary.com", "ik.imagekit.io", "imagedelivery.net"];
+
+// Respaldo mínimo por si la hoja no contesta. La pestaña Configuración manda.
+let WHATSAPP = "573008610480";
+let NEGOCIO  = "Orgánico";
+
+let EMPRESA = {
+  razon:     "[RAZÓN SOCIAL]",
+  nit:       "[NIT O CÉDULA]",
+  correo:    "[CORREO DE CONTACTO]",
+  direccion: "[DIRECCIÓN]",
+  ciudad:    "Rionegro, Antioquia",
+  tel:       "300 861 0480",
+  actualizado: "4 de septiembre de 2026"
+};
+
+// ══════════════════════════════════════════════════════════════════════════
+// CATÁLOGO DE RESPALDO — lo genera el Apps Script, no se edita a mano
+// El menú de la hoja > Generar inventario para index.html, y se reemplaza todo lo
+// que hay entre esta marca y la de abajo. Solo se usa si Google no responde.
+// ══════════════════════════════════════════════════════════════════════════
+const ENVIOS = [
+  { id:"finca",     nombre:"Recoger en finca (Rionegro)",   valor:0     },
+  { id:"medellin",  nombre:"Medellín y Valle de Aburrá",    valor:9000  },
+  { id:"oriente",   nombre:"Rionegro y Oriente antioqueño", valor:6000  },
+  { id:"principal", nombre:"Bogotá, Cali, Barranquilla",    valor:15000 },
+  { id:"resto",     nombre:"Resto del país",                valor:19000 }
+];
+
+const PRODUCTOS = [
+  { id:"chonto", nombre:"Tomate chonto", formato:"Canasta 1 kg", categoria:"Frescos",
+    precio:8900, stock:24, forma:"tomate", imagenes:["","",""],
+    descripcion:"El tomate de todos los días: pulpa jugosa, piel delgada y acidez media. Cortado la mañana del despacho. Ideal para guisos, sofritos y ensaladas." },
+
+  { id:"cherry", nombre:"Tomate cherry", formato:"Bandeja 250 g", categoria:"Frescos",
+    precio:6500, stock:4, forma:"tomate", imagenes:["","",""],
+    descripcion:"Dulce, firme y de piel brillante. Se cosecha en racimo y se empaca el mismo día. Va directo a la ensalada o al horno con aceite de oliva." },
+
+  { id:"rinon", nombre:"Tomate riñón", formato:"Canasta 1 kg", categoria:"Frescos",
+    precio:9800, stock:14, forma:"tomate", imagenes:["",""],
+    descripcion:"Carnoso y de pocas semillas, el mejor para rodajas gruesas. Aguanta bien la nevera hasta cinco días sin perder textura." },
+
+  { id:"salsa", nombre:"Salsa de tomate natural", formato:"Frasco 300 g", categoria:"Salsas",
+    precio:14900, stock:9, forma:"frasco", imagenes:["","",""],
+    descripcion:"Solo tomate, sal marina, ajo y albahaca. Sin azúcar añadida, sin conservantes, sin almidones. Se cocina a fuego lento durante cuatro horas." },
+
+  { id:"sofrito", nombre:"Sofrito base de tomate", formato:"Frasco 400 g", categoria:"Salsas",
+    precio:18500, stock:16, forma:"frasco", imagenes:["",""],
+    descripcion:"Tomate, cebolla larga, pimentón y aceite de oliva. La base de arroces, carnes y pastas, lista en un frasco. Rinde para seis platos." },
+
+  { id:"pasta", nombre:"Pasta de tomate concentrada", formato:"Frasco 250 g", categoria:"Salsas",
+    precio:16500, stock:0, forma:"frasco", imagenes:[""],
+    descripcion:"Reducción triple de tomate chonto. Una cucharada levanta cualquier caldo o estofado. Vuelve a estar disponible con la próxima cosecha." },
+
+  { id:"secos", nombre:"Tomates secos en aceite de oliva", formato:"Frasco 200 g", categoria:"Conservas",
+    precio:22900, stock:3, forma:"frasco", imagenes:["","",""],
+    descripcion:"Deshidratados al sol durante tres días y conservados en aceite de oliva extra virgen con orégano y laurel. Para panes, quesos y pastas." },
+
+  { id:"jugo", nombre:"Jugo de tomate prensado en frío", formato:"Botella 500 ml", categoria:"Bebidas",
+    precio:12900, stock:7, forma:"botella", imagenes:["",""],
+    descripcion:"Prensado sin calor para conservar el licopeno. Ligeramente salado, con un toque de limón y apio. Se conserva refrigerado hasta cinco días." }
+];
+// ═══════════════════════ FIN DEL CATÁLOGO DE RESPALDO ═══════════════════════
+
+[PRODUCTOS, ENVIOS].forEach(lista => { lista.forEach(Object.freeze); Object.freeze(lista); });
+
+// ── Catálogo efectivo ──
+let VISIBLES = PRODUCTOS;   // lo que se muestra y con qué precio
+let TARIFAS  = ENVIOS;      // tarifas de envío efectivas
+
+// ── Configuración que llega de la hoja ──
+function texto(id, valor){
+  const el = document.getElementById(id);
+  if(el && valor) el.textContent = valor;
+}
+
+function lista(id, valor, envolver){
+  const el = document.getElementById(id);
+  if(!el || !valor) return;
+  const partes = String(valor).split("|").map(t => t.trim()).filter(Boolean);
+  if(partes.length) el.innerHTML = partes.map(envolver).join("");
+}
+
+/* Cuánto se puede pagar de una sola vez. Lo pone la hoja; 0 = sin tope. */
+let TOPE_PAGO = 0;
+
+function aplicarConfiguracion(c){
+  if(!c || typeof c !== "object") return;
+  const v = k => (c[k] || "").trim();
+
+  if(v("negocio")){
+    NEGOCIO = v("negocio");
+    texto("marcaNombre", NEGOCIO);
+    texto("pieNombre", NEGOCIO);
+    // El consentimiento es lo que el comprador está autorizando: tiene que
+    // decir el nombre de SU tienda, no uno escrito a mano en este archivo.
+    texto("consientoNombre", NEGOCIO);
+  }
+
+  if(v("whatsapp")){
+    WHATSAPP = v("whatsapp").replace(/[^0-9]/g, "");
+    const flotante = $("#flotante");
+    if(flotante) flotante.href = `https://wa.me/${WHATSAPP}?text=` +
+      encodeURIComponent("Hola, tengo una pregunta sobre sus productos.");
+    const pie = $("#pieTelefono");
+    if(pie) pie.href = `https://wa.me/${WHATSAPP}`;
+  }
+
+  texto("portadaTitulo", v("portada_titulo"));
+  texto("portadaTexto",  v("portada_texto"));
+  texto("pieDescripcion", v("pie_descripcion"));
+  if(v("empresa_tel")) texto("pieTelefono", v("empresa_tel"));
+
+  lista("portadaDatos", v("portada_puntos"),
+        t => `<span><i class="punto"></i> ${escapar(t)}</span>`);
+  lista("comoCompras", v("como_compras"), t => `<li>${escapar(t)}</li>`);
+
+  
+  const raiz = document.documentElement.style;
+  if(/^#[0-9a-f]{6}$/i.test(v("color_principal"))){
+    raiz.setProperty("--rojo", v("color_principal"));
+    COLORES.rojo = v("color_principal");
+  }
+  if(/^#[0-9a-f]{6}$/i.test(v("color_secundario"))){
+    raiz.setProperty("--verde", v("color_secundario"));
+    COLORES.verde = v("color_secundario");
+  }
+  if(/^#[0-9a-f]{6}$/i.test(v("color_alterno"))){
+    raiz.setProperty("--acento", v("color_alterno"));
+  }
+
+  /* EL TOPE POR TRANSFERENCIA. Son 1.000 UVB —hoy $12.110.000— y se reindexa
+     cada diciembre, así que sale de la hoja y no de aquí. Cero o ausente quiere
+     decir «sin tope», que es lo que corresponde cuando el comercio todavía no
+     cobra por transferencia. */
+  /* Se convierte, no se comprueba el tipo. Por ?a=catalogo llega como NÚMERO y
+     por catalogo.json como TEXTO —el horneado pasa toda la configuración por
+     String()—, así que un `typeof === "number"` funcionaba contra el maestro y
+     fallaba en silencio contra el archivo publicado, que es el camino normal.
+     Es el fallo que solo se ve en producción, y no se veía porque la batería
+     de extremo a extremo habla con el maestro. */
+  const topeLeido = Number(c.tope_pago);
+  if(isFinite(topeLeido) && topeLeido > 0) TOPE_PAGO = topeLeido;
+
+  if(v("fotos_origen")) FOTOS.origen = v("fotos_origen");
+  if(c && typeof c.fotos_cdn === "string") FOTOS.cdn = c.fotos_cdn;
+  FOTOS.webp = /^(s[ií]|si|true|1)$/i.test(String(v("fotos_webp") || "").trim());
+
+  // Logo propio, si el negocio tiene uno. Si no, queda el signo por defecto,
+  // que al menos toma los colores de la marca.
+  const logo = v("logo");
+  const signo = $("#marcaSigno");
+  if(logo && /^https:\/\/res\.cloudinary\.com\//.test(logo) && signo){
+    const img = document.createElement("img");
+    img.src = urlFoto(logo, "miniatura");
+    img.alt = NEGOCIO;
+    signo.replaceWith(img);
+  }
+
+  EMPRESA = {
+    razon:       v("empresa_razon")     || EMPRESA.razon,
+    nit:         v("empresa_nit")       || EMPRESA.nit,
+    correo:      v("empresa_correo")    || EMPRESA.correo,
+    direccion:   v("empresa_direccion") || EMPRESA.direccion,
+    ciudad:      v("empresa_ciudad")    || EMPRESA.ciudad,
+    tel:         v("empresa_tel")       || EMPRESA.tel,
+    actualizado: v("legal_actualizado") || EMPRESA.actualizado
+  };
+}
+
+function aplicarCatalogo(datos){
+  if(!datos || !datos.ok) return false;
+  if(!esquemaEntendido(datos)) return false;
+  aplicarConfiguracion(datos.config);
+  /* Solo del catálogo horneado: el maestro en vivo no sabe qué hay en la
+     carpeta del sitio, y contestar por él sería inventar. */
+  if(datos.fotos && typeof datos.fotos === "object") MEDIDAS = datos.fotos;
+
+  if(Array.isArray(datos.productos) && datos.productos.length){
+    
+    const base = {};
+    PRODUCTOS.forEach(p => { base[p.id] = p; });
+
+    const lista = datos.productos
+      .filter(c => c && c.id && c.nombre && c.activo !== false)
+      .map(c => Object.freeze({
+        id:          String(c.id),
+        nombre:      String(c.nombre),
+        formato:     String(c.formato || ""),
+        categoria:   String(c.categoria || "Otros"),
+        precio:      Number(c.precio) || 0,
+        stock:       Math.max(0, Math.floor(Number(c.stock) || 0)),
+        descripcion: String(c.descripcion || ""),
+        imagenes:    Array.isArray(c.imagenes) ? c.imagenes.slice(0, 6) : [],
+        destacado:   c.destacado === true,
+        referencia:  String(c.referencia || ""),
+        /* Solo si es mayor que el de hoy. La hoja ya lo comprueba; se repite
+           aquí porque esta página también sirve su propio catálogo. */
+        precioAntes: (Number(c.precioAntes) || 0) > (Number(c.precio) || 0)
+                       ? Number(c.precioAntes) : 0,
+        umbralBajo:  Math.max(0, Math.floor(Number(c.umbralBajo) || 0)),
+        forma:       (base[c.id] && base[c.id].forma) || "tomate"
+      }));
+
+    if(lista.length){
+      // Los destacados primero; dentro de cada grupo, el orden de la hoja.
+      const ordenada = lista.filter(p => p.destacado).concat(lista.filter(p => !p.destacado));
+      VISIBLES = Object.freeze(ordenada);
+    }
+  }
+
+  if(Array.isArray(datos.envios) && datos.envios.length){
+    const lista = datos.envios
+      .filter(e => e && e.id)
+      .map(e => Object.freeze({ id:String(e.id), nombre:String(e.nombre || e.id),
+                                valor:Math.max(0, Number(e.valor) || 0) }));
+    if(lista.length){
+      TARIFAS = Object.freeze(lista);
+      // Conservamos el envío que el cliente ya había escogido, si sigue existiendo.
+      const igual = TARIFAS.find(e => envioActivo && e.id === envioActivo.id);
+      envioActivo = igual || TARIFAS[1] || TARIFAS[0];
+    }
+  }
+  return true;
+}
+
+const TOPE_ESPERA = 15000;
+const REINTENTOS  = 2;
+
+function traer(url, ms){
+  const opciones = { method:"GET", redirect:"follow" };
+  let reloj = null;
+  if(typeof AbortController !== "undefined"){
+    const corte = new AbortController();
+    opciones.signal = corte.signal;
+    reloj = setTimeout(() => corte.abort(), ms);
+  }
+  return fetch(url, opciones).then(
+    r => { if(reloj) clearTimeout(reloj); return r; },
+    e => { if(reloj) clearTimeout(reloj); throw e; });
+}
+
+/* El esquema que esta página sabe leer. La hoja publica el suyo en cada
+   respuesta. Si el de la hoja es MAYOR, quien está viejo es este archivo: la
+   hoja habla un idioma con palabras que aquí no existen. */
+const ESQUEMA = 1;
+let esquemaHoja = null;
+
+/* Un esquema que no entendemos NO se aplica. Se conserva lo último bueno —el
+   catálogo del archivo, o el que ya estaba— y se dice por consola. Pintar a
+   medias lo que no se entiende es la peor de las tres opciones: el comprador ve
+   una tienda que parece completa y no lo está. */
+function esquemaEntendido(datos){
+  if(!datos || datos.esquema === undefined || datos.esquema === null) return true;
+  esquemaHoja = Number(datos.esquema);
+  if(!(esquemaHoja > ESQUEMA)) return true;
+  console.warn(
+    "[" + NEGOCIO + "] La hoja publica el esquema " + esquemaHoja +
+    " y esta página entiende hasta el " + ESQUEMA + ".\n" +
+    "No se aplica: se conserva lo último que sí se entendía.\n" +
+    "Falta traer el index.html nuevo al repositorio de esta tienda.");
+  return false;
+}
+
+function revisarVersion(datos){
+  if(!datos || !datos.version) return;
+  versionHoja = String(datos.version);
+  if(versionHoja !== SCRIPT_VERSION){
+    console.warn(
+      "[" + NEGOCIO + "] La hoja responde con la versión " + versionHoja +
+      " y la tienda espera " + SCRIPT_VERSION + ".\n" +
+      "Falta publicar el Apps Script: Implementar > Gestionar implementaciones >" +
+      " lápiz > Versión: Nueva versión.\n" +
+      "Mientras tanto los pedidos van a salir sin verificar.");
+  }
+}
+
+function versionCoincide(){
+  return versionHoja === null || versionHoja === SCRIPT_VERSION;
+}
+
+/* ============================================================================
+   DE DÓNDE SALE EL CATÁLOGO, EN ORDEN.
+   ----------------------------------------------------------------------------
+   1. catalogo.json, del mismo sitio. Lo hornea el montaje desde la hoja.
+   2. Si no está, el maestro en vivo. Es lo que se hacía siempre.
+   3. Si tampoco, el inventario que viene dentro de este archivo.
+
+   El orden es el cambio importante, y la razón no es la velocidad —aunque
+   también—: lo que aprieta en Apps Script son 30 ejecuciones SIMULTÁNEAS por
+   cuenta de Google, igual en la versión de pago. Es concurrencia, no volumen.
+   Mientras MIRAR y COMPRAR compitan por esas 30, el que pierde la competencia
+   es el que iba a pagar. Con el catálogo servido desde el borde de Cloudflare,
+   el maestro queda entero para sellar y registrar.
+
+   Lo que NO cambia: los precios los pone la hoja. Este JSON es para mirar. Al
+   enviar el pedido el maestro revalida contra el catálogo vivo, y si algo
+   cambió lo dice. Congelar la vitrina no es congelar la venta.
+
+   Y el paso 2 no se retira: una tienda que todavía no ha corrido un montaje no
+   tiene catalogo.json, y tiene que seguir funcionando. */
+const CATALOGO_ESTATICO = "catalogo.json";
+
+function cargarCatalogo(){
+  fetch(CATALOGO_ESTATICO, { cache: "no-cache" })
+    .then(r => r.ok ? r.json() : Promise.reject(new Error("sin catalogo.json")))
+    .then(datos => {
+      /* Que traiga productos es la condición para usarlo. Un JSON válido y
+         vacío es peor que ninguno: dejaría la tienda sin nada que vender y sin
+         un error a la vista. */
+      if(!datos || !Array.isArray(datos.productos) || !datos.productos.length)
+        throw new Error("catalogo.json sin productos");
+      datos.ok = true;
+      if(!aplicarCatalogo(datos)) throw new Error("catalogo.json con esquema desconocido");
+      avisarSiEsViejo(datos.generado);
+      terminarCarga(false);
+    })
+    .catch(() => pedirleElCatalogoAlMaestro());
+}
+
+/* Cuánto lleva horneado. No se le dice al comprador —para él el sello es la
+   garantía, y un cartel de «esto es de hace tres días» solo asusta— pero sí
+   queda en la consola, que es donde mira quien vino a averiguar por qué un
+   precio no cuadra. */
+function avisarSiEsViejo(generado){
+  const t = Date.parse(generado || "");
+  if(!t) return;
+  const dias = (Date.now() - t) / 86400000;
+  if(dias > 3){
+    console.warn("[" + NEGOCIO + "] El catálogo publicado tiene " +
+                 Math.floor(dias) + " días. Corre el flujo montaje para refrescarlo.");
+  }
+}
+
+function terminarCarga(delRespaldo){
+  sello = null;                // los precios pudieron cambiar: hay que resellar
+  pagina = 1;
+  delArchivo = delRespaldo;
+  catalogoResuelto = true;
+  pintarFiltros();
+  refrescar();
+  refrescarFichaAbierta();
+  atenderEnlace();
+  /* Si quedó algún pedido sin registrar de una visita anterior, este es el
+     momento: el catálogo llegó, así que el maestro contesta. Va al final para
+     no retrasar ni un milisegundo lo que el comprador vino a ver. */
+  reenviarPendientes();
+}
+
+function pedirleElCatalogoAlMaestro(intento){
+  if(!SCRIPT_URL){ terminarCarga(false); return; }
+  intento = intento || 1;
+  traer(SCRIPT_URL + "?a=catalogo", TOPE_ESPERA)
+    .then(r => r.json())
+    .then(datos => {
+      revisarVersion(datos);
+      aplicarCatalogo(datos);
+      terminarCarga(false);
+    })
+    .catch(() => {
+      if(intento <= REINTENTOS){
+        setTimeout(() => pedirleElCatalogoAlMaestro(intento + 1), 1200 * intento);
+        return;
+      }
+      /* Último respaldo: el inventario de este archivo. Y SE DICE. Antes no: la
+         tienda seguía vendiendo con precios que podían ser de hace un mes y el
+         comprador veía la misma cara de siempre. Todo lo que cae a un respaldo
+         tiene que gritar, o el respaldo se vuelve el estado normal.
+         Si el cliente pide algo, el sello detecta la diferencia y el pedido
+         sale marcado sin validar. */
+      console.warn("[" + NEGOCIO + "] Ni catalogo.json ni la hoja contestaron. " +
+                   "Se muestran los productos del archivo, que pueden estar desactualizados.");
+      terminarCarga(true);
+    });
+}
+
+// ── Marcadores visuales mientras no haya fotos reales ──
+let COLORES = { rojo:"#D0211C", verde:"#1B5E3A" };
+
+function marcador(forma, variante){
+  const R = COLORES.rojo, V = COLORES.verde, F = "#FAFAFA";
+  let cuerpo = "";
+  if(forma === "tomate"){
+    const tomate = (cx,cy,r) =>
+      `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${R}"/>
+       <path d="M${cx} ${cy-r} v-${r*0.34}" stroke="${V}" stroke-width="${r*0.14}" stroke-linecap="round"/>
+       <path d="M${cx} ${cy-r+2} c-${r*0.5} -${r*0.42} -${r*0.95} -${r*0.2} -${r*1.05} ${r*0.02}
+                c${r*0.34} ${r*0.3} ${r*0.72} ${r*0.36} ${r*1.05} ${r*0.2}
+                c${r*0.33} ${r*0.16} ${r*0.71} ${r*0.1} ${r*1.05} -${r*0.2}
+                c-${r*0.1} -${r*0.22} -${r*0.55} -${r*0.44} -${r*1.05} -${r*0.02} z" fill="${V}"/>`;
+    if(variante === 0) cuerpo = tomate(150,158,74);
+    else if(variante === 1) cuerpo = tomate(108,168,58) + tomate(196,150,50) + tomate(178,214,38);
+    else cuerpo = `<circle cx="150" cy="158" r="74" fill="${R}"/>
+                   <path d="M150 84 A74 74 0 0 1 150 232 Z" fill="#E86B60"/>
+                   <circle cx="176" cy="132" r="9" fill="#FBE3E0"/><circle cx="188" cy="176" r="8" fill="#FBE3E0"/>
+                   <circle cx="166" cy="200" r="7" fill="#FBE3E0"/>`;
+  } else if(forma === "frasco"){
+    cuerpo = `<rect x="104" y="96" width="92" height="34" rx="4" fill="${V}"/>
+              <rect x="96" y="130" width="108" height="128" rx="10" fill="${R}"/>
+              ${variante === 1 ? `<rect x="118" y="158" width="64" height="72" rx="3" fill="#FFFFFF" opacity=".9"/>` : ""}
+              ${variante === 2 ? `<circle cx="128" cy="180" r="9" fill="#8E140F"/><circle cx="160" cy="206" r="11" fill="#8E140F"/><circle cx="176" cy="166" r="8" fill="#8E140F"/>` : ""}`;
+  } else if(forma === "botella"){
+    cuerpo = `<rect x="136" y="76" width="28" height="42" fill="${V}"/>
+              <path d="M136 118 c0 16 -30 26 -30 48 v82 a12 12 0 0 0 12 12 h64 a12 12 0 0 0 12 -12 v-82 c0 -22 -30 -32 -30 -48 z" fill="${R}"/>
+              ${variante === 1 ? `<rect x="112" y="184" width="76" height="46" rx="3" fill="#FFFFFF" opacity=".9"/>` : ""}`;
+  } else {
+    cuerpo = `<path d="M98 108 h104 v142 a8 8 0 0 1 -8 8 h-88 a8 8 0 0 1 -8 -8 z" fill="${R}"/>
+              <rect x="98" y="94" width="104" height="18" fill="${V}"/>`;
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><rect width="300" height="300" fill="${F}"/>${cuerpo}</svg>`;
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// FOTOS — tres capas
+// ══════════════════════════════════════════════════════════════════════════
+//   1. Maestro       Los originales pesados, en el Drive del cliente. No se
+//                    sirven: son el archivo del que todo lo demás se deriva.
+//   2. Origen        Los archivos servibles, junto al sitio: /fotos/chonto-1.jpg
+//   3. Transformación  ImageKit, Cloudinary o ninguno, apuntando al origen.
+//                    Nunca se sube nada al proveedor: se le dice de dónde leer.
+//
+// En la hoja se escribe solo el nombre del archivo. Cambiar de proveedor —o
+// dejar de usar uno— es cambiar UNA celda: fotos_cdn en Configuración.
+const ANCHOS = { tarjeta:600, galeria:900, miniatura:160 };
+// Por defecto, la carpeta /fotos del propio sitio. La hoja puede apuntarla a
+// otro lado, pero sin configurar nada esto ya funciona.
+let FOTOS = { origen: location.origin + "/fotos", cdn:"", webp:false };
+
+/* QUÉ MEDIDAS EXISTEN DE VERDAD. Lo hornea el montaje mirando la carpeta, y
+   llega dentro de catalogo.json: { "chonto-1.jpg": [160, 600, 900] }.
+
+   Antes esto se ADIVINABA: si la hoja decía que use WebP, se pedía
+   `chonto-1-600.webp` y, si no existía, el respaldo de más abajo volvía al
+   original. Funcionaba —por eso nadie lo arregló— pero cada tarjeta sin
+   derivadas costaba dos peticiones fallidas y llenaba la consola de rojos que
+   no significaban nada. Un respaldo no debería activarse en el caso normal.
+
+   `null` es «no sé»: una tienda que todavía no ha corrido un montaje no tiene
+   manifiesto, y ahí se vuelve a adivinar, que es lo que hacía siempre. */
+let MEDIDAS = null;
+
+/* Sin proveedor de transformación se pierden f_auto y q_auto: el formato
+   moderno y la calidad que cada navegador aguanta. Se recuperan generando los
+   tamaños en el montaje (herramienta preparar-fotos.mjs) y pidiéndolos aquí.
+   Si esos archivos no existen, el respaldo de más abajo devuelve al original,
+   así que activar la opción sin haber generado nada no rompe la tienda. */
+function conTamano(ruta, ancho){
+  /* Con manifiesto no se pide lo que no está. Sin manifiesto, se adivina como
+     siempre y el respaldo hace su trabajo si falla. */
+  if(MEDIDAS){
+    const tiene = MEDIDAS[ruta];
+    if(!tiene || !tiene.length) return ruta;
+    if(tiene.indexOf(ancho) === -1){
+      // La más cercana por encima; si no hay, la más grande que exista.
+      ancho = tiene.find(a => a >= ancho) || tiene[tiene.length - 1];
+    }
+  }
+  const punto = ruta.lastIndexOf(".");
+  const raiz = punto > 0 ? ruta.slice(0, punto) : ruta;
+  return raiz + "-" + ancho + ".webp";
+}
+
+function urlFoto(nombre, uso){
+  const limpio = String(nombre || "").trim();
+  if(!limpio) return "";
+
+  // Una URL completa en la hoja se respeta tal cual. Es lo que permite migrar
+  // sin romper: las tiendas viejas siguen andando mientras se pasan a nombres.
+  if(/^https?:\/\//i.test(limpio)) return limpio;
+
+  const origen = String(FOTOS.origen || "").replace(/\/+$/, "");
+  const ruta   = limpio.replace(/^\/+/, "");
+  if(!origen) return "";
+
+  const plantilla = String(FOTOS.cdn || "").trim();
+  if(!plantilla || !cdnPermitido(plantilla)){
+    return origen + "/" + (FOTOS.webp ? conTamano(ruta, ANCHOS[uso] || 600) : ruta);
+  }
+
+  return plantilla
+    .replace(/\{origen\}/g, origen)
+    .replace(/\{ruta\}/g,   ruta)
+    .replace(/\{ancho\}/g,  ANCHOS[uso] || 600);
+}
+
+// La CSP de esta página lista los hosts de imagen permitidos, y es HTML fijo.
+// Si la hoja apunta a un proveedor que no está en esa lista, el navegador
+// bloquearía las fotos EN SILENCIO. Preferimos servirlas directo del origen
+// —que siempre está permitido— y decir por consola qué falta.
+let avisoCdnDado = false;
+function cdnPermitido(plantilla){
+  let host;
+  try { host = new URL(plantilla.replace(/\{[a-z]+\}/g, "x")).host; }
+  catch(e){ return false; }
+  if(FOTOS_HOSTS.indexOf(host) !== -1) return true;
+  if(!avisoCdnDado){
+    avisoCdnDado = true;
+    console.warn("[" + NEGOCIO + "] La hoja pide servir las fotos por " + host +
+      ", que no está en la política de seguridad de esta página. Se sirven " +
+      "directo del origen. Para usarlo: el menú de la hoja > Generar configuración " +
+      "para index.html, pegar el bloque nuevo y volver a publicar.");
+  }
+  return false;
+}
+
+function fotosDe(p, uso){
+  const lista = (p.imagenes && p.imagenes.length ? p.imagenes : [""]);
+  return lista.map((nombre, i) => {
+    const url = urlFoto(nombre, uso || "tarjeta");
+    return url || marcador(p.forma, i);
+  });
+}
+
+/* La URL sin optimizar, para volver a ella si la optimizada no existe. */
+function fotoPlana(p, i){
+  const nombre = ((p.imagenes || [])[i] || "").trim();
+  if(!nombre) return "";
+  if(/^https?:\/\//i.test(nombre)) return nombre;
+  return String(FOTOS.origen || "").replace(/\/+$/, "") + "/" + nombre.replace(/^\/+/, "");
+}
+
+/* Una foto que no carga no puede dejar un hueco en silencio. Si la versión
+   generada falta —porque la opción está activa pero no se corrió la
+   herramienta— se cae al archivo original una sola vez. */
+addEventListener("error", e => {
+  const img = e.target;
+  if(!img || img.tagName !== "IMG" || img.dataset.reintentado) return;
+  const plano = img.dataset.plano;
+  if(!plano || plano === img.getAttribute("src")) return;
+  img.dataset.reintentado = "1";
+  img.src = plano;
+}, true);
+
+// ── Estado ──
+let carrito = [];              // [{id, cantidad}]
+let categoriaActiva = "Todos";
+const OPCIONES_PAGINA = [25, 50, 100];
+let porPagina = OPCIONES_PAGINA[0];
+let pagina = 1;
+let cuponActivo = null;                     // cupón aprobado, con descuento aplicado
+let cuponTexto  = "";                       // lo que el cliente escribió y pidió validar
+let avisoCupon  = { clase:"", texto:"" };   // se conserva entre repintados
+let sello       = null;                     // respuesta sellada por la hoja
+let validando   = false;
+let tempValidar = null;
+let firmaFallida = null;                    // para no reintentar en bucle
+let firmaEnVuelo = null;                    // qué pedido se está validando ahora
+let versionHoja  = null;                    // la que respondió el Apps Script
+let cantidades  = {};                       // {id: n} elegido en la tarjeta
+let envioActivo = TARIFAS[1];
+let fichaActual = null;
+let fotoActual = 0;
+
+const $ = s => document.querySelector(s);
+const pesos = n => "$" + Math.round(n).toLocaleString("es-CO");
+const producto = id => VISIBLES.find(p => p.id === id);
+const escapar = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// ── Catálogo ──
+function pintarFiltros(){
+  const cats = ["Todos", ...new Set(VISIBLES.map(p => p.categoria))];
+  $("#filtros").innerHTML = cats.map(c =>
+    `<button class="chip" aria-pressed="${c === categoriaActiva}" onclick="filtrar('${c}')">${c}</button>`
+  ).join("");
+}
+
+function filtrar(cat){ categoriaActiva = cat; pagina = 1; pintarFiltros(); pintarRejilla(); }
+
+/* Al buscar o filtrar volvemos a la página 1: quedarse en la página 4 de un
+   resultado que ahora tiene 6 productos deja la pantalla vacía sin explicación. */
+function buscar(){ pagina = 1; pintarRejilla(); }
+
+function estadoStock(p){
+  const enCarrito = (carrito.find(i => i.id === p.id) || {}).cantidad || 0;
+  const libre = p.stock - enCarrito;
+  if(p.stock === 0)  return { clase:"cero", texto:"Agotado", libre:0 };
+  if(libre <= 0)     return { clase:"poco", texto:"Todo en tu carrito", libre:0 };
+  /* Cuántas son «pocas» lo decide el comercio, producto por producto, en la
+     columna Umbral bajo de su hoja: cinco frascos de salsa son muchos y cinco
+     canastas de tomate son casi nada. Sin ese dato, cinco, que es lo que hacía
+     antes para todos. */
+  const pocas = p.umbralBajo > 0 ? p.umbralBajo : 5;
+  if(p.stock <= pocas) return { clase:"poco", texto:`Últimas ${p.stock} unidades`, libre };
+  return { clase:"ok", texto:"Disponible", libre };
+}
+
+/* Cantidad elegida en la tarjeta o en la ficha, siempre dentro del stock libre. */
+function cantidadElegida(id){
+  const libre = estadoStock(producto(id)).libre;
+  if(libre <= 0) return 0;
+  return Math.max(1, Math.min(libre, cantidades[id] || 1));
+}
+
+function ajustarCantidad(id, d){
+  const libre = estadoStock(producto(id)).libre;
+  if(libre <= 0) return;
+  cantidades[id] = Math.max(1, Math.min(libre, cantidadElegida(id) + d));
+  pintarRejilla();
+  if(fichaActual && fichaActual.id === id) pintarFicha();
+}
+
+/* Bloque −/n/+ que comparten la tarjeta y la ficha. Mismo estilo del carrito. */
+function selectorCantidad(p, st){
+  const n = cantidadElegida(p.id) || 1;
+  const off = st.libre <= 0;
+  return `
+    <div class="cantidad cantidad-elegir">
+      <button onclick="ajustarCantidad('${p.id}',-1)" ${off || n <= 1 ? "disabled" : ""} aria-label="Quitar una unidad">−</button>
+      <span aria-live="polite" aria-label="Cantidad">${n}</span>
+      <button onclick="ajustarCantidad('${p.id}',1)" ${off || n >= st.libre ? "disabled" : ""} aria-label="Agregar una unidad">+</button>
+    </div>`;
+}
+
+function pintarRejilla(){
+  const aviso = $("#avisoArchivo");
+  if(aviso){
+    aviso.hidden = !delArchivo;
+    aviso.textContent = delArchivo
+      ? "Estamos mostrando nuestro catálogo guardado porque la tienda no respondió. " +
+        "Los precios y la disponibilidad pueden haber cambiado: te los confirmamos por WhatsApp."
+      : "";
+  }
+
+  const q = ($("#buscar").value || "").toLowerCase().trim();
+  const lista = VISIBLES.filter(p =>
+    (categoriaActiva === "Todos" || p.categoria === categoriaActiva) &&
+    (!q || (p.nombre + " " + p.descripcion + " " + p.categoria).toLowerCase().includes(q))
+  );
+
+  if(!lista.length){
+    $("#rejilla").innerHTML = `<div class="vacio">No encontramos nada con ese nombre. Prueba con otra palabra o mira todas las categorías.</div>`;
+    pintarPaginacion(0, 0, 0, 1);
+    return;
+  }
+
+  // Recortamos a la página actual. Si la lista encogió (por un filtro o porque
+  // la hoja quitó productos), la página se ajusta sola en vez de quedar vacía.
+  const paginas = Math.max(1, Math.ceil(lista.length / porPagina));
+  if(pagina > paginas) pagina = paginas;
+  const desde = (pagina - 1) * porPagina;
+  const enPantalla = lista.slice(desde, desde + porPagina);
+  pintarPaginacion(lista.length, desde, enPantalla.length, paginas);
+
+  $("#rejilla").innerHTML = enPantalla.map(p => {
+    const fotos = fotosDe(p, "tarjeta");
+    const st = estadoStock(p);
+    return `
+      <article class="tarjeta">
+        <button class="tarjeta-img" onclick="abrirFicha('${p.id}')" aria-label="Ver ${escapar(p.nombre)}">
+          <img src="${fotos[0]}" data-plano="${fotoPlana(p, 0)}" alt="${escapar(p.nombre)}" loading="lazy">
+          ${p.destacado ? `<span class="destacado">Destacado</span>` : ""}
+          ${fotos.length > 1 ? `<span class="mas-fotos">${fotos.length} fotos</span>` : ""}
+        </button>
+        <h3>${escapar(p.nombre)}</h3>
+        <p class="formato">${escapar(p.formato)}</p>
+        <div class="fila-precio">
+          <span class="precio">${pesos(p.precio)}${p.precioAntes ? `<s class="antes">${pesos(p.precioAntes)}</s>` : ""}</span>
+          <span class="disponible ${st.clase}"><i class="marcador"></i>${st.texto}</span>
+        </div>
+        <div class="acciones">
+          ${selectorCantidad(p, st)}
+          <button class="btn btn-solido" onclick="agregar('${p.id}', cantidadElegida('${p.id}'))" ${st.libre <= 0 ? "disabled" : ""}>
+            ${p.stock === 0 ? "Agotado" : "Agregar"}
+          </button>
+          <button class="btn btn-linea" onclick="abrirFicha('${p.id}')">Ver</button>
+        </div>
+      </article>`;
+  }).join("");
+}
+
+// ── Paginación ──
+function pintarPaginacion(total, desde, cuantos, paginas){
+  const caja = $("#paginacion");
+  if(!caja) return;
+
+  if(total <= OPCIONES_PAGINA[0]){ caja.hidden = true; caja.innerHTML = ""; return; }
+  caja.hidden = false;
+
+  caja.innerHTML = `
+    <p class="conteo">Mostrando ${desde + 1}–${desde + cuantos} de ${total} productos</p>
+    <div class="paginas">
+      <button class="btn btn-linea" onclick="irPagina(${pagina - 1})"
+              ${pagina <= 1 ? "disabled" : ""} aria-label="Página anterior">Anterior</button>
+      <span class="donde" aria-live="polite">Página ${pagina} de ${paginas}</span>
+      <button class="btn btn-linea" onclick="irPagina(${pagina + 1})"
+              ${pagina >= paginas ? "disabled" : ""} aria-label="Página siguiente">Siguiente</button>
+    </div>
+    <div class="por-pagina" role="group" aria-label="Productos por página">
+      <span>Ver</span>
+      ${OPCIONES_PAGINA.map(o => `
+        <button class="chip" aria-pressed="${o === porPagina}" onclick="cambiarPorPagina(${o})"
+                aria-label="Ver ${o} productos por página">${o}</button>`).join("")}
+    </div>`;
+}
+
+function irPagina(p){
+  pagina = Math.max(1, p);
+  pintarRejilla();
+  const rejilla = $("#rejilla");
+  if(rejilla){
+    const quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, rejilla.offsetTop - 70), behavior: quieto ? "auto" : "smooth" });
+  }
+}
+
+function cambiarPorPagina(n){
+  if(OPCIONES_PAGINA.indexOf(n) === -1) return;
+  // Conservamos el primer producto que estabas viendo, para no perder el sitio.
+  const primero = (pagina - 1) * porPagina;
+  porPagina = n;
+  pagina = Math.floor(primero / n) + 1;
+  pintarRejilla();
+}
+
+// ── Ficha con galería ──
+function abrirFicha(id, desdeEnlace){
+  fichaActual = producto(id); fotoActual = 0;
+  if(!fichaActual) return;
+  if(!desdeEnlace) apuntarEnHistoria(id);
+  pintarFicha();
+  $("#ficha").classList.add("abierta");
+  $("#capa").classList.add("activa");
+  $("#flotante").classList.add("oculto");
+  document.body.style.overflow = "hidden";
+}
+
+function pintarFicha(){
+  const p = fichaActual, fotos = fotosDe(p, "galeria"), st = estadoStock(p);
+  const miniaturas = fotosDe(p, "miniatura");
+  $("#fichaCaja").innerHTML = `
+    <div class="ficha-grid">
+      <div class="galeria">
+        <button class="ficha-cerrar" onclick="cerrarTodo()" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="galeria-principal" id="galeriaPrincipal">
+          <img src="${fotos[fotoActual]}" data-plano="${fotoPlana(p, fotoActual)}" alt="${escapar(p.nombre)}, foto ${fotoActual + 1} de ${fotos.length}">
+        </div>
+        ${fotos.length > 1 ? `
+          <button class="flecha izq" onclick="moverFoto(-1)" aria-label="Foto anterior">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button class="flecha der" onclick="moverFoto(1)" aria-label="Foto siguiente">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <div class="miniaturas">
+            ${miniaturas.map((f, i) => `
+              <button onclick="verFoto(${i})" aria-current="${i === fotoActual}" aria-label="Ver foto ${i + 1}">
+                <img src="${f}" data-plano="${fotoPlana(p, i)}" alt="" loading="lazy">
+              </button>`).join("")}
+          </div>` : ""}
+      </div>
+      <div class="ficha-texto">
+        <h2>${escapar(p.nombre)}</h2>
+        <p class="formato">${escapar(p.formato)} · ${escapar(p.categoria)}</p>
+        <p class="ficha-precio">${pesos(p.precio)}</p>
+        <p class="disponible ${st.clase}"><i class="marcador"></i>${st.texto}</p>
+        <p class="ficha-desc">${escapar(p.descripcion)}</p>
+        <div class="ficha-agregar">
+          ${selectorCantidad(p, st)}
+          <button class="btn btn-solido" onclick="agregar('${p.id}', cantidadElegida('${p.id}')); cerrarTodo()" ${st.libre <= 0 ? "disabled" : ""}>
+            ${p.stock === 0 ? "Sin existencias" : "Agregar al carrito"}
+          </button>
+        </div>
+        <button class="btn btn-linea ficha-compartir" onclick="compartirProducto()">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
+          Compartir este producto
+        </button>
+      </div>
+    </div>`;
+  activarDeslizamiento();
+}
+
+function verFoto(i){ fotoActual = i; pintarFicha(); }
+function moverFoto(d){
+  const total = fotosDe(fichaActual, "galeria").length;
+  fotoActual = (fotoActual + d + total) % total;
+  pintarFicha();
+}
+
+function activarDeslizamiento(){
+  const zona = $("#galeriaPrincipal");
+  if(!zona) return;
+  let x0 = null;
+  zona.addEventListener("touchstart", e => { x0 = e.changedTouches[0].clientX; }, { passive:true });
+  zona.addEventListener("touchend", e => {
+    if(x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if(Math.abs(dx) > 45) moverFoto(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, { passive:true });
+}
+
+// ── Carrito ──
+function agregar(id, n){
+  const p = producto(id);
+  const item = carrito.find(i => i.id === id);
+  const actual = item ? item.cantidad : 0;
+  if(n < 1 || actual + n > p.stock) return;
+  if(item) item.cantidad += n; else carrito.push({ id, cantidad:n });
+  cantidades[id] = 1;              // la tarjeta vuelve a 1 tras agregar
+  refrescar();
+}
+
+function cambiarCantidad(id, n){
+  const item = carrito.find(i => i.id === id);
+  if(!item) return;
+  const p = producto(id);
+  item.cantidad = Math.max(0, Math.min(p.stock, item.cantidad + n));
+  if(item.cantidad === 0) carrito = carrito.filter(i => i.id !== id);
+  refrescar();
+}
+
+function quitar(id){ carrito = carrito.filter(i => i.id !== id); refrescar(); }
+
+function sanear(){
+  const limpio = [];
+  (Array.isArray(carrito) ? carrito : []).forEach(i => {
+    const p = producto(i && i.id);
+    if(!p || limpio.some(x => x.id === p.id)) return;
+    const cant = Math.floor(Number(i.cantidad));
+    if(!isFinite(cant) || cant < 1) return;
+    const tope = Math.min(cant, p.stock);
+    if(tope > 0) limpio.push({ id:p.id, cantidad:tope });
+  });
+  carrito = limpio;
+
+  if(TARIFAS.indexOf(envioActivo) === -1) envioActivo = TARIFAS[1] || TARIFAS[0];
+
+  if(SCRIPT_URL){
+    // Con la hoja conectada, el descuento solo existe mientras haya un sello
+    // que corresponda EXACTAMENTE a este pedido. Si algo cambió, se cae.
+    if(sello && sello.firma !== firmaPedido()) sello = null;
+    if(!selloVigente()) cuponActivo = null;
+  } else {
+    cuponActivo = null;          // sin hoja no hay cupón que valga
+  }
+}
+
+/* Identifica un pedido de forma estable: mismos productos, mismo cupón, mismo
+   envío. Es lo que le pedimos sellar a la hoja y lo que comparamos después. */
+function firmaPedido(){
+  return carrito.map(i => i.id + ":" + i.cantidad).join(",") +
+         "|" + cuponTexto + "|" + (envioActivo ? envioActivo.id : "");
+}
+
+/* EL NOMBRE DEL ENVÍO LO DICE LA HOJA. Cuando hay sello vigente, el valor sale
+   de él; el nombre tiene que salir del mismo sitio, o se arma la frase peor
+   posible: la zona que eligió el comprador con el costo que la hoja NO le supo
+   poner. La hoja contesta 'Por confirmar' y 0 a propósito —«mejor decirlo que
+   cobrar cero en silencio»— y ese aviso se perdía aquí. */
+function nombreEnvio(){
+  if(SCRIPT_URL && selloVigente() && sello && sello.envioNombre)
+    return String(sello.envioNombre);
+  return envioActivo ? envioActivo.nombre : "Por confirmar";
+}
+
+function selloVigente(){
+  return !!(sello && versionCoincide() &&
+            sello.firma === firmaPedido() && sello.sub === subtotal());
+}
+
+function subtotal(){
+  return carrito.reduce((s, i) => s + producto(i.id).precio * i.cantidad, 0);
+}
+
+function calcular(){
+  const sub = subtotal();
+
+  // Con la hoja conectada ella es la autoridad: los números salen del sello.
+  // Sin sello no hay descuento, aunque el cliente haya escrito un código válido.
+  if(SCRIPT_URL){
+    if(selloVigente())
+      return { sub:sello.sub, descuento:sello.descuento, envio:sello.envio, total:sello.total };
+    return { sub, descuento:0, envio:envioActivo.valor, total:Math.max(0, sub + envioActivo.valor) };
+  }
+
+  // Sin hoja conectada no hay descuentos: no hay dónde validarlos.
+  const envio = envioActivo.valor;
+  return { sub, descuento:0, envio, total: Math.max(0, sub + envio) };
+}
+
+function aplicarCupon(){
+  const campo = $("#cupon");
+  const codigo = ((campo && campo.value) || "").toUpperCase().trim();
+  if(campo) campo.value = codigo;
+  cuponTexto = codigo;
+  firmaFallida = null;                     // el cliente pidió otra vez: reintentamos
+
+  if(SCRIPT_URL){
+    // Nada se aplica hasta que la hoja lo apruebe. Si no responde, no hay descuento.
+    cuponActivo = null;
+    sello = null;
+    avisoCupon = codigo ? { clase:"", texto:"Validando tu código…" } : { clase:"", texto:"" };
+    refrescar();
+    if(codigo) validarEnLaHoja();
+    return;
+  }
+
+  cuponActivo = null;
+  avisoCupon = codigo
+    ? { clase:"mal", texto:"Los cupones se validan contra la hoja, y todavía no está conectada." }
+    : { clase:"", texto:"" };
+  refrescar();
+}
+
+// ── Validación contra las hojas ──
+
+function pedirSello(){
+  if(!SCRIPT_URL) return;
+  clearTimeout(tempValidar);
+  if(!carrito.length){ sello = null; return; }
+  const firma = firmaPedido();
+  if(sello && sello.firma === firma) return;      // ya está sellado
+  if(validando && firmaEnVuelo === firma) return; // ya va una en camino, no la duplicamos
+  if(firmaFallida === firma) return;              // se agotaron los intentos
+  tempValidar = setTimeout(validarEnLaHoja, 400);
+}
+
+function validarEnLaHoja(intento){
+  if(!SCRIPT_URL || !carrito.length) return;
+  intento = intento || 1;
+  clearTimeout(tempValidar);          // si había una programada, esta la reemplaza
+  const firma = firmaPedido();
+  if(intento === 1 && validando && firmaEnVuelo === firma) return;
+
+  const params = new URLSearchParams({
+    a: "validar", sellar: "1",
+    pedido: codigoDelPedido(),         // la hoja actualiza SU fila, no crea otra
+    items: carrito.map(i => i.id + ":" + i.cantidad).join(","),
+    cupon: cuponTexto,
+    envio: envioActivo.id,
+    sub:   String(subtotal())          // para que la hoja detecte discrepancias
+  });
+
+  validando = true;
+  firmaEnVuelo = firma;
+  if(intento === 1) refrescar();     // en los reintentos ya está pintado "Validando…"
+
+  traer(SCRIPT_URL + "?" + params.toString(), TOPE_ESPERA)
+    .then(r => r.json())
+    .then(r => {
+      if(firma !== firmaPedido()){             // el carrito cambió mientras esperábamos
+        validando = false; firmaEnVuelo = null; return;
+      }
+      if(!r || !r.ok) throw new Error(r && r.error ? r.error : "respuesta inválida");
+
+      validando = false;
+      firmaEnVuelo = null;
+      revisarVersion(r);
+      firmaFallida = null;
+      sello = { firma, sub:r.sub, descuento:r.descuento, envio:r.envio,
+                total:r.total, ref:r.ref || "", avisos:(r.avisos || []),
+                envioNombre: String(r.envioNombre || "") };
+      const c = r.cupon || {};
+      cuponActivo = c.ok ? c.codigo : null;
+      avisoCupon  = cuponTexto ? { clase: c.ok ? "bien" : "mal", texto: c.texto || "" }
+                               : { clase:"", texto:"" };
+      refrescar();
+    })
+    .catch(() => {
+      if(firma !== firmaPedido()){
+        validando = false; firmaEnVuelo = null; return;
+      }
+      
+      if(intento <= REINTENTOS){
+        setTimeout(() => validarEnLaHoja(intento + 1), 1200 * intento);
+        return;                                // seguimos mostrando "Validando…"
+      }
+      validando = false;
+      firmaEnVuelo = null;
+      firmaFallida = firma;
+      sello = null;
+      cuponActivo = null;
+      if(cuponTexto) avisoCupon = { clase:"mal",
+        texto:"No pudimos validar tu código. Vuelve a darle Aplicar, o envía el pedido y te lo aplicamos por WhatsApp." };
+      refrescar();
+    });
+}
+
+function teclaCupon(e){
+  if(e.key === "Enter"){ e.preventDefault(); aplicarCupon(); }
+}
+
+function cambiarEnvio(id){
+  envioActivo = TARIFAS.find(e => e.id === id) || envioActivo;
+  refrescar(true);
+}
+
+// ── Pintado del panel ──
+function refrescar(){
+  sanear();
+
+  
+  const activo = document.activeElement;
+  const idFoco = (activo && activo.id) ? activo.id : null;
+  let posFoco = null;
+  try{ if(activo && typeof activo.selectionStart === "number") posFoco = activo.selectionStart; }catch(e){}
+
+  const datos = leerFormulario();   // nunca perdemos lo que el cliente ya escribió
+  $("#contador").textContent = carrito.reduce((s, i) => s + i.cantidad, 0);
+  pintarPanel(datos);
+  pintarRejilla();
+
+  if(idFoco){
+    const el = document.getElementById(idFoco);
+    if(el && el !== document.activeElement){
+      el.focus();
+      if(posFoco !== null && el.setSelectionRange){
+        try{ el.setSelectionRange(posFoco, posFoco); }catch(e){}
+      }
+    }
+  }
+
+  pedirSello();
+}
+
+/* Topes de longitud. El maxlength del HTML se puede saltar; esto no, y evita
+   que una nota kilométrica arme una URL que Android trunca o rechaza. */
+const LARGOS = { fNombre:60, fTel:15, fCiudad:40, fDir:120, fNotas:300, cupon:20 };
+
+function leerFormulario(){
+  const g = id => {
+    const el = document.getElementById(id);
+    return el ? String(el.value).slice(0, LARGOS[id] || 100) : "";
+  };
+  const ch = document.getElementById("consiento");
+  return { nombre:g("fNombre"), tel:g("fTel"), ciudad:g("fCiudad"), dir:g("fDir"), notas:g("fNotas"),
+           cupon:g("cupon"), consiento: ch ? ch.checked : false };
+}
+
+function pintarPanel(datos){
+  const cuerpo = $("#panelCuerpo"), pie = $("#panelPie");
+
+  if(pedidoEnviado){
+    pie.style.display = "none";
+    cuerpo.innerHTML = `<div class="enviado">
+        <div class="enviado-marca" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none"
+               stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
+               stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg>
+        </div>
+        <h3>Tu pedido salió por WhatsApp</h3>
+        <p class="enviado-codigo">PEDIDO #${escapar(pedidoEnviado)}</p>
+        <p>${escapar(NEGOCIO)} te confirma por ese mismo chat la disponibilidad,
+           el total definitivo y los datos de pago.</p>
+        <p class="enviado-nota">¿No se abrió WhatsApp o no ves el mensaje?
+           Vuelve a enviarlo: es el mismo pedido, no se duplica.</p>
+        <a class="btn-whatsapp" href="${enlaceWhatsapp()}" target="_blank" rel="noopener">
+          Volver a enviarlo por WhatsApp
+        </a>
+        <button class="enviado-otro" onclick="otroPedido()">Hacer otro pedido</button>
+      </div>`;
+    return;
+  }
+
+  if(!carrito.length){
+    cuerpo.innerHTML = `<div class="carrito-vacio">
+        <p style="font-weight:600;color:#000">Tu carrito está vacío</p>
+        <p style="margin-top:6px">Agrega productos del catálogo y arma tu pedido.</p>
+      </div>`;
+    pie.style.display = "none";
+    cuponActivo = null;
+    avisoCupon = { clase:"", texto:"" };
+    codigoActual = null;           // el siguiente pedido tendrá su propio número
+    return;
+  }
+  pie.style.display = "block";
+
+  const items = carrito.map(i => {
+    const p = producto(i.id), foto = fotosDe(p, "miniatura")[0];
+    return `
+      <div class="linea-item">
+        <img src="${foto}" alt="">
+        <div class="linea-info">
+          <h4>${escapar(p.nombre)}</h4>
+          <p class="formato">${escapar(p.formato)} · ${pesos(p.precio)} c/u</p>
+          <div class="cantidad">
+            <button onclick="cambiarCantidad('${p.id}',-1)" aria-label="Quitar una unidad">−</button>
+            <span>${i.cantidad}</span>
+            <button onclick="cambiarCantidad('${p.id}',1)" ${i.cantidad >= p.stock ? "disabled" : ""} aria-label="Agregar una unidad">+</button>
+          </div>
+          ${i.cantidad >= p.stock ? `<p style="font-size:.76rem;color:var(--rojo);margin-top:5px">Máximo disponible</p>` : ""}
+        </div>
+        <div class="linea-der">
+          <strong>${pesos(p.precio * i.cantidad)}</strong>
+          <button class="quitar" onclick="quitar('${p.id}')">Quitar</button>
+        </div>
+      </div>`;
+  }).join("");
+
+  cuerpo.innerHTML = items + `
+    <div class="bloque">
+      <label for="cupon">Código de descuento</label>
+      <div class="cupon-fila">
+        <input class="campo" id="cupon" maxlength="20" placeholder="Ej: ORGANICO10" autocomplete="off"
+               onkeydown="teclaCupon(event)" value="${datos ? escapar(datos.cupon) : ""}">
+        <button class="btn btn-linea" onclick="aplicarCupon()">Aplicar</button>
+      </div>
+      <p class="aviso" id="avisoCupon"></p>
+    </div>
+
+    <div class="bloque">
+      <label for="fEnvio">Envío</label>
+      <select class="campo" id="fEnvio" onchange="cambiarEnvio(this.value)">
+        ${TARIFAS.map(e => `<option value="${e.id}" ${e.id === envioActivo.id ? "selected" : ""}>${e.nombre} — ${e.valor ? pesos(e.valor) : "sin costo"}</option>`).join("")}
+      </select>
+    </div>
+
+    <div class="bloque" id="bloqueDatos">
+      <p class="titulo">Datos de entrega</p>
+      <div class="dos-col" style="margin-bottom:10px">
+        <input class="campo" id="fNombre" maxlength="60" placeholder="Nombre y apellido" oninput="revisarFormulario()" value="${datos ? escapar(datos.nombre) : ""}">
+        <input class="campo" id="fTel" maxlength="15" placeholder="Celular" inputmode="tel" oninput="revisarFormulario()" value="${datos ? escapar(datos.tel) : ""}">
+      </div>
+      <input class="campo" id="fCiudad" maxlength="40" placeholder="Ciudad" style="margin-bottom:10px" oninput="revisarFormulario()" value="${datos ? escapar(datos.ciudad) : ""}">
+      <input class="campo" id="fDir" maxlength="120" placeholder="Dirección de entrega" style="margin-bottom:10px" oninput="revisarFormulario()" value="${datos ? escapar(datos.dir) : ""}">
+      <textarea class="campo" id="fNotas" maxlength="300" placeholder="Notas: punto de referencia, horario, indicaciones para la portería">${datos ? escapar(datos.notas) : ""}</textarea>
+    </div>`;
+
+  // El aviso del cupón lo escribió la respuesta de la hoja; aquí solo se
+  // vuelve a pintar, porque repintar el panel lo borraba.
+  const aviso = $("#avisoCupon");
+  aviso.className = "aviso" + (avisoCupon.clase ? " " + avisoCupon.clase : "");
+  aviso.textContent = avisoCupon.texto;
+
+  const t = calcular();
+  const avisosHoja = (sello && sello.avisos && sello.avisos.length)
+    ? `<div class="sello aviso-stock">${sello.avisos.map(escapar).join(" ")}</div>` : "";
+  const estadoSello = !SCRIPT_URL ? ""
+    : validando ? `<div class="sello esperando">Validando tu pedido…</div>`
+    : (selloVigente() && sello.ref) ? `<div class="sello confirmado">Total verificado con la tienda</div>`
+    : (sello) ? `<div class="sello aviso-stock">Estamos confirmando los precios de hoy. Envía tu pedido y te confirmamos el total por WhatsApp.</div>`
+    : "";
+
+  $("#totales").innerHTML = `
+    <div><span>Subtotal</span><span>${pesos(t.sub)}</span></div>
+    ${t.descuento ? `<div class="descuento"><span>Descuento (${escapar(cuponActivo || "")})</span><span>−${pesos(t.descuento)}</span></div>` : ""}
+    <div><span>Envío · ${escapar(nombreEnvio())}</span><span>${t.envio ? pesos(t.envio) : "Sin costo"}</span></div>
+    <div class="granTotal"><span>Total</span><span>${pesos(t.total)}</span></div>
+    ${avisosHoja}${estadoSello}`;
+
+  if(datos) document.getElementById("consiento").checked = datos.consiento;
+  revisarFormulario();
+}
+
+function revisarFormulario(){
+  const d = leerFormulario();
+  const listo = formularioListo(d);
+  const btn = $("#btnFinalizar");
+  if(!btn) return;
+  btn.setAttribute("aria-disabled", listo ? "false" : "true");
+  // El enlace se rearma aquí, así que siempre lleva el estado más reciente:
+  // el cupón que acaba de validarse, la cantidad que acaba de cambiar.
+  btn.href = listo ? enlaceWhatsapp() : "#";
+
+  const aviso = document.getElementById("faltan");
+  if(!aviso) return;
+
+  /* EL TOPE SE AVISA EN EL CARRITO, no al abrir WhatsApp. Enterarse con el
+     pedido ya armado y el mensaje escrito es enterarse tarde.
+
+     Y dice «consulta con tu banco» a propósito: este es el tope del SISTEMA, y
+     la entidad del comprador puede tener uno más bajo. Prometerle que por
+     debajo de esta cifra le va a pasar es prometer algo que no depende de
+     nosotros. */
+  if(carrito.length && pasaDelTope()){
+    aviso.hidden = false;
+    document.getElementById("faltanTexto").textContent =
+      "Este pedido pasa de " + pesos(TOPE_PAGO) + ", que es el máximo por " +
+      "transferencia. Quita algo del carrito o escríbenos por WhatsApp para " +
+      "dividirlo en dos pagos. Consulta también con tu banco: el tuyo puede " +
+      "tener un tope más bajo.";
+    return;
+  }
+
+  const falta = carrito.length ? queFalta(d) : [];
+  aviso.hidden = listo || !falta.length;
+  if(!aviso.hidden){
+    document.getElementById("faltanTexto").textContent =
+      "Para enviar tu pedido falta " + enLista(falta) + ".";
+  }
+}
+
+// ── Envío del pedido ──
+const pedidosRegistrados = new Set();   // evita contar dos veces el mismo pedido
+let codigoActual = null;                // el número de ESTE pedido, mientras dure
+let pedidoEnviado = null;               // el código, una vez que el mensaje salió
+
+function codigoPedido(){
+  const abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  return Array.from({length:5}, () => abc[Math.floor(Math.random() * abc.length)]).join("");
+}
+
+function codigoDelPedido(){
+  if(!codigoActual) codigoActual = codigoPedido();
+  return codigoActual;
+}
+
+function armarMensaje(){
+  sanear();                          // los números del mensaje salen del catálogo
+  const d = leerFormulario();
+  const t = calcular();
+  if(!carrito.length) return "";
+  const codigo = codigoDelPedido();
+  const ahora = new Date().toLocaleString("es-CO", { dateStyle:"short", timeStyle:"short" });
+
+  /* Armamos el mensaje con dos perillas: cuántos productos se detallan y cuánto
+     de las notas cabe. Sirven para el recorte de más abajo. */
+  function armar(topeProductos, topeNotas, breve){
+  const lineas = [];
+  lineas.push(`*PEDIDO #${codigo}* 🍅`);
+  if(!breve) lineas.push(`_${NEGOCIO} · ${ahora}_`);
+  lineas.push("");
+  lineas.push("*PRODUCTOS*");
+  carrito.slice(0, topeProductos).forEach((i, n) => {
+    const p = producto(i.id);
+    lineas.push(`${n + 1}. ${p.nombre} — ${p.formato}`);
+    lineas.push(`   ${i.cantidad} x ${pesos(p.precio)} = ${pesos(p.precio * i.cantidad)}`);
+  });
+  const ocultos = carrito.length - Math.min(topeProductos, carrito.length);
+  if(ocultos > 0) lineas.push(topeProductos === 0
+    ? `${ocultos} producto${ocultos > 1 ? "s" : ""} — te paso el detalle por aquí`
+    : `   ...y ${ocultos} producto${ocultos > 1 ? "s" : ""} más (te los detallo en el chat)`);
+  lineas.push("");
+  lineas.push("*RESUMEN*");
+  lineas.push(`Subtotal: ${pesos(t.sub)}`);
+  if(t.descuento) lineas.push(`Cupón ${cuponActivo}: -${pesos(t.descuento)}`);
+  lineas.push(`Envío (${nombreEnvio()}): ${t.envio ? pesos(t.envio) : "sin costo"}`);
+  lineas.push(`*TOTAL: ${pesos(t.total)}*`);
+  if(!(SCRIPT_URL && selloVigente() && sello.ref)){
+    lineas.push(`_Total calculado por la página. ${NEGOCIO} lo confirma antes del despacho._`);
+  }
+  lineas.push("");
+  lineas.push("*DATOS DE ENTREGA*");
+  lineas.push(`Nombre: ${d.nombre}`);
+  lineas.push(`Celular: ${d.tel}`);
+  lineas.push(`Ciudad: ${d.ciudad}`);
+  if(envioActivo.id !== "finca") lineas.push(`Dirección: ${d.dir}`);
+  const notas = d.notas.trim();
+  if(notas){
+    lineas.push(notas.length > topeNotas
+      ? `Notas: ${notas.slice(0, topeNotas).trim()}... (te cuento el resto por acá)`
+      : `Notas: ${notas}`);
+  }
+  if(!breve){
+    lineas.push("");
+    lineas.push("_Confirmo mi pedido. Quedo atento a que me confirmes disponibilidad, el");
+    lineas.push("total y los datos de pago por este chat._");
+  }
+  return lineas.join("\n");
+  }
+
+  
+  const enlaceDe = m => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(m)}`;
+  const TOPE_URL = 2000;
+
+  let mensaje = armar(carrito.length, 300);
+  if(enlaceDe(mensaje).length > TOPE_URL){
+    for(const tn of [160, 80, 0]){
+      mensaje = armar(carrito.length, tn);
+      if(enlaceDe(mensaje).length <= TOPE_URL) break;
+    }
+  }
+  if(enlaceDe(mensaje).length > TOPE_URL){
+    // Después, el detalle de productos, hasta dejarlo todo para el chat.
+    for(let tp = Math.min(carrito.length, 10); tp >= 0; tp--){
+      mensaje = armar(tp, 0);
+      if(enlaceDe(mensaje).length <= TOPE_URL) break;
+    }
+  }
+  if(enlaceDe(mensaje).length > TOPE_URL){
+    // Y por último la cortesía: la fecha y la frase de cierre.
+    // Lo que NUNCA se recorta: los totales, la referencia de validación y los
+    // datos de entrega. Sin eso el pedido no sirve para nada.
+    for(let tp = Math.min(carrito.length, 10); tp >= 0; tp--){
+      mensaje = armar(tp, 0, true);
+      if(enlaceDe(mensaje).length <= TOPE_URL) break;
+    }
+  }
+
+  return mensaje;
+}
+
+function enlaceWhatsapp(){
+  const mensaje = armarMensaje();
+  if(!mensaje) return "#";
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+}
+
+/* QUÉ FALTA, en las mismas palabras que ve el cliente. formularioListo se
+   deriva de aquí y no al revés: con dos listas, el botón podía quedarse apagado
+   por algo que el aviso no nombraba, que es peor que no avisar. */
+/* ¿Este pedido se pasa del tope por transferencia?
+   Se mide contra el TOTAL, que es lo que el comprador va a transferir, y no
+   contra el subtotal: el envío también viaja en la transferencia. */
+function pasaDelTope(){
+  return TOPE_PAGO > 0 && calcular().total > TOPE_PAGO;
+}
+
+function queFalta(d){
+  const f = [];
+  if(d.nombre.trim().length <= 2) f.push("tu nombre");
+  if(d.tel.trim().length < 7)     f.push("tu celular");
+  if(d.ciudad.trim().length <= 1) f.push("tu ciudad");
+  if(envioActivo.id !== "finca" && d.dir.trim().length <= 4) f.push("la dirección");
+  if(!d.consiento) f.push("autorizar el uso de tus datos");
+  return f;
+}
+
+function enLista(xs){
+  if(xs.length <= 1) return xs[0] || "";
+  return xs.slice(0, -1).join(", ") + " y " + xs[xs.length - 1];
+}
+
+function formularioListo(d){
+  return carrito.length > 0 && queFalta(d).length === 0 && !pasaDelTope();
+}
+
+/* Lleva al cliente hasta el campo vacío y le abre el teclado ahí. Sin esto, el
+   aviso le dice qué falta y lo deja buscándolo. */
+function irADatos(){
+  const bloque = document.getElementById("bloqueDatos");
+  if(bloque) bloque.scrollIntoView({ behavior: "smooth", block: "start" });
+  const vacio = ["fNombre", "fTel", "fCiudad", "fDir"]
+    .map(id => document.getElementById(id))
+    .find(el => el && !el.value.trim());
+  const destino = vacio || document.getElementById("consiento");
+  // Después del desplazamiento: enfocar antes lo cancela en algunos móviles.
+  if(destino) setTimeout(() => destino.focus({ preventScroll: true }), 320);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LA BANDEJA DE SALIDA
+   --------------------------------------------------------------------------
+   EL PROBLEMA. El número del pedido lo pone esta página, el mensaje de WhatsApp
+   sale siempre, y el registro en la hoja se intenta aparte. Si el maestro no
+   contesta y se agotan los reintentos, el comprador se va con su código y su
+   mensaje, y en la hoja NO HAY FILA. El comercio ve el chat y no ve el pedido:
+   o lo escribe a mano, o se le pierde.
+
+   Eso no se puede arreglar en el momento —cuando el registro falla, lo que
+   falla es justamente el sitio donde habría que anotarlo—. Así que el pedido
+   se guarda AQUÍ, en el navegador del comprador, y se reintenta la próxima vez
+   que la página se abra y el maestro conteste.
+
+   QUÉ SE GUARDA, Y POR QUÉ ESTO NO ROMPE LA REGLA DE NO ALMACENAR DATOS DEL
+   COMPRADOR. Lo que va en la bandeja es exactamente lo que ya viajaba en el
+   registro: el código, los productos, el envío, el cupón, el subtotal y la
+   ciudad. NO va el nombre, ni el celular, ni la dirección — el registro nunca
+   los mandó, esos viajan por WhatsApp—. Y vive en el dispositivo del propio
+   comprador, no en un servidor nuestro, para que no se pierda SU pedido.
+
+   CADUCA. Siete días y cinco pedidos como mucho: una bandeja que crece para
+   siempre deja de ser una bandeja y pasa a ser un archivo.
+
+   TODO ENTRE try/catch. En una ventana de incógnito, o con el almacenamiento
+   bloqueado, `localStorage` no falla devolviendo vacío: LANZA. Y una tienda que
+   revienta al abrirse por querer recordar un pedido de la semana pasada es peor
+   que una tienda que se olvida. */
+const BANDEJA = "pendientes";
+const BANDEJA_DIAS = 7;
+const BANDEJA_TOPE = 5;
+
+function leerBandeja(){
+  try{
+    const crudo = localStorage.getItem(BANDEJA);
+    if(!crudo) return [];
+    const corte = Date.now() - BANDEJA_DIAS * 24 * 3600 * 1000;
+    const vivos = JSON.parse(crudo).filter(x => x && x.q && x.t > corte);
+    return Array.isArray(vivos) ? vivos.slice(-BANDEJA_TOPE) : [];
+  }catch(e){ return []; }
+}
+
+function escribirBandeja(lista){
+  try{
+    if(!lista.length) localStorage.removeItem(BANDEJA);
+    else localStorage.setItem(BANDEJA, JSON.stringify(lista.slice(-BANDEJA_TOPE)));
+  }catch(e){ /* sin almacenamiento, el pedido se pierde y no hay más que hacer */ }
+}
+
+function guardarPendiente(codigo, consulta){
+  const lista = leerBandeja().filter(x => x.c !== codigo);
+  lista.push({ c: codigo, q: consulta, t: Date.now() });
+  escribirBandeja(lista);
+}
+
+function quitarPendiente(codigo){
+  escribirBandeja(leerBandeja().filter(x => x.c !== codigo));
+}
+
+/* Se llama cuando el catálogo ya llegó, o sea cuando consta que el maestro
+   contesta. Reintentar contra un maestro caído solo gastaría la cuota.
+
+   Cada reenvío lleva `tarde`, los minutos que pasaron: es lo que convierte esto
+   en una medida. Un pedido rescatado a los tres minutos es un tropiezo de red;
+   uno rescatado a los dos días es que la tienda estuvo caída y nadie se enteró.
+   El maestro ya descarta los códigos repetidos, así que reenviar es seguro. */
+function reenviarPendientes(){
+  if(!SCRIPT_URL) return;
+  leerBandeja().forEach(x => {
+    const minutos = Math.max(1, Math.round((Date.now() - x.t) / 60000));
+    fetch(SCRIPT_URL + "?" + x.q + "&tarde=" + minutos,
+          { method:"GET", redirect:"follow" })
+      .then(r => r.json())
+      .then(r => { if(r && r.ok) quitarPendiente(x.c); })
+      .catch(() => { /* sigue pendiente para la próxima */ });
+  });
+}
+
+function registrarPedido(d, intento){
+  const codigo = codigoDelPedido();
+  if(!SCRIPT_URL) return;
+  intento = intento || 1;
+  if(intento === 1){
+    if(pedidosRegistrados.has(codigo)) return;
+    pedidosRegistrados.add(codigo);
+  }
+
+  const params = new URLSearchParams({
+    a: "registrar",
+    pedido: codigo,
+    ciudad: d.ciudad,
+    cupon: cuponActivo || "",
+    envio: envioActivo.id,
+    items: carrito.map(i => i.id + ":" + i.cantidad).join(","),
+    /* El acta la escribe este registro, no el sello: el sello sale con 400 ms
+       de espera y podía llegar tarde. Por eso el subtotal de la página viaja
+       aquí también, que es lo que la hoja compara para detectar discrepancias. */
+    sub: String(subtotal())
+  });
+
+  try{
+    // keepalive: si el cliente se va a WhatsApp, la petición termina igual.
+    fetch(SCRIPT_URL + "?" + params.toString(),
+          { method:"GET", redirect:"follow", keepalive:true })
+      .then(r => r.json())
+      .then(r => { if(!r || !r.ok) throw new Error("registro rechazado"); })
+      .then(() => quitarPendiente(codigo))
+      .catch(() => {
+        if(intento <= REINTENTOS){
+          setTimeout(() => registrarPedido(d, intento + 1), 1500 * intento);
+          return;
+        }
+        /* Se agotaron los reintentos. A la bandeja: es lo único que puede
+           evitar que este pedido se pierda del todo. */
+        guardarPendiente(codigo, params.toString());
+      });
+  }catch(e){ guardarPendiente(codigo, params.toString()); }
+}
+
+function alEnviar(e){
+  const d = leerFormulario();
+  if(!formularioListo(d)){
+    /* Tocar un botón y que no pase NADA es lo que hace que el cliente se vaya.
+       Que lo lleve al campo que falta cuesta lo mismo. */
+    e.preventDefault();
+    irADatos();
+    return false;
+  }
+  registrarPedido(d);
+  /* Al volver de WhatsApp el navegador NO recarga la página: el cliente cae
+     otra vez en el carrito lleno, sin saber si su pedido salió. Desde aquí el
+     panel pasa a decir que ya salió y con qué número. El carrito no se borra:
+     si el mensaje no llegó, "volver a enviarlo" usa el MISMO código y la hoja
+     no lo cuenta dos veces. */
+  pedidoEnviado = codigoDelPedido();
+  setTimeout(refrescar, 0);          // después de que el enlace navegue
+  return true;                       // el enlace navega solo, sin window.open
+}
+
+function otroPedido(){
+  carrito = [];
+  pedidoEnviado = null;
+  codigoActual = null;               // el siguiente pedido estrena número
+  cuponActivo = null;
+  avisoCupon = { clase:"", texto:"" };
+  refrescar();
+}
+
+// ── Textos legales ──
+
+const falta = v => !v || /^\[.*\]$/.test(String(v).trim());
+
+function responsable(){
+  const p = [falta(EMPRESA.razon) ? NEGOCIO : `${EMPRESA.razon} (${NEGOCIO})`];
+  if(!falta(EMPRESA.nit)) p.push(`NIT ${EMPRESA.nit}`);
+  p.push(falta(EMPRESA.direccion) ? EMPRESA.ciudad : `${EMPRESA.direccion}, ${EMPRESA.ciudad}`);
+  return p.join(", ");
+}
+
+function comoEscribirnos(){
+  return falta(EMPRESA.correo)
+    ? `por WhatsApp al <strong>${EMPRESA.tel}</strong>`
+    : `al correo <strong>${EMPRESA.correo}</strong> o por WhatsApp al <strong>${EMPRESA.tel}</strong>`;
+}
+
+const LEGALES = {
+datos: { titulo:"Política de tratamiento de datos personales", cuerpo: () => `
+  <p>Esta política explica cómo ${responsable()} trata tus datos personales, en
+     cumplimiento de la Ley 1581 de 2012 y del Decreto 1074 de 2015.</p>
+
+  <h3>Quién responde por tus datos</h3>
+  <p>${falta(EMPRESA.razon) ? NEGOCIO : EMPRESA.razon} es el responsable del
+     tratamiento. Puedes escribirnos ${comoEscribirnos()}.</p>
+
+  <h3>Qué datos recogemos</h3>
+  <ul>
+    <li>Nombre y apellido.</li>
+    <li>Número de celular.</li>
+    <li>Ciudad y dirección de entrega.</li>
+    <li>Las notas que escribas sobre tu pedido.</li>
+  </ul>
+  <p>No pedimos documentos de identidad, ni datos bancarios, ni datos sensibles.
+     Tampoco tratamos datos de niñas, niños ni adolescentes.</p>
+
+  <h3>Cómo llegan a nosotros</h3>
+  <p>Esta tienda es una página estática: <strong>no tiene servidor ni base de datos</strong>
+     y no guarda nada en tu navegador. Lo que escribes se usa únicamente para armar el
+     mensaje que se abre en WhatsApp. Los datos quedan en esa conversación cuando tú
+     decides enviarla, y solo entonces llegan a nosotros.</p>
+
+  <h3>Para qué los usamos</h3>
+  <ul>
+    <li>Confirmar tu pedido, la disponibilidad y el valor total.</li>
+    <li>Coordinar el pago y despachar la entrega.</li>
+    <li>Responder tus preguntas, quejas y reclamos.</li>
+    <li>Cumplir obligaciones legales y contables.</li>
+  </ul>
+  <p>No vendemos ni cedemos tus datos. No te enviamos publicidad salvo que nos
+     autorices por separado.</p>
+
+  <h3>Quién más los ve</h3>
+  <ul>
+    <li><strong>Meta Platforms</strong>, porque el pedido viaja por WhatsApp.</li>
+    <li>La <strong>empresa transportadora</strong> que lleve tu pedido, solo con lo
+        necesario para entregarlo.</li>
+  </ul>
+  <p>Para saber cuántas unidades se venden de cada producto guardamos un registro
+     con la ciudad, el cupón y los productos del pedido, <strong>sin tu nombre,
+     celular ni dirección</strong>.</p>
+
+  <h3>Quién opera ${escapar(NEGOCIO)}</h3>
+  <p>${NEGOCIO} lo opera una persona natural en ${EMPRESA.ciudad}.
+     Todavía no somos una sociedad constituida, y por eso esta página no publica
+     un NIT. Puedes verificarnos y hablar con nosotros por WhatsApp al
+     <strong>${EMPRESA.tel}</strong> antes de comprar.</p>
+
+  <h3>Cuánto tiempo los guardamos</h3>
+  <p>El tiempo necesario para atender el pedido y cumplir los términos legales de
+     conservación contable y de garantías. Después los eliminamos.</p>
+
+  <h3>Tus derechos</h3>
+  <ul>
+    <li>Conocer, actualizar y rectificar tus datos.</li>
+    <li>Pedir prueba de la autorización que nos diste.</li>
+    <li>Ser informado sobre el uso que les hemos dado.</li>
+    <li>Revocar la autorización y pedir que los suprimamos, salvo que exista un
+        deber legal o contractual de conservarlos.</li>
+    <li>Presentar quejas ante la Superintendencia de Industria y Comercio.</li>
+  </ul>
+
+  <h3>Cómo los ejerces</h3>
+  <p>Escríbenos ${comoEscribirnos()} con tu nombre, el dato de contacto donde
+     quieres que te respondamos y lo que necesitas. Respondemos las consultas
+     en máximo <strong>10 días hábiles</strong> y los reclamos en máximo
+     <strong>15 días hábiles</strong>, prorrogables según la ley.</p>
+
+  <h3>Seguridad</h3>
+  <p>Tomamos medidas razonables para proteger la información. Ten en cuenta que la
+     conversación de WhatsApp también está en tu teléfono y bajo tu control.</p>
+
+  <p class="legal-fecha">Última actualización: ${EMPRESA.actualizado}.</p>
+` },
+
+retracto: { titulo:"Derecho de retracto y cambios", cuerpo: () => `
+  <p>Como compras a distancia, la Ley 1480 de 2011 (Estatuto del Consumidor) te da
+     derecho de retracto. Aquí te contamos cómo funciona con nuestros productos.</p>
+
+  <h3>Cuándo aplica</h3>
+  <p>Tienes <strong>5 días hábiles</strong> contados desde la entrega para retractarte
+     de tu compra, sin tener que explicarnos por qué. Aplica a nuestros
+     <strong>procesados de tomate</strong>: salsas, sofritos, pastas, conservas y jugo,
+     siempre que el empaque esté sin abrir y el producto en el mismo estado en que lo
+     recibiste.</p>
+
+  <h3>Cuándo no aplica</h3>
+  <p>El artículo 47 de la Ley 1480 excluye del retracto los bienes perecederos. Por eso
+     el <strong>tomate fresco</strong> (chonto, cherry y riñón) no admite retracto.
+     Eso no te deja sin protección: si llega en mal estado, aplica la garantía que
+     explicamos abajo.</p>
+
+  <h3>Cómo te retractas</h3>
+  <ul>
+    <li>Escríbenos ${comoEscribirnos()} dentro de los 5 días hábiles, con tu
+        número de pedido.</li>
+    <li>Devuelve el producto por el medio que acordemos. El
+        <strong>transporte de la devolución corre por tu cuenta</strong>, como lo
+        permite la ley.</li>
+    <li>Cuando recibamos el producto en buen estado, te devolvemos el dinero dentro de
+        los <strong>30 días calendario</strong> siguientes, por el mismo medio en que
+        pagaste.</li>
+  </ul>
+
+  <h3>Si tu pedido llegó mal</h3>
+  <p>Esto no es retracto, es garantía, y aplica a todo, incluido el tomate fresco.
+     Avísanos por WhatsApp dentro de las <strong>24 horas</strong> siguientes a la
+     entrega y mándanos fotos. Si el producto llegó dañado, incompleto o no
+     corresponde a lo que pediste, elegimos contigo entre reponerlo en el siguiente
+     despacho o devolverte el dinero.</p>
+
+  <h3>Reversión del pago</h3>
+  <p>Cuando pagues por medios electrónicos y proceda el retracto, una entrega
+     incompleta o un producto defectuoso, puedes pedir la reversión del pago según el
+     artículo 51 de la Ley 1480 de 2011.</p>
+
+  <p class="legal-fecha">Última actualización: ${EMPRESA.actualizado}.</p>
+` },
+
+terminos: { titulo:"Términos y condiciones", cuerpo: () => `
+  <p>Al usar esta tienda y enviarnos un pedido aceptas estas condiciones.
+     Quien vende es ${responsable()}.</p>
+
+  <h3>Cómo funciona el pedido</h3>
+  <p>Esta página <strong>no cobra ni procesa pagos</strong>. Armas tu carrito y el botón
+     abre WhatsApp con el pedido ya escrito. La venta queda en firme cuando te
+     confirmamos por chat la disponibilidad, el valor total y el medio de pago. Antes
+     de eso, tu pedido es una solicitud.</p>
+
+  <h3>Precios y disponibilidad</h3>
+  <ul>
+    <li>Los precios están en pesos colombianos e incluyen los impuestos que apliquen a
+        cada producto.</li>
+    <li>Trabajamos con cosecha propia, así que el inventario cambia. Si algo se agota
+        entre tu pedido y nuestra confirmación, te avisamos y ajustamos el total o lo
+        cambiamos por lo que prefieras.</li>
+    <li>Podemos actualizar precios en cualquier momento. Vale el precio que te
+        confirmemos por WhatsApp.</li>
+  </ul>
+
+  <h3>Pago</h3>
+  <p>Los datos de pago te los confirmamos <strong>por el chat de WhatsApp</strong>, una
+     vez validado tu pedido. Aceptamos transferencia y contraentrega donde la cobertura
+     lo permita. Despachamos cuando el pago está confirmado, salvo que acordemos
+     contraentrega.</p>
+  <p><strong>Nunca publicamos datos de pago en esta página ni te los mandamos por otro
+     medio.</strong> Si alguien te da una llave o una cuenta por fuera de nuestro chat,
+     no transfieras y escríbenos al ${EMPRESA.tel}.</p>
+
+  <h3>Envíos y entregas</h3>
+  <ul>
+    <li>Entregamos en todo el país. La tarifa depende del destino y la ves en el
+        carrito antes de enviar el pedido.</li>
+    <li>Los tiempos van de <strong>24 a 72 horas hábiles</strong> según la ciudad.
+        Son estimados y dependen de la transportadora.</li>
+    <li>Puedes recoger sin costo en la finca, en ${EMPRESA.ciudad}, coordinando el
+        horario por WhatsApp.</li>
+    <li>Verifica que la dirección esté completa. Si el envío se pierde o se devuelve
+        por una dirección mal escrita, el nuevo despacho tiene costo.</li>
+  </ul>
+
+  <h3>Cupones de descuento</h3>
+  <ul>
+    <li>Cada cupón tiene un monto mínimo de compra y una fecha de vencimiento.</li>
+    <li>Se aplica <strong>un solo cupón por pedido</strong> y no son acumulables con
+        otras promociones.</li>
+    <li>No son canjeables por dinero.</li>
+    <li>Podemos desactivar un cupón si detectamos un uso indebido.</li>
+  </ul>
+
+  <h3>Retracto, garantía y datos</h3>
+  <p>Consulta el <a href="#" onclick="abrirLegal('retracto');return false">derecho de
+     retracto</a> y la <a href="#" onclick="abrirLegal('datos');return false">política de
+     tratamiento de datos personales</a>.</p>
+
+  <h3>Contenido del sitio</h3>
+  <p>Los textos, las fotos y la marca ${NEGOCIO} son nuestros. Puedes compartir el
+     enlace libremente, pero no reproducir el contenido con fines comerciales sin
+     nuestro permiso.</p>
+
+  <h3>Ley aplicable</h3>
+  <p>Se rigen por la ley colombiana. Cualquier reclamo puedes presentarlo primero ante
+     nosotros y, si no quedas conforme, ante la Superintendencia de Industria y
+     Comercio.</p>
+
+  <h3>Contacto</h3>
+  <p>Escríbenos ${comoEscribirnos()}. Estamos en ${falta(EMPRESA.direccion)
+     ? EMPRESA.ciudad : EMPRESA.direccion + ", " + EMPRESA.ciudad}.</p>
+
+  <p class="legal-fecha">Última actualización: ${EMPRESA.actualizado}.</p>
+` }
+};
+
+function abrirLegal(id){
+  const L = LEGALES[id];
+  if(!L) return;
+  $("#legalCaja").innerHTML = `
+    <button class="legal-cerrar" onclick="cerrarLegal()" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="legal-texto">
+      <h2>${L.titulo}</h2>
+      ${L.cuerpo()}
+    </div>`;
+  $("#legalCaja").scrollTop = 0;
+  $("#legal").classList.add("abierta");
+  $("#capa").classList.add("activa");
+  $("#flotante").classList.add("oculto");
+  document.body.style.overflow = "hidden";
+}
+
+/* Cierra solo la ventana legal: si venía abierta encima del carrito, el carrito
+   se queda como estaba. */
+function cerrarLegal(){
+  $("#legal").classList.remove("abierta");
+  const sigueAbierto = $("#panel").classList.contains("abierto") ||
+                       $("#ficha").classList.contains("abierta");
+  if(!sigueAbierto){
+    $("#capa").classList.remove("activa");
+    $("#flotante").classList.remove("oculto");
+    document.body.style.overflow = "";
+  }
+}
+
+function clicCapa(){
+  if($("#legal").classList.contains("abierta")) cerrarLegal(); else cerrarTodo();
+}
+
+// ── Enlace por producto  —  .../?p=chonto ──
+const PARAM_PRODUCTO = "p";
+let enlacePendiente = null;      // id que pidió la dirección y todavía no se abre
+let catalogoResuelto = !SCRIPT_URL;   // sin hoja, lo que hay en el archivo es todo
+/* Verdadero cuando lo que se está mostrando salió del archivo y no de la hoja.
+   Con SCRIPT_URL vacío es el estado normal y no hay nada que avisar; con hoja
+   configurada es un respaldo, y un respaldo se anuncia. */
+let delArchivo = false;
+
+function idEnLaDireccion(){
+  try { return (new URLSearchParams(location.search).get(PARAM_PRODUCTO) || "").trim(); }
+  catch(e){ return ""; }
+}
+
+function enlaceDe(id){
+  try {
+    const u = new URL(location.href);
+    u.search = ""; u.hash = "";
+    u.searchParams.set(PARAM_PRODUCTO, id);
+    return u.href;
+  } catch(e){ return location.href; }
+}
+
+function direccionBase(){
+  return location.origin + location.pathname;
+}
+
+/* Cambia la barra de direcciones sin recargar. Si el navegador no deja
+   (file://, por ejemplo), la tienda sigue funcionando igual. */
+function apuntarEnHistoria(id){
+  try { history.pushState({ ficha:id }, "", enlaceDe(id)); } catch(e){}
+}
+
+function salirDelEnlace(){
+  try {
+    if(history.state && history.state.ficha) history.back();
+    else if(idEnLaDireccion()) history.replaceState({}, "", direccionBase());
+  } catch(e){}
+}
+
+window.addEventListener("popstate", e => {
+  const id = (e.state && e.state.ficha) || "";
+  if(id && producto(id)) abrirFicha(id, true);
+  else if($("#ficha").classList.contains("abierta")) cerrarTodo();
+});
+
+/* Se llama al arrancar y otra vez cuando responde la hoja. */
+function atenderEnlace(){
+  if(!enlacePendiente) return;
+  const p = producto(enlacePendiente);
+  if(p){ enlacePendiente = null; abrirFicha(p.id, true); return; }
+  if(!catalogoResuelto) return;           // todavía puede llegar en el catálogo real
+  enlacePendiente = null;
+  try { history.replaceState({}, "", direccionBase()); } catch(e){}
+  brindis("Ese producto ya no está en la tienda. Mira lo que hay disponible.");
+}
+
+function refrescarFichaAbierta(){
+  if(!fichaActual) return;
+  const p = producto(fichaActual.id);
+  if(p){ fichaActual = p; pintarFicha(); return; }
+  cerrarTodo();
+  brindis("Ese producto ya no está en la tienda. Mira lo que hay disponible.");
+}
+
+function compartirProducto(){
+  if(!fichaActual) return;
+  const url = enlaceDe(fichaActual.id);
+  const texto = fichaActual.nombre + " — " + pesos(fichaActual.precio) + " · " + NEGOCIO;
+  if(navigator.share){
+    navigator.share({ title: fichaActual.nombre, text: texto, url: url }).catch(() => {});
+    return;
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(
+      () => brindis("Enlace copiado. Ya lo puedes pegar en WhatsApp."),
+      () => brindis(url));
+    return;
+  }
+  brindis(url);
+}
+
+let brindisReloj = null;
+function brindis(texto){
+  const caja = $("#brindis");
+  if(!caja) return;
+  caja.textContent = texto;
+  caja.classList.add("visible");
+  clearTimeout(brindisReloj);
+  brindisReloj = setTimeout(() => caja.classList.remove("visible"), 4000);
+}
+
+// ── Aperturas y cierres ──
+function abrirPanel(){
+  pintarPanel(leerFormulario());
+  $("#panel").classList.add("abierto");
+  $("#capa").classList.add("activa");
+  $("#flotante").classList.add("oculto");
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarTodo(){
+  const habiaFicha = $("#ficha").classList.contains("abierta");
+  $("#panel").classList.remove("abierto");
+  $("#ficha").classList.remove("abierta");
+  $("#legal").classList.remove("abierta");
+  $("#capa").classList.remove("activa");
+  $("#flotante").classList.remove("oculto");
+  document.body.style.overflow = "";
+  fichaActual = null;
+  if(habiaFicha) salirDelEnlace();
+}
+
+document.addEventListener("keydown", e => {
+  if(e.key !== "Escape") return;
+  if($("#legal").classList.contains("abierta")) cerrarLegal(); else cerrarTodo();
+});
+
+// ── Arranque ──
+pintarFiltros();
+pintarRejilla();
+pintarPanel(null);
+enlacePendiente = idEnLaDireccion();
+atenderEnlace();    // si el enlace trae ?p=, abre esa ficha ya con lo que hay
+cargarCatalogo();   // catalogo.json primero; la hoja solo si no está
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+# Cortar una versión de la plantilla.
+#
+# Esto NO despliega nada. Publica una versión con nombre para que las tiendas
+# de los clientes puedan pedirla: cada una tiene su propio repositorio y su
+# propio ritmo, y ninguna se mueve hasta que alguien aprueba su pull request.
+#
+# La versión se lee de package.json: es el único lugar donde vive. Súbela en
+# la rama del cambio, fusiona, y entonces corre esto desde la pestaña Actions.
+#
+#   Los clientes piden la última con:
+#   https://github.com/laboratoriodigital/organico/releases/latest/download/index.html
+name: release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  # Nada se publica sin todas las baterías en verde.
+  pruebas:
+    uses: ./.github/workflows/pruebas.yml
+
+  publicar:
+    needs: pruebas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Leer la versión
+        id: v
+        run: echo "v=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      # UNA CRUZ ROJA QUE SIGNIFICA "TODO BIEN" ES PEOR QUE NO AVISAR: enseña a
+      # ignorar las cruces rojas. Antes, volver a disparar esto sin haber
+      # cambiado nada fallaba, y eso no es un error — es que no hay nada que
+      # cortar. Lo que SÍ es un error es que la etiqueta exista apuntando a otro
+      # commit: ahí el código cambió y la versión no.
+      - name: ¿Hay algo que cortar?
+        id: hay
+        run: |
+          tag="v${{ steps.v.outputs.v }}"
+          # En una etiqueta anotada, el sha del ref es el del objeto etiqueta;
+          # el del commit está en la entrada pelada, la que termina en ^{}.
+          sha=$(git ls-remote --tags origin "$tag^{}" | awk '{print $1}' | head -1)
+          [ -z "$sha" ] && sha=$(git ls-remote --tags origin "$tag" | awk '{print $1}' | head -1)
+
+          if [ -z "$sha" ]; then
+            echo "corta=si" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "$sha" = "$(git rev-parse HEAD)" ]; then
+            {
+              echo "### $tag ya está publicada, y es exactamente este commit"
+              echo ""
+              echo "No hay nada que cortar. Esto no es un fallo: es que ya está hecho."
+              echo ""
+              echo "Para publicar otra versión, sube \`version\` en \`package.json\`"
+              echo "y vuelve. Se sube **solo cuando cambia algo que se despliega**:"
+              echo "\`maestro.gs\`, \`panel.gs\` o \`publicar/index.html\`."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "$tag ya está publicada en este mismo commit. Nada que hacer."
+            echo "corta=no" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          {
+            echo "### $tag ya existe, pero apunta a otro commit"
+            echo ""
+            echo "Cambió el código y la versión no. **Sube \`version\` en"
+            echo "\`package.json\` antes de cortar otra**, o quien pida"
+            echo "\`$tag\` se llevará algo distinto de lo que hay aquí."
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "$tag existe y apunta a $sha, no a este commit." >&2
+          exit 1
+
+      - name: Empaquetar lo que consume un cliente nuevo
+        if: steps.hay.outputs.corta == 'si'
+        run: |
+          mkdir -p entrega
+          cp publicar/index.html entrega/index.html
+          cp maestro.gs          entrega/maestro.gs
+          cp panel.gs            entrega/panel.gs
+          tar -czf entrega/publicar.tar.gz -C publicar .
+
+      - name: Etiqueta y publicación
+        if: steps.hay.outputs.corta == 'si'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.v.outputs.v }}" \
+            --target "${{ github.sha }}" \
+            --title "v${{ steps.v.outputs.v }}" \
+            --generate-notes \
+            entrega/index.html entrega/maestro.gs entrega/panel.gs \
+            entrega/publicar.tar.gz

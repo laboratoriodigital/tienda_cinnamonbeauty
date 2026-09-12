@@ -1,0 +1,340 @@
+# La vía rápida de lo que cambia el comercio: sus fotos y sus precios.
+#
+# Subir una foto o cambiar un precio son acciones del COMERCIO, y el comercio no
+# entiende de pull requests ni tiene por qué esperar al lunes. Este flujo mira
+# el Drive y la hoja cada cuatro horas y, si hay algo nuevo, lo publica solo.
+#
+# EL CATÁLOGO ENTRÓ AQUÍ POR UNA DEUDA QUE DEJÓ EL SPRINT 2. Al hornear el
+# catálogo dentro del sitio, un cambio de precio dejó de estar en la calle en
+# diez segundos y pasó a esperar un despliegue. Eso se aceptó a cambio de que la
+# vitrina no compita con el checkout por las 30 ejecuciones de Apps Script —pero
+# aceptarlo NO era dejar al comerciante vendiendo al precio de la semana pasada
+# hasta que alguien se acordara de disparar `montaje` a mano. Cuatro horas es el
+# techo, y el «Publicar ahora» del menú (Sprint 4) será el suelo.
+#
+# El nombre del flujo se queda en `fotos` a propósito: renombrarlo arrastra doce
+# menciones en la documentación, y el Sprint 4 probablemente lo reemplaza entero
+# cuando el maestro pueda disparar su propio despliegue.
+#
+# POR QUÉ ESTO SÍ SE FUSIONA SOLO Y EL OTRO NO
+# `montaje` puede reescribir el <head>, la política de seguridad y SCRIPT_URL:
+# si la configuración de la hoja quedó mal, la tienda se cae. Por eso ahí hay
+# una persona en el medio.
+#
+# Una foto no puede hacer eso. Lo peor que pasa si el comercio sube una foto
+# fea o equivocada es que se vea una foto fea: no toca precios, no toca la
+# política de seguridad, no toca el código. El riesgo es reversible con otra
+# foto, y el costo de la aprobación —seis días de espera— es mayor que el daño.
+#
+# El catálogo horneado tampoco: es un volcado de lo que YA decide la hoja, y la
+# hoja la escribe el comerciante sin pedirle permiso a nadie. Publicarlo no le
+# da a nadie un poder que no tuviera; lo que hace es que lo que ya decidió se
+# vea. Y el precio del pedido sigue saliendo del sello, no de este archivo.
+#
+# Y no se confía en esa promesa: el paso "solo fotos" la COMPRUEBA. Si el
+# cambio toca un solo archivo fuera de publicar/fotos/, no se fusiona nada y
+# queda un pull request esperando a una persona.
+#
+# Nota sobre Actions: lo que empuja el GITHUB_TOKEN no dispara otros flujos,
+# así que `pruebas` no vuelve a correr sobre este commit. Por eso las baterías
+# corren aquí dentro, antes de fusionar. Cloudflare sí despliega: su
+# integración es un webhook del repositorio, no un flujo de Actions.
+name: fotos
+
+on:
+  schedule:
+    - cron: '17 */4 * * *'
+  workflow_dispatch:
+    inputs:
+      aprobacion:
+        description: 'Cómo publicarlas'
+        type: choice
+        default: automatica
+        options: [automatica, con-pull-request]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# Nunca a la vez que `montaje`: los dos escriben en publicar/.
+concurrency:
+  group: tienda-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    # LO QUE ESTE FLUJO PUEDE PUBLICAR, ESCRITO UNA SOLA VEZ.
+    #
+    # Estaba escrito dos veces y se separaron. El guardia permitía
+    # `publicar/fotos/` Y `publicar/catalogo.json`; el paso que hace el commit
+    # hacía `git add publicar/fotos/` a secas. Mientras el comercio solo subía
+    # fotos los dos decían lo mismo. El día que dio de baja un producto —un
+    # cambio que solo toca el catálogo— el guardia dijo «adelante», el `git add`
+    # no puso nada en el índice, `git commit` salió con código 1 y el flujo se
+    # cayó con «no changes added to commit». Efecto para el comerciante: el
+    # producto inactivo seguía a la venta y la página seguía sirviendo el
+    # catálogo de antes, sin que nadie viera un error en ningún sitio.
+    #
+    # Es el patrón 2 de la bitácora: dos implementaciones del mismo criterio,
+    # una se queda atrás. La cura no es acordarse de tocar las dos: es que haya
+    # una. Los dos pasos leen de aquí, y `montaje.js` comprueba que ninguno de
+    # los dos vuelva a escribir rutas por su cuenta.
+    env:
+      PUBLICA: publicar/fotos publicar/catalogo.json
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: ¿Está configurada esta tienda?
+        id: hay
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: |
+          if [ -z "$MAESTRO_URL" ] || [ -z "$MAESTRO_TOKEN" ]; then
+            echo "Faltan los secretos MAESTRO_URL y MAESTRO_TOKEN." >> "$GITHUB_STEP_SUMMARY"
+            echo "sigue=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "sigue=si" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ANTES DE MIRAR NADA: ¿esta hoja es la de este repositorio?
+      # Publicar la hoja de un comercio en el sitio de otro no falla en ningún
+      # sitio —el flujo corre en verde, el maestro contesta, Cloudflare
+      # despliega— y desde el mostrador se ve como «subí una foto y no salió».
+      - name: ¿Esta hoja es la de esta tienda?
+        if: steps.hay.outputs.sigue == 'si'
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: |
+          set -o pipefail
+          node montar/misma-tienda.mjs 2>&1 | tee /tmp/misma.txt || estado=$?
+          {
+            echo "### De qué tienda es la hoja"
+            echo '```'
+            cat /tmp/misma.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit ${estado:-0}
+
+      # Lo primero es una sola llamada que casi siempre dice "nada nuevo". Así
+      # una revisión cada cuatro horas cuesta veinte segundos, no cinco minutos.
+      - name: ¿Hay fotos nuevas?
+        if: steps.hay.outputs.sigue == 'si'
+        id: mirar
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: |
+          fotos=no; catalogo=no
+          node montar/traer-fotos.mjs      --revisar > /tmp/mirar-fotos.txt 2>&1 || fotos=si
+          node montar/catalogo-estatico.mjs --revisar > /tmp/mirar-cat.txt  2>&1 || catalogo=si
+
+          # UN "NO" TIENE QUE MOSTRAR SU TRABAJO, y este no lo mostraba.
+          # El comercio subió dos fotos al Drive, publicó, y este paso contestó
+          # "nada nuevo" sin más. La respuesta estaba en el log —cuántas fotos
+          # ve el maestro en la carpeta, y cuáles nombra la hoja sin tenerlas—
+          # pero el resumen, que es lo único que se mira, no la traía.
+          # El flujo `montaje` ya había aprendido esto; este se quedó fuera.
+          # Ahora el detalle sale SIEMPRE, se haya decidido bajar o no.
+          {
+            if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ]; then
+              echo "### Nada nuevo: ni fotos en el Drive, ni cambios en la hoja"
+              echo ""
+              echo "Si acabas de subir fotos y esto dice que no hay nada, la respuesta"
+              echo "está aquí abajo: mira cuántas ve el maestro en la carpeta y si la"
+              echo "hoja nombra alguna que el Drive no tiene."
+            else
+              echo "### Hay novedades"
+              echo ""
+              echo "Fotos nuevas: **$fotos** · Catálogo desactualizado: **$catalogo**"
+            fi
+            echo ""
+            echo "#### Lo que vio en el Drive"
+            echo '```'
+            cat /tmp/mirar-fotos.txt 2>/dev/null || echo "(no llegó a mirar)"
+            echo '```'
+            echo "#### Lo que vio en la hoja"
+            echo '```'
+            cat /tmp/mirar-cat.txt 2>/dev/null || echo "(no llegó a mirar)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ]; then
+            echo "hay=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "hay=si" >> "$GITHUB_OUTPUT"
+          fi
+
+      # LA CACHÉ DE NPM, A MANO Y NO CON `cache: npm`.
+      # `cache: npm` exige un package-lock.json, y en este repositorio los dos
+      # están en .gitignore: en un checkout limpio no existen, y setup-node se
+      # cae con «Some specified paths were not resolved». Cachear ~/.npm no
+      # necesita lockfile y se lleva lo que de verdad pesa, que es el binario
+      # nativo de sharp.
+      - name: Caché de npm
+        if: steps.mirar.outputs.hay == 'si'
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('package.json', 'pruebas/package.json') }}
+          restore-keys: npm-${{ runner.os }}-
+
+      - name: Dependencias
+        if: steps.mirar.outputs.hay == 'si'
+        run: npm install --no-audit --no-fund
+
+      - name: Bajarlas y convertirlas
+        if: steps.mirar.outputs.hay == 'si'
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: |
+          set -o pipefail   # sin esto manda el código de tee y un fallo se pierde
+          estado=0
+          node montar/traer-fotos.mjs       2>&1 | tee /tmp/fotos.txt    || estado=$?
+          node montar/catalogo-estatico.mjs 2>&1 | tee /tmp/catalogo.txt || estado=$?
+          # PASE LO QUE PASE, AL RESUMEN. Este paso se cayó una vez y averiguar
+          # por qué costó ir a desplegar el log a mano. Un paso que falla sin
+          # decir qué obliga a hacer arqueología.
+          {
+            echo "### Las fotos"
+            echo '```'
+            cat /tmp/fotos.txt 2>/dev/null || echo "(no llegó a correr)"
+            echo '```'
+            echo "### El catálogo"
+            echo '```'
+            cat /tmp/catalogo.txt 2>/dev/null || echo "(no llegó a correr)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $estado
+
+      # La promesa de arriba, comprobada. No es confianza: es una lista.
+      # Se fusiona solo lo que este flujo puede generar y nada más: las fotos y
+      # el catálogo horneado. Si aparece cualquier otra cosa, se para y lo dice
+      # — un flujo que fusiona solo tiene que saber exactamente qué fusiona.
+      - name: Comprobar que SOLO cambiaron las fotos y el catálogo
+        if: steps.mirar.outputs.hay == 'si'
+        id: solo
+        run: |
+          # Se le pide a git que liste lo que cambió EXCEPTO lo que este flujo
+          # puede publicar. Lo que quede es, por definición, lo que no toca.
+          excluir=""
+          for ruta in $PUBLICA; do excluir="$excluir :(exclude)$ruta"; done
+          fuera=$(git status --porcelain -- . $excluir)
+          if [ -n "$fuera" ]; then
+            {
+              echo "### No se fusiona solo"
+              echo ""
+              echo "Cambió algo fuera de lo que este flujo publica ($PUBLICA):"
+              echo '```'
+              echo "$fuera"
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "limpio=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "limpio=si" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Chromium pesa ~130 MB y no cambia entre corridas. Bajarlo entero cada
+      # vez era minuto y medio de cada publicación, gastado en descargar
+      # siempre lo mismo. `pruebas.yml` ya lo cacheaba; este flujo —el que de
+      # verdad corre cada cuatro horas— se había quedado fuera.
+      - name: Caché del navegador
+        if: steps.mirar.outputs.hay == 'si'
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package.json') }}
+
+      - name: Navegador para las pruebas
+        if: steps.mirar.outputs.hay == 'si'
+        run: cd pruebas && npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+
+      - name: Todas las baterías sobre las fotos ya publicadas
+        if: steps.mirar.outputs.hay == 'si'
+        run: cd pruebas && ./todas.sh
+
+      - name: Publicar
+        if: steps.mirar.outputs.hay == 'si'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AUTO: ${{ steps.solo.outputs.limpio == 'si' && inputs.aprobacion != 'con-pull-request' }}
+        run: |
+          git config user.name  "montaje"
+          git config user.email "noreply@github.com"
+          rama="fotos/nuevas-$(date +%Y%m%d-%H%M)"
+          git switch -c "$rama"
+
+          # -A y no a secas: cuando el comercio BORRA una foto del Drive, el
+          # cambio es un archivo que desaparece, y `git add <dir>` sin -A no
+          # apunta los borrados en versiones viejas de git.
+          git add -A -- $PUBLICA
+
+          # SI NO HAY NADA QUE COMMITEAR, DECIRLO. `git commit` sin índice sale
+          # con código 1 y el mensaje «no changes added to commit», que en el
+          # log de Actions parece un fallo de git y es otra cosa: el paso que
+          # decidió que había novedades y el que las junta no vieron lo mismo.
+          if git diff --cached --quiet; then
+            {
+              echo "### Se dijo que había novedades y no quedó nada que publicar"
+              echo ""
+              echo "El paso «¿Hay fotos nuevas?» dijo que sí, pero después de"
+              echo "bajar y hornear no hay ningún cambio en \`$PUBLICA\`."
+              echo "Eso no es un fallo de git: es que los dos pasos no están"
+              echo "mirando lo mismo. Mira los dos volcados de arriba."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::Nada que publicar pese a haber detectado novedades."
+            exit 1
+          fi
+
+          # QUÉ TRAE ESTE COMMIT, DICHO POR EL COMMIT.
+          # El título era siempre «fotos nuevas del comercio», dijera lo que
+          # dijera el contenido: un cambio de precio llegaba a `main` anunciado
+          # como una foto. Quien abre el historial para averiguar cuándo cambió
+          # un precio no encuentra nada. Ahora el rótulo lo dicta el índice.
+          nfotos=$(git diff --cached --name-only -- publicar/fotos \
+                   | grep -v '/origen\.json$' | wc -l | tr -d ' ')
+          ncat=$(git diff --cached --name-only -- publicar/catalogo.json | wc -l | tr -d ' ')
+          if [ "$nfotos" -gt 0 ] && [ "$ncat" -gt 0 ]; then
+            resumen="fotos del comercio y catálogo al día"
+          elif [ "$nfotos" -gt 0 ]; then
+            resumen="fotos nuevas del comercio"
+          else
+            resumen="catálogo al día: precios, altas y bajas"
+          fi
+
+          # El detalle sale de lo que IMPRIMIERON los dos scripts, no de una
+          # frase escrita aquí: si mañana bajan una foto más o cambian tres
+          # precios, el cuerpo lo dice sin tocar este archivo.
+          detalle=$(grep -E '^  [+-] ' /tmp/fotos.txt || true)
+          movidos=$(grep -E '^(Catálogo horneado|Productos:|Fotos con medidas)' \
+                    /tmp/catalogo.txt || true)
+
+          git commit -m "feature/frontend: $resumen" \
+                     -m "$detalle" -m "$movidos"
+          git push -u origin "$rama"
+
+          cuerpo="Lo que cambió el comercio desde su hoja y su carpeta de Drive."
+          cuerpo+=$'\n\n### Las fotos\n```\n'
+          cuerpo+="$(cat /tmp/fotos.txt 2>/dev/null || echo '(sin cambios)')"
+          cuerpo+=$'\n```\n\n### El catálogo\n```\n'
+          cuerpo+="$(cat /tmp/catalogo.txt 2>/dev/null || echo '(sin cambios)')"
+          cuerpo+=$'\n```\n\nTodas las baterías ya corrieron sobre estos archivos.'
+          gh pr create --base main --head "$rama" \
+            --title "feature/frontend: $resumen" --body "$cuerpo"
+
+          if [ "$AUTO" = "true" ]; then
+            gh pr merge "$rama" --squash --delete-branch
+            echo "Fusionado. Cloudflare despliega solo." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Pull request abierto, esperando revisión." >> "$GITHUB_STEP_SUMMARY"
+          fi

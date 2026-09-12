@@ -1,0 +1,38 @@
+# ── Capa 1: los originales pesados de las fotos ──
+# Viven en el Drive del cliente. Aquí solo se copian para correr
+# preparar-fotos.mjs; lo que se publica es lo que queda en publicar/fotos.
+originales/
+
+# ── Las fotos publicadas SÍ se versionan ──
+# publicar/fotos/ es lo que Cloudflare sirve. Si no está en el repositorio, el
+# despliegue sale sin fotos. Pesan pocos KB y las genera preparar-fotos.mjs a
+# partir de originales/, que es lo pesado y lo que se queda afuera.
+
+# ── Copias que las pruebas regeneran en cada corrida ──
+pruebas/as.js
+pruebas/pn.js
+pruebas/index.html
+pruebas/srv*.log
+pruebas/*.png
+pruebas/local.html
+pruebas/real.html
+
+# ── Dependencias y basura de sistema ──
+node_modules/
+package-lock.json
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+
+# ── Nada de secretos en el repositorio ──
+# La llave de pago, los ID de hoja y los tokens no se versionan.
+secretos.md
+*.local.md
+.env
+
+# A qué tienda apunta ESTA copia del repositorio, y el proyecto de
+# Apps Script al que clasp le sube el maestro. Distintos por tienda.
+tienda.json
+montar/.clasp.json
+# montar/clasp.json.ejemplo SÍ se versiona: es la plantilla.

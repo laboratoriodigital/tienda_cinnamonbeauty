@@ -1,0 +1,16 @@
+{
+  "name": "organico-pruebas",
+  "private": true,
+  "description": "Banco de pruebas de la tienda: corre contra maestro.gs e index.html reales.",
+  "scripts": {
+    "test": "./todas.sh"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0",
+    "sharp": "^0.35.4"
+  },
+  "comentarios": {
+    "sharp": "exif.js convierte una foto de verdad con la MISMA funcion que publica el sitio, para comprobar que no sale con las coordenadas de donde se tomo. Sin sharp aqui esa bateria no correria, y una prueba de seguridad que se salta sola es peor que no tenerla.",
+    "por-que-aqui": "Dentro de devDependencies NO cabe: npm lee cada clave de ahi como el nombre de un paquete, y un nombre no puede empezar por guion bajo. Costo una corrida roja."
+  }
+}

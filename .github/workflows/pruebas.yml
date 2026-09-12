@@ -1,0 +1,122 @@
+# Todas las baterías, en cada pull request y en cada push a main.
+#
+# Por qué aquí y no en Cloudflare: el plan gratuito de Workers Builds trae
+# 3.000 minutos al mes y UNA sola compilación a la vez. Esa cola es la que
+# despliega; si además corre las pruebas, cada push a cualquier rama se
+# encola detrás de una corrida de cinco minutos con Chromium. GitHub Actions
+# corre en paralelo y el resultado aparece como una marca de verificación en
+# el pull request, que es donde se revisa. Cloudflare despliega; GitHub
+# decide si merece desplegarse.
+name: pruebas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # Para que el flujo de release pueda exigir el verde antes de publicar.
+  workflow_call:
+
+jobs:
+  pruebas:
+    # NO SOBRE EL PULL REQUEST QUE ABRE `fotos`, Y NO POR AHORRAR MINUTOS.
+    #
+    # Ese flujo corre todas las baterías sobre los archivos ya escritos y solo
+    # después abre el pull request y lo fusiona. Volver a correrlas aquí prueba
+    # exactamente lo mismo sobre exactamente los mismos bytes.
+    #
+    # Y no sale gratis: una corrida disparada por el pull request de un bot
+    # queda **esperando la aprobación de un mantenedor**, y si nadie la aprueba
+    # caduca y deja una X roja en un pull request que ya se fusionó bien. Una
+    # marca roja que no significa nada es peor que ninguna marca: enseña a no
+    # mirarlas.
+    #
+    # El de `montaje` SÍ se sigue comprobando aquí, a propósito: ese pull
+    # request espera a una persona, corre una vez por semana, no está en el
+    # camino de publicar una foto, y es el que puede reescribir el <head>, la
+    # política de seguridad y SCRIPT_URL.
+    if: >-
+      !(github.event_name == 'pull_request' &&
+        github.event.pull_request.user.login == 'github-actions[bot]' &&
+        startsWith(github.head_ref, 'fotos/nuevas-'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: pruebas
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # ── Que la versión suba cuando cambia lo que se despliega ──
+      # Sin esto, una mejora sale al aire y las tiendas siguen creyendo que
+      # tienen la de antes: el panel las muestra al día y no lo están. La
+      # comprobación es mecánica a propósito — no depende de acordarse.
+      - name: La versión sube cuando cambia lo desplegable
+        if: github.event_name == 'pull_request'
+        run: |
+          base="origin/${{ github.base_ref }}"
+          if git diff --quiet "$base"...HEAD -- maestro.gs panel.gs publicar/index.html; then
+            echo "No cambió nada que se despliegue. Nada que exigir."
+            exit 0
+          fi
+          echo "Cambió algo que se despliega:"
+          git diff --name-only "$base"...HEAD -- maestro.gs panel.gs publicar/index.html | sed 's/^/  · /'
+          antes=$(git show "$base:package.json" | node -pe "JSON.parse(require('fs').readFileSync(0,'utf8')).version")
+          ahora=$(node -pe "require('./package.json').version")
+          if [ "$antes" = "$ahora" ]; then
+            echo
+            echo "La versión sigue en $antes."
+            echo "Sube \"version\" en package.json antes de fusionar:"
+            echo "  parche  1.0.1  si el cliente no nota nada"
+            echo "  menor   1.1.0  si hay algo nuevo"
+            echo "  mayor   2.0.0  si una tienda vieja tiene que tocar la hoja o el maestro"
+            exit 1
+          fi
+          echo "Versión: $antes -> $ahora"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      # LA CACHÉ DE NPM, A MANO Y NO CON `cache: npm`.
+      # `cache: npm` exige un package-lock.json, y en este repositorio los dos
+      # están en .gitignore: en un checkout limpio no existen, y setup-node se
+      # cae con «Some specified paths were not resolved». Cachear ~/.npm no
+      # necesita lockfile y se lleva lo que de verdad pesa, que es el binario
+      # nativo de sharp.
+      - name: Caché de npm
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('package.json', 'pruebas/package.json') }}
+          restore-keys: npm-${{ runner.os }}-
+
+      # Chromium pesa y no cambia entre corridas: se guarda en caché para que
+      # una corrida normal tarde en pruebas, no en descargar el navegador.
+      - name: Caché del navegador
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package.json') }}
+
+      - name: Dependencias
+        run: npm install --no-audit --no-fund
+
+      - name: Navegador
+        run: npx playwright install --with-deps chromium
+
+      # todas.sh copia maestro.gs e index.html reales antes de correr, y sale
+      # con código 1 si falla una sola aserción.
+      - name: Todas las baterías
+        run: |
+          set -o pipefail
+          ./todas.sh 2>&1 | tee /tmp/pruebas.txt || estado=$?
+          {
+            echo "### Las baterías"
+            echo '```'
+            grep -E "^ FALLA|^  TOTAL|Baterías con problemas|^    ·" /tmp/pruebas.txt || tail -30 /tmp/pruebas.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit ${estado:-0}

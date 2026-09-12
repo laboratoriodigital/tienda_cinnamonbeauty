@@ -1,0 +1,23 @@
+{
+  // ORGÁNICO — cómo se publica la tienda en Cloudflare.
+  //
+  // No hay Worker: no hay clave "main". Esto es un sitio de archivos estáticos
+  // y nada más, que es exactamente lo que la tienda es. Cloudflare los sirve
+  // desde su red y las peticiones a archivos estáticos no gastan cuota.
+  //
+  // La carpeta que se publica es publicar/. Todo lo demás del repositorio
+  // —pruebas, docs, el maestro, los originales de las fotos— se queda fuera.
+  "name": "organico",
+  "compatibility_date": "2026-09-05",
+
+  "assets": {
+    "directory": "./publicar",
+    // Una dirección que no existe devuelve 404.html. Sin esto, un enlace mal
+    // copiado deja al cliente en una página en blanco sin salida.
+    "not_found_handling": "404-page"
+  },
+
+  // Cada rama que no es main estrena su propia URL de vista previa. Es lo que
+  // se revisa en el pull request antes de fusionar.
+  "preview_urls": true
+}

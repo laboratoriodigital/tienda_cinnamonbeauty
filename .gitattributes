@@ -1,0 +1,22 @@
+# FIN DE LÍNEA, FIJO Y EN EL REPOSITORIO.
+# --------------------------------------------------------------------------
+# `publicar/catalogo.json` lo escribe un flujo en Linux (LF) y lo toca una
+# máquina Windows (CRLF). Sin esto, el archivo aparece entero como cambiado
+# —406 líneas, 203 quitadas y 203 puestas, con el mismo contenido— cada vez
+# que se cruzan las dos. Ya pasó una vez.
+#
+# El daño no es el ruido: es que un pull request con 400 líneas de diferencia
+# falsa deja de leerse, y el flujo `montaje` abre uno cada vez que corre. Un
+# diff que nadie lee es una revisión que no existe.
+#
+# LF para todo lo que es texto, en disco y en el repositorio, en las tres
+# plataformas. Es lo que ya usan los flujos, que son quienes más escriben.
+* text=auto eol=lf
+
+# Y lo que no es texto, que nadie intente normalizarlo.
+*.webp binary
+*.jpg  binary
+*.jpeg binary
+*.png  binary
+*.ico  binary
+*.pdf  binary

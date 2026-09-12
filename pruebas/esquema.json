@@ -1,0 +1,222 @@
+{
+  "hojas": {
+    "Catálogo": [
+      "ID",
+      "Nombre",
+      "Formato",
+      "Categoría",
+      "Precio",
+      "Stock",
+      "Descripción",
+      "Imágenes",
+      "Destacado",
+      "Activo",
+      "Referencia",
+      "Precio antes",
+      "Umbral bajo"
+    ],
+    "Configuración": [
+      "Clave",
+      "Valor",
+      "Qué es"
+    ],
+    "Envíos": [
+      "ID",
+      "Nombre",
+      "Valor"
+    ],
+    "Cupones": [
+      "Código",
+      "Tipo",
+      "Valor",
+      "Mínimo",
+      "Vence",
+      "Usos máximos",
+      "Usos confirmados",
+      "Activo",
+      "Notas"
+    ],
+    "Validaciones": [
+      "Fecha",
+      "Pedido",
+      "Cupón",
+      "Subtotal según la hoja",
+      "Subtotal según la página",
+      "Discrepancia",
+      "Descuento",
+      "Envío",
+      "Total según la hoja",
+      "Detalle",
+      "Avisos"
+    ],
+    "Pedidos": [
+      "Fecha",
+      "Pedido",
+      "Validación",
+      "Estado",
+      "Ciudad",
+      "Cupón",
+      "Producto",
+      "ID",
+      "Cantidad",
+      "Precio unitario",
+      "Subtotal línea",
+      "Total del pedido",
+      "Inventario",
+      "Fecha de pago",
+      "Fecha de despacho",
+      "Guía"
+    ],
+    "Más vendidos": [
+      "Producto",
+      "ID",
+      "Unidades vendidas",
+      "Ingresos",
+      "Pedidos en que aparece"
+    ],
+    "Tablero": [
+      "Indicador",
+      "Valor",
+      "Comparación"
+    ],
+    "Errores": [
+      "Fecha",
+      "Error",
+      "Primeros 200 caracteres recibidos"
+    ]
+  },
+  "configuracion": [
+    "negocio",
+    "whatsapp",
+    "logo",
+    "portada_titulo",
+    "portada_texto",
+    "portada_puntos",
+    "color_principal",
+    "color_secundario",
+    "color_alterno",
+    "pie_descripcion",
+    "como_compras",
+    "empresa_razon",
+    "empresa_nit",
+    "empresa_correo",
+    "empresa_direccion",
+    "empresa_ciudad",
+    "empresa_tel",
+    "legal_actualizado",
+    "sitio_url",
+    "sitio_titulo",
+    "sitio_descripcion",
+    "correo_resumen",
+    "correo_hora",
+    "correo_siempre",
+    "correo_ultimo",
+    "fotos_origen",
+    "fotos_cdn",
+    "respaldo_carpeta",
+    "fotos_drive",
+    "fotos_webp",
+    "favicon",
+    "pago_llave",
+    "pago_titular",
+    "pago_entidad",
+    "pago_texto",
+    "pago_tope",
+    "envio_gratis_desde",
+    "horario",
+    "repositorio"
+  ],
+  "puertas": {
+    "version": [
+      "ok",
+      "version"
+    ],
+    "catalogo": [
+      "ok",
+      "productos",
+      "envios",
+      "config",
+      "ilegibles",
+      "version",
+      "esquema",
+      "generado"
+    ],
+    "identidad": [
+      "ok",
+      "version",
+      "scriptId",
+      "hojaId",
+      "url",
+      "hojaOk",
+      "hoja",
+      "negocio",
+      "repositorio"
+    ],
+    "bloques": [
+      "ok",
+      "version",
+      "head",
+      "valores",
+      "scriptId",
+      "negocio",
+      "hoja",
+      "hojaId",
+      "alta"
+    ],
+    "panel": [
+      "ok",
+      "version",
+      "negocio",
+      "sitio",
+      "whatsapp",
+      "correo",
+      "hoja",
+      "productos",
+      "publicados",
+      "agotados",
+      "pocos",
+      "ventasMes",
+      "ventasMesAnterior",
+      "pedidosMes",
+      "ticket",
+      "tasaCierre",
+      "lecturasHoy",
+      "picoHora",
+      "cuotaCorreo",
+      "respaldo",
+      "ventasAyer",
+      "pedidosAyer",
+      "porConfirmar",
+      "atrasados",
+      "errores",
+      "meses",
+      "consultado",
+      "stub",
+      "tokenViejo",
+      "rescates",
+      "alta"
+    ]
+  },
+  "registros": {
+    "producto": [
+      "id",
+      "nombre",
+      "formato",
+      "categoria",
+      "precio",
+      "stock",
+      "descripcion",
+      "imagenes",
+      "destacado",
+      "activo",
+      "referencia",
+      "precioAntes",
+      "umbralBajo"
+    ],
+    "envio": [
+      "id",
+      "nombre",
+      "valor"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+# Cabeceras de seguridad para Cloudflare Workers.
+# Este archivo no es la tienda: es configuración de despliegue. Cloudflare lo lee
+# al publicar y lo aplica a todas las respuestas. Vive junto a index.html, dentro
+# de la carpeta que se publica, y no se sirve como archivo.
+#
+# frame-ancestors y X-Frame-Options son los que impiden que te metan dentro de un
+# iframe invisible para robarte el clic de "Enviar pedido". No funcionan desde una
+# etiqueta <meta>, por eso este archivo existe.
+#
+# OJO CON connect-src: ESTA CSP Y LA DEL <meta> SE APLICAN LAS DOS, y manda la
+# más restrictiva. Cuando la vitrina pasó a leer su propio catalogo.json hubo que
+# poner 'self' en LAS TRES copias de esta regla —aquí, en el <meta> del
+# index.html, y en la que genera el maestro—. Si se olvida una, el fetch se
+# bloquea SIN error de red: simplemente no sale, y la página cae al catálogo de
+# respaldo como si la hoja no hubiera contestado. Hay una aserción que compara
+# las tres.
+
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://ik.imagekit.io https://imagedelivery.net; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'none'; base-uri 'none'; frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# El catálogo horneado cambia en cada despliegue y es lo único que decide qué
+# ve el comprador. Un minuto de caché alcanza para aguantar un pico y no
+# alcanza para servir precios de ayer. La página además lo pide con no-cache,
+# así que esto es el cinturón y aquello los tirantes.
+/catalogo.json
+  Cache-Control: public, max-age=60, must-revalidate
+  Content-Type: application/json; charset=utf-8

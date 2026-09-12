@@ -1,0 +1,436 @@
+# MONTAR LA TIENDA, TODO DE UNA. Un solo flujo, un solo botón.
+#
+# Antes esto eran dos: `montaje` traía la hoja y las fotos, y `maestro`
+# publicaba el backend. Dispararlos por separado y en el orden equivocado es
+# fácil y silencioso: si se publica un maestro nuevo DESPUÉS de escribir el
+# index, la tienda queda avisando que la versión de la hoja no es la que espera.
+# Aquí el orden está fijo y no depende de que nadie se acuerde.
+#
+#   1. maestro.gs   →  opcional, y hay que escribir PUBLICAR
+#   2. index.html   →  el <head> y las 5 constantes, desde la hoja
+#   3. fotos        →  las nuevas del Drive del comercio, ya convertidas
+#   4. todas las baterías, SOBRE LOS ARCHIVOS YA MODIFICADOS
+#   5. el pull request
+#
+# EL PASO 4 ES EL QUE JUSTIFICA EL ORDEN. Los pasos 2 y 3 escriben dentro de
+# index.html a partir de lo que el comercio puso en su hoja. Si esa
+# configuración produce algo que rompe la tienda —una plantilla de fotos mal
+# escrita, un color que no es un color—, es mejor enterarse aquí que en la vista
+# previa del pull request.
+#
+# LA CONFIGURACIÓN SE ESCRIBE EN LA HOJA, no en este formulario. La pestaña
+# Configuración es el sitio: se ve entera, se corrige sin disparar nada y el
+# comercio la entiende. Este flujo la lee, no la pide.
+#
+# ═══ SECRETOS ═══
+# Settings > Secrets and variables > Actions > New repository secret.
+# Son los de ESTA tienda y de ninguna otra: cada tienda tiene su repositorio,
+# así que no hay llavero común.
+#
+#   Siempre:
+#     MAESTRO_URL     https://script.google.com/macros/s/AAA.../exec
+#     MAESTRO_TOKEN   tk-...
+#     Los dos salen del menú de la hoja > Diagnóstico. Lo que ese token permite
+#     está acotado: leer la configuración, listar la carpeta de fotos y bajar
+#     archivos DE ESA CARPETA. No borra, no escribe en la hoja, no alcanza el
+#     resto del Drive.
+#
+#   Solo si se va a publicar el maestro desde aquí:
+#     CLASPRC     el contenido de ~/.clasprc.json tras `clasp login` con la
+#                 cuenta de ESTA tienda. Es una credencial de Google con
+#                 permiso sobre su Apps Script y su Drive: por eso publicar
+#                 pide confirmación escrita y nunca corre por horario.
+#                 NO HACE FALTA UN EQUIPO PARA CREARLA: `clasp login
+#                 --no-localhost` imprime una dirección y pide el código de
+#                 vuelta, así que sirve desde cualquier terminal, incluido uno
+#                 en el navegador. Es una vez por tienda.
+#     SCRIPT_ID   el id del proyecto del maestro: en su URL, entre /projects/
+#                 y /edit
+#     HOJA_ID     el id de la hoja: en su URL, entre /d/ y /edit. SIN ESTO NO
+#                 SE SUBE NADA: el archivo del repositorio lo lleva vacío, y un
+#                 maestro sin hoja se ve perfecto y no registra un solo pedido.
+#
+# Si faltan los tres últimos, el paso del maestro se salta y lo dice. Los otros
+# dos pasos siguen.
+name: montaje
+
+on:
+  schedule:
+    # Lunes 11:00 UTC = 6:00 en Colombia, antes de que abra el comercio.
+    - cron: '0 11 * * 1'
+  workflow_dispatch:
+    inputs:
+      que:
+        description: 'Qué traer de la hoja y del Drive'
+        type: choice
+        default: todo
+        options: [todo, solo-la-hoja, solo-las-fotos]
+      maestro:
+        description: '¿Publicar también maestro.gs? Marca esto Y escribe PUBLICAR abajo'
+        type: boolean
+        default: false
+      confirmar:
+        description: 'Escribe PUBLICAR solo si marcaste la casilla de arriba'
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# Nunca a la vez que `fotos`: los dos escriben en publicar/.
+concurrency:
+  group: tienda-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  montar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      # LA CACHÉ DE NPM, A MANO Y NO CON `cache: npm`.
+      # `cache: npm` exige un package-lock.json, y en este repositorio los dos
+      # están en .gitignore: en un checkout limpio no existen, y setup-node se
+      # cae con «Some specified paths were not resolved». Cachear ~/.npm no
+      # necesita lockfile y se lleva lo que de verdad pesa, que es el binario
+      # nativo de sharp.
+      - name: Caché de npm
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('package.json', 'pruebas/package.json') }}
+          restore-keys: npm-${{ runner.os }}-
+
+      - name: ¿Está configurada esta tienda?
+        id: hay
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: |
+          if [ -z "$MAESTRO_URL" ] || [ -z "$MAESTRO_TOKEN" ]; then
+            {
+              echo "### Este repositorio no tiene la tienda configurada"
+              echo ""
+              echo "Faltan los secretos \`MAESTRO_URL\` y \`MAESTRO_TOKEN\`."
+              echo "Salen del menú de la hoja > Diagnóstico, y se ponen en"
+              echo "Settings > Secrets and variables > Actions."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "sigue=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "sigue=si" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Dependencias
+        if: steps.hay.outputs.sigue == 'si'
+        run: npm install --no-audit --no-fund
+
+      # ── 0. ¿Es esta la tienda de este repositorio? ──
+      # Aquí importa más que en `fotos`: este flujo reescribe el <head>, la
+      # política de seguridad y SCRIPT_URL. Apuntado a la hoja equivocada, deja
+      # una tienda pidiéndole el catálogo al maestro de otro comercio, y lo
+      # hace en verde.
+      - name: ¿Esta hoja es la de esta tienda?
+        if: steps.hay.outputs.sigue == 'si'
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: |
+          set -o pipefail
+          node montar/misma-tienda.mjs 2>&1 | tee /tmp/misma.txt || estado=$?
+          {
+            echo "### De qué tienda es la hoja"
+            echo '```'
+            cat /tmp/misma.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit ${estado:-0}
+
+      # ── 1. El backend, si se pidió ──
+      # Va PRIMERO porque el paso 2 le pregunta al maestro cómo debe quedar el
+      # <head>, y una de las cinco constantes es la versión del contrato. Al
+      # revés, la tienda queda avisando que la hoja responde otra versión.
+      - name: ¿Se pidió publicar el maestro?
+        id: quiere
+        if: steps.hay.outputs.sigue == 'si'
+        env:
+          CLASPRC: ${{ secrets.CLASPRC }}
+          SCRIPT_ID: ${{ secrets.SCRIPT_ID }}
+          HOJA_ID: ${{ secrets.HOJA_ID }}
+        run: |
+          if [ "${{ inputs.maestro }}" != "true" ]; then
+            echo "publica=no" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [ "${{ inputs.confirmar }}" != "PUBLICAR" ]; then
+            echo "Marcaste publicar el maestro pero no escribiste PUBLICAR." >&2
+            echo "Publicar el backend deja código nuevo atendiendo pedidos: se" >&2
+            echo "confirma a propósito. No toqué nada." >&2
+            exit 1
+          fi
+          # Un fallo tiene que decir QUÉ HACER, no solo qué falta, y decirlo en el
+          # resumen, que es lo que alguien lee. Lo mismo que el botón del
+          # carrito: quedarse callado cuesta más que el propio fallo.
+          faltan=""
+          for s in CLASPRC SCRIPT_ID HOJA_ID; do [ -z "${!s}" ] && faltan="$faltan $s"; done
+          if [ -n "$faltan" ]; then
+            {
+              echo "### No publiqué el maestro: faltan secretos"
+              echo ""
+              echo "Falta:\`$faltan\`. Se ponen una sola vez, en"
+              echo "**Settings → Secrets and variables → Actions**."
+              echo ""
+              echo "| Secreto | De dónde sale |"
+              echo "| --- | --- |"
+              echo "| \`HOJA_ID\` | La URL de la hoja, lo que va entre \`/d/\` y \`/edit\` |"
+              echo "| \`SCRIPT_ID\` | La URL del proyecto del maestro, entre \`/projects/\` y \`/edit\` |"
+              echo "| \`CLASPRC\` | El contenido de \`.clasprc.json\` que deja \`clasp login --no-localhost\` con la cuenta de ESTA tienda. Sirve desde cualquier terminal, también uno en el navegador |"
+              echo ""
+              echo "**No toqué nada.** El montaje se detuvo antes de escribir el"
+              echo "\`index.html\`, a propósito: si el maestro no se publica, el index"
+              echo "quedaría escrito contra la versión anterior."
+              echo ""
+              echo "**Mientras tanto**, para seguir sin esos secretos: vuelve a"
+              echo "dispararme con la casilla \`maestro\` **sin marcar** —eso trae la"
+              echo "hoja y las fotos— y publica el maestro **pegándolo en el editor"
+              echo "de Apps Script**, que no necesita ni secretos ni equipo."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "Faltan secretos:$faltan — ver el resumen de esta corrida." >&2
+            exit 1
+          fi
+          echo "publica=si" >> "$GITHUB_OUTPUT"
+
+      - name: clasp y la sesión de Google de esta tienda
+        if: steps.quiere.outputs.publica == 'si'
+        env:
+          CLASPRC: ${{ secrets.CLASPRC }}
+        run: |
+          # SE MIRA QUÉ HAY EN EL SECRETO ANTES DE DÁRSELO A CLASP.
+          # Montando la segunda tienda, aquí se pegó un `.clasp.json` —el que
+          # dice a qué proyecto subir— en vez de un `~/.clasprc.json` —las
+          # credenciales—. clasp contestó «No credentials found», que es cierto
+          # y no ayuda: la pregunta no es dónde están las credenciales, sino qué
+          # hay en su lugar. Y nuestro propio mensaje de error listaba «las dos
+          # causas de siempre», que no eran ninguna de las dos.
+          node montar/revisar-clasprc.mjs
+          npm i -g @google/clasp@3
+          printf '%s' "$CLASPRC" > ~/.clasprc.json
+
+      # La misma herramienta que corre en el equipo: repone el HOJA_ID antes de
+      # subir, se niega a subir si no lo sabe, actualiza la implementación que ya
+      # existe sin estrenar URL, y al terminar pregunta ?a=bloques para
+      # comprobar que el maestro publicado ABRE SU HOJA.
+      - name: Publicar maestro.gs
+        if: steps.quiere.outputs.publica == 'si'
+        env:
+          SCRIPT_ID: ${{ secrets.SCRIPT_ID }}
+          HOJA_ID: ${{ secrets.HOJA_ID }}
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: |
+          set -o pipefail   # sin esto manda el código de tee y un fallo se pierde
+          node montar/publicar-maestro.mjs | tee /tmp/maestro.txt
+          {
+            echo '### Maestro'
+            echo '```'
+            cat /tmp/maestro.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # ── 2. Lo que dice la hoja ──
+      - name: El <head> y las constantes, desde la hoja
+        if: steps.hay.outputs.sigue == 'si' && inputs.que != 'solo-las-fotos'
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: node montar/preparar-index.mjs
+
+      # ── 3. Lo que el comercio subió a su Drive ──
+      - name: Las fotos nuevas
+        if: steps.hay.outputs.sigue == 'si' && inputs.que != 'solo-la-hoja'
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: node montar/traer-fotos.mjs
+
+      # `git diff` NO VE LOS ARCHIVOS NUEVOS. Esto costó una corrida entera: el
+      # montaje horneó catalogo.json por primera vez, este paso dijo "nada
+      # cambió" —porque un archivo sin seguimiento no aparece en git diff— y el
+      # trabajo se tiró a la basura con la corrida en verde. El fallo que
+      # funciona, otra vez.
+      #
+      # `git add -A` primero, y la comparación contra el índice. Así un archivo
+      # nuevo cuenta como cambio, que es lo que cualquiera esperaría que
+      # significara "¿cambió algo?".
+      # ── 3b. El catálogo, horneado dentro del sitio ──
+      # VA DESPUÉS DE LAS FOTOS, y el orden es el arreglo. El catálogo lista qué
+      # medidas existen de cada foto mirando la carpeta; si se hornea antes de
+      # bajarlas, lista el disco de la corrida anterior y promete archivos que
+      # todavía no están. Un manifiesto que se adelanta a lo que describe es
+      # peor que no tenerlo: la página deja de adivinar para creerle a algo
+      # equivocado.
+      - name: El catálogo, horneado en el sitio
+        if: steps.hay.outputs.sigue == 'si' && inputs.que != 'solo-las-fotos'
+        env:
+          MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
+          MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
+        run: |
+          set -o pipefail
+          node montar/catalogo-estatico.mjs 2>&1 | tee /tmp/catalogo.txt
+          {
+            echo "### El catálogo"
+            echo '```'
+            cat /tmp/catalogo.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: ¿Cambió algo?
+        if: steps.hay.outputs.sigue == 'si'
+        id: cambios
+        run: |
+          git add -A -- publicar/
+          if git diff --cached --quiet -- publicar/; then
+            # UN "NO" TIENE QUE MOSTRAR SU TRABAJO. La primera vez que este paso
+            # dijo "nada cambió" era mentira, y averiguar por qué costó ir a
+            # buscar ramas al remoto. Ahora la respuesta trae consigo lo que
+            # miró, así que la siguiente vez se lee en el resumen y ya.
+            {
+              echo "Nada cambió en la hoja ni en el Drive."
+              echo ""
+              echo "Esto es lo que hay en \`publicar/\`, por si el \"no\" sorprende:"
+              echo '```'
+              git status --porcelain -- publicar/ || true
+              echo "(vacío = ni un archivo nuevo, ni uno modificado)"
+              echo ""
+              ls -la publicar/catalogo.json 2>&1 || true
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "hay=no" >> "$GITHUB_OUTPUT"
+          else
+            {
+              echo "### Cambió esto"
+              echo '```'
+              git diff --cached --stat -- publicar/
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "hay=si" >> "$GITHUB_OUTPUT"
+
+            # EL PULL REQUEST TIENE QUE DECIR QUÉ TRAE, y hasta ahora decía
+            # siempre lo mismo. Un título que no cambia nunca es un título que
+            # se deja de leer, y entonces da igual lo que haya dentro: se
+            # fusiona por costumbre. Ya sabemos aquí qué cambió; que lo diga.
+            fotos=$(git diff --cached --name-only -- 'publicar/fotos/*' \
+                    | grep -v 'origen\.json' | wc -l | tr -d ' ')
+            partes=""
+            [ "$fotos" -gt 0 ] && partes="$fotos archivo(s) de foto"
+            if ! git diff --cached --quiet -- publicar/index.html; then
+              partes="${partes:+$partes · }la hoja (index.html)"
+            fi
+            if ! git diff --cached --quiet -- publicar/catalogo.json; then
+              partes="${partes:+$partes · }el catálogo"
+            fi
+            [ -z "$partes" ] && partes="archivos de publicar/"
+            echo "resumen=$partes" >> "$GITHUB_OUTPUT"
+
+            # Y el detalle entero, para que el cuerpo del pull request lo lleve
+            # sin que nadie tenga que abrir la pestaña de archivos.
+            {
+              echo 'detalle<<FIN_DEL_DETALLE'
+              git diff --cached --stat -- publicar/
+              echo 'FIN_DEL_DETALLE'
+            } >> "$GITHUB_OUTPUT"
+          fi
+
+      # ── 4. Probar lo que quedó escrito, NO lo que estaba antes ──
+      - name: Caché del navegador
+        if: steps.cambios.outputs.hay == 'si'
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package.json') }}
+
+      - name: Navegador para las pruebas
+        if: steps.cambios.outputs.hay == 'si'
+        run: cd pruebas && npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+
+      # SI ESTO FALLA, EL RESUMEN TIENE QUE DECIR QUÉ. Una corrida roja que
+      # obliga a abrir el log, buscar el paso y desplegarlo es una corrida que
+      # cuesta una conversación entera. Las líneas FALLA y el marcador van al
+      # resumen, que es lo primero que se ve.
+      - name: Todas las baterías sobre el archivo ya modificado
+        if: steps.cambios.outputs.hay == 'si'
+        run: |
+          set -o pipefail
+          cd pruebas
+          ./todas.sh 2>&1 | tee /tmp/pruebas.txt || estado=$?
+          {
+            echo "### Las baterías"
+            echo '```'
+            grep -E "^ FALLA|^  TOTAL|Baterías con problemas|^    ·" /tmp/pruebas.txt || tail -30 /tmp/pruebas.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit ${estado:-0}
+
+      # ── 5. Recién ahora, el pull request ──
+      - name: Abrir el pull request
+        if: steps.cambios.outputs.hay == 'si'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: montaje/desde-la-hoja
+          base: main
+          commit-message: "refactor/frontend: ${{ steps.cambios.outputs.resumen }}"
+          title: "montaje: ${{ steps.cambios.outputs.resumen }}"
+          body: |
+            Lo abrió el flujo `montaje` con lo que cambió en la hoja del comercio
+            y en su carpeta de Drive.
+
+            ### Qué trae
+
+            ```
+            ${{ steps.cambios.outputs.detalle }}
+            ```
+
+            Todas las baterías ya corrieron **sobre estos archivos**, no sobre
+            los anteriores. Falta lo único que una máquina no puede hacer:
+            mirar la vista previa de Cloudflare antes de fusionar.
+          delete-branch: true
+          add-paths: |
+            publicar/
+
+      # ── 6. Si el pull request no se pudo abrir, DECIR POR QUÉ ──
+      # GitHub contesta «GitHub Actions is not permitted to create or approve
+      # pull requests» en una anotación al pie, y para verla hay que saber que
+      # existe. El runbook ya avisaba de esta casilla —«sin ella, montaje corre
+      # entero, funciona, y falla en la última línea»— pero avisaba en el bloque
+      # de crear una tienda NUEVA, y este repositorio es el primero: nunca pasó
+      # por su propio runbook. La respuesta va aquí, donde se ve el fallo.
+      - name: El pull request no se abrió
+        if: failure() && steps.cambios.outputs.hay == 'si'
+        run: |
+          {
+            echo "### El pull request no se abrió"
+            echo ""
+            echo "El trabajo NO se perdió: está en el artefacto de abajo."
+            echo ""
+            echo "Si el error dice **\`GitHub Actions is not permitted to create"
+            echo "or approve pull requests\`**, es una casilla de ESTE repositorio:"
+            echo ""
+            echo "> Settings → Actions → General → Workflow permissions →"
+            echo "> **Allow GitHub Actions to create and approve pull requests** ✔"
+            echo ""
+            echo "Se marca una vez por repositorio y no vuelve a estorbar."
+            echo "Después, vuelve a disparar este flujo."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Lo que se horneó no se tira aunque el pull request falle. Ya pasó una
+      # vez: el catálogo se generó bien y se perdió con el runner.
+      - name: Guardar lo que se horneó, pase lo que pase
+        if: always() && steps.cambios.outputs.hay == 'si'
+        uses: actions/upload-artifact@v4
+        with:
+          name: publicar
+          path: publicar/
+          retention-days: 7

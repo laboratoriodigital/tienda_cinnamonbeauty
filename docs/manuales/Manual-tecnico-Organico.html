@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manual técnico — Orgánico</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='40' r='23' fill='%23D0211C'/%3E%3Cpath d='M32 17V7' stroke='%231B5E3A' stroke-width='5.5' stroke-linecap='round'/%3E%3Cpath d='M32 18c-5-6-13-5-16-2 3 4 9 6 14 4 5 3 11 2 15-3-3-3-10-4-13 1z' fill='%231B5E3A'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Hoja de estilo compartida por los dos manuales.
+   Pensada para leerse en pantalla y para imprimirse a PDF sin retocar nada. */
+:root{
+  --rojo:#D0211C; --verde:#1B5E3A; --tinta:#161616; --tenue:#6B6B6B;
+  --linea:#E3E3E0; --papel:#FFFFFF; --suave:#F7F7F5;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--papel);color:var(--tinta);
+  font:400 15px/1.62 "Source Sans 3",-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+.hoja{max-width:820px;margin:0 auto;padding:56px 40px 90px}
+
+/* ---------- Portada ---------- */
+.portada{border-bottom:3px solid var(--verde);padding-bottom:26px;margin-bottom:34px}
+.marca{display:flex;align-items:center;gap:11px;margin-bottom:26px}
+.marca svg{display:block}
+.marca b{font-size:1.02rem;letter-spacing:-.01em}
+.portada .tipo{
+  font:700 10px/1 -apple-system,sans-serif;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--verde);margin-bottom:12px
+}
+.portada h1{font-size:2.5rem;line-height:1.08;letter-spacing:-.032em;margin:0 0 12px;font-weight:700}
+.portada p{margin:0;color:var(--tenue);font-size:1.06rem;max-width:60ch}
+.meta{margin-top:20px;font-size:.82rem;color:var(--tenue)}
+
+/* ---------- Índice ---------- */
+.indice{background:var(--suave);border-radius:10px;padding:22px 26px;margin:0 0 42px}
+.indice h2{font:700 10px/1 -apple-system,sans-serif;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--tenue);margin:0 0 14px}
+.indice ol{margin:0;padding-left:1.35em;columns:2;column-gap:34px}
+.indice li{margin:0 0 7px;break-inside:avoid}
+.indice a{color:var(--tinta);text-decoration:none;border-bottom:1px solid transparent}
+.indice a:hover{border-bottom-color:var(--rojo)}
+
+/* ---------- Estructura ---------- */
+h2.seccion{
+  font-size:1.42rem;letter-spacing:-.022em;margin:52px 0 6px;padding-top:20px;
+  border-top:1px solid var(--linea);font-weight:700;break-after:avoid
+}
+h2.seccion .n{color:var(--rojo);font-variant-numeric:tabular-nums;margin-right:10px}
+h3{font-size:1.03rem;margin:30px 0 6px;font-weight:700;break-after:avoid}
+p{margin:0 0 13px;max-width:70ch}
+.entrada{color:var(--tenue);margin-top:-2px;margin-bottom:22px;max-width:70ch}
+ul,ol{margin:0 0 15px;padding-left:1.35em;max-width:70ch}
+li{margin:0 0 6px}
+strong{font-weight:700}
+code{font:.88em/1.4 ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  background:var(--suave);padding:1.5px 5px;border-radius:4px;white-space:nowrap}
+pre{background:#1A1D1B;color:#EDEDE8;border-radius:9px;padding:16px 18px;overflow-x:auto;
+  font:12.5px/1.6 ui-monospace,"SF Mono",Menlo,Consolas,monospace;margin:0 0 18px}
+pre code{background:none;padding:0;white-space:pre;color:inherit}
+a{color:var(--verde)}
+
+/* ---------- Tablas ---------- */
+.tabla{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:.93rem}
+.tabla th{
+  text-align:left;font:700 10px/1.3 -apple-system,sans-serif;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--tenue);padding:0 12px 8px 0;border-bottom:1.5px solid var(--tinta);
+  vertical-align:bottom
+}
+.tabla td{padding:9px 12px 9px 0;border-bottom:1px solid var(--linea);vertical-align:top}
+.tabla td:first-child{white-space:nowrap;font-weight:600}
+.tabla.suelta td:first-child{white-space:normal}
+
+/* ---------- Bloques destacados ---------- */
+.nota,.ojo,.bien{
+  border-left:3px solid var(--verde);background:var(--suave);
+  padding:14px 18px;border-radius:0 8px 8px 0;margin:0 0 20px;break-inside:avoid
+}
+.ojo{border-left-color:var(--rojo)}
+.nota p:last-child,.ojo p:last-child,.bien p:last-child{margin-bottom:0}
+.rotulo{
+  display:block;font:700 10px/1 -apple-system,sans-serif;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--verde);margin-bottom:7px
+}
+.ojo .rotulo{color:var(--rojo)}
+
+/* ---------- Pasos numerados ---------- */
+.pasos{list-style:none;padding:0;margin:0 0 22px;counter-reset:p}
+.pasos li{
+  counter-increment:p;position:relative;padding-left:44px;margin-bottom:16px;break-inside:avoid
+}
+.pasos li::before{
+  content:counter(p);position:absolute;left:0;top:1px;width:27px;height:27px;border-radius:50%;
+  background:var(--verde);color:#fff;display:grid;place-items:center;
+  font:700 13px/1 -apple-system,sans-serif
+}
+.pasos b{display:block;margin-bottom:2px}
+
+/* ---------- Diagrama ---------- */
+figure{margin:0 0 24px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--tenue);margin-top:9px}
+
+/* ---------- Tarjetas ---------- */
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin:0 0 22px}
+.tarjeta{border:1px solid var(--linea);border-radius:10px;padding:16px 18px;break-inside:avoid}
+.tarjeta h4{margin:0 0 5px;font-size:.97rem}
+.tarjeta p{margin:0;font-size:.9rem;color:var(--tenue)}
+
+.cierre{margin-top:60px;padding-top:22px;border-top:1px solid var(--linea);
+  font-size:.85rem;color:var(--tenue)}
+
+/* ---------- Impresión / PDF ---------- */
+@page{margin:16mm 15mm 18mm}
+@media print{
+  .hoja{max-width:none;padding:0}
+  .indice{break-after:page}
+  h2.seccion{break-before:auto}
+  pre,.tabla,figure,.nota,.ojo{break-inside:avoid}
+  a{color:var(--tinta);text-decoration:none}
+}
+
+</style>
+</head>
+<body>
+<div class="hoja">
+
+<header class="portada">
+  <div class="marca">
+    <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="40" r="23" fill="#D0211C"/>
+      <path d="M32 17V7" stroke="#1B5E3A" stroke-width="5.5" stroke-linecap="round"/>
+      <path d="M32 18c-5-6-13-5-16-2 3 4 9 6 14 4 5 3 11 2 15-3-3-3-10-4-13 1z" fill="#1B5E3A"/>
+    </svg>
+    <b>Orgánico</b>
+  </div>
+  <p class="tipo">Manual técnico</p>
+  <h1>Arquitectura, operación y replicación</h1>
+  <p>Una tienda en línea con control de ventas, sobre servicios gratuitos y sin
+     servidor propio. Cómo está armada, por qué así, y cómo montarle una a otro
+     cliente en menos de una hora.</p>
+  <p class="meta">Septiembre de 2026 · Para quien la instala y la mantiene</p>
+</header>
+
+<nav class="indice">
+  <h2>Contenido</h2>
+  <ol>
+    <li><a href="#arquitectura">Arquitectura</a></li>
+    <li><a href="#piezas">Las piezas</a></li>
+    <li><a href="#contrato">El contrato tienda–hoja</a></li>
+    <li><a href="#datos">Modelo de datos</a></li>
+    <li><a href="#flujo">Flujo de un pedido</a></li>
+    <li><a href="#idempotencia">Idempotencia y concurrencia</a></li>
+    <li><a href="#seguridad">Seguridad</a></li>
+    <li><a href="#limites">Capacidad y límites</a></li>
+    <li><a href="#despliegue">Despliegue</a></li>
+    <li><a href="#replicar">Replicar para otro cliente</a></li>
+    <li><a href="#pruebas">Pruebas</a></li>
+    <li><a href="#decisiones">Decisiones y límites</a></li>
+    <li><a href="#mantenimiento">Mantenimiento</a></li>
+  </ol>
+</nav>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="arquitectura"><span class="n">1</span>Arquitectura</h2>
+<p class="entrada">Un archivo HTML estático servido por CDN, y un Google Apps Script
+unido a una hoja de cálculo que hace de base de datos, CMS y backend. No hay servidor,
+no hay build, no hay dependencias.</p>
+
+<figure>
+<svg viewBox="0 0 760 268" role="img" aria-label="Diagrama de la arquitectura">
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0 .5 L8 4.5 L0 8.5 z" fill="#6B6B6B"/>
+    </marker>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0 .5 L8 4.5 L0 8.5 z" fill="#D0211C"/>
+    </marker>
+  </defs>
+
+  <!-- Navegador -->
+  <rect x="20" y="44" width="206" height="92" rx="10" fill="#fff" stroke="#E3E3E0" stroke-width="1.5"/>
+  <text x="123" y="72" text-anchor="middle" font-size="14" font-weight="700" fill="#161616">Navegador</text>
+  <text x="123" y="93" text-anchor="middle" font-size="11.5" fill="#6B6B6B">index.html · 1 archivo</text>
+  <text x="123" y="110" text-anchor="middle" font-size="11.5" fill="#6B6B6B">sin librerías, sin build</text>
+  <text x="123" y="127" text-anchor="middle" font-size="11" fill="#9A9A9A">servido por Netlify (CDN)</text>
+
+  <!-- Apps Script -->
+  <rect x="286" y="24" width="200" height="132" rx="10" fill="#1B5E3A"/>
+  <text x="386" y="53" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Apps Script</text>
+  <text x="386" y="76" text-anchor="middle" font-size="11.5" fill="#CFE3D7">doGet · doPost</text>
+  <text x="386" y="94" text-anchor="middle" font-size="11.5" fill="#CFE3D7">Cache 60 s · LockService</text>
+  <text x="386" y="112" text-anchor="middle" font-size="11.5" fill="#CFE3D7">Disparadores 1 h · onEdit</text>
+  <text x="386" y="130" text-anchor="middle" font-size="11.5" fill="#CFE3D7">MailApp</text>
+  <text x="386" y="148" text-anchor="middle" font-size="11" fill="#8FBFA3">toda la lógica de negocio</text>
+
+  <!-- Google Sheets -->
+  <rect x="546" y="44" width="196" height="92" rx="10" fill="#fff" stroke="#E3E3E0" stroke-width="1.5"/>
+  <text x="644" y="72" text-anchor="middle" font-size="14" font-weight="700" fill="#161616">Google Sheets</text>
+  <text x="644" y="93" text-anchor="middle" font-size="11.5" fill="#6B6B6B">9 pestañas</text>
+  <text x="644" y="110" text-anchor="middle" font-size="11.5" fill="#6B6B6B">datos · CMS · reportes</text>
+
+  <!-- WhatsApp -->
+  <rect x="20" y="200" width="206" height="54" rx="10" fill="#fff" stroke="#E3E3E0" stroke-width="1.5"/>
+  <text x="123" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="#161616">WhatsApp</text>
+  <text x="123" y="242" text-anchor="middle" font-size="11.5" fill="#6B6B6B">cierre, cobro y despacho</text>
+
+  <!-- Cloudinary -->
+  <rect x="546" y="200" width="196" height="54" rx="10" fill="#fff" stroke="#E3E3E0" stroke-width="1.5"/>
+  <text x="644" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="#161616">Cloudinary</text>
+  <text x="644" y="242" text-anchor="middle" font-size="11.5" fill="#6B6B6B">fotos · f_auto,q_auto</text>
+
+  <!-- Navegador ↔ Apps Script -->
+  <text x="256" y="66" text-anchor="middle" font-size="10.5" fill="#6B6B6B">GET ?a=…</text>
+  <path d="M232 76 L280 76" stroke="#6B6B6B" stroke-width="1.5" marker-end="url(#a)"/>
+  <path d="M280 100 L232 100" stroke="#6B6B6B" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="256" y="95" text-anchor="middle" font-size="10.5" fill="#6B6B6B">JSON</text>
+
+  <!-- Apps Script ↔ Sheets -->
+  <path d="M492 76 L540 76" stroke="#6B6B6B" stroke-width="1.5" marker-end="url(#a)"/>
+  <path d="M540 100 L492 100" stroke="#6B6B6B" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Cloudinary → Navegador -->
+  <path d="M540 227 L258 227 L258 124 L232 124" stroke="#6B6B6B" stroke-width="1.5"
+        fill="none" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  <text x="400" y="219" text-anchor="middle" font-size="10.5" fill="#6B6B6B">&lt;img&gt; directo, sin pasar por el backend</text>
+
+  <!-- Navegador → WhatsApp -->
+  <path d="M123 142 L123 194" stroke="#D0211C" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="133" y="172" font-size="10.5" fill="#D0211C">wa.me con el mensaje armado</text>
+</svg>
+<figcaption>El navegador habla con Apps Script por GET con JSON. Las fotos van directo del
+CDN de Cloudinary. El cierre de la venta pasa por WhatsApp, fuera del sistema.</figcaption>
+</figure>
+
+<div class="nota">
+  <span class="rotulo">La premisa</span>
+  <p>La forma más costo-eficiente de poner en línea a un negocio pequeño, con control
+  básico de ventas, usando servicios gratuitos. <strong>Costo de operación: $0/mes.</strong>
+  Único gasto opcional: el dominio, ~$50.000/año. Cada decisión de este documento se
+  sostiene contra esa vara.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="piezas"><span class="n">2</span>Las piezas</h2>
+
+<table class="tabla suelta">
+  <tr><th>Archivo</th><th>Qué es</th><th>Dónde vive</th></tr>
+  <tr><td><code>index.html</code></td><td>La tienda entera: HTML, CSS y JS en un archivo. ~100 KB.</td><td>Netlify</td></tr>
+  <tr><td><code>_headers</code></td><td>Cabeceras de seguridad de Netlify (CSP, <code>frame-ancestors</code>, etc.).</td><td>Netlify</td></tr>
+  <tr><td><code>compartir.jpg</code></td><td>Imagen 1200×630 de la vista previa al compartir.</td><td>Netlify</td></tr>
+  <tr><td><code>apps-script.gs</code></td><td>El backend completo. ~1.500 líneas, sin dependencias.</td><td>Apps Script, unido a la hoja</td></tr>
+</table>
+
+<p>La carpeta <code>publicar/</code> del repositorio contiene <strong>exactamente</strong>
+esos tres primeros archivos y nada más. Existe para no arrastrar por accidente la
+documentación interna a un hosting público.</p>
+
+<h3>Reglas de construcción</h3>
+<ul>
+  <li>Un solo archivo. Sin frameworks, sin npm, sin paso de build.</li>
+  <li>Sin <code>localStorage</code> ni <code>sessionStorage</code>.</li>
+  <li>Mobile-first, probado a 375 px.</li>
+  <li>Todo texto visible sale de la hoja o de una constante de respaldo en el archivo.</li>
+</ul>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="contrato"><span class="n">3</span>El contrato tienda–hoja</h2>
+<p class="entrada">Apps Script se publica como aplicación web y expone cuatro operaciones
+por GET. Todas devuelven JSON con <code>version</code>.</p>
+
+<table class="tabla suelta">
+  <tr><th>Petición</th><th>Devuelve</th><th>Cuándo</th></tr>
+  <tr><td><code>?a=catalogo</code></td><td>Productos activos, envíos y configuración.</td><td>Al cargar la tienda.</td></tr>
+  <tr><td><code>?a=validar&amp;items=…&amp;cupon=…&amp;envio=…&amp;sub=…</code></td><td>Subtotal recalculado por la hoja, descuento, envío, total y avisos. Con <code>sellar=1</code> además deja la fila en <code>Validaciones</code>, con el número del pedido como referencia.</td><td>Al aplicar cupón y antes de enviar.</td></tr>
+  <tr><td><code>?a=registrar&amp;pedido=…&amp;items=…</code></td><td>Graba el pedido en <code>Pedidos</code>.</td><td>Al tocar «Enviar pedido».</td></tr>
+  <tr><td><code>?a=version</code></td><td>Solo la versión del contrato.</td><td>Diagnóstico.</td></tr>
+</table>
+
+<h3>El versionado, y el error que evita</h3>
+<p><code>VERSION</code> en el script y <code>SCRIPT_VERSION</code> en la tienda deben
+coincidir. Si no coinciden, la tienda <strong>no sella el pedido</strong>, avisa por
+consola y el mensaje sale marcado como «calculado por la página», para que el error sea
+ruidoso en vez de silencioso.</p>
+
+<div class="ojo">
+  <span class="rotulo">La causa número uno de fallos</span>
+  <p>En Apps Script, <strong>guardar el código no publica nada</strong>. La aplicación web
+  sigue sirviendo la versión anterior hasta que se hace
+  <em>Implementar → Gestionar implementaciones → lápiz → Versión: Nueva versión</em>.
+  Casi todos los síntomas raros («la hoja no se llena», «el cupón no aplica») son esto.
+  El chequeo de versión existe precisamente para delatarlo en un segundo.</p>
+</div>
+
+<p><code>VERSION</code> describe el <strong>contrato</strong>, no el código. Un cambio que
+la tienda no consume —el tablero, el correo, el formato de una pestaña— <strong>no</strong>
+debe subirla: subirla obligaría al cliente a republicar Netlify sin razón.</p>
+
+<h3>Por qué GET y no POST</h3>
+<p>Apps Script responde a un POST con un <strong>302 hacia
+<code>script.googleusercontent.com</code></strong>, y el navegador convierte esa redirección
+en un GET sin cuerpo. El resultado es una petición que parece exitosa y no escribe nada.
+Todo el tráfico va por GET por eso; los parámetros van en la URL y el servidor los valida.</p>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="datos"><span class="n">4</span>Modelo de datos</h2>
+<p class="entrada">Nueve pestañas. Los nombres son parte del contrato: renombrar una
+rompe el sistema en silencio. Agregar columnas <strong>a la derecha</strong> es seguro;
+insertarlas en medio no.</p>
+
+<table class="tabla suelta">
+  <tr><th>Pestaña</th><th>Columnas</th><th>Quién escribe</th></tr>
+  <tr><td>Configuración</td><td>Clave · Valor · Qué es</td><td>Dueño</td></tr>
+  <tr><td>Catálogo</td><td>ID · Nombre · Formato · Categoría · Precio · Stock · Descripción · Imágenes · Destacado · Activo</td><td>Dueño (Stock también el script)</td></tr>
+  <tr><td>Envíos</td><td>ID · Nombre · Valor</td><td>Dueño</td></tr>
+  <tr><td>Cupones</td><td>Código · Tipo · Valor · Mínimo · Vence · Usos máximos · Usos confirmados · Activo · Notas</td><td>Dueño (usos, el script)</td></tr>
+  <tr><td>Validaciones</td><td>Fecha · Pedido · Cupón · Subtotal hoja · Subtotal página · Discrepancia · Descuento · Envío · Total hoja · Detalle</td><td>Script</td></tr>
+  <tr><td>Pedidos</td><td>Fecha · Pedido · Validación · <strong>Estado</strong> · Ciudad · Cupón · Producto · ID · Cantidad · Precio · Subtotal línea · Total pedido · <strong>Inventario</strong></td><td>Script (Estado, el dueño)</td></tr>
+  <tr><td>Tablero</td><td>4 columnas de presentación</td><td>Script, se reescribe entera</td></tr>
+  <tr><td>Más vendidos</td><td>Producto · ID · Unidades · Ingresos · Pedidos</td><td>Script</td></tr>
+  <tr><td>Errores</td><td>Fecha · Error · Primeros 200 caracteres</td><td>Script</td></tr>
+</table>
+
+<p><strong>Una fila por línea de pedido</strong>, no por pedido: el total del pedido se
+repite en cada fila. Todo cálculo agrupa por número de pedido antes de sumar totales —
+si no, un pedido de tres productos contaría triple.</p>
+
+<h3>Configuración: las claves</h3>
+<p>La pestaña <code>Configuración</code> es la que hace genérica la tienda. Cuando el
+script gana una clave nueva, volver a ejecutar <code>instalar()</code> la agrega a hojas
+ya existentes sin tocar los valores del dueño.</p>
+<table class="tabla suelta">
+  <tr><td>Identidad</td><td><code>negocio</code>, <code>whatsapp</code>, <code>logo</code>, <code>favicon</code></td></tr>
+  <tr><td>Portada</td><td><code>portada_titulo</code>, <code>portada_texto</code>, <code>portada_puntos</code>, <code>como_compras</code>, <code>pie_descripcion</code></td></tr>
+  <tr><td>Marca</td><td><code>color_principal</code>, <code>color_secundario</code>, <code>color_alterno</code> — se pueden pintar en vez de escribir</td></tr>
+  <tr><td>Legales</td><td><code>empresa_razon</code>, <code>empresa_nit</code>, <code>empresa_correo</code>, <code>empresa_direccion</code>, <code>empresa_ciudad</code>, <code>empresa_tel</code>, <code>legal_actualizado</code></td></tr>
+  <tr><td>SEO</td><td><code>sitio_url</code>, <code>sitio_titulo</code>, <code>sitio_descripcion</code></td></tr>
+  <tr><td>Correo</td><td><code>correo_resumen</code>, <code>correo_hora</code>, <code>correo_siempre</code>, <code>correo_ultimo</code></td></tr>
+</table>
+<p>Los valores entre corchetes —<code>[NIT]</code>, <code>[DIRECCIÓN]</code>— se tratan como
+«todavía no lo tengo» y la frase que los contiene no se muestra, en vez de renderizar el
+corchete.</p>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="flujo"><span class="n">5</span>Flujo de un pedido</h2>
+
+<ol class="pasos">
+  <li><b>Carga.</b> La tienda pide <code>?a=catalogo</code>, aplica configuración,
+      catálogo, envíos y colores. Si no hay respuesta, usa el catálogo de respaldo del
+      propio archivo y sigue funcionando.</li>
+  <li><b>Carrito.</b> Estado en memoria. <code>sanear()</code> lo recorta al stock, valida
+      el envío y descarta un cupón inválido en cada repintado.</li>
+  <li><b>Validación.</b> Al aplicar cupón o al llenar el formulario, la tienda manda el
+      carrito a <code>?a=validar&amp;sellar=1</code>. La hoja recalcula con
+      <strong>sus</strong> precios, aplica el cupón según <strong>sus</strong> reglas y
+      devuelve el total con un código de verificación. La fila queda en
+      <code>Validaciones</code>.</li>
+  <li><b>Sello.</b> El sello solo se considera vigente si coinciden versión, firma del
+      carrito y subtotal. Cualquier cambio posterior lo invalida y obliga a revalidar.</li>
+  <li><b>Envío.</b> El mensaje lleva el número del pedido, no un código de verificación
+      aparte: son el mismo identificador desde que se unificaron, y repetirlo solo
+      ensuciaba el mensaje. El botón es un <code>&lt;a href="wa.me/…"&gt;</code> real —no
+      <code>window.open</code>— para no chocar con el bloqueo de ventanas emergentes ni
+      generar dobles toques fantasma. Al hacer clic se dispara
+      <code>?a=registrar</code> con <code>keepalive</code>.</li>
+  <li><b>Cierre.</b> El pedido entra como <em>Por confirmar</em>. El dueño confirma en la
+      hoja; ahí baja el inventario y la venta entra en los reportes.</li>
+</ol>
+
+<h3>El mensaje de WhatsApp</h3>
+<p>Se recorta progresivamente para no pasar de 2.000 caracteres de URL: primero se caen
+las notas, luego el detalle por producto, luego las líneas de cortesía. <strong>No lleva
+datos de pago</strong> (ver Seguridad). Va por <code>encodeURIComponent</code>.</p>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="idempotencia"><span class="n">6</span>Idempotencia y concurrencia</h2>
+<p class="entrada">Tres mecanismos, cada uno por un bug real de producción.</p>
+
+<table class="tabla suelta">
+  <tr><th>Mecanismo</th><th>Problema que resuelve</th></tr>
+  <tr><td>Número de pedido estable</td>
+      <td>Se calcula una vez por carrito y solo se reinicia cuando el carrito queda vacío. Antes se generaba en cada envío y un doble toque creaba dos pedidos.</td></tr>
+  <tr><td>Deduplicación en el servidor</td>
+      <td><code>registrar</code> ignora un número de pedido ya grabado. Tres envíos del mismo pedido dejan una sola entrada.</td></tr>
+  <tr><td><code>LockService</code> + upsert por número</td>
+      <td><code>Validaciones</code> se escribe leyendo-y-escribiendo bajo candado. Sin él, dos validaciones simultáneas creaban dos filas con códigos distintos.</td></tr>
+  <tr><td>Columna <code>Inventario</code></td>
+      <td>Marca cada línea como <em>Descontado</em> o <em>Devuelto</em>. Hace que confirmar, anular y volver a confirmar no descuadre el stock, y que la rutina se pueda correr mil veces sin efecto.</td></tr>
+  <tr><td>Congelado tras el envío</td>
+      <td>Una fila de <code>Validaciones</code> cuyo pedido ya se registró no se puede reescribir.</td></tr>
+</table>
+
+<p>El inventario <strong>no</strong> se descuenta al enviar el pedido, a propósito: un
+pedido abierto en WhatsApp no es una venta, y si descontara ahí, cualquiera podría dejar
+el inventario en cero abriendo pedidos que nunca paga.</p>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="seguridad"><span class="n">7</span>Seguridad</h2>
+<p class="entrada">El modelo de amenaza parte de un hecho: <strong>todo lo que está en el
+navegador es del atacante.</strong> El HTML se lee, el JavaScript se edita, la consola
+está abierta.</p>
+
+<table class="tabla suelta">
+  <tr><th>Riesgo</th><th>Mitigación</th></tr>
+  <tr><td>Alterar el total desde la consola</td>
+      <td>El servidor recalcula todo con los precios de la hoja. La tienda nunca es la autoridad sobre el precio. Además <code>Object.freeze</code> sobre catálogo, cupones y envíos.</td></tr>
+  <tr><td>Inventar o reutilizar un cupón</td>
+      <td>Los cupones viven solo en la hoja, con vigencia, mínimo y tope de usos. La lista del archivo está vacía.</td></tr>
+  <tr><td>Clonar el sitio y cambiar la llave de pago</td>
+      <td><strong>Los datos de pago no están en la página.</strong> Se entregan por respuesta automática de WhatsApp, que además advierte al cliente que no transfiera si ve otra llave. Eso hace inútil una copia.</td></tr>
+  <tr><td>Inyección de fórmulas en Sheets</td>
+      <td><code>celdaSegura()</code> antepone un apóstrofo a todo valor que empiece por <code>=</code>, <code>+</code>, <code>-</code>, <code>@</code> o un carácter de control, y recorta a 60 caracteres.</td></tr>
+  <tr><td>XSS y carga de recursos ajenos</td>
+      <td>CSP en la etiqueta <code>meta</code> y en <code>_headers</code>: <code>default-src 'none'</code>, con lista explícita para estilos, tipografías, imágenes y <code>connect-src</code>. <code>frame-ancestors</code> solo funciona en cabecera, por eso existe <code>_headers</code>.</td></tr>
+  <tr><td>Payloads absurdos al backend</td>
+      <td>Tope de 30 ítems, cantidad máxima 200, total máximo 5.000.000, IDs que no estén en el catálogo se descartan, duplicados se colapsan y el <code>Estado</code> nunca lo decide quien envía.</td></tr>
+  <tr><td>Fuga de datos personales</td>
+      <td>La hoja guarda <strong>qué</strong> se pidió, no <strong>quién</strong>. Nombre, teléfono y dirección viven solo en WhatsApp. Lo que no se guarda no se filtra.</td></tr>
+</table>
+
+<div class="ojo">
+  <span class="rotulo">Lo que este diseño NO puede impedir</span>
+  <p><code>wa.me</code> solo rellena la caja de texto: <strong>el cliente puede editar el
+  mensaje antes de enviarlo.</strong> Por eso el mensaje es lo que el cliente decidió
+  escribir, no un documento con validez. El código de verificación permite cruzar contra
+  la fila de <code>Validaciones</code>, pero el punto de control final es el dueño
+  revisando el total antes de despachar. Está documentado como paso obligatorio en el
+  manual del dueño.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="limites"><span class="n">8</span>Capacidad y límites</h2>
+<p class="entrada">Números medidos, no estimados. Se miden con
+<code>limites.js</code>, que siembra catálogos de distinto tamaño en la hoja y cronometra
+el backend real y la tienda en un navegador.</p>
+
+<h3>Tamaño del catálogo</h3>
+<table class="tabla">
+  <tr><th>Productos</th><th>Respuesta de <code>?a=catalogo</code></th><th>Tienda lista</th><th>Tarjetas en el DOM</th></tr>
+  <tr><td>50</td><td>11 KB</td><td>0,36 s</td><td>25</td></tr>
+  <tr><td>150</td><td>30 KB</td><td>0,32 s</td><td>25</td></tr>
+  <tr><td>300</td><td>59 KB</td><td>0,28 s</td><td>25</td></tr>
+  <tr><td>600</td><td>117 KB</td><td>0,30 s</td><td>25</td></tr>
+  <tr><td>1.000</td><td>195 KB</td><td>0,32 s</td><td>25</td></tr>
+</table>
+<p>El tiempo de pintado no crece porque la paginación mantiene el DOM en 25, 50 o 100
+tarjetas pase lo que pase. <strong>Lo que crece es el JSON</strong>, y ese viaja por
+datos móviles. Los números de arriba son con descripciones cortas; con descripciones
+reales de ~200 caracteres y URLs de fotos, cuenta el doble.</p>
+<p><strong>Recomendación: hasta 300 productos cómodo, 500 el tope práctico.</strong> Más
+allá, el catálogo pesa más que la propia página y conviene otro diseño (carga por
+categoría, o un backend de verdad).</p>
+
+<h3>Concurrencia</h3>
+<p>El techo es la cuota de Google: <strong>30 ejecuciones simultáneas</strong> de Apps
+Script. Pero no toda visita consume una:</p>
+<ul>
+  <li><strong>Ver la tienda</strong> casi nunca: el catálogo va en caché 60 s, así que
+      una sola ejecución sirve a todos los que entren en ese minuto.</li>
+  <li><strong>Aplicar un cupón o enviar un pedido</strong> sí consume una, y dura uno o
+      dos segundos.</li>
+</ul>
+<p>En la práctica: <strong>~25 personas validando en el mismo instante</strong>. La 26
+recibe un fallo, la tienda reintenta dos veces sola, y si no lo logra el pedido sale
+marcado como no verificado en vez de perderse.</p>
+
+<h3>Tráfico y almacenamiento</h3>
+<table class="tabla suelta">
+  <tr><th>Recurso</th><th>Tope del plan gratuito</th><th>Qué significa aquí</th></tr>
+  <tr><td>Cloudinary (fotos)</td><td>25 créditos/mes ≈ 25 GB de entrega</td>
+      <td><strong>Es el primer techo.</strong> Una visita nueva que ve una página de 25
+          productos descarga ~1 MB de fotos: <strong>~25.000 visitas nuevas al mes</strong>.
+          Las repetidas casi no cuentan, porque el navegador las guarda.</td></tr>
+  <tr><td>Netlify (la página)</td><td>Plan gratuito por créditos, 300/mes</td>
+      <td>La página pesa ~100 KB. No es el cuello de botella. Al agotarse, el sitio
+          queda pausado hasta el mes siguiente.</td></tr>
+  <tr><td>Google Sheets</td><td>10 millones de celdas</td>
+      <td>Muy por encima del tope que impone el propio script.</td></tr>
+  <tr><td>Filas de <code>Pedidos</code></td><td>20.000 (<code>MAX_FILAS</code>)</td>
+      <td>Una fila por línea de pedido: <strong>6.000 a 10.000 pedidos</strong>. Al
+          llegar, el script se niega a escribir con un mensaje claro en vez de corromper
+          la hoja: hay que archivar y vaciar.</td></tr>
+  <tr><td>Correo</td><td>100 al día</td><td>El resumen gasta 1.</td></tr>
+  <tr><td>Disparadores</td><td>90 minutos al día</td>
+      <td>El recálculo horario tarda segundos. Sobra.</td></tr>
+  <tr><td>Ejecución</td><td>6 minutos cada una</td>
+      <td>La más lenta —recalcular tablero con miles de filas— va muy por debajo.</td></tr>
+</table>
+
+<div class="ojo">
+  <span class="rotulo">Los planes gratuitos cambian</span>
+  <p>Los topes de Netlify y Cloudinary de esta tabla son de <strong>septiembre de
+  2026</strong>, y ambos proveedores los han cambiado antes. Verifícalos al montar cada
+  tienda. Las cuotas de Google Apps Script son las más estables de las tres.</p>
+</div>
+
+<h3>Rendimiento del cliente</h3>
+<ul>
+  <li>Catálogo cacheado 60 s con <code>CacheService</code>; se invalida al confirmar un
+      pedido o al cambiar un color.</li>
+  <li>Fotos por Cloudinary con <code>f_auto,q_auto,c_fill,ar_1:1</code> y ancho según el
+      uso: 600 px tarjeta, 900 px galería, 160 px miniatura.</li>
+  <li>Espera de 15 s por petición y 2 reintentos silenciosos, por la red móvil.</li>
+  <li>Paginación de 25 / 50 / 100.</li>
+</ul>
+
+<h3>Lo que el sistema no hace, por diseño</h3>
+<ul>
+  <li>Sin pasarela de pagos ni facturación electrónica.</li>
+  <li>Sin generación de guías ni integración logística.</li>
+  <li>Sin usuarios ni permisos: quien tenga la hoja lo puede todo.</li>
+  <li>Sin datos personales almacenados: no hay CRM ni historial por cliente.</li>
+  <li>Sin picos: una campaña masiva concentrada en una hora excede la concurrencia.</li>
+</ul>
+<p>Cada una de esas ausencias es lo que sostiene el costo en $0/mes. El punto de quiebre
+razonable son <strong>~30 pedidos al día</strong> o la necesidad de cobrar en línea: ahí
+ya hay volumen para pagar una plataforma con mensualidad.</p>
+
+<h2 class="seccion" id="despliegue"><span class="n">9</span>Despliegue</h2>
+
+<h3>Backend</h3>
+<ol class="pasos">
+  <li><b>Hoja nueva</b> en Google Sheets. <em>Extensiones → Apps Script</em>.</li>
+  <li><b>Pegar <code>apps-script.gs</code> completo</b>, reemplazando todo.</li>
+  <li><b>Ejecutar <code>instalar()</code></b>. Está de primera en el archivo a propósito:
+      el desplegable del editor toma la primera función, y ejecutar otra por accidente es
+      un clásico. Crea las nueve pestañas, siembra datos de ejemplo y programa los
+      disparadores.</li>
+  <li><b>Implementar → Nueva implementación → Aplicación web.</b> Ejecutar como: yo.
+      Acceso: cualquier usuario. Copiar la URL que termina en <code>/exec</code>.</li>
+  <li><b>Pegar esa URL</b> en <code>SCRIPT_URL</code> dentro de <code>index.html</code>.
+      Es lo único que se escribe a mano en todo el archivo.</li>
+</ol>
+
+<h3>Frontend</h3>
+<p>Arrastrar la carpeta <code>publicar/</code> sobre la pestaña <em>Deploys</em> del sitio
+en Netlify. Sin CI, sin build.</p>
+
+<h3>Cuando cambia el título, la descripción o el dominio</h3>
+<p>El <code>&lt;title&gt;</code>, las etiquetas Open Graph, el canonical y el favicon
+tienen que ser HTML estático: los rastreadores no ejecutan JavaScript. Menú
+<strong>Orgánico → Generar configuración para index.html</strong> abre una ventana con los
+dos bloques listos para copiar. El primero reemplaza lo que hay entre las marcas
+<code>CONFIGURACIÓN DE ESTA TIENDA</code> y <code>FIN DE LA CONFIGURACIÓN</code>; el
+segundo, las cuatro constantes del <code>&lt;script&gt;</code>. La URL <code>/exec</code>
+se pega a mano: es lo único que el script no puede saber de sí mismo. Después, republicar.</p>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h3>Los dos bloques generados</h3>
+<p>Nada de <code>index.html</code> se edita a mano salvo <code>SCRIPT_URL</code>. Todo lo
+demás que alguna vez hubo que tocar ahora lo escribe el Apps Script y se pega entre
+marcas:</p>
+<table class="tabla suelta">
+  <tr><th>Menú</th><th>Qué genera</th><th>Cuándo</th></tr>
+  <tr><td>Generar configuración para index.html</td>
+      <td>El bloque del <code>&lt;head&gt;</code> (title, Open Graph, canonical, favicon,
+          theme-color) y las cuatro constantes del <code>&lt;script&gt;</code>.</td>
+      <td>Cambió el título, la descripción, el dominio o los colores de marca.</td></tr>
+  <tr><td>Generar inventario para index.html</td>
+      <td><code>const ENVIOS</code> y <code>const PRODUCTOS</code>: el catálogo de
+          respaldo, con precios y stock del momento, en JavaScript válido.</td>
+      <td>Cada tanto, para que el paracaídas esté al día.</td></tr>
+</table>
+<p>La lista de cupones desapareció del archivo: los cupones solo existen en la hoja y solo
+la hoja los valida. Un paso manual menos en el despliegue, y una superficie menos.</p>
+
+<h3>La hoja como interfaz</h3>
+<p><code>presentarHojas()</code> corre al instalar y desde el menú. Deja encabezados con
+el color de la marca, filas y columnas fijas, anchos, formatos de moneda y fecha, y
+—lo importante— <strong>listas desplegables</strong> en todo campo donde una errata rompe
+el sistema: <code>Estado</code> del pedido, <code>Destacado</code>, <code>Activo</code>,
+<code>Tipo</code> de cupón, <code>correo_siempre</code>. <code>Categoría</code> sugiere
+pero deja escribir, porque el negocio crece.</p>
+<p>Los tres colores de marca se pueden <strong>pintar</strong> con el relleno nativo de
+Sheets: <code>sincronizarColores()</code> lee el fondo con <code>getBackground()</code> y
+escribe el hexadecimal. El camino inverso lo hace <code>alEditar</code>, que pinta la
+celda con el valor recién escrito. Cuál gana se decide por cuál cambió, y por eso las dos
+direcciones no se pelean.</p>
+
+<h2 class="seccion" id="replicar"><span class="n">10</span>Replicar para otro cliente</h2>
+<p class="entrada">La tienda es genérica. Cambiando solo la pestaña
+<code>Configuración</code>, el mismo <code>index.html</code> se convierte en otro negocio
+—nombre, colores, textos, WhatsApp, legales y favicon incluidos—. Hay una prueba
+automática que lo verifica convirtiendo la tomatera en una panadería.</p>
+
+<ol class="pasos">
+  <li><b>Hoja y script</b> — los cinco pasos de despliegue del backend. <em>~15 min</em></li>
+  <li><b>Configuración</b> — llenar la pestaña con los datos del cliente: nombre,
+      WhatsApp, textos de portada, dos colores de marca, datos de la empresa para los
+      legales. <em>~10 min</em></li>
+  <li><b>Catálogo</b> — una fila por producto. Las fotos a Cloudinary, las URL en la
+      columna Imágenes separadas por <code>|</code>. <em>~15 min, según cuántos productos</em></li>
+  <li><b>Envíos y cupones</b> — zonas con sus valores; cupones si los hay. <em>~5 min</em></li>
+  <li><b>Bloque estático</b> — menú → Generar configuración → pegar los dos bloques en
+      <code>index.html</code> → pegar la URL <code>/exec</code>. <em>~5 min</em></li>
+  <li><b>Publicar</b> — arrastrar <code>publicar/</code> a Netlify. <em>~2 min</em></li>
+  <li><b>Cerrar el circuito</b> — respuesta automática de WhatsApp Business con los datos
+      de pago y la advertencia; correo del dueño en <code>correo_resumen</code>. <em>~5 min</em></li>
+</ol>
+
+<div class="bien">
+  <span class="rotulo">Lo que sí hay que revisar cada vez</span>
+  <p>La imagen <code>compartir.jpg</code> (1200×630) es del negocio y hay que reemplazarla.
+  Los datos legales <code>empresa_*</code> son obligatorios en Colombia por la Ley 1480: si
+  quedan entre corchetes, la frase no se muestra, pero el vendedor queda sin identificar.
+  Y la CSP de <code>_headers</code> lista los dominios de imágenes permitidos: si el
+  cliente usa otro proveedor de fotos, hay que agregarlo ahí <strong>y</strong> en la
+  etiqueta <code>meta</code>.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="pruebas"><span class="n">11</span>Pruebas</h2>
+<p class="entrada">525 comprobaciones en 16 baterías, sobre el código real. Corren en
+Node con Playwright y Chromium.</p>
+
+<p>La pieza clave es <code>gas.js</code>: un emulador de Google Apps Script y Sheets que
+<strong>carga <code>apps-script.gs</code> tal cual</strong> y le inyecta el entorno de
+Google (<code>SpreadsheetApp</code>, <code>CacheService</code>, <code>LockService</code>,
+<code>MailApp</code>, <code>HtmlService</code>…). Existe porque una versión anterior del
+banco de pruebas reimplementaba el backend a mano: validaba la imitación, no el código
+del cliente. El servidor de pruebas sirve <code>index.html</code> reescribiendo
+<code>SCRIPT_URL</code>, de modo que el navegador habla con el backend real.</p>
+
+<table class="tabla suelta">
+  <tr><th>Batería</th><th>Qué cubre</th></tr>
+  <tr><td>e2e · test · movil</td><td>Compra completa, formulario, red móvil que se cae, reintentos.</td></tr>
+  <tr><td>pedidos</td><td>Registro, deduplicación, inventario, anulación, inyección de fórmulas.</td></tr>
+  <tr><td>val · cat · hoja</td><td>Validación de cupones y envíos, catálogo desde la hoja, cambios en caliente.</td></tr>
+  <tr><td>config</td><td>Convierte la tienda en otro negocio cambiando solo la hoja.</td></tr>
+  <tr><td>tablero</td><td>Cada número del tablero, y que el diseño esté puesto.</td></tr>
+  <tr><td>correo</td><td>Destinatarios, hora, una vez al día, contenido, adjunto mensual, fallos.</td></tr>
+  <tr><td>enlace</td><td>Enlace por producto, compartir, botón atrás, producto inexistente.</td></tr>
+  <tr><td>presentacion</td><td>Formato de todas las hojas, listas desplegables, colores pintables y el catálogo de respaldo generado.</td></tr>
+  <tr><td>version · menu · pag · sec2</td><td>Desfase de versión, menú y ventana de configuración, paginación, seguridad.</td></tr>
+</table>
+
+<pre><code>./todas.sh        # levanta los servidores y corre las 16 baterías</code></pre>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="decisiones"><span class="n">12</span>Decisiones y límites</h2>
+
+<h3>Decisiones deliberadas</h3>
+<ul>
+  <li><strong>La hoja es la única fuente de verdad</strong> de precios, stock, envíos,
+      cupones, marca y textos. El archivo solo guarda un respaldo que evita que la tienda
+      se caiga si Google no responde.</li>
+  <li><strong>Fallo cerrado en cupones</strong>: si la hoja no responde, no se aplica
+      descuento. Un cupón aplicado sin validar es plata perdida.</li>
+  <li><strong>Fallo abierto en catálogo</strong>: si la hoja no responde, la tienda sirve
+      el catálogo del archivo. Una tienda vacía es peor que una desactualizada.</li>
+  <li><strong>Los gráficos del tablero se dibujan con bloques</strong> (<code>█</code>) y
+      no con <code>SPARKLINE</code>: las fórmulas de Sheets cambian de separador según el
+      idioma de la hoja, y una fórmula escrita desde el script se rompe con solo cambiar
+      el idioma. Un bloque de texto se ve igual en todas partes.</li>
+  <li><strong>El correo se revisa cada hora</strong> en vez de programar un disparador a
+      una hora fija, porque la hora vive en la hoja. Se cura solo si Google se salta una
+      ejecución.</li>
+</ul>
+
+<h3>Límites conocidos</h3>
+<ul>
+  <li><strong>La vista previa de un enlace de producto</strong> es la de la tienda, no la
+      del producto. Los rastreadores no ejecutan JavaScript. Arreglarlo pediría una página
+      por producto y un paso de build.</li>
+  <li><strong>El total del mensaje es editable</strong> por el cliente antes de enviarlo.
+      Mitigado con el código de verificación y el paso de revisión del dueño.</li>
+  <li><strong>El contador de usos de cupón</strong> se actualiza cada hora: un cupón de un
+      solo uso conviene apagarlo a mano.</li>
+  <li><strong>Sin pasarela de pagos.</strong> El cobro se acuerda por chat. Es parte de la
+      premisa de costo cero, no una omisión.</li>
+  <li><strong>Techo de concurrencia</strong>: 30 ejecuciones simultáneas de Apps Script.</li>
+</ul>
+
+<!-- ══════════════════════════════════════════════════ -->
+<h2 class="seccion" id="mantenimiento"><span class="n">13</span>Mantenimiento</h2>
+
+<h3>Diagnóstico</h3>
+<p>Menú <strong>Orgánico → Diagnóstico</strong> imprime en el Registro de ejecución: la
+versión del código, la hoja a la que está unido, qué pestañas faltan y cuántas filas
+tiene cada una. Es el primer paso ante cualquier síntoma.</p>
+
+<table class="tabla suelta">
+  <tr><th>Síntoma</th><th>Causa habitual</th></tr>
+  <tr><td>La tienda no muestra productos</td><td>Pestaña renombrada, o <code>instalar()</code> nunca se ejecutó.</td></tr>
+  <tr><td>Los pedidos no se graban</td><td>Implementación desactualizada. Publicar versión nueva.</td></tr>
+  <tr><td>Aviso de versión en consola</td><td>Lo mismo. Es exactamente lo que ese aviso detecta.</td></tr>
+  <tr><td>Las fotos no cargan</td><td>Dominio de imágenes no listado en la CSP, en <code>meta</code> o en <code>_headers</code>.</td></tr>
+  <tr><td>Filas en la pestaña Errores</td><td>Payload que el backend no entendió. Trae los primeros 200 caracteres recibidos.</td></tr>
+  <tr><td>El correo no llega</td><td>Sin destinatario, no era la hora, o no había nada que contar. Probar con el menú.</td></tr>
+</table>
+
+<h3>Rutina</h3>
+<ul>
+  <li>La hoja crece una fila por línea de pedido. A las 20.000 filas conviene archivar el
+      año anterior en una copia y vaciar; el script avisa antes de llegar al tope.</li>
+  <li>El catálogo de respaldo dentro de <code>index.html</code> conviene refrescarlo de vez
+      en cuando: solo se usa si Google no responde, pero es lo que ve el cliente ese día.</li>
+  <li>Los disparadores se recrean al ejecutar <code>instalar()</code>; ejecutarlo de nuevo
+      no duplica nada.</li>
+</ul>
+
+<p class="cierre">Orgánico · Manual técnico · Septiembre de 2026<br>
+Para la operación diaria del negocio existe el <em>Manual del dueño</em>.</p>
+
+</div>
+</body>
+</html>
