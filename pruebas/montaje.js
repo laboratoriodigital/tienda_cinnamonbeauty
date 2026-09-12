@@ -2797,6 +2797,29 @@ const configurar = (g, clave, valor) => {
      /Colores de la hoja/.test(pi) && /LA HOJA NO TRAE NINGÚN COLOR/.test(pi) &&
      /A0_instalar\(\)/.test(pi),
      '«salió con los de la plantilla» se veía abriendo la tienda, que es tarde');
+
+  /* Y LA TRAMPA QUE ESTO DESTAPÓ, QUE ES PEOR QUE EL FALLO.
+     `config.js` exigía `#D0211C` y `#1B5E3A` a pelo en el icono. Pasaba desde
+     siempre porque la única tienda montada usaba los de fábrica, y se puso
+     roja el primer día que un comercio eligió los suyos — o sea, el día en que
+     todo funcionó bien. El flujo `montaje` corre las baterías sobre el
+     index.html que acaba de escribir CON LA CONFIGURACIÓN DE ESA TIENDA: todo
+     lo que una batería de navegador dé por hecho de la primera tienda es una
+     tienda que no se puede montar. Es el patrón 4, y ya había pasado en
+     `hoja.js` con el nombre del comercio.
+
+     Las que NO abren navegador sí pueden nombrar la paleta: miran la hoja
+     emulada, que es siempre la de fábrica. */
+  const FABRICA = /#D0211C|#1B5E3A|#14472B|%23D0211C|%231B5E3A|%2314472B/;
+  const conPaleta = fs.readdirSync('.')
+    .filter(n => /\.js$/.test(n) && n !== 'montaje.js')
+    .filter(n => {
+      const src = fs.readFileSync(n, 'utf8');
+      return /playwright/.test(src) && FABRICA.test(src.replace(/\/\*[\s\S]*?\*\//g, ''));
+    });
+  ok('NINGUNA BATERÍA DE NAVEGADOR da por hecha la paleta de la primera tienda',
+     conPaleta.length === 0,
+     conPaleta.join(', ') + ' — el montaje las corre sobre el archivo de OTRA tienda');
 }
 
 console.log(T.join('\n'));

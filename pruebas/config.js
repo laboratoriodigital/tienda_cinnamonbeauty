@@ -45,7 +45,30 @@ const cfg = async (clave, valor) => {
   ok('  ...dibujado dentro del propio archivo, sin pedir nada al servidor',
      icono.indexOf('http') === -1 || icono.indexOf('http') > 30,
      'no hay petición extra');
-  ok('  ...con los colores de la marca', /#D0211C/.test(icono) && /#1B5E3A/.test(icono));
+  /* LOS COLORES DE LA MARCA, NO LOS DE ORGÁNICO.
+     Esta aserción exigía `#D0211C` y `#1B5E3A` a pelo. Pasaba desde siempre
+     porque la única tienda montada usaba los colores de fábrica — y se puso
+     roja el primer día que un comercio eligió los suyos, que es justo el día
+     en que TODO funcionó bien. El flujo `montaje` corre las baterías sobre el
+     index.html que acaba de escribir CON LA CONFIGURACIÓN DE ESA TIENDA, así
+     que cualquier cosa quemada aquí es una tienda que no se puede montar.
+     Es el patrón 4 de la bitácora: una prueba que solo sabe ver la primera
+     tienda no prueba el producto.
+
+     Lo que sí vale en cualquier tienda: el icono y el `theme-color` salen los
+     dos de `color_principal`, así que TIENEN QUE COINCIDIR. Eso comprueba que
+     el color de la hoja llegó al archivo, sea el que sea. */
+  const tema = await p.evaluate(() => {
+    const m = document.querySelector('meta[name="theme-color"]');
+    return m ? m.getAttribute('content') : '';
+  });
+  const delIcono = (icono.match(/fill='(#[0-9A-Fa-f]{6})'/) || [])[1] || '';
+  ok('  ...con los colores de ESTA tienda, no con los de la primera',
+     /^#[0-9A-Fa-f]{6}$/.test(tema) && delIcono.toUpperCase() === tema.toUpperCase(),
+     'icono ' + (delIcono || '(ninguno)') + ' · theme-color ' + (tema || '(ninguno)'));
+  ok('  ...y el segundo color también es un color de verdad',
+     /stroke='(#[0-9A-Fa-f]{6})'/.test(icono),
+     'si no es un hex de seis dígitos, la página lo tira sin avisar');
   ok('  ...y también para la pantalla de inicio del celular',
      await p.evaluate(() => !!document.querySelector('link[rel="apple-touch-icon"]')));
 
