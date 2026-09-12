@@ -1,1 +1,27 @@
-{}
+{
+  "cosmeticos1.jpg": {
+    "id": "1wjVk9p48bpXq1Kw6rv34TUNyYob3e6Kh",
+    "modificado": "2026-09-12T03:17:39.000Z",
+    "bytes": 433586
+  },
+  "labial.jpg": {
+    "id": "1PVR7f5tlts-vxJrVD0x0o38kESkV7THX",
+    "modificado": "2026-09-12T03:18:54.000Z",
+    "bytes": 24823
+  },
+  "rubor.jpg": {
+    "id": "1HxDbAx4QGUfwqtMvlLe9fvEg7r-BVmSR",
+    "modificado": "2026-09-12T03:19:53.000Z",
+    "bytes": 30115
+  },
+  "rubor1.png": {
+    "id": "1BFQjRZWQVqgek4iBDSegCb_ewYZdjiGs",
+    "modificado": "2026-09-12T03:20:28.000Z",
+    "bytes": 937104
+  },
+  "rubor3.jpg": {
+    "id": "1OccXEQBLbg65vhnlVmJ7bb3faTZrNCmg",
+    "modificado": "2026-09-12T03:20:42.000Z",
+    "bytes": 26126
+  }
+}
