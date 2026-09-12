@@ -360,7 +360,7 @@ existe**, así que la URL no cambia. La comprobación es el menú de la hoja →
 Diagnóstico** de la hoja: "Versión del MAESTRO de esta tienda" tiene que decir
 lo que imprimió el comando.
 
-- [ ] `clasp login --status` muestra la cuenta correcta antes de correrlo
+- [ ] `clasp show-authorized-user` muestra la cuenta correcta antes de correrlo
 
 ---
 
@@ -615,7 +615,7 @@ disparadores. Ante la duda, córrelo.
 | El panel dice *403, se acabaron las 60 peticiones por hora* | Sin token, GitHub limita por IP y Apps Script comparte las suyas: ese cupo está agotado **casi siempre** | Pon un token de grano fino con `Actions: read-only`. Sube a 5.000/hora |
 | `npm run maestro` falla con *unknown command* | clasp 3 renombró los comandos | Resuelto desde 1.6.2: detecta la versión |
 | `npm run maestro` dice *"." no se reconoce como un comando* | Era un script de bash y PowerShell no lo corre | Resuelto desde 1.6.3: ahora es Node |
-| `npm run maestro` falla al subir | `clasp` está autenticado con otra cuenta | `clasp login --status` para ver cuál, y `clasp login` con la dueña del proyecto |
+| `npm run maestro` falla al subir | `clasp` está autenticado con otra cuenta | `clasp show-authorized-user` para ver cuál, y `clasp login` con la dueña del proyecto |
 | `npm run maestro` dice *Falta clasp* y clasp **sí** está instalado | En Windows el binario es `clasp.cmd` y Node no lo lanza sin shell | Resuelto desde 1.6.4 |
 | La versión del panel no coincide con la que imprime `npm run maestro` | **No tienen por qué coincidir.** Son tres códigos con tres numeraciones: el maestro, el `index.html` y el panel | La que se compara es la del menú de la hoja de la hoja de la tienda, no la del panel |
 | El pull request no se abre | No cambió nada | Es lo correcto: el resumen del flujo lo dice |

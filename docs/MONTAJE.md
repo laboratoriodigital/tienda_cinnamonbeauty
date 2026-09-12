@@ -26,7 +26,7 @@ maestro. Si te autenticas con otra, `clasp push` falla con un error de permisos
 que no dice eso. Para comprobar con cuál estás:
 
 ```bash
-clasp login --status
+clasp show-authorized-user
 ```
 
 Y como cada tienda vive en su propia cuenta, cambiar de tienda es volver a

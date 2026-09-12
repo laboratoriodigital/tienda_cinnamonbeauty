@@ -211,8 +211,15 @@ const configurar = (g, clave, valor) => {
   ok('  ...y descarta la de @HEAD, que es la de desarrollo',
      /@HEAD/.test(src), 'actualizar esa no publica nada');
 
+  /* `clasp login --status` NO EXISTE EN CLASP 3 —lo dice su propio --help— y
+     este mensaje llevaba meses mandando a escribir un comando inventado. El
+     que sí existe es `show-authorized-user`. Un remedio que no se puede
+     ejecutar es peor que ninguno: quien lo prueba concluye que el problema es
+     otro. */
   ok('SI clasp ESTÁ EN OTRA CUENTA, lo dice: es el fallo más probable',
-     /autenticado con OTRA cuenta/.test(src) && /clasp login --status/.test(src));
+     /autenticado con OTRA cuenta/.test(src) && /show-authorized-user/.test(src) &&
+     !/clasp login --status/.test(src),
+     'el remedio tiene que ser un comando que exista en la versión instalada');
   ok('SIN IMPLEMENTACIÓN previa explica qué hacer una sola vez',
      /no tiene ninguna implementación publicada/.test(src) &&
      /Cualquier persona/.test(src) && /abre esa URL una vez/.test(src));
@@ -2554,10 +2561,91 @@ const configurar = (g, clave, valor) => {
        dijo clasp, y con stdio:'inherit' su salida quedaba en null: mirarla
        habría sido mirar a la nada. */
     const pm = fs.readFileSync('../montar/publicar-maestro.mjs', 'utf8');
-    ok('  ...y «no hay credenciales» ya no se confunde con «no tienes permiso»',
-       /no credentials\|not logged in/.test(pm) && /revisar-clasprc\.mjs/.test(pm) &&
+    ok('  ...y la salida de clasp se CAPTURA, que es lo que permite decidir',
        !/clasp\(\['push', '--force'\], \{ cwd: tmp, stdio: 'inherit' \}\)/.test(pm),
-       'sin capturar la salida, la decisión se tomaría sobre null');
+       'con stdio:inherit la decisión se tomaría sobre null');
+
+    /* TRES FALLOS DISTINTOS QUE SE CONTESTABAN CON EL MISMO PÁRRAFO.
+       «Las dos causas de siempre» —cuenta equivocada, API sin habilitar—
+       mandó dos veces seguidas a mirar donde no era: a revisar la cuenta
+       cuando lo que faltaba era un archivo, y a habilitar una API que ya
+       estaba habilitada. Un error que apunta al sitio equivocado cuesta más
+       que uno que no dice nada. */
+    const { porQueFallo } = require('../montar/publicar-maestro.mjs');
+    const dice = {
+      'sin-credenciales': 'No credentials found.',
+      'sin-permiso':      'The caller does not have permission',
+      'api-apagada':      'User has not enabled the Apps Script API. Enable it by ' +
+                          'visiting https://script.google.com/home/usersettings',
+      'otro':             'ECONNRESET'
+    };
+    ok('CADA QUEJA DE GOOGLE se reconoce como la suya',
+       Object.keys(dice).every(k => porQueFallo(dice[k]) === k),
+       Object.keys(dice).map(k => k + ':' + porQueFallo(dice[k])).join(' '));
+    /* El de la API apagada TAMBIÉN trae un 403. Si se mirara primero el
+       permiso, se lo tragaría y volveríamos a mandar al sitio equivocado. */
+    ok('  ...y la API apagada gana al 403, que también lo trae',
+       porQueFallo('403 PERMISSION_DENIED: User has not enabled the Apps Script API ' +
+                   'https://script.google.com/home/usersettings') === 'api-apagada',
+       'el orden de las comprobaciones ES la comprobación');
+
+    ok('  ...y «no tienes permiso» dice QUIÉN y SOBRE QUÉ',
+       /cuenta:    /.test(pm) && /proyecto:  /.test(pm) &&
+       /show-authorized-user/.test(pm) && /list-scripts/.test(pm),
+       'Google dice que alguien no tiene permiso, sin decir quién ni sobre qué');
+    ok('  ...y el scriptId se imprime ENTERO, no truncado',
+       /proyecto ' \+ cfg\.scriptId\)/.test(pm) &&
+       !/cfg\.scriptId\.slice\(0, 14\)/.test(pm),
+       'truncado, dos proyectos de la misma plantilla se ven idénticos');
+
+    /* Y el archivo no puede volver a hacer nada al importarlo: probar la
+       clasificación no puede disparar un despliegue. */
+    ok('  ...y publicar-maestro NO hace nada al importarlo',
+       /import\.meta\.url === pathToFileURL\(process\.argv\[1\] \|\| ''\)\.href\) main\(\)/.test(pm),
+       'importarlo para probarlo llegó a crear montar/.clasp.json');
+
+    /* ── El plantón de 45 segundos, y el consejo que hablaba de otra cosa ──
+       Montando la segunda tienda, `?a=bloques` contestó bien desde
+       publicar-maestro.mjs y, segundos después, se plantó en 45 s desde
+       preparar-index.mjs con la MISMA petición. No era la tienda: Apps Script
+       está frío justo después de actualizar una implementación, que es
+       exactamente el momento del montaje en que se le pregunta.
+       Y el mensaje del plantón decía «si es una foto, casi siempre es que
+       pesa demasiado» — en un plantón de «bloques», mandando a buscar una
+       foto grande que no existía. */
+    const { topeDe, seReintenta, mensajeDePlanton } = require('../montar/tienda.mjs');
+
+    ok('EL TOPE de una llamada normal aguanta un Apps Script frío',
+       topeDe('bloques') >= 90000 && topeDe('foto') >= 180000,
+       'bloques ' + topeDe('bloques') / 1000 + ' s · foto ' + topeDe('foto') / 1000 + ' s');
+    ok('  ...y un plantón se reintenta, porque en frío es la primera vez',
+       seReintenta('bloques') && seReintenta('catalogo'),
+       'un plantón en frío no es un fallo');
+    ok('  ...pero NO lo que escribe en la hoja',
+       !seReintenta('sembrar'),
+       'un plantón no dice si la escritura llegó: reintentarla puede duplicarla');
+
+    ok('EL CONSEJO DEL PLANTÓN es de lo que falló, no de fotos siempre',
+       !/foto/i.test(mensajeDePlanton('bloques')) &&
+       /Solo yo/.test(mensajeDePlanton('bloques')) &&
+       /pesa demasiado/.test(mensajeDePlanton('foto', { id: '1x' })),
+       'a «bloques» le mandaba a buscar una foto grande que no existía');
+    ok('  ...y nombra la foto concreta cuando sí lo es',
+       /\(id 1x\)/.test(mensajeDePlanton('foto', { id: '1x' })),
+       'con cien fotos, saber cuál reventó es la mitad del arreglo');
+    ok('  ...y no promete un reintento que no hubo',
+       /ni al reintentar/.test(mensajeDePlanton('bloques')) &&
+       /No se reintenta porque escribe/.test(mensajeDePlanton('sembrar')),
+       'decir «ni al reintentar» sin reintentar es una mentira pequeña y cara');
+
+    /* Y CUÁNTO TARDÓ, SIEMPRE. La comprobación de publicar-maestro no lleva
+       tope, así que puede tardar cuarenta segundos y decir «sí» tan tranquila
+       mientras el paso siguiente se planta con la misma petición. El log no
+       traía ni un número con el que sospecharlo. */
+    ok('  ...y una llamada lenta DICE cuánto tardó',
+       /RUIDOSA_DESDE/.test(fs.readFileSync('../montar/tienda.mjs', 'utf8')) &&
+       /sí, en ' \+ tardo \+ ' s\./.test(pm) && /está FRÍO/.test(pm),
+       'sin ese número, «contestó» y «casi no contesta» se ven igual');
   }
 
   ok('  ...y la única espera fija que queda tiene nombre y motivo',

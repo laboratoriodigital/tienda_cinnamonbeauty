@@ -54,30 +54,93 @@ export async function laTienda() {
    5 minutos exactos en «Bajarlas y convertirlas» y no dejó ni una línea que
    dijera en qué se había quedado: cinco minutos de silencio y un rojo. Apps
    Script se toma su tiempo entregando una foto en base64, así que el tope de
-   una foto es alto; el de las demás llamadas, corto, porque contestan rápido o
-   no contestan. */
-const ESPERA = { foto: 180000, otras: 45000 };
+   una foto es alto; el de las demás, más corto.
+
+   PERO «CORTO» ERAN 45 SEGUNDOS Y NO ALCANZABAN EL DÍA QUE MÁS FALTA HACÍA.
+   Montando la segunda tienda, `?a=bloques` contestó bien desde
+   publicar-maestro.mjs y, segundos después, se plantó en 45 s desde
+   preparar-index.mjs. No era la tienda: era que Apps Script está FRÍO. La
+   primera llamada después de actualizar una implementación —y las primeras de
+   una cuenta recién creada— tardan lo suyo, y ese es justo el momento del
+   montaje en que se hacen.
+
+   Así que el tope sube y, sobre todo, SE REINTENTA: un plantón en frío no es
+   un fallo, es la primera vez. Lo que no se hace es esperar en silencio; cada
+   intento dice cuánto lleva. */
+const ESPERA = { foto: 180000, otras: 90000 };
+const REINTENTOS = 2;
+
+/* LO QUE NO SE REINTENTA, Y POR QUÉ.
+   Un plantón no dice si la petición no llegó o si llegó y la respuesta se
+   perdió. Para una LECTURA da igual: se vuelve a preguntar. Para algo que
+   ESCRIBE, no: reintentar puede escribir dos veces.
+   `sembrar` es la única que escribe en la hoja desde aquí. Hoy da la
+   casualidad de que es idempotente —pone las mismas claves— pero apoyarse en
+   esa casualidad es exactamente cómo se cuela un doble registro el día que
+   deje de serlo. */
+export const SIN_REINTENTO = ['sembrar'];
+
+/* Cuando una llamada tarda de verdad, que se vea. Este número —«contestó en
+   38 s»— es el que habría explicado el plantón de la segunda tienda en un
+   vistazo, y no estaba en ninguna parte. */
+const RUIDOSA_DESDE = 5000;
+
+/* Las tres decisiones del plantón, sueltas y probables de verdad. Estaban
+   metidas dentro de `alMaestro`, que necesita un servidor y noventa segundos
+   para ejercitarse; así una batería puede preguntar por la política sin
+   montar una tienda. La que estuvo mal fue la tercera. */
+export const topeDe      = accion => accion === 'foto' ? ESPERA.foto : ESPERA.otras;
+export const seReintenta = accion => SIN_REINTENTO.indexOf(accion) === -1;
+
+export function mensajeDePlanton(accion, extra = {}) {
+  return 'El maestro no contestó en ' + Math.round(topeDe(accion) / 1000) +
+    ' segundos a la petición «' + accion + '»' +
+    (seReintenta(accion) ? ', ni al reintentar.\n'
+                         : '. No se reintenta porque escribe en la hoja.\n') +
+    /* EL CONSEJO TIENE QUE SER DE LO QUE FALLÓ. Este mensaje hablaba de fotos
+       que pesan demasiado SIEMPRE, dijera lo que dijera la acción: en un
+       plantón de «bloques» mandaba a buscar una foto grande que no existía. */
+    (accion === 'foto'
+      ? 'Casi siempre es que la foto' + (extra.id ? ' (id ' + extra.id + ')' : '') +
+        ' pesa demasiado para que Apps Script\nla entregue en base64: bájala ' +
+        'de tamaño en el Drive y vuelve a correr.'
+      : 'Con «' + accion + '» casi nunca es la red. Las dos causas:\n' +
+        '  · La implementación quedó con acceso «Solo yo»: entonces la /exec\n' +
+        '    devuelve la pantalla de inicio de sesión de Google y se queda ahí.\n' +
+        '    Implementar > Gestionar implementaciones > lápiz > Quién tiene\n' +
+        '    acceso: Cualquier persona.\n' +
+        '  · O el script se quedó colgado: ábrelo y mira Ejecuciones.');
+}
 
 /** Una llamada al maestro, con los errores dichos en cristiano. */
 export async function alMaestro({ url, token }, accion, extra = {}) {
   const q = new URLSearchParams({ a: accion, t: token, ...extra });
-  const tope = accion === 'foto' ? ESPERA.foto : ESPERA.otras;
+  const tope = topeDe(accion);
   let r;
-  try {
-    r = await fetch(url + '?' + q, { redirect: 'follow',
-                                     signal: AbortSignal.timeout(tope) });
-  } catch (e) {
-    /* Un plantón se nombra como lo que es. «fetch failed» a secas mandaba a
-       buscar un problema de red que casi nunca era el problema. */
-    if (e.name === 'TimeoutError' || e.name === 'AbortError') {
-      throw new Error(
-        'El maestro no contestó en ' + Math.round(tope / 1000) + ' segundos ' +
-        'a la petición «' + accion + '»' +
-        (extra.id ? ' (id ' + extra.id + ')' : '') + '.\n' +
-        'Si es una foto, casi siempre es que pesa demasiado para que Apps ' +
-        'Script la entregue: bájala de tamaño en el Drive y vuelve a correr.');
+  for (let intento = 1; ; intento++) {
+    const arranque = Date.now();
+    try {
+      r = await fetch(url + '?' + q, { redirect: 'follow',
+                                       signal: AbortSignal.timeout(tope) });
+      const tardo = Date.now() - arranque;
+      if (tardo >= RUIDOSA_DESDE) {
+        console.log('  · «' + accion + '» contestó en ' + Math.round(tardo / 1000) +
+                    ' s' + (intento > 1 ? ' (intento ' + intento + ')' : '') + '.');
+      }
+      break;
+    } catch (e) {
+      /* Un plantón se nombra como lo que es. «fetch failed» a secas mandaba a
+         buscar un problema de red que casi nunca era el problema. */
+      const planton = e.name === 'TimeoutError' || e.name === 'AbortError';
+      if (planton && intento < REINTENTOS && seReintenta(accion)) {
+        console.log('  · «' + accion + '» no contestó en ' + Math.round(tope / 1000) +
+                    ' s. Apps Script suele estar frío justo después de publicar; ' +
+                    'reintento ' + (intento + 1) + ' de ' + REINTENTOS + '…');
+        continue;
+      }
+      if (planton) throw new Error(mensajeDePlanton(accion, extra));
+      throw new Error('No pude hablar con el maestro: ' + e.message);
     }
-    throw new Error('No pude hablar con el maestro: ' + e.message);
   }
   if (r.status === 404) {
     throw new Error(

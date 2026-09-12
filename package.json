@@ -1,7 +1,7 @@
 {
   "name": "organico",
   "private": true,
-  "version": "2.9.5",
+  "version": "2.9.7",
   "description": "Tienda en línea de una sola página. La hoja de cálculo es la base de datos; este repositorio es lo que se publica.",
   "scripts": {
     "fotos": "node preparar-fotos.mjs",

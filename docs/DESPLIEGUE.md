@@ -239,6 +239,13 @@ archivos ya modificados** → abre el pull request.
 
 Revisar la vista previa de Cloudflare y fusionar.
 
+> **La primera corrida después de publicar el maestro es LENTA, y es normal.**
+> Apps Script queda «frío» al actualizar una implementación: la primera
+> petición a la `/exec` puede tardar cuarenta segundos o más. Las herramientas
+> ya lo aguantan —esperan 90 s y reintentan— y el log dice cuánto tardó cada
+> llamada. Si ves `· «bloques» contestó en 38 s`, no está roto: está
+> arrancando.
+
 ## 12 · ⚠ `A1_generarStub()` — y el orden importa
 
 **Genera el stub a partir del maestro que está PUBLICADO**, no del que está en
@@ -347,9 +354,22 @@ porque **corre entero en verde**:
 2. La clave `repositorio` de la pestaña `Configuración` de la hoja.
 3. **A qué repositorio está conectado el proyecto de Cloudflare** que sirve el
    sitio → *Workers & Pages > el proyecto > Settings > Build*.
+4. **`SCRIPT_ID` y `CLASPRC` juntos.** Al montar la segunda tienda se copian
+   los secretos de la primera y este se queda con el proyecto de aquella,
+   mientras las credenciales ya son de la nueva cuenta. Google contesta
+   **`The caller does not have permission`**, que dice que alguien no tiene
+   permiso sin decir quién ni sobre qué — y lleva a revisar la API de Apps
+   Script, que casi siempre estaba bien.
 
 Los flujos comparan 1 contra 2 y se plantan si no coinciden. El 3 no lo puede
-ver nadie desde aquí: se mira a mano.
+ver nadie desde aquí: se mira a mano. El 4 lo nombra el propio flujo: imprime
+la cuenta y el proyecto antes de subir, y si falla lista los proyectos que esa
+cuenta **sí** ve.
+
+> **Para comprobar el 4 en un minuto:** abre
+> `https://script.google.com/d/<SCRIPT_ID>/edit` con la cuenta de **esta**
+> tienda y ninguna otra —una ventana de incógnito ayuda—. Si dice que no
+> tienes acceso, el secreto apunta al maestro de otra.
 
 ## Y uno que solo aparece al rotar el token
 

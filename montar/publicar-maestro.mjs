@@ -46,6 +46,7 @@ import { readFileSync, writeFileSync, mkdtempSync, rmSync, copyFileSync,
          existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { pathToFileURL } from 'node:url';
 
 const CLASP  = 'montar/.clasp.json';
 const TIENDA = 'tienda.json';
@@ -89,6 +90,42 @@ function version() {
   const r = clasp(['--version']);
   const m = String(r.stdout || '').match(/(\d+)\.\d+/);
   return m ? Number(m[1]) : 2;
+}
+
+/* QUÉ SE QUEJÓ GOOGLE, EXACTAMENTE.
+   Tres fallos distintos que durante meses se contestaron con el mismo párrafo:
+   «las dos causas de siempre». Dos veces seguidas, montando la segunda tienda,
+   ese párrafo mandó a mirar donde no era —a revisar la cuenta cuando faltaba un
+   archivo, y a habilitar una API que ya estaba habilitada—. Un error que apunta
+   al sitio equivocado cuesta más que uno que no dice nada.
+
+   El orden importa: la API apagada se mira ANTES que el permiso, porque su
+   mensaje también trae un 403 y si no, se lo tragaría el otro caso. */
+export function porQueFallo(dijo) {
+  const t = String(dijo || '');
+  if (/no credentials|not logged in|no se encontraron credenciales/i.test(t)) return 'sin-credenciales';
+  if (/has not enabled the apps script api|home\/usersettings/i.test(t))      return 'api-apagada';
+  if (/caller does not have permission|permission_denied|\b403\b/i.test(t))  return 'sin-permiso';
+  return 'otro';
+}
+
+/* Con qué cuenta de Google está autenticado clasp. Existe desde la 3; en la 2
+   no, y entonces se calla en vez de inventarse un dato. */
+function cuentaAutenticada() {
+  const r = clasp(['show-authorized-user', '--json']);
+  try { return JSON.parse(String(r.stdout || '')).email || ''; } catch { return ''; }
+}
+
+/* Qué proyectos ve esa cuenta. Es lo que convierte «no tienes permiso» en
+   «esta cuenta no ve ese proyecto, y estos son los que sí ve». */
+function proyectosQueVe() {
+  const r = clasp(['list-scripts', '--json']);
+  try {
+    const d = JSON.parse(String(r.stdout || ''));
+    const lista = Array.isArray(d) ? d : (d.scripts || d.files || []);
+    return lista.map(x => ({ id: x.id || x.scriptId || '', nombre: x.name || x.title || '' }))
+                .filter(x => x.id);
+  } catch { return null; }
 }
 
 /* EL VALOR QUE SE PIERDE AL SUBIR, Y QUE DEJÓ UNA TIENDA MUDA.
@@ -162,12 +199,22 @@ async function verificar(version) {
   }
 
   process.stdout.write('\nComprobando que el maestro publicado abre su hoja… ');
+  const arranque = Date.now();
   try {
     const r = await fetch(url + '?a=bloques&t=' + encodeURIComponent(token),
                           { redirect: 'follow' });
     const d = await r.json();
+    /* CUÁNTO TARDÓ, SIEMPRE. Esta llamada no lleva tope, así que puede tardar
+       cuarenta segundos y decir «sí» tan tranquila — y el paso siguiente, que
+       sí lo lleva, plantarse con la misma petición. Pasó montando la segunda
+       tienda y el log no traía ni un número con el que sospecharlo. */
+    const tardo = Math.round((Date.now() - arranque) / 1000);
     if (d.ok && d.valores) {
-      console.log('sí.');
+      console.log('sí, en ' + tardo + ' s.');
+      if (tardo >= 20) {
+        console.log('  ⚠ Apps Script está FRÍO: es lo normal justo después de');
+        console.log('    publicar, y los pasos siguientes pueden tardar igual.');
+      }
       if (d.version !== version) {
         console.log('\n⚠ Responde la versión ' + d.version + ' y se publicó la ' +
                     version + '. Google tarda unos segundos: vuelve a mirar el');
@@ -196,8 +243,16 @@ async function main() {
 
   const cfg = elProyecto();
   const mayor = version();
-  console.log('clasp ' + String(v.stdout).trim() + '  ·  proyecto ' +
-              cfg.scriptId.slice(0, 14) + '…');
+  console.log('clasp ' + String(v.stdout).trim() + '  ·  proyecto ' + cfg.scriptId);
+
+  /* CON QUÉ CUENTA SE ESTÁ ACTUANDO. Es el dato que faltaba, y sin él el fallo
+     típico de la segunda tienda —los secretos de una con el proyecto de otra—
+     es indiagnosticable: Google contesta «The caller does not have permission»,
+     que dice que ALGUIEN no tiene permiso sin decir quién ni sobre qué.
+     El scriptId también se imprime ENTERO: iba truncado a 14 caracteres, y así
+     dos proyectos distintos de la misma plantilla se ven idénticos. */
+  const quien = cuentaAutenticada();
+  console.log('Cuenta de clasp:  ' + (quien || '(no pude averiguarla)'));
 
   /* Una carpeta temporal con lo único que debe existir en ese proyecto: el
      maestro y su manifiesto. Sin esto clasp le subiría a Google las pruebas,
@@ -229,25 +284,87 @@ async function main() {
       /* «No credentials found» NO es ninguna de las dos causas de siempre, y
          mandarlo a comprobar la cuenta es mandarlo al sitio equivocado: lo que
          falta no es permiso, es el archivo. Se separa a propósito. */
-      const sinCredenciales = /no credentials|not logged in|no se encontraron credenciales/i
-        .test(String(push.stdout || '') + String(push.stderr || ''));
-      console.error(
-        '\nNo pude subir el archivo.\n\n' +
-        (sinCredenciales
-          ? 'Clasp dice que NO ENCUENTRA CREDENCIALES, así que no es un problema\n' +
-            'de permisos: es que no hay sesión, o que lo que hay no lo es.\n\n' +
-            'En Actions:  el secreto CLASPRC tiene que llevar el contenido de\n' +
-            '  ~/.clasprc.json —el que escribe `clasp login` en tu CARPETA\n' +
-            '  PERSONAL—, y NO el .clasp.json de la carpeta del proyecto, que\n' +
-            '  es otro archivo y solo dice a qué proyecto subir.\n' +
-            '  Compruébalo con  node montar/revisar-clasprc.mjs\n\n' +
-            'En tu equipo:  corre  clasp login  con la cuenta de esta tienda.\n'
-          : 'Las dos causas de siempre:\n' +
-            '  · clasp está autenticado con OTRA cuenta. Tiene que ser la dueña\n' +
-            '    del proyecto de ESTA tienda. Compruébalo con  clasp login --status\n' +
-            '    y cámbiala con  clasp login\n' +
-            '  · falta habilitar la API de Apps Script en esa cuenta:\n' +
-            '    https://script.google.com/home/usersettings\n'));
+      const queja = porQueFallo(String(push.stdout || '') + String(push.stderr || ''));
+      const sinCredenciales = queja === 'sin-credenciales';
+      const sinPermiso      = queja === 'sin-permiso';
+      const apiApagada      = queja === 'api-apagada';
+
+      console.error('\nNo pude subir el archivo.\n');
+
+      if (sinCredenciales) {
+        console.error(
+          'Clasp dice que NO ENCUENTRA CREDENCIALES, así que no es un problema\n' +
+          'de permisos: es que no hay sesión, o que lo que hay no lo es.\n\n' +
+          'En Actions:  el secreto CLASPRC tiene que llevar el contenido de\n' +
+          '  ~/.clasprc.json —el que escribe `clasp login` en tu CARPETA\n' +
+          '  PERSONAL—, y NO el .clasp.json de la carpeta del proyecto, que\n' +
+          '  es otro archivo y solo dice a qué proyecto subir.\n' +
+          '  Compruébalo con  node montar/revisar-clasprc.mjs\n\n' +
+          'En tu equipo:  corre  clasp login  con la cuenta de esta tienda.\n');
+
+      } else if (apiApagada) {
+        console.error(
+          'Falta habilitar la API de Apps Script EN LA CUENTA que está usando\n' +
+          'clasp' + (quien ? ' —' + quien + '—' : '') + ', que no tiene por qué ser\n' +
+          'la que tengas abierta en el navegador. Entra con ESA:\n' +
+          '    https://script.google.com/home/usersettings\n');
+
+      } else if (sinPermiso) {
+        /* «The caller does not have permission» dice que ALGUIEN no tiene
+           permiso, sin decir quién ni sobre qué. Con dos tiendas montadas, la
+           causa casi siempre es que los secretos de una apuntan al proyecto de
+           la otra — y mandar a «habilitar la API», que es lo que decía el
+           mensaje viejo, manda a comprobar algo que ya estaba bien. */
+        console.error(
+          'Google dice: «The caller does not have permission».\n\n' +
+          'Eso NO es la API apagada —esa se queja con otro mensaje y te manda a\n' +
+          'usersettings—. Es que esta cuenta no tiene acceso a ESE proyecto:\n\n' +
+          '    cuenta:    ' + (quien || '(no pude averiguarla)') + '\n' +
+          '    proyecto:  ' + cfg.scriptId + '\n' +
+          '    hoja:      ' + hojaId + '\n');
+
+        const vistos = proyectosQueVe();
+        if (vistos && vistos.length) {
+          const loVe = vistos.some(x => x.id === cfg.scriptId);
+          if (loVe) {
+            console.error(
+              'Esa cuenta SÍ ve el proyecto, así que no es de quién es: es que\n' +
+              'le falta permiso de edición, o la API no está habilitada para ella.\n');
+          } else {
+            console.error(
+              'Y esa cuenta NO VE ese proyecto. Los que sí ve son:\n' +
+              vistos.slice(0, 10).map(x => '    · ' + x.id + '  ' + x.nombre).join('\n') +
+              (vistos.length > 10 ? '\n    … y ' + (vistos.length - 10) + ' más' : '') + '\n\n' +
+              'Así que una de las dos cosas está mal, y hay que decidir CUÁL:\n\n' +
+              '  · El secreto SCRIPT_ID apunta al maestro de OTRA tienda. Es el\n' +
+              '    error típico al montar la segunda: se copian los secretos de\n' +
+              '    la primera y este se queda. Cópialo de la URL del editor:\n' +
+              '    entre /projects/ y /edit.\n\n' +
+              '  · O el proyecto del maestro se creó con otra cuenta de Google.\n' +
+              '    Cada tienda tiene la suya, y la que crea el proyecto es la\n' +
+              '    que tiene que hacer el `clasp login`.\n');
+          }
+        } else {
+          console.error(
+            'No pude listar los proyectos de esa cuenta para comparar.\n' +
+            'Compruébalo a mano: abre esto con ESA cuenta y NINGUNA otra\n' +
+            '(una ventana de incógnito ayuda):\n' +
+            '    https://script.google.com/d/' + cfg.scriptId + '/edit\n\n' +
+            'Si dice que no tienes acceso, el secreto SCRIPT_ID apunta al\n' +
+            'maestro de otra tienda, o el proyecto se creó con otra cuenta.\n');
+        }
+
+      } else {
+        console.error(
+          'Las dos causas de siempre:\n' +
+          '  · clasp está autenticado con OTRA cuenta' +
+          (quien ? ' (ahora: ' + quien + ')' : '') + '. Tiene que ser\n' +
+          '    la dueña del proyecto de ESTA tienda. Míralo con\n' +
+          '        clasp show-authorized-user\n' +
+          '    y cámbiala con  clasp login\n' +
+          '  · falta habilitar la API de Apps Script en esa cuenta:\n' +
+          '    https://script.google.com/home/usersettings\n');
+      }
       process.exit(1);
     }
 
@@ -300,4 +417,8 @@ async function main() {
   }
 }
 
-main();
+/* Se ejecuta cuando se LANZA, no cuando se importa. Antes llamaba a main() a
+   secas, así que una batería que quisiera probar `porQueFallo` disparaba un
+   despliegue —o, aquí, se ponía a crear montar/.clasp.json—. Lo mismo que ya
+   hacen traer-fotos.mjs y misma-tienda.mjs, por la misma razón. */
+if (import.meta.url === pathToFileURL(process.argv[1] || '').href) main();
