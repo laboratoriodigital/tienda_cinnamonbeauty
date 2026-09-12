@@ -1,45 +1,53 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-12T02:49:05.139Z",
+ "generado": "2026-09-12T03:27:33.386Z",
  "productos": [
   {
-   "id": "chonto",
-   "nombre": "Tomate chonto",
+   "id": "labial",
+   "nombre": "Labial normal",
    "formato": "Canasta 1 kg",
    "categoria": "Frescos",
    "precio": 8900,
    "stock": 24,
    "descripcion": "El tomate de todos los días: pulpa jugosa, piel delgada y acidez media. Cortado la mañana del despacho. Ideal para guisos, sofritos y ensaladas.",
-   "imagenes": [],
+   "imagenes": [
+    "labial.jpg"
+   ],
    "destacado": true,
    "referencia": "",
    "precioAntes": 0,
    "umbralBajo": 0
   },
   {
-   "id": "cherry",
-   "nombre": "Tomate cherry",
+   "id": "cosmetico",
+   "nombre": "Kit Cosmeticos",
    "formato": "Bandeja 250 g",
    "categoria": "Frescos",
    "precio": 6500,
    "stock": 4,
    "descripcion": "Dulce, firme y de piel brillante. Se cosecha en racimo y se empaca el mismo día. Va directo a la ensalada o al horno con aceite de oliva.",
-   "imagenes": [],
+   "imagenes": [
+    "costemicos1.jpg"
+   ],
    "destacado": false,
    "referencia": "",
    "precioAntes": 0,
    "umbralBajo": 0
   },
   {
-   "id": "rinon",
-   "nombre": "Tomate riñón",
-   "formato": "Canasta 1 kg",
+   "id": "rubor",
+   "nombre": "Rubor 3 colores",
+   "formato": "Unidad",
    "categoria": "Frescos",
    "precio": 9800,
    "stock": 14,
    "descripcion": "Carnoso y de pocas semillas, el mejor para rodajas gruesas. Aguanta bien la nevera hasta cinco días sin perder textura.",
-   "imagenes": [],
+   "imagenes": [
+    "rubor.jpg",
+    "rubor1.png",
+    "rubor3.jpg"
+   ],
    "destacado": false,
    "referencia": "",
    "precioAntes": 0,
@@ -180,5 +188,26 @@
   "repositorio": "laboratoriodigital/tienda_cinnamonbeauty",
   "tope_pago": "12110000"
  },
- "fotos": {}
+ "fotos": {
+  "labial.jpg": [
+   160,
+   600,
+   900
+  ],
+  "rubor.jpg": [
+   160,
+   600,
+   900
+  ],
+  "rubor1.png": [
+   160,
+   600,
+   900
+  ],
+  "rubor3.jpg": [
+   160,
+   600,
+   900
+  ]
+ }
 }
