@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-12T16:29:39.317Z",
+ "generado": "2026-09-12T20:31:15.417Z",
  "productos": [
   {
    "id": "labial",
@@ -170,7 +170,7 @@
   "empresa_ciudad": "Medellín",
   "empresa_tel": "3218550807",
   "legal_actualizado": "Fri Sep 11 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
-  "sitio_url": "cinnamonbeauty.laboratoriodigital-la.workers.dev",
+  "sitio_url": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev",
   "sitio_titulo": "Cinnamon Beauty - Professional Makeup",
   "sitio_descripcion": "Maquillaje profesional a los mejores precios",
   "correo_resumen": "dcbs.1323@gmail.com",
