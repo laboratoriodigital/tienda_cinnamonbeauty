@@ -161,7 +161,8 @@
       "negocio",
       "hoja",
       "hojaId",
-      "alta"
+      "alta",
+      "colores"
     ],
     "panel": [
       "ok",

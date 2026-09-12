@@ -2720,5 +2720,84 @@ const configurar = (g, clave, valor) => {
   }
 }
 
+
+// ═══ 32. Los colores de la hoja tienen que llegar a la tienda ═══
+/* «Desplegó, pero quedó con los colores de la plantilla.»
+   La paleta no se hornea en el archivo: la aplica la página con la
+   configuración que recibe, y la página exige seis dígitos con almohadilla.
+   Todo lo que no encaje ahí se ignora EN SILENCIO y la tienda sale con los
+   colores de fábrica, con el montaje en verde.
+
+   Y había una puerta abierta a ese silencio: la ayuda de la fila invita a
+   PINTAR la celda —«y el código sale solo»—, pero cambiar el relleno de una
+   celda NO dispara `onEdit`: para Google eso es formato, no contenido. El
+   relleno solo se convertía en código dentro de `instalar()`. Quien pintó sus
+   colores y publicó se llevó los de la plantilla. */
+{
+  const conColores = () => {
+    const hablar = console.log;
+    console.log = function () { };
+    const g = yaConfigurada(nuevo());
+    console.log = hablar;
+    return g;
+  };
+  const pintar = (g, clave, color) => {
+    const i = g.filas('Configuración').findIndex(f => String(f[0]).trim() === clave);
+    g.hojas.get('Configuración').getRange(i + 1, 2).setBackground(color);
+  };
+  const escribir = (g, clave, texto) => {
+    const i = g.filas('Configuración').findIndex(f => String(f[0]).trim() === clave);
+    g.hojas.get('Configuración').getRange(i + 1, 2).setValue(texto);
+  };
+  const colores = g => { const h = console.log; console.log = function () { };
+                         const r = puerta(g, 'bloques').colores; console.log = h; return r; };
+
+  {
+    const g = conColores();
+    pintar(g, 'color_principal', '#123456');
+    ok('PINTAR LA CELDA basta: el color llega al publicar',
+       colores(g).principal === '#123456',
+       colores(g).principal + ' — cambiar el relleno no dispara onEdit');
+  }
+  {
+    const g = conColores();
+    escribir(g, 'color_secundario', 'rojo');
+    const c = colores(g);
+    ok('UN COLOR QUE NO SE PUEDE LEER se dice, no se traga',
+       c.ilegibles.length === 1 && /color_secundario/.test(c.ilegibles[0]) &&
+       /rojo/.test(c.ilegibles[0]),
+       JSON.stringify(c.ilegibles));
+  }
+  {
+    const g = conColores();
+    escribir(g, 'color_alterno', '#D21');
+    ok('  ...también el hex de tres dígitos, que parece bueno y no lo es',
+       /#D21/.test((colores(g).ilegibles[0] || '')),
+       'la página exige seis dígitos y no avisa de nada');
+  }
+  {
+    /* Vacío NO es ilegible: una celda en blanco quiere decir «usa el de
+       fábrica», y confundir las dos cosas es exactamente el crítico de
+       `Number(celda) || 0` con otro disfraz. */
+    const g = conColores();
+    escribir(g, 'color_principal', '');
+    ok('  ...pero una celda vacía no es un error, es una decisión',
+       colores(g).ilegibles.length === 0,
+       'vacío = el de fábrica; ilegible = alguien eligió y se perdió');
+  }
+
+  const m = fs.readFileSync('../maestro.gs', 'utf8');
+  ok('  ...y se MIRA antes de reparar, o no se vería nunca',
+     m.indexOf('var coloresMalos = coloresIlegibles();') <
+     m.indexOf('try { sincronizarColores(); }'),
+     'la sincronización pisa el valor ilegible con el relleno viejo');
+
+  const pi = fs.readFileSync('../montar/preparar-index.mjs', 'utf8');
+  ok('EL MONTAJE dice con qué colores sale la tienda',
+     /Colores de la hoja/.test(pi) && /LA HOJA NO TRAE NINGÚN COLOR/.test(pi) &&
+     /A0_instalar\(\)/.test(pi),
+     '«salió con los de la plantilla» se veía abriendo la tienda, que es tarde');
+}
+
 console.log(T.join('\n'));
 console.log('\nResultado: ' + T.filter(x => x.startsWith('  OK')).length + '/' + T.length);

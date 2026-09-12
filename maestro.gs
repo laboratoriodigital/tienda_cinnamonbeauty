@@ -137,7 +137,7 @@ function tokenMenu() {
   return t;
 }
 
-var VERSION = '2026-09-11-1';
+var VERSION = '2026-09-12-1';
 
 /* Antes esto era getActiveSpreadsheet(): el script vivía dentro de la hoja.
    Ahora abre la del cliente por su ID, y esa es toda la diferencia. */
@@ -1691,6 +1691,26 @@ function atenderBloques(p) {
     return { ok: false, error: 'Token que no corresponde a esta tienda.' };
   }
   try {
+    /* PINTAR LA CELDA TIENE QUE BASTAR, Y NO BASTABA.
+       La ayuda de la fila dice «PINTA la celda de al lado con el color que
+       quieras y el código sale solo». Sale solo, sí — pero solo lo sacaba
+       `instalar()`, porque cambiar el RELLENO de una celda no dispara
+       `onEdit`: para Google eso es formato, no contenido. Así que quien pintó
+       los colores y publicó se llevó los de la plantilla, sin un aviso en
+       ninguna parte.
+       Aquí es donde los colores se van a usar de verdad, así que aquí se leen
+       los rellenos. Es una escritura en una puerta de lectura, y es a
+       propósito: esta puerta solo la abre el montaje con el token, una vez por
+       despliegue, y es el último momento en que se puede arreglar. Si falla,
+       no se lleva por delante la publicación. */
+    /* PRIMERO SE MIRA LO QUE ESCRIBIÓ, Y DESPUÉS SE REPARA.
+       Al revés no se ve nada: la sincronización pisa un valor ilegible con el
+       relleno que hubiera antes —repara, que está bien— y entonces «#D21» o
+       «rojo» desaparecen sin que nadie se entere de que alguien eligió un
+       color y no le llegó. Se anota antes, se arregla después. */
+    var coloresMalos = coloresIlegibles();
+    try { sincronizarColores(); } catch (e) { }
+
     var r = generarConfiguracion();
     var c = leerConfiguracion();
     return { ok: true, version: VERSION, head: r.bloque, valores: r.valores,
@@ -1713,7 +1733,20 @@ function atenderBloques(p) {
                 usa para negarse a escribir el index de una tienda que no puede
                 vender: hasta ahora miraba cinco claves y las otras once no las
                 miraba nadie. */
-             alta: revisarTienda(c) };
+             alta: revisarTienda(c),
+
+             /* Y AL FINAL DEL TODO (R1), LOS COLORES QUE VA A USAR LA TIENDA.
+                No para que el montaje los aplique —eso lo hace la página, con
+                la configuración que ya recibe— sino para que los DIGA. «Se
+                publicó con los colores de la plantilla» era invisible hasta
+                abrir la tienda y mirarla; ahora sale en el log del montaje,
+                junto con los que no se pudieron leer. */
+             colores: {
+               principal:  String(c.color_principal  || ''),
+               secundario: String(c.color_secundario || ''),
+               alterno:    String(c.color_alterno    || ''),
+               ilegibles:  coloresMalos
+             } };
   } catch (err) {
     registrarError('bloques: ' + err.message, null);
     return { ok: false, error: err.message };
@@ -3570,6 +3603,23 @@ var CLAVES_COLOR = ['color_principal', 'color_secundario', 'color_alterno'];
 function esColor(t) { return /^#[0-9a-fA-F]{6}$/.test(String(t).trim()); }
 
 function normalizarColor(t) { return String(t).trim().toUpperCase(); }
+
+/* VACÍO ES UNA DECISIÓN; ILEGIBLE NO. Es la misma regla que `cifra()` aplica a
+   los números, que costó un crítico entero: una celda en blanco quiere decir
+   «usa el de fábrica», pero «rojo», «#D21» o «D0211C» sin almohadilla quieren
+   decir que alguien eligió un color y la página lo está tirando a la basura.
+   La página exige seis dígitos con almohadilla y, si no, se queda con el suyo
+   SIN DECIR NADA. Eso es lo que se acaba aquí. */
+function coloresIlegibles() {
+  var c = leerConfiguracion();
+  var malos = [];
+  CLAVES_COLOR.forEach(function (k) {
+    var t = String(c[k] === null || c[k] === undefined ? '' : c[k]).trim();
+    if (!t) return;
+    if (!esColor(t)) malos.push(k + ' dice "' + t.slice(0, 24) + '"');
+  });
+  return malos;
+}
 
 function sincronizarColores() {
   var h = elLibro().getSheetByName(H_CONFIG);

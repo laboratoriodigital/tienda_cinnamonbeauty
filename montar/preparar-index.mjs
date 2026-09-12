@@ -97,6 +97,37 @@ export function aplicar(html, datos) {
     console.log('    No bloquea el montaje. Conviene cerrarlo antes de cobrarle a nadie.\n');
   }
 
+  /* CON QUÉ COLORES SALE LA TIENDA, DICHO EN VOZ ALTA.
+     La paleta no se hornea en el archivo: la aplica la página al recibir la
+     configuración. Eso está bien —cambiar un color no necesita un despliegue—
+     pero tiene un efecto feo: si los colores de la hoja no llegan, la tienda
+     sale con los de la plantilla y el montaje termina en verde. Se descubre
+     abriendo la tienda y mirándola, que es tarde.
+
+     Y los que no se pueden leer son peores que los que faltan: alguien eligió
+     un color y la página lo tira a la basura en silencio porque no son seis
+     dígitos con almohadilla. */
+  if (datos.colores) {
+    const cl = datos.colores;
+    const puestos = ['principal', 'secundario', 'alterno'].filter(k => cl[k]);
+    if (puestos.length) {
+      console.log('  Colores de la hoja: ' +
+                  puestos.map(k => k + ' ' + cl[k]).join(' · '));
+    } else {
+      console.log('\n  ⚠ LA HOJA NO TRAE NINGÚN COLOR, así que la tienda sale con');
+      console.log('    los de la plantilla. Si los pusiste PINTANDO las celdas de');
+      console.log('    Configuración, corre A0_instalar() en el editor del maestro');
+      console.log('    para que el relleno se convierta en código, y vuelve.\n');
+    }
+    if (cl.ilegibles && cl.ilegibles.length) {
+      console.log('\n  ⚠ HAY COLORES QUE NO SE PUEDEN LEER, y la página los ignora');
+      console.log('    en silencio: se queda con el suyo. Tienen que ser seis');
+      console.log('    dígitos con almohadilla, así: #D0211C');
+      cl.ilegibles.forEach(x => console.log('      · ' + x));
+      console.log('');
+    }
+  }
+
   const headViejo = salida.match(HEAD)[0];
   if (headViejo !== datos.head) cambios.push('el bloque del <head>');
   salida = salida.replace(HEAD, () => datos.head);
