@@ -149,6 +149,13 @@ for f in $BATERIAS; do
   d=$(echo "$linea" | sed -n 's/.*: \([0-9]*\)\/\([0-9]*\).*/\2/p')
   buenas=$((buenas + ${n:-0})); total=$((total + ${d:-0}))
 
+  # UN SALTO QUE NO SE VE ES UN SALTO ESCONDIDO. Una batería puede saltarse un
+  # escenario que hoy no puede existir —un index.html anterior al 4.20, por
+  # ejemplo— y eso está bien SI SE DICE. Como el marcador sale verde, la línea
+  # se imprime aquí a mano: si no, el salto solo existiría dentro del archivo de
+  # salida que nadie abre.
+  echo "$salida" | grep -E "^  SALTA" | sed 's/^/    /'
+
   # Lo que faltaba: decir QUÉ se cayó, aquí y ahora.
   if [ -z "$linea" ]; then
     rotas="$rotas$f"$'\n'

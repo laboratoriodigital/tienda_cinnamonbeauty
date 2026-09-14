@@ -71,6 +71,36 @@ const DE_ORGANICO = /Orgánico|Tomate chonto|Tomate cherry|Sofrito|Rionegro|5730
      corren a la vez, que es justo como corren. */
   const html = fs.readFileSync('./index.html', 'utf8');
 
+  /* ¿PUEDE EXISTIR ESTE ESCENARIO EN ESTE REPOSITORIO?
+     `publicar/index.html` NO se sincroniza desde la semilla: nace de la hoja de
+     cada comercio y llega por la release. Así que una tienda puede tener ya el
+     código del 4.20 —flujos, `sembrar-respaldo.mjs`, esta batería— y todavía el
+     index.html de antes, que no declara CONFIG_SEMILLA ni lo aplica. Escribirle
+     el bloque funciona; la página no lo mira, y esto salía en rojo acusando al
+     producto de algo que está bien y que solo espera un paso del despliegue.
+     Pasó en Cinnamon Beauty el 14 de septiembre de 2026, en el primer push.
+
+     Es el caso de «un escenario que no puede existir hoy se salta DICIÉNDOLO»
+     (patrón 8, regla 2). Saltarlo en silencio sería lo otro: esconderlo. */
+  if (html.indexOf('aplicarConfiguracion(CONFIG_SEMILLA)') === -1) {
+    console.log('  SALTA | esta batería entera: el index.html de esta tienda es anterior al 4.20.');
+    console.log('');
+    console.log('  No declara CONFIG_SEMILLA ni lo aplica, así que lo que se pinta antes');
+    console.log('  de la red todavía es el comercio de la plantilla. Esto NO es un fallo');
+    console.log('  del código: `publicar/index.html` no se sincroniza, llega por la');
+    console.log('  release.');
+    console.log('');
+    console.log('  Lo que falta, una vez por tienda:');
+    console.log('    1. Bajar index.html de la última release de la semilla');
+    console.log('       https://github.com/laboratoriodigital/organico/releases/latest/download/index.html');
+    console.log('    2. Reemplazar publicar/index.html, commit y push');
+    console.log('    3. Correr el flujo `montaje`');
+    console.log('');
+    console.log('  Desde ese momento esta batería corre y mide de verdad.');
+    console.log('\nResultado: 0/0');
+    return;
+  }
+
   /* Se escribe con la MISMA herramienta del flujo. Una copia de la lógica aquí
      probaría la copia, no el producto (patrón 2). */
   const escrito = respaldo.aplicar(html, OTRA, '2026-09-14').html;

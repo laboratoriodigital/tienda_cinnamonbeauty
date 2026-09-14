@@ -553,6 +553,24 @@ batería, `pruebas/respaldo.js`, que monta una tienda que no es Orgánico, la
 sirve con la hoja muerta y mira qué se pinta — y lleva dentro la prueba de que
 distingue: con el arreglo quitado, se cae.
 
+**Y lo que costó el primer push (2.11.1).** El repositorio de la tienda se
+actualizó con el código del 4.20 y las baterías salieron rojas: `respaldo.js`
+4/10 y `config.js` con dos caídas, todas diciendo «Orgánico». El código estaba
+bien. Lo que pasa es que **`publicar/index.html` no se sincroniza desde la
+semilla** —nace de la hoja de cada comercio y llega por la release—, así que
+una tienda puede tener ya los flujos, la herramienta y las baterías del 4.20 y
+todavía el archivo de antes, que no declara `CONFIG_SEMILLA` ni lo aplica.
+
+Las baterías estaban exigiendo algo que en ese repositorio todavía no podía ser
+cierto, y el rojo mandaba a buscar un fallo que no existía — otra vez el error
+que cerró la tanda pasada. Ahora las dos **se saltan ese escenario diciéndolo**
+(patrón 8, regla 2) y `todas.sh` saca los saltos a la luz aunque el marcador
+salga verde, porque un salto que no se ve es un salto escondido.
+
+La consecuencia para el despliegue, que vale por sí sola: **actualizar una
+tienda son dos cosas, no una** — el código, y el `index.html` de la release. Lo
+segundo no lo trae ningún `git pull`.
+
 Queda anotado, porque es de la misma familia y sigue abierto: el emoji 🍅 del
 encabezado del mensaje de WhatsApp, y `fotos_origen` apuntando a la dirección de
 producción, que en una vista previa de rama carga las fotos del sitio de verdad.

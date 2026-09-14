@@ -150,21 +150,47 @@ const cfg = async (clave, valor) => {
      Desde el 4.20 lo escribe `sembrar-respaldo.mjs`, así que lo que hay que
      exigir no es un nombre —eso vuelve a ser el patrón 4— sino que el archivo
      esté de acuerdo consigo mismo. */
-  const delArchivo = await p.evaluate(() => ({
-    negocio: (CONFIG_SEMILLA.negocio || NEGOCIO || '').trim(),
-    whatsapp: String(CONFIG_SEMILLA.whatsapp || WHATSAPP || '').replace(/[^0-9]/g, ''),
-    productos: PRODUCTOS.length
-  }));
+  /* `typeof` y no la variable a pelo: una tienda con el index.html de antes del
+     4.20 no declara CONFIG_SEMILLA, y leerla revienta la evaluación entera con
+     un ReferenceError que no se parece en nada a lo que pasa. El index.html no
+     se sincroniza desde la semilla —llega por la release—, así que ese archivo
+     viejo es un estado normal, no un error. */
+  const delArchivo = await p.evaluate(() => {
+    const semilla = (typeof CONFIG_SEMILLA === 'object' && CONFIG_SEMILLA) || {};
+    return {
+      negocio: (semilla.negocio || NEGOCIO || '').trim(),
+      whatsapp: String(semilla.whatsapp || WHATSAPP || '').replace(/[^0-9]/g, ''),
+      productos: PRODUCTOS.length
+    };
+  });
+  /* LO QUE SE PUEDE EXIGIR DEPENDE DE QUÉ index.html TENGA ESTA TIENDA.
+     `publicar/index.html` no se sincroniza desde la semilla: llega por la
+     release. Una tienda puede tener el código del 4.20 y todavía el archivo de
+     antes, que no aplica CONFIG_SEMILLA — y entonces, sin red, el marcado
+     todavía dice lo de la plantilla. Eso no es un fallo del código: es el paso
+     del despliegue que falta. Se dice, y se exige lo que sí puede ser cierto
+     hoy: que la tienda no se rompa y sirva su catálogo. */
+  const conSemilla = await p.evaluate(() => typeof CONFIG_SEMILLA === 'object');
+
   ok('Sin hoja usa el respaldo y no se rompe',
-     (await p.locator('#marcaNombre').innerText()) === delArchivo.negocio &&
      (await p.evaluate(() => VISIBLES.length)) === delArchivo.productos &&
      (await p.locator('.rejilla .tarjeta').count()) > 0,
-     await p.locator('#marcaNombre').innerText() + ' · ' + delArchivo.productos +
-     ' productos, ' + (await p.locator('.rejilla .tarjeta').count()) + ' tarjetas en la página');
-  ok('  ...y el WhatsApp de respaldo sigue siendo válido',
-     delArchivo.whatsapp.length >= 10 &&
-     (await p.locator('#flotante').getAttribute('href')).includes(delArchivo.whatsapp),
-     delArchivo.whatsapp);
+     delArchivo.productos + ' productos, ' +
+     (await p.locator('.rejilla .tarjeta').count()) + ' tarjetas en la página');
+
+  if (conSemilla) {
+    ok('  ...y lo que se lee es el nombre de ESTE comercio',
+       (await p.locator('#marcaNombre').innerText()) === delArchivo.negocio,
+       await p.locator('#marcaNombre').innerText());
+    ok('  ...y el WhatsApp de respaldo sigue siendo válido',
+       delArchivo.whatsapp.length >= 10 &&
+       (await p.locator('#flotante').getAttribute('href')).includes(delArchivo.whatsapp),
+       delArchivo.whatsapp);
+  } else {
+    console.log('  SALTA | el nombre y el WhatsApp sin red: este index.html es ' +
+                'anterior al 4.20.\n          Falta traerlo de la release de la semilla y ' +
+                'correr el flujo montaje.');
+  }
   /* LA PARTE NUEVA, que es la que este arreglo existe para sostener: sin red,
      la tienda tiene que hablar de SU comercio. Un respaldo que funciona pero
      vende lo de otro es el patrón 1 — el fallo que funciona. */

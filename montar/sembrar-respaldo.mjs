@@ -101,7 +101,8 @@ export function bloque(catalogo, cuando) {
   L.push('   queda si no contesta nadie. Sale de la hoja de ESTA tienda: lo repone');
   L.push('   `montar/sembrar-respaldo.mjs` desde el catalogo.json que hornea el mismo');
   L.push('   flujo, así que no hay aquí un dato a mano que se pueda quedar atrás.');
-  L.push('   A mano, si hiciera falta: menú de la hoja > Generar inventario. */');
+  L.push('   No se edita a mano: la opción del menú que lo generaba se derogó en el');
+  L.push('   Sprint 5. Si hay que rehacerlo, se corre el flujo montaje. */');
   L.push('const CONFIG_SEMILLA = {');
   L.push(Object.keys(limpia)
     .map(k => '  ' + JSON.stringify(k) + ': ' + literal(limpia[k]))

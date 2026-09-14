@@ -3180,7 +3180,8 @@ function generarInventario() {
   lineas.push('/* ═══ CATÁLOGO DE RESPALDO — escrito el ' + fechaCorta(ahora) + ' ═══');
   lineas.push('   Lo que la página pinta ANTES de que conteste nadie, y lo único que le');
   lineas.push('   queda si no contesta nadie. Normalmente lo escribe el flujo montaje;');
-  lineas.push('   esto es el camino de a mano, para una tienda que aún no lo corre. */');
+  lineas.push('   esto queda para una tienda que todavía no puede correrlo. La opción');
+  lineas.push('   del menú que lo generaba se derogó en el Sprint 5. */');
   lineas.push('const CONFIG_SEMILLA = {');
   lineas.push(claves.map(function (k) {
     return '  ' + txt(k) + ': ' + txt(cfg[k]);
