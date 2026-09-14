@@ -11,13 +11,51 @@ Cómo saber qué versión tiene cada una: en el panel de tiendas, columna
 
 | Cambió | Qué hay que hacer en esa tienda |
 |---|---|
-| `publicar/index.html` | Traer el archivo nuevo al repositorio de la tienda, pull request, fusionar. Cloudflare despliega |
+| `publicar/index.html` | **Nada a mano.** Lo trae el flujo **montaje** de la última versión de la semilla, y le escribe encima lo de esa tienda. Pull request, fusionar |
 | `maestro.gs` | Publicar el maestro: flujo **maestro**, o `npm run maestro`. **Nunca una implementación nueva** |
 | El stub de la hoja | **En el editor del MAESTRO**, ejecutar `generarStub` y copiar lo que imprima el registro. Ver abajo |
 | `panel.gs` | Solo en tu hoja de panel, no en la de ningún cliente |
 | La pestaña Configuración | Volver a ejecutar `instalar()`: agrega las claves nuevas y **no toca ningún valor escrito** |
 | Las columnas de una pestaña | Lo mismo: `instalar()` las agrega **al final**. Nunca renombra ni reordena — es R2 del contrato |
 | `publicar/catalogo.json` | No se trae a mano: lo hornea el flujo **montaje** desde la hoja de esa tienda |
+
+---
+
+## Desde la 2.12.0: la página ya no se copia a mano
+
+Actualizar una tienda eran **dos** cosas y solo una estaba automatizada. El
+código lo trae la sincronización; `publicar/index.html` no, porque no es código:
+es el archivo publicado de ese comercio. Así que esta misma guía mandaba a bajar
+el archivo del navegador y pegarlo.
+
+Se vio cuando falló. La tienda dos quedó con los flujos, la herramienta y las
+baterías de una versión, y la página de la anterior. Nada roto, nada avisando,
+el marcador en verde — y la tienda abriendo con el comercio de la plantilla.
+
+Ahora el flujo **`montaje`** lo hace solo, en este orden:
+
+```
+1. trae publicar/index.html de la última release de la semilla
+2. le escribe el <head>, las cinco constantes y la paleta de ESTA hoja
+3. hornea publicar/catalogo.json desde ESTA hoja
+4. le escribe el catálogo de respaldo y CONFIG_SEMILLA desde ese catálogo
+```
+
+**Por qué se puede reemplazar entero.** Porque no queda en ese archivo un solo
+valor de la tienda escrito a mano: todo lo suyo lo vuelven a poner los pasos 2 a
+4, desde su hoja, unos segundos después. El día que alguien meta ahí un valor a
+mano, esto se rompe en silencio.
+
+**Si no se puede traer** —la release no tiene el archivo, o este repositorio no
+puede leerla—, el montaje **no se para**: la tienda se queda con la página que
+ya tenía, que funciona, y sale un aviso en el resumen del flujo.
+
+**Si las versiones de la semilla no son públicas**, cada tienda necesita un
+secreto `SEMILLA_TOKEN`: un token *fine-grained* de **solo ese** repositorio,
+con **un solo** permiso, *Contents: Read-only*. Sigue sin haber llavero común.
+
+**Para no moverla de versión en una corrida**, se desmarca `plantilla` en el
+formulario del flujo.
 
 ---
 

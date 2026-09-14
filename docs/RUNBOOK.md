@@ -249,11 +249,12 @@ Pestañas **Catálogo**, **Envíos**, **Cupones**:
 > acotado: leer la configuración, listar la carpeta de fotos y bajar archivos de
 > esa carpeta. No borra, no escribe en la hoja, no alcanza el resto del Drive.
 
-- [ ] Actions → **montaje** → Run workflow, con los tres campos **como vienen**:
+- [ ] Actions → **montaje** → Run workflow, con los cuatro campos **como vienen**:
 
 | Campo | Déjalo así | Para qué está |
 |---|---|---|
 | `que` | `todo` | `solo-la-hoja` o `solo-las-fotos` para una corrida parcial |
+| `plantilla` | **marcado** | Trae la página de la última versión de la semilla. Desmárcalo solo para no moverla de versión en esta corrida |
 | `maestro` | **sin marcar** | Publicar `maestro.gs` desde aquí. Pide tres secretos más, que no se pueden sacar de un navegador |
 | `confirmar` | vacío | Solo si marcaste `maestro`: hay que escribir `PUBLICAR` |
 

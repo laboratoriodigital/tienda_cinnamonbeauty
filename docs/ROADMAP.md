@@ -454,7 +454,7 @@ autorizado. Evaluación completa, con las dos formas y las dos condiciones
 nuevas, en `EVALUACION-stub-automatico.md`, sección 8.
 
 
-**4.18 Sincronizar la semilla con las tiendas, sin manos**   [PENDIENTE]
+**4.18 Sincronizar la semilla con las tiendas, sin manos**   [LA PÁGINA, HECHA · 2.12.0 · el código, pendiente]
 
 Hoy, poner una tienda al día contra la semilla es copiar archivos a mano.
 Costó su primer accidente el 14 de septiembre de 2026, montando la tienda 2:
@@ -482,6 +482,19 @@ Forma probable: un flujo `sincronizar` en el repositorio de la tienda que baja
 los activos de la última `release` de la semilla, repone lo generado y abre un
 PR con el diff. Mide bien el valor: es el trabajo que se repite por cada tienda
 y por cada versión, así que se paga con la tercera tienda.
+
+**Lo que ya está hecho (2.12.0): la página.** El flujo `montaje` de cada tienda
+trae `publicar/index.html` de la última versión publicada de la semilla y le
+escribe encima lo de esa hoja —el `<head>`, las constantes, la paleta y el
+catálogo de respaldo—. Se puede reemplazar entero porque no queda ahí ni un
+valor escrito a mano. En la semilla no corre: Orgánico es de donde sale la
+plantilla. Si no se puede traer, el montaje **no se para**: avisa y sigue con la
+página que la tienda ya tenía.
+
+**Lo que falta: el código.** `montar/`, `pruebas/`, `.github/workflows/`,
+`maestro.gs`, `panel.gs`, `docs/` siguen copiándose a mano de la semilla al
+repositorio de cada tienda. Es lo que queda de este punto, y es lo que se paga
+con la tercera tienda.
 
 Relacionado: **`release` no es un flujo de tienda** y hoy nada lo impide. Ver
 4.19.

@@ -65,6 +65,10 @@ on:
         type: choice
         default: todo
         options: [todo, solo-la-hoja, solo-las-fotos]
+      plantilla:
+        description: '¿Traer también la página de la última versión de la semilla?'
+        type: boolean
+        default: true
       maestro:
         description: '¿Publicar también maestro.gs? Marca esto Y escribe PUBLICAR abajo'
         type: boolean
@@ -76,6 +80,12 @@ on:
 permissions:
   contents: write
   pull-requests: write
+
+# DE DÓNDE SALE LA PLANTILLA, ESCRITO UNA SOLA VEZ.
+# Lo usan el paso que trae la página y la guarda que impide que la semilla se
+# traiga la plantilla a sí misma. En un sitio, para que no haya dos.
+env:
+  SEMILLA: laboratoriodigital/organico
 
 # Nunca a la vez que `fotos`: los dos escriben en publicar/.
 concurrency:
@@ -237,6 +247,80 @@ jobs:
             echo '### Maestro'
             echo '```'
             cat /tmp/maestro.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # ── 1.5. LA PÁGINA, DE LA ÚLTIMA VERSIÓN DE LA SEMILLA ────────────────
+      # Actualizar una tienda eran DOS cosas y solo una estaba automatizada. El
+      # código lo trae la sincronización; `publicar/index.html` no, porque no es
+      # código: es el archivo publicado de ese comercio. La guía decía «traer el
+      # archivo nuevo al repositorio de la tienda» — a mano, del navegador.
+      #
+      # Se vio cuando falló: la tienda dos tenía los flujos y las baterías de
+      # una versión y el index.html de la anterior. Todo verde, todo al día, y
+      # la página seguía pintando el comercio de la plantilla al arrancar.
+      #
+      # Se puede reemplazar ENTERO porque todo lo que en ese archivo es de esta
+      # tienda lo vuelven a escribir los tres pasos que siguen: el <head>, las
+      # constantes y la paleta; el catálogo horneado; y el respaldo. No queda un
+      # solo valor que se escriba a mano ahí.
+      #
+      # EN LA SEMILLA NO CORRE. Orgánico es de donde SALE la plantilla: traérsela
+      # a sí mismo sería pisar con la última versión publicada lo que se está
+      # trabajando para la siguiente.
+      - name: La página, de la última versión de la semilla
+        id: plantilla
+        if: >-
+          steps.hay.outputs.sigue == 'si' && inputs.que != 'solo-las-fotos' &&
+          inputs.plantilla != false && github.repository != env.SEMILLA
+        env:
+          SEMILLA: ${{ env.SEMILLA }}
+          # Solo hace falta si las versiones de la semilla NO son públicas. Con
+          # un repositorio público basta el curl de abajo y este secreto no
+          # existe en ninguna tienda.
+          SEMILLA_TOKEN: ${{ secrets.SEMILLA_TOKEN }}
+        run: |
+          set -o pipefail
+          url="https://github.com/$SEMILLA/releases/latest/download/index.html"
+          estado=0
+
+          # 1) Como lo pide un cliente cualquiera. Si la semilla es pública,
+          #    aquí se acaba y no hay un secreto más que poner por tienda.
+          if curl -fsSL --retry 2 --max-time 60 -o /tmp/plantilla.html "$url"; then
+            echo "Bajada de la release pública de $SEMILLA."
+          elif [ -n "$SEMILLA_TOKEN" ] && \
+               GH_TOKEN="$SEMILLA_TOKEN" gh release download --repo "$SEMILLA" \
+                 --pattern index.html --output /tmp/plantilla.html --clobber; then
+            echo "Bajada con SEMILLA_TOKEN: las versiones de $SEMILLA no son públicas."
+          else
+            # NO SE PARA EL MONTAJE POR ESTO. La tienda se queda con la página
+            # que ya tenía —que funciona— y el resto del montaje sigue trayendo
+            # lo de su hoja. Pero se DICE, y en grande: una tienda que se quedó
+            # atrás sin que nadie se entere es justo lo que este paso existe
+            # para que no pase.
+            {
+              echo "### ⚠ No pude traer la página de la semilla"
+              echo ""
+              echo "Intenté \`$url\` y no llegó."
+              echo ""
+              echo "Si las versiones de \`$SEMILLA\` no son públicas, esta tienda"
+              echo "necesita un secreto **SEMILLA_TOKEN**: un token *fine-grained*"
+              echo "de **solo ese** repositorio, con **un solo** permiso —"
+              echo "*Contents: Read-only*."
+              echo ""
+              echo "El montaje sigue: la tienda se queda con la página que ya"
+              echo "tenía y se le escribe encima lo de su hoja. Lo que NO llega"
+              echo "son los cambios de la plantilla."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::warning::No se pudo traer index.html de $SEMILLA; la tienda sigue con la suya."
+            exit 0
+          fi
+
+          node montar/traer-plantilla.mjs /tmp/plantilla.html 2>&1 | tee /tmp/traer.txt
+          {
+            echo "### La página, de la semilla"
+            echo '```'
+            cat /tmp/traer.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 

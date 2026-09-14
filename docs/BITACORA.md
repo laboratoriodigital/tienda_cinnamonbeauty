@@ -463,3 +463,120 @@ Y una batería nueva, `calendario.js`, que corre las que miran el calendario
 **fingiendo ser cada día de un año bisiesto** y exige el mismo marcador en
 todos. Ninguna de las cuatro trampas se veía leyendo el código. Las cuatro se
 veían corriéndolo otro día.
+
+---
+
+**9 · Dos cosas que hay que actualizar, y solo una tiene dueño.** El 14 de
+septiembre de 2026, montando la tienda dos, todo estaba al día y la tienda
+seguía abriendo con tomates.
+
+El código se sincroniza de la semilla al repositorio de cada tienda.
+`publicar/index.html` **no**, y con razón: no es código, es el archivo publicado
+de ese comercio. Pero eso dejaba una actualización partida en dos, con la mitad
+automatizada y la otra mitad en una línea de la guía —«traer el archivo nuevo al
+repositorio de la tienda»— que alguien tenía que leer y hacer.
+
+Lo que hace caro este fallo es que **no se ve**: la tienda quedó con los flujos,
+la herramienta y las baterías de una versión, y la página de la anterior. Nada
+está roto, nada avisa, el marcador sale verde. El síntoma aparece a tres pasos
+de la causa, en el navegador de un comprador.
+
+La regla: **si actualizar algo son dos cosas, la segunda se olvida.** No se
+arregla escribiéndola mejor en el documento — se arregla haciendo que sea una
+sola. Ahora el montaje se trae la página de la última versión de la semilla
+antes de escribir encima lo de esa tienda, y el paso manual desapareció.
+
+Y el corolario que conviene tener a mano al diseñar: **se puede reemplazar
+entero lo que se genera entero.** Ese archivo se podía tirar y volver a traer
+porque no queda en él un solo valor escrito a mano — el `<head>`, las
+constantes, la paleta y el respaldo los escribe el montaje desde la hoja. El día
+que alguien meta ahí un valor a mano, esta automatización se rompe en silencio.
+
+---
+
+**10 · Una comprobación que solo mira el principio del archivo no ve que el
+archivo está cortado.** Recién escrita, y en el sitio donde más dolía.
+
+El paso que trae la página de la semilla comprueba, antes de escribirla encima,
+que lo descargado sea de verdad la plantilla: cuatro marcas que los pasos
+siguientes van a buscar. Las cuatro viven en el primer tercio del archivo.
+**Media descarga las traía todas**, pesaba sesenta mil bytes y pasaba la
+revisión entera — justo el caso que esa revisión existe para atrapar.
+
+Se vio porque la aserción que la probaba partía el archivo por la mitad y
+esperaba un fallo que no llegó. Es el patrón 5 otra vez, y esta vez lo cazó una
+prueba escrita el mismo día.
+
+La regla: **para saber si algo llegó entero, hay que mirar el final.** La seña
+que faltaba era `</html>`, que solo está si la descarga terminó. Vale para
+cualquier cosa que se transfiera: el principio de un archivo no dice nada sobre
+su tamaño.
+
+---
+
+**11 · Dos números que coinciden esconden dos pruebas que no prueban nada.**
+Al escribir el catálogo de respaldo por tienda (4.20), dos baterías se pusieron
+rojas. Las dos llevaban meses en verde. Ninguna de las dos había medido jamás lo
+que decía su título.
+
+- `cat.js` probaba el catálogo de respaldo poniendo el servidor en modo
+  `caido`. `caido` tumba el registro y la validación, y **deja el catálogo
+  vivo**: la sección medía una tienda con la hoja contestando con normalidad y
+  la daba por muerta. El modo que hacía falta era `muerto`.
+- `pag.js` esperaba a `pintado()`, que vuelve en cuanto la página dibuja algo —
+  y lo primero que dibuja es el respaldo del archivo, antes de que llegue la
+  hoja. Medía la paginación del archivo, no la de la hoja.
+
+**Las dos pasaban por la misma razón: el respaldo del archivo tenía justo los
+mismos ocho productos que la hoja emulada.** Esperar de más o de menos daba el
+mismo número, y un modo o el otro daban el mismo número. Contestaban lo mismo
+con el arreglo puesto y sin él.
+
+El día en que el respaldo dejó de ser el de Orgánico, los dos números se
+separaron y las dos hablaron.
+
+La regla, que es una vuelta de tuerca del patrón 5: **cuando dos fuentes de un
+dato tienen el mismo valor, ninguna prueba puede decir de cuál vino.** Si la
+siembra y el archivo dicen lo mismo, hay que hacer que digan cosas distintas
+antes de creerse una sola aserción.
+
+---
+
+**12 · Una guarda que acusa al producto de un acierto.** Al cerrar el 4.20 el
+primer impulso fue calcar la guarda de la paleta (2.9.9): «ninguna batería de
+navegador puede nombrar un producto de Orgánico». Marcó **diez** baterías.
+
+Las diez tenían razón. Nombran tomates porque conducen la **hoja emulada**, que
+es de fábrica y es idéntica en todas las tiendas. Lo que viaja por tienda es el
+respaldo del archivo, no la hoja emulada — y esa diferencia una regla de texto
+no la puede ver.
+
+Se cambió por una batería, `respaldo.js`, que **monta una tienda que no es
+Orgánico**, la sirve con la hoja muerta y mira qué se pinta. Lleva dentro su
+propia prueba de que distingue: con el arreglo quitado, se cae.
+
+La regla: **una guarda que produce falsos positivos se desactiva sola** — la
+gente aprende a saltársela, y el día que acierta nadie la mira. Antes de poner
+una regla de texto, hay que preguntarse si lo que quiere prohibir se puede
+nombrar sin tocar lo que está bien. Cuando no se puede, no es una regla: es una
+prueba, y hay que escribirla.
+
+---
+
+**13 · Un rojo que pide arreglar algo que no está roto.** El primer push del
+4.20 al repositorio de la tienda salió rojo: `respaldo.js` 4/10 y `config.js`
+con dos caídas, todas diciendo «Orgánico».
+
+El código estaba bien. Lo que pasaba es que ese repositorio tenía el
+`index.html` de antes —ver el 9— y las baterías estaban exigiendo algo que allí
+**todavía no podía ser cierto**. El rojo mandaba a buscar un fallo inexistente:
+el mismo error que cerró la tanda anterior, ahora del lado de las pruebas.
+
+La regla ya estaba escrita en el patrón 8 y hubo que aplicarla en otro sitio:
+**un escenario que hoy no puede existir se salta DICIÉNDOLO.** Las dos baterías
+lo detectan y lo dicen, con los pasos que faltan.
+
+Y la media vuelta que hacía falta para que eso no se convierta en lo otro:
+`todas.sh` imprime los saltos **aunque el marcador salga verde**. Un salto que
+solo existe dentro del archivo de salida que nadie abre es un salto escondido, y
+de ahí a una batería que no corre desde hace tres meses hay un paso.

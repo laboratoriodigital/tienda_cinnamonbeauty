@@ -17,6 +17,7 @@ const { loQueSeMando } = require('../montar/sembrar-configuracion.mjs');
 const { hornear } = require('../montar/catalogo-estatico.mjs');
 const { veredicto } = require('../montar/misma-tienda.mjs');
 const respaldo = require('../montar/sembrar-respaldo.mjs');
+const plantilla = require('../montar/traer-plantilla.mjs');
 const fs = require('fs');
 const T = []; const ok = (n, c, d) => T.push((c ? '  OK  ' : ' FALLA') + ' | ' + n + (d ? '  -> ' + d : ''));
 
@@ -1369,7 +1370,7 @@ const configurar = (g, clave, valor) => {
     const campos = (flujo.match(/^      ([a-z_]+):$/gm) || [])
       .map(l => l.trim().replace(':', ''));
     ok('EL RUNBOOK nombra TODOS los campos del formulario de montaje',
-       campos.length === 3 && campos.every(c => runbook.indexOf('`' + c + '`') !== -1),
+       campos.length === 4 && campos.every(c => runbook.indexOf('`' + c + '`') !== -1),
        campos.join(', '));
     ok('  ...y dice cuáles se dejan como vienen en un despliegue normal',
        /como vienen/.test(runbook) && /sin marcar/.test(runbook));
@@ -2987,6 +2988,88 @@ const configurar = (g, clave, valor) => {
      /sembrar-respaldo/.test(fs.readFileSync('./respaldo.js', 'utf8')) &&
      /todas\.sh/.test('todas.sh') && /respaldo\.js/.test(fs.readFileSync('./todas.sh', 'utf8')),
      'y corre en todas.sh, que si no, no la corre nadie');
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TRAER LA PÁGINA DE LA SEMILLA (4.18, el tramo del index.html)
+   --------------------------------------------------------------------------
+   Actualizar una tienda eran DOS cosas y solo una estaba automatizada. El
+   código lo trae la sincronización; `publicar/index.html` no, porque no es
+   código: es el archivo publicado de ese comercio. La guía mandaba a bajarlo
+   del navegador y pegarlo — un paso manual justo donde la premisa del negocio
+   dice que no puede haberlos.
+   ══════════════════════════════════════════════════════════════════════════ */
+{
+  const html = fs.readFileSync('./index.html', 'utf8');
+
+  ok('LA PLANTILLA DE VERDAD pasa la revisión', plantilla.revisar(html).length === 0,
+     plantilla.revisar(html).join(' · ') || 'las cuatro señas');
+
+  /* LO QUE ESTO EXISTE PARA QUE NO PASE: que un curl se traiga una página de
+     error, o media descarga, y se escriba encima de la tienda. Dejarla sin
+     sitio es peor que dejarla con la versión anterior, que funciona. */
+  ok('UNA PÁGINA DE ERROR de GitHub NO se escribe encima de la tienda',
+     plantilla.revisar('<html><body>404 Not Found</body></html>').length > 0,
+     'pesa cuatro líneas, y la plantilla pesa más de veinte mil bytes');
+  ok('  ...ni una descarga a medias', (() => {
+       const cortado = html.slice(0, Math.floor(html.length / 2));
+       return plantilla.revisar(cortado).length > 0;
+     })(), 'le faltarían las marcas que buscan los pasos siguientes');
+  ok('  ...ni un archivo que ya no trae las marcas que el montaje busca',
+     plantilla.revisar(html.replace('FIN DEL CATÁLOGO DE RESPALDO', 'x')).length === 1 &&
+     /CATÁLOGO DE RESPALDO/.test(plantilla.revisar(
+        html.replace('FIN DEL CATÁLOGO DE RESPALDO', 'x'))[0]),
+     'y dice CUÁL falta, no «no es la plantilla»');
+
+  /* LA PRUEBA DE QUE SE PUEDE REEMPLAZAR ENTERO. Es la afirmación de la que
+     cuelga todo este paso: si algo de la tienda se escribiera a mano en ese
+     archivo, traer la plantilla lo borraría. Así que se hace el camino
+     completo —plantilla de Orgánico, hoja de otro comercio— y se mira que no
+     quede nada del comercio de la plantilla en lo que la página va a usar. */
+  {
+    const otra = {
+      productos: [{ id: 'labial', nombre: 'Labial mate', formato: 'Unidad',
+                    categoria: 'Labios', precio: 38000, stock: 5,
+                    descripcion: 'x', imagenes: [] }],
+      envios: [{ id: 'bog', nombre: 'Bogotá', valor: 7000 }],
+      config: { negocio: 'Cinnamon Beauty', whatsapp: '573218550807' }
+    };
+    const puesto = respaldo.aplicar(html, otra, '2026-09-14').html;
+    /* Hasta el FINAL DE LA LÍNEA de la marca de cierre. Contar caracteres a
+       ojo cortaba el comentario por la mitad y dejaba un `/*` sin cerrar: el
+       bloque no compilaba y el fallo no hablaba del bloque. */
+    const desde = puesto.indexOf('/* ═══ CATÁLOGO DE RESPALDO');
+    const hasta = puesto.indexOf('\n', puesto.indexOf('FIN DEL CATÁLOGO DE RESPALDO'));
+    const leido = new Function(puesto.slice(desde, hasta) +
+      '\n; return { c: CONFIG_SEMILLA, p: PRODUCTOS, e: ENVIOS };')();
+    ok('TRAER LA PLANTILLA ENTERA no pierde nada de la tienda',
+       leido.c.negocio === 'Cinnamon Beauty' && leido.p.length === 1 &&
+       leido.e[0].id === 'bog',
+       'lo que la página usa sale de la hoja, no del archivo que se reemplazó');
+  }
+
+  ok('DOS VECES no vuelve a escribir: si ya es la de la última, no hay commit',
+     typeof plantilla.version === 'function' &&
+     plantilla.version(html).contrato.length > 0,
+     'dice de qué versión venía y a cuál va, para que el PR se entienda');
+
+  /* Y QUE EL FLUJO NO SE LO HAGA A LA SEMILLA. Orgánico es de donde SALE la
+     plantilla: traérsela a sí mismo sería pisar con la última versión
+     publicada lo que se está trabajando para la siguiente. */
+  const yml = fs.readFileSync('../.github/workflows/montaje.yml', 'utf8');
+  ok('EL FLUJO NO trae la plantilla en la semilla',
+     /github\.repository != env\.SEMILLA/.test(yml) &&
+     /SEMILLA: laboratoriodigital\/organico/.test(yml),
+     'y el nombre de la semilla está escrito una sola vez');
+  ok('  ...y si no la puede traer, NO para el montaje: lo dice y sigue',
+     /::warning::/.test(yml) && /exit 0/.test(yml),
+     'la tienda se queda con la página que tenía, que funciona');
+  ok('  ...y va ANTES de escribir el <head>, que si no lo pisaría',
+     yml.indexOf('traer-plantilla.mjs') < yml.indexOf('preparar-index.mjs'),
+     'traer la página después sería borrar lo que se acaba de escribir');
+  ok('  ...y el respaldo va DESPUÉS de hornear el catálogo',
+     yml.indexOf('catalogo-estatico.mjs') < yml.indexOf('sembrar-respaldo.mjs'),
+     'el respaldo es una copia del catálogo que se acaba de hornear');
 }
 
 console.log(T.join('\n'));
