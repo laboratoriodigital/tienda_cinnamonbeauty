@@ -143,12 +143,36 @@ const cfg = async (clave, valor) => {
   // ═══ 5. Sin hoja, el respaldo del archivo sostiene la tienda ═══
   await fetch(U + '/__modo?m=muerto');   // ni siquiera responde el catálogo
   await p.goto(U); await catalogoListo(p);
+  /* EL RESPALDO ES EL DE ESTA TIENDA, Y ESO ES LO QUE SE COMPRUEBA.
+     Decía 'Orgánico' y 8 productos a pelo, y pasaba porque el montaje escribía
+     el <head>, las constantes y la paleta de cada comercio pero NO el catálogo
+     de respaldo: ese se quedaba con el de la plantilla en todas las tiendas.
+     Desde el 4.20 lo escribe `sembrar-respaldo.mjs`, así que lo que hay que
+     exigir no es un nombre —eso vuelve a ser el patrón 4— sino que el archivo
+     esté de acuerdo consigo mismo. */
+  const delArchivo = await p.evaluate(() => ({
+    negocio: (CONFIG_SEMILLA.negocio || NEGOCIO || '').trim(),
+    whatsapp: String(CONFIG_SEMILLA.whatsapp || WHATSAPP || '').replace(/[^0-9]/g, ''),
+    productos: PRODUCTOS.length
+  }));
   ok('Sin hoja usa el respaldo y no se rompe',
-     (await p.locator('#marcaNombre').innerText()) === 'Orgánico' &&
-     (await p.locator('.rejilla .tarjeta').count()) === 8,
-     await p.locator('#marcaNombre').innerText());
+     (await p.locator('#marcaNombre').innerText()) === delArchivo.negocio &&
+     (await p.evaluate(() => VISIBLES.length)) === delArchivo.productos &&
+     (await p.locator('.rejilla .tarjeta').count()) > 0,
+     await p.locator('#marcaNombre').innerText() + ' · ' + delArchivo.productos +
+     ' productos, ' + (await p.locator('.rejilla .tarjeta').count()) + ' tarjetas en la página');
   ok('  ...y el WhatsApp de respaldo sigue siendo válido',
-     (await p.locator('#flotante').getAttribute('href')).includes('573008610480'));
+     delArchivo.whatsapp.length >= 10 &&
+     (await p.locator('#flotante').getAttribute('href')).includes(delArchivo.whatsapp),
+     delArchivo.whatsapp);
+  /* LA PARTE NUEVA, que es la que este arreglo existe para sostener: sin red,
+     la tienda tiene que hablar de SU comercio. Un respaldo que funciona pero
+     vende lo de otro es el patrón 1 — el fallo que funciona. */
+  /* Que el respaldo hable de ESTE comercio y no del de la plantilla se prueba
+     entero en `respaldo.js`, que se escribe un archivo de otra tienda y lo
+     sirve con la hoja muerta. Aquí sobraría: el arnés corre sin semilla a
+     propósito —ver todas.sh— porque su index.html y su hoja emulada son de
+     comercios distintos. */
   await fetch(U + '/__modo?m=ok');
 
   ok('Sin errores de JavaScript', errores.length === 0, errores[0] || '');

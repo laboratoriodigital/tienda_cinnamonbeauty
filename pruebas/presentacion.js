@@ -161,8 +161,16 @@ const valorDe = (g, clave) => g.filas('Configuración')[filaDe(g, clave) - 1][1]
 
   ok('Genera el bloque con sus dos marcas',
      /CATÁLOGO DE RESPALDO/.test(b) && /FIN DEL CATÁLOGO DE RESPALDO/.test(b));
-  ok('  ...y dice de qué día es', /generado el \d\d\/\d\d\/\d{4}/.test(b),
-     (b.match(/generado el [^ ]+ /) || [''])[0]);
+  ok('  ...y dice de qué día es', /escrito el \d\d\/\d\d\/\d{4}/.test(b),
+     (b.match(/escrito el [^ ]+ /) || [''])[0]);
+  /* LA MISMA FORMA QUE ESCRIBE EL FLUJO. Este es el camino de a mano y aquel el
+     automático: si dejan el archivo distinto, un día la expresión regular del
+     montaje encuentra una marca y no la otra. */
+  ok('  ...y la configuración de la hoja, que es lo que se pinta antes de la red',
+     /^const CONFIG_SEMILLA = \{$/m.test(b) && /"negocio":/.test(b),
+     (b.match(/"negocio": "[^"]*"/) || [''])[0]);
+  ok('  ...sin la llave de pago, que no va en la página',
+     !/pago_llave|pago_titular|pago_entidad/.test(b));
   ok('Trae las dos listas que espera index.html',
      /^const ENVIOS = \[$/m.test(b) && /^const PRODUCTOS = \[$/m.test(b));
 
@@ -178,11 +186,17 @@ const valorDe = (g, clave) => g.filas('Configuración')[filaDe(g, clave) - 1][1]
   ok('  ...con los precios y el stock de HOY',
      PRODUCTOS && PRODUCTOS[0].precio === 8900 && PRODUCTOS[0].stock === 24,
      PRODUCTOS ? PRODUCTOS[0].precio + ' / ' + PRODUCTOS[0].stock : '');
-  ok('  ...y el dibujo que le toca a cada uno',
-     PRODUCTOS && PRODUCTOS.find(p => p.id === 'salsa').forma === 'frasco' &&
-     PRODUCTOS.find(p => p.id === 'jugo').forma === 'botella' &&
-     PRODUCTOS.find(p => p.id === 'chonto').forma === 'tomate',
-     PRODUCTOS ? PRODUCTOS.map(p => p.forma).join(' ') : '');
+  /* EL DIBUJO DEL PRODUCTO SIN FOTO YA NO LO ESCRIBE EL MAESTRO.
+     Lo calculaba aquí y lo metía dentro del respaldo; la página, para lo que
+     llegaba en vivo, lo heredaba POR ID de ese respaldo con «tomate» de
+     reserva. Dos sitios decidiendo lo mismo y uno mandando sobre el otro: un
+     producto que no estuviera en el respaldo —o una tienda que no vende
+     tomate— salía dibujado como un tomate. Ahora lo decide la página, en un
+     solo sitio, desde el formato y la categoría. Se prueba allí:
+     `pruebas/respaldo.js`. */
+  ok('  ...y NO trae el dibujo: eso lo decide la página, en un solo sitio',
+     PRODUCTOS && PRODUCTOS.every(p => p.forma === undefined),
+     PRODUCTOS ? PRODUCTOS.map(p => p.forma).join(' ') || '(ninguno)' : '');
 
   ok('Un producto apagado NO entra al respaldo', (() => {
        const g2 = nuevo();

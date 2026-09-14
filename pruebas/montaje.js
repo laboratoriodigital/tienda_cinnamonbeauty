@@ -16,6 +16,7 @@ const { novedades, desajustes } = require('../montar/traer-fotos.mjs');
 const { loQueSeMando } = require('../montar/sembrar-configuracion.mjs');
 const { hornear } = require('../montar/catalogo-estatico.mjs');
 const { veredicto } = require('../montar/misma-tienda.mjs');
+const respaldo = require('../montar/sembrar-respaldo.mjs');
 const fs = require('fs');
 const T = []; const ok = (n, c, d) => T.push((c ? '  OK  ' : ' FALLA') + ' | ' + n + (d ? '  -> ' + d : ''));
 
@@ -2866,6 +2867,126 @@ const configurar = (g, clave, valor) => {
   ok('NINGUNA BATERÍA DE NAVEGADOR da por hecha la paleta de la primera tienda',
      conPaleta.length === 0,
      conPaleta.join(', ') + ' — el montaje las corre sobre el archivo de OTRA tienda');
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   EL CATÁLOGO DE RESPALDO DEL index.html (4.20)
+   --------------------------------------------------------------------------
+   Lo que la página pinta antes de que conteste nadie, y lo único que le queda
+   si no contesta nadie. Venía quemado de la plantilla y NADIE lo reescribía:
+   el montaje ponía el <head>, las constantes y la paleta de cada comercio, y
+   dejaba ahí los ocho tomates de Orgánico. La tienda dos —cosméticos— abría
+   con tomates un instante y se corregía sola. Eso era lo visible; lo otro es
+   que sin red ese instante no se acaba nunca.
+   ══════════════════════════════════════════════════════════════════════════ */
+{
+  const html = fs.readFileSync('./index.html', 'utf8');
+  const catalogo = {
+    productos: [{ id: 'labial', nombre: 'Labial mate', formato: 'Unidad',
+                  categoria: 'Labios', precio: 38000, stock: 12,
+                  descripcion: 'Larga duración', imagenes: ['labial-1.webp'] }],
+    envios: [{ id: 'local', nombre: 'Medellín', valor: 8000 },
+             { id: 'resto', nombre: 'Resto del país', valor: 15000 }],
+    config: { negocio: 'Cinnamon Beauty', whatsapp: '573218550807',
+              color_principal: '#EA9999', pago_llave: 'NO-DEBE-SALIR' }
+  };
+
+  const r = respaldo.aplicar(html, catalogo, '2026-09-14');
+  ok('EL RESPALDO del index es el catálogo de ESTA tienda', r.cambio &&
+     r.productos === 1 && r.envios === 2 && r.negocio === 'Cinnamon Beauty',
+     r.productos + ' productos · ' + r.negocio);
+  ok('  ...y lo que pinta antes de la red ya es suyo',
+     /const CONFIG_SEMILLA = \{/.test(r.html) && /"negocio": "Cinnamon Beauty"/.test(r.html),
+     'la página aplica CONFIG_SEMILLA sin esperar a nadie');
+  ok('  ...y NO queda ni rastro del comercio de la plantilla',
+     !/Tomate chonto|Sofrito base|Rionegro/.test(
+        r.html.slice(r.html.indexOf('CATÁLOGO DE RESPALDO'),
+                     r.html.indexOf('FIN DEL CATÁLOGO DE RESPALDO'))),
+     'un respaldo con los productos de otro comercio funciona, y eso es lo caro');
+
+  /* LA LLAVE DE PAGO NO SALE DE LA HOJA, Y ESTE ARCHIVO ES LO MÁS PÚBLICO QUE
+     HAY. El maestro ya la quita y el horneado la vuelve a quitar; aquí se
+     quita por tercera vez, que no es redundancia: es que el tercer filtro
+     sobrevive a que alguien afloje los dos primeros. */
+  ok('  ...y la llave de pago NO se cuela en la página',
+     r.html.indexOf('NO-DEBE-SALIR') === -1 && !/pago_llave/.test(r.html),
+     'tres filtros para la misma regla, a propósito');
+
+  ok('DOS VECES SEGUIDAS no cambia nada la segunda',
+     respaldo.aplicar(r.html, catalogo, '2026-09-14').cambio === false);
+
+  /* UNA TIENDA CON EL ARCHIVO VIEJO. El bloque se rotulaba con `//` y ahora se
+     escribe con comentario de bloque. Las tiendas ya montadas tienen el archivo
+     viejo hasta que se traen el index.html de la release, y una que corra el
+     montaje antes de eso NO puede encontrarse con un «no encontré el bloque»:
+     ese mensaje sería correcto de forma y falso de fondo, que es el error que
+     cerró la tanda pasada. */
+  {
+    const viejo = html.replace(
+      /\/\* ═══ CATÁLOGO DE RESPALDO[\s\S]*?\*\//,
+      '// ══════════════════════════════════════════════════\n' +
+      '// CATÁLOGO DE RESPALDO — lo genera el Apps Script\n' +
+      '// ══════════════════════════════════════════════════\n' +
+      'const CONFIG_SEMILLA = {};')
+      .replace('/* ═══ FIN DEL CATÁLOGO DE RESPALDO ═══ */',
+               '// ═══════ FIN DEL CATÁLOGO DE RESPALDO ═══════');
+    const v = respaldo.aplicar(viejo, catalogo, '2026-09-14');
+    ok('UN index.html DE ANTES del 4.20 también se puede montar',
+       v.cambio && v.negocio === 'Cinnamon Beauty', v.negocio);
+    /* Las CUATRO líneas de justo encima, no todo el archivo: el index tiene
+       más comentarios de dibujo en otros sitios y mirarlos todos era acusar al
+       producto de algo que pasa en otra parte. */
+    const encima = v.html.slice(0, v.html.indexOf('CATÁLOGO DE RESPALDO'))
+                     .split('\n').slice(-5).join('\n');
+    ok('  ...y no queda una línea de dibujo huérfana encima del bloque',
+       !/^\/\/ ═+$/m.test(encima),
+       'el rótulo viejo traía una fila encima que hay que recoger entera');
+    ok('  ...y queda con la forma nueva, no con las dos a la vez',
+       v.html.indexOf('// CATÁLOGO DE RESPALDO') === -1 &&
+       v.html.indexOf('/* ═══ CATÁLOGO DE RESPALDO') !== -1,
+       'dos formas del mismo bloque es lo que hace falta para que un día falle');
+  }
+
+  ok('UN CATÁLOGO SIN PRODUCTOS se planta en vez de publicar una vitrina vacía', (() => {
+       try { respaldo.aplicar(html, { productos: [], envios: [], config: {} }, 'x'); return false; }
+       catch (e) { return /ni un producto activo/.test(e.message); }
+     })(), 'vacío no es ilegible, pero tiene que decirse en voz alta');
+
+  ok('SI ALGUIEN BORRÓ las marcas, lo dice en vez de escribir a ciegas', (() => {
+       const roto = html.replace(/FIN DEL CATÁLOGO DE RESPALDO/g, 'x');
+       try { respaldo.aplicar(roto, catalogo, 'x'); return false; }
+       catch (e) { return /CATÁLOGO DE RESPALDO/.test(e.message); }
+     })(), 'escribir igual dejaría la tienda con el catálogo de la plantilla');
+
+  /* UNA COMILLA EN LA HOJA NO PUEDE PARTIR LA PÁGINA EN DOS. Y </script>
+     tampoco: dentro de una etiqueta <script> esa secuencia cierra el bloque
+     aunque vaya dentro de una cadena de texto. */
+  ok('LO QUE ESCRIBA EL DUEÑO no puede romper el archivo', (() => {
+       const sucio = JSON.parse(JSON.stringify(catalogo));
+       sucio.productos[0].descripcion = 'Dice "hola" \\ y </script><script>alert(1)</script>';
+       sucio.config.negocio = "L'Atelier \"Beauty\"";
+       const x = respaldo.aplicar(html, sucio, 'x');
+       return x.negocio === "L'Atelier \"Beauty\"" &&
+              x.html.indexOf('</script><script>alert') === -1;
+     })(), 'pasa por JSON.stringify y el </script> se escapa aparte');
+
+  /* LA GUARDA QUE NO SE PUSO, Y POR QUÉ.
+     El primer intento fue calcar la de la paleta (2.9.9): «ninguna batería de
+     navegador puede nombrar un producto de Orgánico». Marcó diez baterías, y
+     las diez tenían razón — nombran tomates porque conducen la HOJA EMULADA,
+     que es de fábrica y es la misma en todas las tiendas. Lo que viaja por
+     tienda es el RESPALDO DEL ARCHIVO, no la hoja emulada, y esa diferencia
+     una regla de texto no la ve.
+     Una comprobación que acusa al producto de un acierto es peor que ninguna
+     (patrón 5), así que se cambió por `pruebas/respaldo.js`: monta una tienda
+     que no es Orgánico, la sirve con la hoja muerta, y mira qué se pinta. Y
+     esa batería lleva dentro la prueba de que distingue — con el arreglo
+     quitado, se cae. */
+  ok('HAY UNA BATERÍA que monta OTRA tienda y mira qué se ve sin red',
+     fs.existsSync('./respaldo.js') &&
+     /sembrar-respaldo/.test(fs.readFileSync('./respaldo.js', 'utf8')) &&
+     /todas\.sh/.test('todas.sh') && /respaldo\.js/.test(fs.readFileSync('./todas.sh', 'utf8')),
+     'y corre en todas.sh, que si no, no la corre nadie');
 }
 
 console.log(T.join('\n'));

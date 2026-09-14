@@ -3168,10 +3168,25 @@ function generarInventario() {
       .replace(/[\r\n]+/g, ' ').trim() + '"';
   };
 
+  /* LA MISMA FORMA QUE ESCRIBE EL MONTAJE, marca por marca y constante por
+     constante. Este es el camino de a mano y aquel el automático, pero los dos
+     dejan el mismo bloque en el mismo sitio: dos formas del mismo bloque es lo
+     que hace falta para que un día la expresión regular del montaje encuentre
+     una y no la otra y se plante sin motivo (patrón 2). */
+  var cfg = configPublica(leerConfiguracion());
+  var claves = Object.keys(cfg).sort();
+
   var lineas = [];
-  lineas.push('/* ═══ CATÁLOGO DE RESPALDO — generado el ' + fechaCorta(ahora) + ' ═══');
-  lineas.push('   Solo se usa si Google no responde. Lo genera el Apps Script:');
-  lineas.push('   el menú de la hoja > Generar inventario para index.html. */');
+  lineas.push('/* ═══ CATÁLOGO DE RESPALDO — escrito el ' + fechaCorta(ahora) + ' ═══');
+  lineas.push('   Lo que la página pinta ANTES de que conteste nadie, y lo único que le');
+  lineas.push('   queda si no contesta nadie. Normalmente lo escribe el flujo montaje;');
+  lineas.push('   esto es el camino de a mano, para una tienda que aún no lo corre. */');
+  lineas.push('const CONFIG_SEMILLA = {');
+  lineas.push(claves.map(function (k) {
+    return '  ' + txt(k) + ': ' + txt(cfg[k]);
+  }).join(',\n'));
+  lineas.push('};');
+  lineas.push('');
   lineas.push('const ENVIOS = [');
   lineas.push(envios.map(function (f) {
     return '  { id:' + txt(f[0]) + ', nombre:' + txt(f[1]) +
@@ -3187,8 +3202,7 @@ function generarInventario() {
     if (!fotos.length) fotos = [''];
     return '  { id:' + txt(f[0]) + ', nombre:' + txt(f[1]) +
            ', formato:' + txt(f[2]) + ', categoria:' + txt(f[3]) + ',\n' +
-           '    precio:' + (Number(f[4]) || 0) + ', stock:' + (Number(f[5]) || 0) +
-           ', forma:' + txt(formaDe(f[2], f[3])) + ',\n' +
+           '    precio:' + (Number(f[4]) || 0) + ', stock:' + (Number(f[5]) || 0) + ',\n' +
            '    imagenes:[' + fotos.map(txt).join(', ') + '],\n' +
            '    descripcion:' + txt(f[6]) + ' }';
   }).join(',\n\n'));
@@ -3204,14 +3218,11 @@ function generarInventario() {
 
 /* El dibujo que se usa mientras un producto no tenga fotos. Sale del formato,
    que es donde ya está la pista: "Frasco 300 g", "Botella 500 ml". */
-function formaDe(formato, categoria) {
-  var t = (String(formato) + ' ' + String(categoria)).toLowerCase();
-  if (t.indexOf('frasco') !== -1 || t.indexOf('salsa') !== -1 ||
-      t.indexOf('conserva') !== -1) return 'frasco';
-  if (t.indexOf('botella') !== -1 || t.indexOf('bebida') !== -1) return 'botella';
-  if (t.indexOf('bolsa') !== -1 || t.indexOf('caja') !== -1) return 'bolsa';
-  return 'tomate';
-}
+/* formaDe() vivía aquí. Qué dibujo se usa cuando un producto no tiene foto
+   es una decisión de la página, y la página ya la toma para lo que llega en
+   vivo. Tenerla también aquí eran dos implementaciones del mismo criterio
+   con el respaldo heredando la de este lado por id — y un producto que no
+   estuviera en el respaldo se dibujaba con un tomate. */
 
 function ventanaInventario(bloque, cuantos, envios) {
   var caja = 'width:100%;box-sizing:border-box;font:12px/1.5 Menlo,Consolas,monospace;' +

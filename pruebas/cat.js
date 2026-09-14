@@ -70,14 +70,33 @@ const T = []; const ok = (n,c,d) => T.push((c?'  OK  ':' FALLA')+' | '+n+(d?'  -
   });
   ok('El mensaje sale marcado sin validar', !/Validación:/.test(msg) && /calculado por la página/.test(msg));
 
-  // ===== 4. Sin red: se queda con el respaldo del archivo =====
-  await fetch(U + '/__modo?m=caido');
+  /* ===== 4. Sin red: se queda con el respaldo del archivo =====
+     ESTO PEDÍA `caido`, Y `caido` DEJA EL CATÁLOGO VIVO. Solo tumba el registro
+     y la validación. Así que esta sección abría una tienda con el catálogo de
+     la hoja llegando con normalidad, leía ocho productos —que son los de la
+     hoja emulada— y daba por probado el respaldo. Contestaba lo mismo con el
+     respaldo puesto y con el respaldo roto: no era una comprobación.
+     No se vio nunca porque el archivo traía justo ocho productos, los mismos
+     ocho. El día que el montaje empezó a escribir el catálogo de cada comercio
+     —4.20— los dos números dejaron de coincidir y la aserción habló.
+     `muerto` es el que tumba también el catálogo. */
+  await fetch(U + '/__modo?m=muerto');
   await abrir();
-  const resp = await p.evaluate(() => ({ n: VISIBLES.length, precio: producto('chonto').precio,
-                                          sofrito: !!producto('sofrito') }));
-  ok('Sin hoja usa el catálogo de respaldo', resp.n === 8 && resp.precio === 8900 && resp.sofrito,
-     resp.n + ' productos');
-  ok('La tienda sigue funcionando', (await p.locator('.rejilla .tarjeta').count()) === 8);
+  /* LO QUE SE ESPERA SALE DEL PROPIO ARCHIVO. Decía 8 productos y $8.900 a
+     pelo, y eso era dar por hecha la primera tienda: desde el 4.20 el montaje
+     escribe en cada index.html el catálogo de SU comercio, así que un número
+     quemado aquí es una tienda que no se puede montar (patrón 4). */
+  const resp = await p.evaluate(() => {
+    const uno = PRODUCTOS[0];
+    return { n: VISIBLES.length, delArchivo: PRODUCTOS.length,
+             precio: producto(uno.id) ? producto(uno.id).precio : null,
+             suyo: uno.precio, id: uno.id,
+             ultimo: !!producto(PRODUCTOS[PRODUCTOS.length - 1].id) };
+  });
+  ok('Sin hoja usa el catálogo de respaldo',
+     resp.n === resp.delArchivo && resp.precio === resp.suyo && resp.ultimo,
+     resp.n + ' productos · ' + resp.id + ' a $' + resp.precio);
+  ok('La tienda sigue funcionando', (await p.locator('.rejilla .tarjeta').count()) > 0);
 
   await fetch(U + '/__modo?m=ok');
   console.log(T.join('\n'));

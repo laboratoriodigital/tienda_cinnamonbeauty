@@ -119,9 +119,17 @@ const titulo  = p => p.evaluate(() => { const h = document.querySelector('#ficha
 
   // ═══ 10. La hoja no responde: el enlace debe funcionar con el respaldo ═══
   await fetch(U + '/__modo?m=muerto');
-  await p.goto(U + '/?p=chonto'); await catalogoListo(p);
+  /* CUÁL PRODUCTO, LO DICE EL ARCHIVO. Sin hoja lo único que queda es el
+     catálogo de respaldo, y desde el 4.20 ese es el de la tienda que se esté
+     montando: escribir `chonto` aquí ataba esta batería a Orgánico. */
+  await p.goto(U); await catalogoListo(p);
+  const delRespaldo = await p.evaluate(() => ({ id: PRODUCTOS[0].id,
+                                                nombre: PRODUCTOS[0].nombre }));
+  await p.goto(U + '/?p=' + encodeURIComponent(delRespaldo.id)); await catalogoListo(p);
   ok('SIN HOJA el enlace igual abre la ficha (catálogo de respaldo)',
-     (await abierta(p)) && /chonto/i.test(await titulo(p)), await titulo(p));
+     (await abierta(p)) &&
+     (await titulo(p)).trim().toLowerCase() === delRespaldo.nombre.trim().toLowerCase(),
+     await titulo(p));
   ok('  ...y se puede comprar desde ahí',
      await p.locator('#fichaCaja .ficha-agregar .btn-solido').isEnabled());
   await fetch(U + '/__modo?m=ok');

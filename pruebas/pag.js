@@ -63,7 +63,14 @@ const T = []; const ok = (n,c,d) => T.push((c?'  OK  ':' FALLA')+' | '+n+(d?'  -
      (await cards()) + ' resultados');
 
   await fetch(U + '/__reset');
-  await p.goto(U); await pintado(p);
+  /* SE ESPERA AL CATÁLOGO, NO AL PINTADO. `pintado()` vuelve en cuanto la
+     página dibuja algo — y lo primero que dibuja es el catálogo de respaldo del
+     archivo. Mientras ese respaldo tuvo los mismos ocho productos que la hoja
+     emulada, esperar de más o de menos daba igual y esta aserción pasaba sin
+     mirar nada. Desde el 4.20 el respaldo es el catálogo de verdad del
+     comercio, y entonces se vio: estaba midiendo la paginación del archivo, no
+     la de la hoja. */
+  await p.goto(U); await catalogoListo(p); await pintado(p);
   ok('Con 4 productos la paginación no existe', await p.locator('#paginacion').isHidden(),
      (await cards()) + ' productos');
 

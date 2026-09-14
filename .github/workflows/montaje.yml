@@ -287,6 +287,34 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
+      # ── LO QUE SE VE ANTES DE QUE CONTESTE NADIE ──────────────────────────
+      # Va DESPUÉS de hornear, y no es un detalle de orden: el respaldo es una
+      # copia del catalogo.json que el paso anterior acaba de escribir. Pedirle
+      # el catálogo al maestro otra vez sería la segunda lectura del mismo dato
+      # y, de las dos, una se queda atrás (patrón 2).
+      #
+      # Sin este paso el montaje dejaba la tienda escribiendo el <head>, las
+      # constantes y la paleta de ESTE comercio, y el catálogo de respaldo del
+      # comercio de la plantilla. Una tienda de cosméticos abría con ocho
+      # tomates un instante — y se quedaba con ellos para siempre el día que
+      # Google no contestara.
+      #
+      # El flujo `fotos` NO hace esto a propósito: ese fusiona sin una persona
+      # en medio, y lo que puede publicar está acotado a `publicar/fotos` y
+      # `publicar/catalogo.json`. El index.html solo lo escribe un flujo que
+      # termina en un pull request que alguien aprueba.
+      - name: El respaldo del index, desde el catálogo recién horneado
+        if: steps.hay.outputs.sigue == 'si' && inputs.que != 'solo-las-fotos'
+        run: |
+          set -o pipefail
+          node montar/sembrar-respaldo.mjs 2>&1 | tee /tmp/respaldo.txt
+          {
+            echo "### El respaldo del index.html"
+            echo '```'
+            cat /tmp/respaldo.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: ¿Cambió algo?
         if: steps.hay.outputs.sigue == 'si'
         id: cambios

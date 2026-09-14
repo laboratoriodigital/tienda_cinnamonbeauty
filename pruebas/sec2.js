@@ -21,29 +21,43 @@ const LOCAL = pathToFileURL(path.join(__dirname, 'local.html')).href;
   await p.waitForSelector('.rejilla .tarjeta');
   const T = []; const ok = (n,c,d) => T.push((c?'  OK  ':' FALLA')+' | '+n+(d?'  -> '+d:''));
 
-  // ===== C1 · repetimos EXACTAMENTE el ataque del informe =====
+  /* ===== C1 · repetimos EXACTAMENTE el ataque del informe =====
+     LOS NÚMEROS SALEN DEL ARCHIVO, NO DE AQUÍ. Esta batería corre sobre el
+     index.html de la tienda que se esté montando, y desde el 4.20 el catálogo
+     de respaldo de ese archivo es el de ESE comercio. Escribir «8900» y
+     «chonto» aquí era dar por hecha la primera tienda: el patrón 4, el mismo
+     que puso roja config.js el día que un comercio eligió sus colores.
+     Lo que se comprueba no cambia: que el precio, el stock, el cupón y el
+     envío no se dejan tocar desde la consola. */
   const a = await p.evaluate(() => {
+    const antes = { id: PRODUCTOS[0].id, precio: PRODUCTOS[0].precio,
+                    stock: PRODUCTOS[0].stock };
+    // El que la página escoge sola al arrancar, sea cual sea la tienda.
+    const suyo = TARIFAS[1] || TARIFAS[0];
     PRODUCTOS[0].precio = 100;
     PRODUCTOS[0].stock  = 9999;
     try { CUPONES['GRATIS99'] = { tipo:'porcentaje', valor:99, minimo:0, vence:'2099-01-01' }; } catch(e){}
-    carrito = [{ id:'chonto', cantidad:500 }];
+    carrito = [{ id:antes.id, cantidad:500 }];
     cuponActivo = 'GRATIS99';
     envioActivo = { id:'x', nombre:'Gratis', valor:-99999 };
     sanear();
     return { precio:PRODUCTOS[0].precio, stock:PRODUCTOS[0].stock,
              cupon:cuponActivo, cantidad:(carrito[0]||{}).cantidad,
-             envio:envioActivo.id, total:calcular().total };
+             envio:envioActivo.id, total:calcular().total,
+             antes: antes, suyo: suyo };
   });
-  ok('Precio no se puede cambiar', a.precio === 8900, '$' + a.precio);
-  ok('Stock no se puede cambiar', a.stock === 24, String(a.stock));
+  ok('Precio no se puede cambiar', a.precio === a.antes.precio, '$' + a.precio);
+  ok('Stock no se puede cambiar', a.stock === a.antes.stock, String(a.stock));
   ok('Cupón inventado se descarta', a.cupon === null, String(a.cupon));
-  ok('500 unidades se topan al stock', a.cantidad === 24, String(a.cantidad));
-  ok('Envío falso se descarta', a.envio === 'medellin', a.envio);
-  ok('Total real (24×8900+9000)', a.total === 222600, '$' + a.total);
+  ok('500 unidades se topan al stock', a.cantidad === a.antes.stock, String(a.cantidad));
+  ok('Envío falso se descarta', a.envio === a.suyo.id, a.envio);
+  ok('Total real (stock × precio + envío de la tienda)',
+     a.total === Math.max(0, a.antes.stock * a.antes.precio + a.suyo.valor),
+     '$' + a.total + ' · ' + a.antes.stock + '×' + a.antes.precio + '+' + a.suyo.valor);
 
   // el mensaje ya no lleva la llave
   const msg = await p.evaluate(() => {
-    carrito = [{id:'chonto',cantidad:2}]; cuponActivo=null; abrirPanel();
+    carrito = [{id:PRODUCTOS[0].id,cantidad:2}]; cuponActivo=null; abrirPanel();
     ['fNombre','fTel','fCiudad','fDir'].forEach((id,i) =>
       document.getElementById(id).value = ['Ana Ruiz','3001234567','Bogotá','Calle 100'][i]);
     document.getElementById('consiento').checked = true; revisarFormulario();
@@ -60,7 +74,7 @@ const LOCAL = pathToFileURL(path.join(__dirname, 'local.html')).href;
   ok('Pide los datos de pago por el chat', /datos de pago por este chat/.test(msg));
 
   // ===== M3 · topes de longitud =====
-  await p.evaluate(() => { carrito=[{id:'chonto',cantidad:2}]; abrirPanel(); });
+  await p.evaluate(() => { carrito=[{id:PRODUCTOS[0].id,cantidad:2}]; abrirPanel(); });
   await pintado(p);
   const largo = await p.evaluate(() => {
     document.getElementById('fNotas').value = 'á'.repeat(5000);

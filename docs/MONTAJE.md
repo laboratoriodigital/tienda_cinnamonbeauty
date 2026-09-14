@@ -93,15 +93,21 @@ el nombre que va en la columna Imágenes: `chonto-1.jpg`.
 npm run montar
 ```
 
-Eso hace dos cosas:
+Eso hace cuatro cosas, en este orden:
 
 - **`npm run index`** — le pregunta al maestro cómo debe quedar el `<head>` y
   las cinco constantes, y las escribe. Reemplaza el copiar y pegar del menú
   "Generar configuración". O aplica todo, o no toca el archivo.
+- **`npm run catalogo`** — hornea `publicar/catalogo.json` desde la hoja.
 - **`npm run fotos:drive`** — baja del Drive del comercio lo que falte o haya
   cambiado, lo convierte a WebP en tres tamaños más el JPG de respaldo, y
   actualiza `publicar/fotos/origen.json`, que es el registro de qué salió de
   qué archivo de Drive.
+- **`npm run respaldo`** — escribe dentro de `publicar/index.html` lo que la
+  página pinta antes de que conteste nadie: el catálogo y la configuración de
+  esta tienda. Sale del `catalogo.json` del paso anterior, y por eso va después.
+  Sin esto la tienda abre con el comercio de la plantilla un instante — y se
+  queda con él para siempre el día que Google no conteste.
 
 **`npm run montar` escribe archivos, no commitea.** El commit y el pull request
 los hace el flujo `fotos` o `montaje` cuando corren en GitHub. En local el

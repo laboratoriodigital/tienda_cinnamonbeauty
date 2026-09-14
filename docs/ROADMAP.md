@@ -506,6 +506,72 @@ devuelve `repositorio` desde la 2.9.2, y `github.repository` está en el propio
 flujo.
 
 
+**4.20 El montaje escribe el catálogo de respaldo**   [HECHO · 2.11.0]
+
+Dentro de `publicar/index.html` vive lo que la página pinta ANTES de que
+conteste nadie, y lo único que le queda si no contesta nadie. Venía quemado de
+la plantilla y el montaje no lo tocaba: ponía el `<head>`, las constantes y la
+paleta de cada comercio, y dejaba los ocho tomates de Orgánico.
+
+Cinnamon Beauty abría con ocho tomates un instante. Eso era lo visible. Lo caro
+era lo otro: sin red ese instante no se acaba y esa tienda vende tomate.
+
+**Cómo quedó.** `montar/sembrar-respaldo.mjs` escribe el bloque desde
+`publicar/catalogo.json` —el que hornea el mismo flujo unos segundos antes—, así
+que el respaldo es literalmente una copia del catálogo publicado y es imposible
+que digan cosas distintas. Y en vez de reescribir el marcado etiqueta por
+etiqueta, el montaje escribe la configuración de la hoja dentro del archivo
+(`CONFIG_SEMILLA`) y la página la aplica de una vez, sin red, con la misma
+función que ya aplica la que llega: una sola implementación (patrón 2).
+
+El flujo `fotos` NO lo hace, a propósito: ese fusiona sin una persona en medio
+y lo que puede publicar está acotado a `publicar/fotos` y `publicar/catalogo.json`.
+El `index.html` solo lo escribe un flujo que termina en un pull request.
+
+**Lo que se llevó por delante.** El dibujo del producto sin foto lo calculaba el
+Apps Script y lo metía dentro del respaldo; lo vivo lo heredaba POR ID de ahí,
+con «tomate» de reserva. Ahora lo decide la página, en un solo sitio, desde el
+formato y la categoría.
+
+**Y tres comprobaciones que no comprobaban nada, destapadas al mover esto:**
+
+1. `cat.js` probaba el respaldo pidiendo el modo `caido` — que deja el catálogo
+   VIVO y solo tumba el registro. Medía una tienda con la hoja contestando y la
+   daba por muerta. Es la trampa del 302 otra vez, en otro sitio.
+2. `pag.js` esperaba a `pintado()`, que vuelve en cuanto se dibuja el respaldo
+   del archivo. Medía la paginación del archivo, no la de la hoja.
+3. Las dos pasaban **porque el respaldo traía los mismos ocho productos que la
+   hoja emulada**. Contestaban lo mismo con el arreglo y sin él. Se vieron el
+   día en que los dos números dejaron de coincidir.
+
+**Y una guarda que no se puso.** El primer intento fue calcar la de la paleta
+(2.9.9): «ninguna batería de navegador puede nombrar un producto de Orgánico».
+Marcó diez baterías y las diez tenían razón — nombran tomates porque conducen la
+hoja EMULADA, que es de fábrica y es igual en todas las tiendas. Acusar al
+producto de un acierto es peor que no comprobar (patrón 5). En su lugar hay una
+batería, `pruebas/respaldo.js`, que monta una tienda que no es Orgánico, la
+sirve con la hoja muerta y mira qué se pinta — y lleva dentro la prueba de que
+distingue: con el arreglo quitado, se cae.
+
+Queda anotado, porque es de la misma familia y sigue abierto: el emoji 🍅 del
+encabezado del mensaje de WhatsApp, y `fotos_origen` apuntando a la dirección de
+producción, que en una vista previa de rama carga las fotos del sitio de verdad.
+
+
+**4.21 `wrangler.jsonc` dice `organico` en todas las tiendas**   [PENDIENTE, menor]
+
+La clave `name` del `wrangler.jsonc` de Cinnamon Beauty dice `"organico"`, y
+los comentarios del archivo también. El montaje no lo reescribe.
+
+Hoy no rompe nada: Cloudflare publica estas tiendas por la integración de git
+del panel, no por ese nombre. Pero es un campo de un comercio dentro del
+repositorio de otro, y el día que alguien despliegue con `wrangler deploy`
+desde una máquina —o que se quiera automatizar el paso 2 del despliegue— va a
+apuntar al Worker equivocado.
+
+Barato: sale del mismo `?a=bloques` que ya trae lo demás. Va detrás de 4.20.
+
+
 ## El techo: hasta dónde aguanta este diseño
 
 Números oficiales de Google para cuentas gratuitas (gmail.com):

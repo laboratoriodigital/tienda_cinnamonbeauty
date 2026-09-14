@@ -31,7 +31,7 @@ hasta que el comercio está vendiendo, en orden, y con quién hace cada cosa.
    ├─ 8. llenar la hoja (16 claves)
    ├─ 9. A2_diagnosticoCompleto() ─► servicio + token
    ├─ 10. los 5 secretos ──────► del repositorio
-   ├─ 11. flujo `montaje` ─────► index.html y catalogo.json
+   ├─ 11. flujo `montaje` ─────► index.html, catalogo.json y el respaldo
    ├─ 12. A1_generarStub() ───────────────────────────────► pegar en la hoja
    ├─ 13. fotos al Drive ─────────────────────────────────► «Publicar ahora»
    ├─ 14. WhatsApp Business: respuesta automática
