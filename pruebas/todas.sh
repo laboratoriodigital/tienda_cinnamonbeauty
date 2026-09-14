@@ -37,28 +37,25 @@ cp ../maestro.gs            as.js
 cp ../panel.gs              pn.js
 cp ../publicar/index.html   index.html
 
-# ── EL ARNÉS NO MEZCLA DOS TIENDAS ──────────────────────────────────────────
-# Desde el 4.20 el montaje escribe dentro de index.html la configuración de la
-# hoja de ESA tienda —CONFIG_SEMILLA—, y la página la aplica antes de pedir
-# nada por la red. Está bien: es lo que hace que la primera pintada ya sea
-# suya. Pero aquí el index.html es el del comercio del repositorio y la hoja es
-# la EMULADA, que es otra: la panadería de gas.js. Dejar las dos puestas es
-# probar una tienda que no existe — y lo primero que salió fue una batería
-# exigiendo que las fotos se sirvan del propio sitio mientras la semilla decía
-# que se sirven de la dirección de producción de otro comercio.
+# ── EL ARNÉS ES UNA SOLA TIENDA ─────────────────────────────────────────────
+# Desde el 4.20 `publicar/index.html` lleva dentro el catálogo y la
+# configuración de SU comercio: es lo que la página pinta antes de que conteste
+# nadie. Y las baterías conducen la hoja EMULADA de gas.js, que es otra tienda.
+# Dejar las dos puestas es probar un comercio que no existe, y los síntomas no
+# se parecen a la causa: `val.js` reventaba con «Cannot read properties of
+# undefined» al agregar un producto que no está en el archivo de esa tienda,
+# `config.js` leía el nombre del comercio equivocado sin red, y `fotos.js`
+# exigía que las fotos salgan del propio sitio mientras la semilla decía que
+# salen de la dirección de producción de otro.
 #
-# Así que el arnés se queda SIN semilla y las baterías miden lo que siempre
-# midieron: la hoja contra la página. Quien prueba el camino con semilla es
-# respaldo.js, que se escribe su propio archivo con una tienda inventada y lo
-# sirve con la hoja muerta.
-python3 - <<'SEMILLA'
-import io, re
-s = io.open('index.html', encoding='utf-8').read()
-s = re.sub(r'const CONFIG_SEMILLA = \{[\s\S]*?\n\};',
-           'const CONFIG_SEMILLA = {};   /* lo vacía todas.sh: ver el comentario de arriba */',
-           s, count=1)
-io.open('index.html', 'w', encoding='utf-8').write(s)
-SEMILLA
+# No se BORRA el respaldo —eso dejaría sin probar justo el camino que el 4.20
+# existe para arreglar—: se reemplaza por el de la hoja emulada, con la misma
+# herramienta que usa el flujo. El arnés queda siendo una tienda coherente y da
+# igual de qué comercio sea el repositorio.
+#
+# Quien prueba que ese camino funciona para un comercio CUALQUIERA es
+# respaldo.js, que se escribe su propio archivo con una tienda inventada.
+node arnes.mjs || { echo "ERROR: no se pudo armar el arnés"; exit 1; }
 
 # local.html es el MISMO index, con el servicio vacío: así sec2.js comprueba
 # que una tienda sin Apps Script configurado no manda nada a ninguna parte.

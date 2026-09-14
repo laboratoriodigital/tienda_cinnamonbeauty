@@ -137,9 +137,14 @@ const configurar = (g, clave, valor) => {
     const mala = JSON.parse(JSON.stringify(datos));
     mala.colores = { principal: 'rojo', secundario: '', alterno: '#D21', ilegibles: ['x'] };
     const conMala = (aplicar(html, mala).html.match(/:root\{[\s\S]*?\}/) || [''])[0];
+    /* CONTRA EL COLOR QUE TENGA EL ARCHIVO, no contra el de Orgánico. Decía
+       `#D0211C` a pelo y se cayó en el repositorio de una tienda cuyo montaje
+       ya le había escrito su paleta: es el patrón 4, el mismo que cerró la
+       2.9.9, en la batería que lo vigila. */
+    const delArchivo = (html.match(/--rojo:(#[0-9A-Fa-f]{6})/) || [])[1];
     ok('  ...y un color que no se puede leer NO se escribe',
-       /--rojo:#D0211C/.test(conMala),
-       'una variable rota deja la tienda sin color, que es peor');
+       !!delArchivo && new RegExp('--rojo:' + delArchivo).test(conMala),
+       'una variable rota deja la tienda sin color, que es peor · ' + delArchivo);
 
     /* Y si alguien cambia la forma del :root, esto tiene que PARAR, no
        seguir en silencio dejando la tienda con los colores de la plantilla.

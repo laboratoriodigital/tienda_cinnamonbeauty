@@ -233,9 +233,34 @@ el que se olvida al rotarlo.
 
 Actions → `montaje` → Run workflow. Marcar `maestro` **y** escribir `PUBLICAR`.
 
-Hace, en este orden: publica el maestro → escribe `index.html` desde la hoja →
-trae las fotos → hornea `catalogo.json` → corre todas las baterías **sobre los
-archivos ya modificados** → abre el pull request.
+Hace, en este orden:
+
+```
+publica el maestro
+trae publicar/index.html de la última versión de la semilla
+le escribe el <head>, las cinco constantes y la paleta de ESTA hoja
+trae las fotos del Drive
+hornea publicar/catalogo.json desde ESTA hoja
+le escribe el catálogo de respaldo y CONFIG_SEMILLA desde ese catálogo
+corre todas las baterías SOBRE LOS ARCHIVOS YA MODIFICADOS
+abre el pull request
+```
+
+> **Nadie copia el `index.html` a mano, y conviene entender por qué se puede.**
+> Ese archivo no es código: es la página publicada de ese comercio. La
+> **plantilla** sale de `release` en la semilla, que la adjunta como
+> `index.html`; el `montaje` de cada tienda se la trae y le escribe encima lo
+> suyo. Se puede reemplazar entero porque **no queda en él un solo valor de la
+> tienda escrito a mano**: el `<head>`, las constantes, la paleta y el respaldo
+> los ponen los tres pasos siguientes desde la hoja.
+>
+> De ahí la regla que no se puede olvidar: **nada de la tienda se escribe a mano
+> en `publicar/index.html`.** El día que alguien lo haga, el siguiente montaje
+> lo borra sin decir nada.
+>
+> Si la tienda no puede leer las versiones de la semilla, el montaje **no se
+> para**: avisa en el resumen y sigue con la página que ya tenía. Cómo se
+> arregla —una vez, no una por tienda— está en `ACTUALIZAR-UNA-TIENDA.md`.
 
 Revisar la vista previa de Cloudflare y fusionar.
 

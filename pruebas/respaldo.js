@@ -82,7 +82,7 @@ const DE_ORGANICO = /Orgánico|Tomate chonto|Tomate cherry|Sofrito|Rionegro|5730
 
      Es el caso de «un escenario que no puede existir hoy se salta DICIÉNDOLO»
      (patrón 8, regla 2). Saltarlo en silencio sería lo otro: esconderlo. */
-  if (html.indexOf('aplicarConfiguracion(CONFIG_SEMILLA)') === -1) {
+  if (html.indexOf('window.SEMILLA_APLICADA = true') === -1) {
     console.log('  SALTA | esta batería entera: el index.html de esta tienda es anterior al 4.20.');
     console.log('');
     console.log('  No declara CONFIG_SEMILLA ni lo aplica, así que lo que se pinta antes');

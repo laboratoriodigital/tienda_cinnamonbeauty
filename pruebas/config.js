@@ -170,7 +170,7 @@ const cfg = async (clave, valor) => {
      todavía dice lo de la plantilla. Eso no es un fallo del código: es el paso
      del despliegue que falta. Se dice, y se exige lo que sí puede ser cierto
      hoy: que la tienda no se rompa y sirva su catálogo. */
-  const conSemilla = await p.evaluate(() => typeof CONFIG_SEMILLA === 'object');
+  const conSemilla = await p.evaluate(() => window.SEMILLA_APLICADA === true);
 
   ok('Sin hoja usa el respaldo y no se rompe',
      (await p.evaluate(() => VISIBLES.length)) === delArchivo.productos &&

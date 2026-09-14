@@ -50,9 +50,22 @@ mano, esto se rompe en silencio.
 puede leerla—, el montaje **no se para**: la tienda se queda con la página que
 ya tenía, que funciona, y sale un aviso en el resumen del flujo.
 
-**Si las versiones de la semilla no son públicas**, cada tienda necesita un
-secreto `SEMILLA_TOKEN`: un token *fine-grained* de **solo ese** repositorio,
-con **un solo** permiso, *Contents: Read-only*. Sigue sin haber llavero común.
+**Si las versiones de la semilla no son públicas** —GitHub contesta 404 a quien
+no tiene acceso—, se arregla **una vez, no una por tienda**. Dos caminos:
+
+1. **Un secreto de organización `SEMILLA_TOKEN`.** Settings de la organización
+   → Secrets and variables → Actions → New organization secret, compartido con
+   los repositorios de las tiendas. El valor es un token *fine-grained* de
+   **solo** `laboratoriodigital/organico`, con **un solo** permiso: *Contents:
+   Read-only*. Lo heredan las tiendas de hoy y las que vengan.
+2. **Hacer público el repositorio de la semilla.** No guarda secretos: la llave
+   de pago, los ID de hoja y los tokens viven fuera a propósito. Entonces basta
+   el `curl` y no hace falta ningún token.
+
+**Esto no es el llavero común que la arquitectura evita.** Aquel es un token de
+varios repositorios dentro del proyecto de Apps Script del comerciante, donde
+las propiedades **no están cifradas**. Este es de lectura, de un solo
+repositorio, y vive en los secretos de Actions, donde el comerciante no entra.
 
 **Para no moverla de versión en una corrida**, se desmarca `plantilla` en el
 formulario del flujo.

@@ -580,3 +580,49 @@ Y la media vuelta que hacía falta para que eso no se convierta en lo otro:
 `todas.sh` imprime los saltos **aunque el marcador salga verde**. Un salto que
 solo existe dentro del archivo de salida que nadie abre es un salto escondido, y
 de ahí a una batería que no corre desde hace tres meses hay un paso.
+
+---
+
+**14 · El banco de pruebas era dos comercios a la vez.** El 14 de septiembre de
+2026, el primer montaje de la tienda dos con la versión nueva reventó tres
+baterías, y ninguna de las tres hablaba de lo que le pasaba.
+
+- `val.js` murió con «Cannot read properties of undefined (reading 'stock')».
+  Hacía `agregar('chonto')` **a propósito antes de que llegara el catálogo** —la
+  sección mira la pantalla mientras la hoja tarda—, y lo que hay en ese momento
+  es el catálogo de respaldo DEL ARCHIVO. En el archivo de una tienda de
+  cosméticos no existe ningún `chonto`.
+- `config.js` leía «Orgánico» sin red en el repositorio de otro comercio.
+- `montaje.js` exigía `#D0211C` en una tienda cuya paleta ya era la suya — el
+  patrón 4 dentro de la batería que vigila el patrón 4.
+
+La causa era una sola: desde que el montaje escribe el catálogo de respaldo, el
+`index.html` del repositorio es **de un comercio** y la hoja emulada de `gas.js`
+es **de otro**. El banco estaba probando una tienda que no existe, y los
+síntomas caían a tres pasos de ahí.
+
+La regla: **el archivo y los datos que se prueban juntos tienen que ser del
+mismo comercio.** El arreglo no fue borrar el respaldo del arnés —eso dejaría
+sin probar justo el camino nuevo— sino reescribirlo con el catálogo de la hoja
+emulada, con la misma herramienta que usa el flujo. Una línea en `todas.sh`, y
+las tres baterías volvieron a medir lo que dice su título.
+
+Y el corolario para el diseño: **cuando una entrada que era constante se vuelve
+variable, hay que buscar quién la daba por constante.** El respaldo llevaba
+siendo el mismo en todos los repositorios desde que existía. El día que dejó de
+serlo, salieron diez baterías que se apoyaban en eso sin saberlo.
+
+---
+
+**15 · Declarar no es aplicar.** La primera comprobación de «¿esta tienda ya
+tiene la página del 4.20?» miraba `typeof CONFIG_SEMILLA`.
+
+Daba verde en los dos casos. Un archivo **anterior** al 4.20 acaba declarando
+`CONFIG_SEMILLA` igual —se la escribe el montaje, que sí está al día— y no la
+aplica nunca, porque la línea que la aplica no está en él. La constante existía;
+la página seguía pintando el comercio de la plantilla.
+
+La regla: **se comprueba el efecto, no la presencia.** La página pone ahora una
+bandera después de aplicar la configuración, y esa bandera solo existe si el
+trabajo se hizo. Es el patrón 5 en su forma más barata de cometer: mirar si algo
+está escrito en vez de mirar si algo pasó.
