@@ -47,9 +47,9 @@
    Paleta: rojo tomate, verde hoja, blanco, negro.
    ============================================================ */
 :root{
-  --rojo:#D0211C;
-  --acento:#14472B;
-  --verde:#1B5E3A;
+  --rojo:#EA9999;
+  --acento:#CC0000;
+  --verde:#F1C232;
   --blanco:#FFFFFF;
   --negro:#000000;
   --linea:#E4E4E4;
@@ -581,53 +581,101 @@ let EMPRESA = {
   actualizado: "4 de septiembre de 2026"
 };
 
-// ══════════════════════════════════════════════════════════════════════════
-// CATÁLOGO DE RESPALDO — lo genera el Apps Script, no se edita a mano
-// El menú de la hoja > Generar inventario para index.html, y se reemplaza todo lo
-// que hay entre esta marca y la de abajo. Solo se usa si Google no responde.
-// ══════════════════════════════════════════════════════════════════════════
+/* ═══ CATÁLOGO DE RESPALDO — escrito el 2026-09-14 ═══
+   Lo que la página pinta ANTES de que conteste nadie, y lo único que le
+   queda si no contesta nadie. Sale de la hoja de ESTA tienda: lo repone
+   `montar/sembrar-respaldo.mjs` desde el catalogo.json que hornea el mismo
+   flujo, así que no hay aquí un dato a mano que se pueda quedar atrás.
+   No se edita a mano: la opción del menú que lo generaba se derogó en el
+   Sprint 5. Si hay que rehacerlo, se corre el flujo montaje. */
+const CONFIG_SEMILLA = {
+  "color_alterno": "#CC0000",
+  "color_principal": "#EA9999",
+  "color_secundario": "#F1C232",
+  "como_compras": "Armas tu carrito aquí|Confirmas por WhatsApp|Pagas como acordemos por el chat|Recibes en 24 a 72 horas",
+  "correo_hora": "7",
+  "correo_resumen": "dcbs.1323@gmail.com",
+  "correo_siempre": "No",
+  "correo_ultimo": "Mon Sep 14 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "empresa_ciudad": "Medellín",
+  "empresa_correo": "cinnamonbeauty.tienda@gmail.com",
+  "empresa_direccion": "TIENDA VIRTUAL",
+  "empresa_nit": "[NIT O CÉDULA]",
+  "empresa_razon": "Cinnamon Beauty",
+  "empresa_tel": "3218550807",
+  "envio_gratis_desde": "",
+  "favicon": "",
+  "fotos_cdn": "",
+  "fotos_drive": "https://drive.google.com/drive/folders/1FWaop3se-dAHG3wcRHYyGbbphCcaspI3?usp=sharing",
+  "fotos_origen": "",
+  "fotos_webp": "Sí",
+  "horario": "",
+  "legal_actualizado": "Fri Sep 11 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "logo": "",
+  "negocio": "Cinnamon Beauty",
+  "pie_descripcion": "Tienda Virtual - Envio a todo el país",
+  "portada_puntos": "Producto de la semana|Entregas a todo el país|Pides y confirmas por WhatsApp",
+  "portada_texto": "Makeup Beauty - Profesional Products",
+  "portada_titulo": "Cinnamon Beauty",
+  "repositorio": "laboratoriodigital/tienda_cinnamonbeauty",
+  "respaldo_carpeta": "https://drive.google.com/drive/folders/1VVXb4WTKB4tYk7EuWkluHHirQYlNhhc8?usp=sharing",
+  "sitio_descripcion": "Maquillaje profesional a los mejores precios",
+  "sitio_titulo": "Cinnamon Beauty - Professional Makeup",
+  "sitio_url": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev",
+  "tope_pago": "12110000",
+  "whatsapp": "573218550807"
+};
+
 const ENVIOS = [
-  { id:"finca",     nombre:"Recoger en finca (Rionegro)",   valor:0     },
-  { id:"medellin",  nombre:"Medellín y Valle de Aburrá",    valor:9000  },
-  { id:"oriente",   nombre:"Rionegro y Oriente antioqueño", valor:6000  },
-  { id:"principal", nombre:"Bogotá, Cali, Barranquilla",    valor:15000 },
-  { id:"resto",     nombre:"Resto del país",                valor:19000 }
+  { id:"finca", nombre:"Contraentrega Medellín - Bello", valor:15000 },
+  { id:"medellin", nombre:"Medellín y Valle de Aburrá", valor:9000 },
+  { id:"oriente", nombre:"Rionegro y Oriente antioqueño", valor:10000 },
+  { id:"principal", nombre:"Bogotá, Cali, Barranquilla", valor:15000 },
+  { id:"resto", nombre:"Resto del país", valor:19000 }
 ];
 
 const PRODUCTOS = [
-  { id:"chonto", nombre:"Tomate chonto", formato:"Canasta 1 kg", categoria:"Frescos",
-    precio:8900, stock:24, forma:"tomate", imagenes:["","",""],
+  { id:"labial", nombre:"Labial normal", formato:"Canasta 1 kg", categoria:"Frescos",
+    precio:8900, stock:24,
+    imagenes:["labial.jpg"],
     descripcion:"El tomate de todos los días: pulpa jugosa, piel delgada y acidez media. Cortado la mañana del despacho. Ideal para guisos, sofritos y ensaladas." },
 
-  { id:"cherry", nombre:"Tomate cherry", formato:"Bandeja 250 g", categoria:"Frescos",
-    precio:6500, stock:4, forma:"tomate", imagenes:["","",""],
+  { id:"cosmetico", nombre:"Kit Cosmeticos", formato:"Bandeja 250 g", categoria:"Frescos",
+    precio:6500, stock:4,
+    imagenes:["cosmeticos1.jpg"],
     descripcion:"Dulce, firme y de piel brillante. Se cosecha en racimo y se empaca el mismo día. Va directo a la ensalada o al horno con aceite de oliva." },
 
-  { id:"rinon", nombre:"Tomate riñón", formato:"Canasta 1 kg", categoria:"Frescos",
-    precio:9800, stock:14, forma:"tomate", imagenes:["",""],
+  { id:"rubor", nombre:"Rubor 3 colores", formato:"Unidad", categoria:"Frescos",
+    precio:9800, stock:14,
+    imagenes:["rubor.jpg", "rubor1.png", "rubor3.jpg"],
     descripcion:"Carnoso y de pocas semillas, el mejor para rodajas gruesas. Aguanta bien la nevera hasta cinco días sin perder textura." },
 
   { id:"salsa", nombre:"Salsa de tomate natural", formato:"Frasco 300 g", categoria:"Salsas",
-    precio:14900, stock:9, forma:"frasco", imagenes:["","",""],
+    precio:14900, stock:9,
+    imagenes:[""],
     descripcion:"Solo tomate, sal marina, ajo y albahaca. Sin azúcar añadida, sin conservantes, sin almidones. Se cocina a fuego lento durante cuatro horas." },
 
   { id:"sofrito", nombre:"Sofrito base de tomate", formato:"Frasco 400 g", categoria:"Salsas",
-    precio:18500, stock:16, forma:"frasco", imagenes:["",""],
+    precio:18500, stock:16,
+    imagenes:[""],
     descripcion:"Tomate, cebolla larga, pimentón y aceite de oliva. La base de arroces, carnes y pastas, lista en un frasco. Rinde para seis platos." },
 
   { id:"pasta", nombre:"Pasta de tomate concentrada", formato:"Frasco 250 g", categoria:"Salsas",
-    precio:16500, stock:0, forma:"frasco", imagenes:[""],
+    precio:16500, stock:0,
+    imagenes:[""],
     descripcion:"Reducción triple de tomate chonto. Una cucharada levanta cualquier caldo o estofado. Vuelve a estar disponible con la próxima cosecha." },
 
   { id:"secos", nombre:"Tomates secos en aceite de oliva", formato:"Frasco 200 g", categoria:"Conservas",
-    precio:22900, stock:3, forma:"frasco", imagenes:["","",""],
+    precio:22900, stock:3,
+    imagenes:[""],
     descripcion:"Deshidratados al sol durante tres días y conservados en aceite de oliva extra virgen con orégano y laurel. Para panes, quesos y pastas." },
 
   { id:"jugo", nombre:"Jugo de tomate prensado en frío", formato:"Botella 500 ml", categoria:"Bebidas",
-    precio:12900, stock:7, forma:"botella", imagenes:["",""],
+    precio:12900, stock:7,
+    imagenes:[""],
     descripcion:"Prensado sin calor para conservar el licopeno. Ligeramente salado, con un toque de limón y apio. Se conserva refrigerado hasta cinco días." }
 ];
-// ═══════════════════════ FIN DEL CATÁLOGO DE RESPALDO ═══════════════════════
+/* ═══ FIN DEL CATÁLOGO DE RESPALDO ═══ */
 
 [PRODUCTOS, ENVIOS].forEach(lista => { lista.forEach(Object.freeze); Object.freeze(lista); });
 
