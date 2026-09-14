@@ -120,4 +120,4 @@ function main() {
   console.log(r.mensaje);
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (import.meta.url === pathToFileURL(process.argv[1] || "").href) main();

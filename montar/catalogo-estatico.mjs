@@ -184,6 +184,6 @@ async function principal() {
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1] || "").href) {
   principal().catch(e => { console.error('\n' + e.message + '\n'); process.exit(1); });
 }

@@ -454,6 +454,58 @@ autorizado. Evaluación completa, con las dos formas y las dos condiciones
 nuevas, en `EVALUACION-stub-automatico.md`, sección 8.
 
 
+**4.18 Sincronizar la semilla con las tiendas, sin manos**   [PENDIENTE]
+
+Hoy, poner una tienda al día contra la semilla es copiar archivos a mano.
+Costó su primer accidente el 14 de septiembre de 2026, montando la tienda 2:
+un `git rebase` quedó a medias con un conflicto en `publicar/catalogo.json`
+—**un archivo generado**, el mismo patrón que la 2.10.0 arregló para el bot— y
+se quedó ahí días. Consecuencia visible: `origin/main` de la tienda seguía en
+`2.9.9` mientras la copia local decía `2.10.0`, y `release` falló contra una
+etiqueta que apuntaba a otro commit. El error salió lejos de la causa.
+
+Lo que hay que resolver, y es lo que hace difícil el problema:
+
+1. **Qué se copia y qué no.** El código de la plantilla se copia entero. Lo
+   que nace de la hoja de cada comercio —`catalogo.json`, `publicar/fotos/`,
+   el `<head>`, la paleta, `tienda.json`— **no se copia nunca**. Traerlo es
+   publicar la tienda de otro, que es justo el fallo de la 2.9.2.
+2. **Una sola lista**, derivada, no escrita dos veces (patrón 2). La lista de
+   lo que NO se copia y la de lo que el montaje regenera son la misma lista.
+3. **Nadie se mueve sola.** La tienda se actualiza por un pull request que
+   alguien aprueba. Eso no cambia: lo que se automatiza es *preparar* el PR,
+   no fusionarlo.
+4. **Sin conflictos posibles.** Los archivos generados no se fusionan: se
+   reponen encima, como ya hace el flujo `fotos` desde la 2.10.0.
+
+Forma probable: un flujo `sincronizar` en el repositorio de la tienda que baja
+los activos de la última `release` de la semilla, repone lo generado y abre un
+PR con el diff. Mide bien el valor: es el trabajo que se repite por cada tienda
+y por cada versión, así que se paga con la tercera tienda.
+
+Relacionado: **`release` no es un flujo de tienda** y hoy nada lo impide. Ver
+4.19.
+
+
+**4.19 `release` se niega a correr fuera de la semilla**   [PENDIENTE, barato]
+
+`release` corta la versión de la plantilla. Una tienda no corta versiones: las
+consume. Pero el flujo viaja en la plantilla, así que aparece en la pestaña
+Actions de cada tienda, invitando a correrlo — y correrlo es razonable si
+estás comprobando el ciclo completo de una tienda nueva.
+
+Cuando falla, además, el mensaje manda al sitio equivocado: «sube `version` en
+`package.json`». En una tienda ese consejo es falso, y es exactamente el
+patrón que cerró la tanda pasada: **un error que apunta al sitio equivocado
+cuesta más que uno que no dice nada.**
+
+El arreglo es una guarda al principio del trabajo: si el repositorio no es la
+semilla, parar con un resumen que diga qué correr en su lugar (`montaje`, o
+`sincronizar` cuando exista 4.18). El dato ya está a mano —`?a=identidad`
+devuelve `repositorio` desde la 2.9.2, y `github.repository` está en el propio
+flujo.
+
+
 ## El techo: hasta dónde aguanta este diseño
 
 Números oficiales de Google para cuentas gratuitas (gmail.com):

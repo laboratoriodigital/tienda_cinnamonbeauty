@@ -272,7 +272,49 @@ jobs:
           git config user.name  "montaje"
           git config user.email "noreply@github.com"
           rama="fotos/nuevas-$(date +%Y%m%d-%H%M)"
-          git switch -c "$rama"
+
+          # ── LA RAMA SE HACE SOBRE EL `main` DE AHORA, NO SOBRE EL DEL ARRANQUE ──
+          # Este flujo tardaba cuatro minutos entre el checkout y el commit, y en
+          # ese rato `main` puede haberse movido —normalmente por la corrida
+          # ANTERIOR de este mismo flujo—. La rama salía del commit viejo y el
+          # pull request chocaba: «Pull Request has merge conflicts».
+          #
+          # Y el conflicto era en `publicar/catalogo.json`, que es un archivo
+          # GENERADO. Un conflicto ahí no tiene nada que decidir: la versión
+          # buena es siempre la que se acaba de hornear desde la hoja, porque
+          # la hoja es la fuente. Fusionar a mano dos horneadas es elegir entre
+          # dos copias de lo mismo con distinta hora.
+          #
+          # Así que no se fusiona: se REHACE. Se guarda lo horneado, la rama se
+          # planta sobre el `main` de este instante, y lo horneado se vuelve a
+          # poner encima. La rama queda siempre a un commit de `main` y el
+          # conflicto deja de ser posible.
+          guardado=$(mktemp -d)
+          mkdir -p "$guardado/publicar"
+          cp -r publicar/fotos "$guardado/publicar/"
+          cp publicar/catalogo.json "$guardado/publicar/" 2>/dev/null || true
+
+          git fetch --quiet origin main
+          git switch --quiet -c "$rama"
+          git reset --hard --quiet FETCH_HEAD
+
+          rm -rf publicar/fotos
+          cp -r "$guardado/publicar/fotos" publicar/
+          cp "$guardado/publicar/catalogo.json" publicar/ 2>/dev/null || true
+          rm -rf "$guardado"
+
+          # ── Y LOS PULL REQUESTS DEL BOT QUE QUEDARON ABIERTOS, SE CIERRAN ──
+          # Cada corrida abre el suyo. Si uno anterior no se fusionó —porque
+          # falló, o porque se pidió revisión— se queda ahí, y dos ramas que
+          # rehacen el mismo archivo generado no pueden convivir: la segunda
+          # choca contra la primera pase lo que pase. El que vale es el último,
+          # que es el que trae lo que dice la hoja AHORA.
+          for viejo in $(gh pr list --state open --json number,headRefName \
+                           --jq '.[] | select(.headRefName | startswith("fotos/nuevas-")) | .number'); do
+            gh pr close "$viejo" --delete-branch \
+               --comment "Lo reemplaza una horneada más nueva del catálogo. El archivo es generado: la versión buena es siempre la última que salió de la hoja." \
+               && echo "  · cerrado el pull request #$viejo, que quedó atrás"
+          done
 
           # -A y no a secas: cuando el comercio BORRA una foto del Drive, el
           # cambio es un archivo que desaparece, y `git add <dir>` sin -A no

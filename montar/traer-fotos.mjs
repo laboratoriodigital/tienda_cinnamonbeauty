@@ -221,7 +221,7 @@ async function main() {
    D:\CoWork\… y la comparación NUNCA coincide, así que el script se cargaba,
    no ejecutaba nada y salía con código 0. Un fallo silencioso que parece que
    funcionó. */
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (import.meta.url === pathToFileURL(process.argv[1] || "").href) {
   main().catch(e => { console.error('\n' + e.message + '\n'); process.exit(1); });
 }
 

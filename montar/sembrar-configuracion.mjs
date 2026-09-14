@@ -90,6 +90,6 @@ async function main() {
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (import.meta.url === pathToFileURL(process.argv[1] || "").href) {
   main().catch(e => { console.error('\n' + e.message + '\n'); process.exit(1); });
 }

@@ -128,6 +128,41 @@ export function aplicar(html, datos) {
     }
   }
 
+  /* ── Y LA PALETA, EN EL ARCHIVO, PARA QUE LA PRIMERA PINTADA YA SEA SUYA ──
+     La página aplica los colores de la hoja al recibir la configuración, y eso
+     es correcto: cambiar un color no tiene por qué esperar a un despliegue.
+     Pero antes de que llegue esa configuración el navegador YA PINTÓ, y pintó
+     con lo que dice el `:root` del archivo — que era el rojo tomate de la
+     plantilla. Una tienda de cosméticos parpadeaba en rojo cada vez que alguien
+     recargaba.
+
+     Así que el `:root` deja de ser «la paleta de Orgánico» y pasa a ser LA
+     PALETA DE ESTA TIENDA: la escribe el montaje con lo que diga su hoja. El
+     ajuste en vivo sigue mandando —un estilo en línea gana a una hoja de
+     estilos—, así que esto no le quita nada; solo hace que el instante previo
+     tenga el color correcto en vez del de otro comercio. */
+  if (datos.colores) {
+    const paleta = { '--rojo': datos.colores.principal,
+                     '--verde': datos.colores.secundario,
+                     '--acento': datos.colores.alterno };
+    let repintadas = 0;
+    for (const [variable, color] of Object.entries(paleta)) {
+      if (!/^#[0-9A-Fa-f]{6}$/.test(String(color || ''))) continue;
+      const busca = new RegExp('(\\n\\s*' + variable + ':)#[0-9A-Fa-f]{6}(;)');
+      if (!busca.test(salida)) {
+        throw new Error(
+          'No encontré ' + variable + ' en el :root de ' + ARCHIVO + '.\n' +
+          'La paleta de la tienda se escribe ahí, y si la declaración cambió de\n' +
+          'forma esto dejaría la tienda con los colores de la plantilla sin que\n' +
+          'nadie se entere. Prefiero parar.');
+      }
+      const antes = salida;
+      salida = salida.replace(busca, '$1' + color.toUpperCase() + '$2');
+      if (salida !== antes) repintadas++;
+    }
+    if (repintadas) cambios.push('la paleta del :root');
+  }
+
   const headViejo = salida.match(HEAD)[0];
   if (headViejo !== datos.head) cambios.push('el bloque del <head>');
   salida = salida.replace(HEAD, () => datos.head);
@@ -188,6 +223,6 @@ async function main() {
    D:\CoWork\… y la comparación NUNCA coincide, así que el script se cargaba,
    no ejecutaba nada y salía con código 0. Un fallo silencioso que parece que
    funcionó. */
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (import.meta.url === pathToFileURL(process.argv[1] || "").href) {
   main().catch(e => { console.error('\n' + e.message + '\n'); process.exit(1); });
 }

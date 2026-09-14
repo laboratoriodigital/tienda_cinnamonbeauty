@@ -106,6 +106,49 @@ const configurar = (g, clave, valor) => {
      aplicar(r.html, datos).cambios.length === 0,
      aplicar(r.html, datos).cambios.join(', ') || 'sin cambios');
 
+  /* ── LA PALETA, EN EL ARCHIVO ──────────────────────────────────────────
+     La página aplica los colores de la hoja al recibir la configuración, y
+     eso está bien. Pero ANTES de que llegue esa configuración el navegador
+     ya pintó, con lo que dijera el `:root` del archivo — que era el rojo
+     tomate de la plantilla. Una tienda de cosméticos parpadeaba en rojo en
+     cada recarga, y era lo primero que veía su cliente.
+     El `:root` deja de ser «la paleta de Orgánico» y pasa a ser la de ESTA
+     tienda. El ajuste en vivo sigue mandando —un estilo en línea gana a una
+     hoja de estilos—, así que esto no le quita nada. */
+  {
+    const otra = JSON.parse(JSON.stringify(datos));
+    otra.colores = { principal: '#7A4A21', secundario: '#2F5D3A',
+                     alterno: '#3E2A14', ilegibles: [] };
+    const pintado = aplicar(html, otra).html;
+    const raiz = (pintado.match(/:root\{[\s\S]*?\}/) || [''])[0];
+    ok('LA PALETA DEL ARCHIVO es la de esta tienda, no la de la plantilla',
+       /--rojo:#7A4A21/.test(raiz) && /--verde:#2F5D3A/.test(raiz) &&
+       /--acento:#3E2A14/.test(raiz),
+       raiz.replace(/\s+/g, ' ').slice(0, 90));
+    ok('  ...y el resto del :root se queda como estaba',
+       /--blanco:#FFFFFF/.test(raiz) && /--max:1180px/.test(raiz),
+       'se reescriben tres variables, no la hoja de estilos');
+
+    /* Un color ilegible NO se escribe: la página se quedaría con una variable
+       rota y la tienda saldría sin color ninguno, que es peor que salir con
+       el de la plantilla. */
+    const mala = JSON.parse(JSON.stringify(datos));
+    mala.colores = { principal: 'rojo', secundario: '', alterno: '#D21', ilegibles: ['x'] };
+    const conMala = (aplicar(html, mala).html.match(/:root\{[\s\S]*?\}/) || [''])[0];
+    ok('  ...y un color que no se puede leer NO se escribe',
+       /--rojo:#D0211C/.test(conMala),
+       'una variable rota deja la tienda sin color, que es peor');
+
+    /* Y si alguien cambia la forma del :root, esto tiene que PARAR, no
+       seguir en silencio dejando la tienda con los colores de la plantilla.
+       Es el modo de falla que este arreglo existe para cerrar. */
+    ok('  ...y si el :root cambia de forma, se planta en vez de callarse', (() => {
+         const roto = html.replace(/--rojo:#[0-9A-Fa-f]{6};/, '--rojo: var(--x);');
+         try { aplicar(roto, otra); return false; }
+         catch (e) { return /--rojo/.test(e.message) && /plantilla/.test(e.message); }
+       })(), 'un repintado que no repinta es exactamente el fallo que se arregla');
+  }
+
   ok('Dice QUÉ cambió, para que el pull request se entienda',
      aplicar(html.replace(/const SCRIPT_VERSION\s*=\s*"[^"]*";/,
              'const SCRIPT_VERSION = "vieja";'), datos).cambios
@@ -161,7 +204,10 @@ const configurar = (g, clave, valor) => {
   ok('  ...y el guardia usa pathToFileURL, no una plantilla file://', (() => {
        const fuentes = ['preparar-index.mjs', 'traer-fotos.mjs']
          .map(f => fs.readFileSync('../montar/' + f, 'utf8'));
-       return fuentes.every(t => /pathToFileURL\(process\.argv\[1\]\)\.href/.test(t)) &&
+       /* El `|| ""` NO es adorno: sin él, importar el módulo para probar una
+          función suelta revienta con «path must be of type string», porque
+          `node -e` no tiene argv[1]. Lo descubrí probando la paleta. */
+       return fuentes.every(t => /pathToFileURL\(process\.argv\[1\] \|\| ["']["']\)\.href/.test(t)) &&
               fuentes.every(t => !/`file:\/\/\$\{process\.argv/.test(t));
      })(), 'la comparación de Windows era el fallo silencioso');
 }
