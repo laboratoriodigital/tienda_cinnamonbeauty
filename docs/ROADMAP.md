@@ -11,6 +11,23 @@ Hoy el costo total de operación es **$0/mes**. El único gasto es el
 dominio, ~$50.000 al año. Eso no debería cambiar en ninguna fase.
 
 
+## 3.0.0 — la primera versión publicable   ·  15 de septiembre de 2026
+
+La plantilla se puede clonar y la tienda que sale de ahí funciona sin que nadie
+la toque a mano. Comprobado el mismo día y en la misma versión: `release` en la
+semilla, `montaje` en la tienda dos, «Publicar ahora» en la tienda tres, las
+tres con el código de plantilla idéntico archivo por archivo, 1372/1372 — y **un
+pedido de punta a punta con un teléfono real**, que es lo único que ninguna
+batería puede probar.
+
+Es un número mayor y no un 2.16 a propósito: lo que cambió no es una función, es
+que **por primera vez el producto se entrega solo**. Quien pregunte dentro de
+seis meses desde cuándo esto se podía clonar, busca este número.
+
+Lo que queda para poder cobrar está en `ANTES-DE-SALIR.md`, y son dos puntos:
+la caída de Apps Script al enviar un pedido, y el abogado. Ninguno es código.
+
+
 ## Fase 0 — Antes de vender en serio
 
 Esto no es mejora, es lo que falta para que la tienda sea confiable.

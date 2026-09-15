@@ -793,3 +793,22 @@ ha contestado nada todavía, el consejo de siempre vuelve a ser el bueno.
 
 Dicho corto: **si el programa tiene delante la prueba de que su consejo es
 falso, no tiene excusa para darlo.**
+
+---
+
+**22 · Lo que ninguna batería podía probar.** El 15 de septiembre de 2026 se
+hizo, por primera vez, un pedido completo con un teléfono que no era el del
+comercio: pedido → WhatsApp → respuesta automática → transferencia → *Pagado* en
+la hoja → el stock baja. Salió bien.
+
+No hay nada que arreglar aquí, y por eso mismo vale anotarlo. **1372 aserciones
+prueban las piezas; esta prueba probó la costura.** Y la costura es donde vive
+todo lo que este proyecto ha aprendido a temer: el paso que funciona pero llega
+al sitio equivocado, el que se salta en silencio, el que contesta lo mismo con
+el fallo puesto y sin él.
+
+La regla, que cierra la lista y no contradice ninguna de las anteriores: **una
+suite verde es una hipótesis, no un hecho.** Dice que cada pieza hace lo que
+alguien escribió que hiciera. No dice que el comprador pueda pagar. Eso solo lo
+dice un comprador pagando, y hay que ir a buscarlo — una vez, a propósito, antes
+de que lo haga uno de verdad.

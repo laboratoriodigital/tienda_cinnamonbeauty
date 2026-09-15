@@ -8,6 +8,19 @@ sale mal, no por lo que más trabajo cuesta.
 
 ## Bloquean el lanzamiento
 
+> **Estado al 15 de septiembre de 2026.** De los cinco, quedan **dos y medio**:
+>
+> | | |
+> |---|---|
+> | 0 · La semilla corriendo lo que se copia | **resuelto** (2.15.1) |
+> | 1 · La respuesta automática de WhatsApp | **comprobada** donde se hizo el punto 4. Por tienda |
+> | 2 · Qué pasa si Apps Script no contesta al enviar | **abierto** — hay que provocarlo |
+> | 3 · Los datos legales, y que un abogado mire el machote | **abierto** |
+> | 4 · Un pedido de punta a punta con un teléfono real | **resuelto** (3.0.0) |
+>
+> Los dos que quedan no son código. El 2 es una prueba de media hora; el 3 es
+> una conversación con un abogado antes de cobrarle a un tercero.
+
 **0. Orgánico tiene que estar corriendo la versión que se va a copiar.**
    [RESUELTO · 2.15.1 · 15 de septiembre de 2026]
 
@@ -27,7 +40,7 @@ se publicó desde la hoja en LA MIGUERIA — los tres caminos, los tres verdes.
 > nadie la toque a mano.** Lo que queda por delante ya no es construir el
 > producto: es comprobarlo con una persona que compra.
 
-**1. La respuesta automática de WhatsApp, configurada.**
+**1. La respuesta automática de WhatsApp, configurada.**   [POR TIENDA]
 La llave de pago sale de la página a propósito: se entrega solo por el chat. Si
 la respuesta automática no está puesta, el comprador termina el pedido y **no
 tiene cómo pagar**. Es el único paso donde el diseño de seguridad se convierte
@@ -50,9 +63,21 @@ conviene que un abogado revise una vez el machote, y que quede claro por
 contrato quién es el responsable del tratamiento —el comercio, no nosotros.
 
 **4. Una prueba completa con un teléfono de verdad.**
+   [RESUELTO · 3.0.0 · 15 de septiembre de 2026]
+
 Pedido → WhatsApp → respuesta automática → transferencia → confirmar en la hoja
 → el stock baja. De punta a punta, con un celular que no sea el del comercio.
-Todo lo que está probado en automático son las piezas; esto prueba la costura.
+
+Hecha, y salió bien. Todo lo que estaba probado en automático eran las piezas;
+esto probó la costura, que es lo único que ninguna batería puede probar.
+
+> **Y arrastra el punto 1, pero solo para esa tienda.** La respuesta automática
+> de WhatsApp estaba en medio de esa cadena: si hubiera faltado, el comprador se
+> habría quedado sin llave de pago y la prueba habría parado ahí. Así que en la
+> tienda donde se hizo, el punto 1 está comprobado — **no en las otras**. Es
+> configuración de la cuenta de WhatsApp Business de cada comercio, no del
+> producto: hay que mirarlo una vez por tienda, y mirarlo de verdad, no darlo
+> por puesto.
 
 ---
 
