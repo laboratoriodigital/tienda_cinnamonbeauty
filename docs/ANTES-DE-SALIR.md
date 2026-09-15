@@ -9,17 +9,23 @@ sale mal, no por lo que más trabajo cuesta.
 ## Bloquean el lanzamiento
 
 **0. Orgánico tiene que estar corriendo la versión que se va a copiar.**
+   [RESUELTO · 2.15.1 · 15 de septiembre de 2026]
+
 Orgánico no es una tienda más: es la semilla. Mientras esté desplegada con una
 versión anterior a la de la plantilla, cada tienda nueva nace de un archivo que
-nadie ha visto funcionar. Montar la segunda tienda antes de esto es probar dos
-cosas a la vez y no saber cuál falló.
+nadie ha visto funcionar.
 
-- [ ] `git push` y cortar la versión: Actions → **release**
-- [ ] Poner Orgánico al día siguiendo `ACTUALIZAR-UNA-TIENDA.md`: publicar el
-      maestro, regenerar y pegar el stub, desplegar el `index.html`
-- [ ] Diagnóstico de la hoja: la versión del maestro coincide con la de la
-      etiqueta
-- [ ] Un pedido de punta a punta con la versión nueva (es el punto 4)
+Cerrado, y no por acuerdo sino por medición: **las tres tiendas corren la
+2.15.1 y su código de plantilla es idéntico al de la semilla, archivo por
+archivo.** En la misma versión se cortó el release, se montó Cinnamon Beauty y
+se publicó desde la hoja en LA MIGUERIA — los tres caminos, los tres verdes.
+
+> **Esta es la primera versión publicable.** No significa que esté todo: los
+> puntos 1 a 4 de esta lista siguen abiertos, y son los que deciden si un
+> comprador real puede pagar. Significa otra cosa, que hasta hoy no era cierta:
+> **la plantilla se puede clonar y la tienda que sale de ahí funciona sin que
+> nadie la toque a mano.** Lo que queda por delante ya no es construir el
+> producto: es comprobarlo con una persona que compra.
 
 **1. La respuesta automática de WhatsApp, configurada.**
 La llave de pago sale de la página a propósito: se entrega solo por el chat. Si
@@ -101,13 +107,26 @@ tiene estos pasos manuales, en orden de cuánto tiempo cuestan:
 | Llenar la configuración de la hoja | Flujo **montaje**, seis campos | **Hecho** |
 | Pasar las fotos de Drive a `publicar/fotos` | `npm run fotos:drive` | **Hecho** |
 
-**Antes de ponerle precio al servicio, hay que montar la tienda número dos con
-un cronómetro al lado.** El tiempo que dé ese ejercicio es el dato que falta
-para todo lo demás: cuánto cobrar, cuántas tiendas caben en un mes, y cuál de
-las automatizaciones de arriba se paga sola primero.
+**El cronómetro ya se corrió, con la tienda tres: 30 minutos.**   [MEDIDO]
 
-Y ese cronómetro solo sirve **después** del punto 0. Un despliegue medido contra
-una semilla que todavía se está moviendo mide el ruido, no el proceso.
+| Paso | Reloj |
+|---|---|
+| GitHub: repositorio, secretos, token, correr los flujos | **15 min** |
+| Hoja, proyecto de Apps Script, pegar el maestro, implementar | 8 min |
+| Llenar la información en la hoja | 5 min |
+| `clasp login` | 2 min |
+
+**La mitad se va en GitHub**, copiando cinco secretos de un sitio a otro — y
+cuatro de los cinco los sabe el maestro y ya salen juntos del Diagnóstico. Esa
+es la automatización que se paga sola primero, y no ninguna de las de la tabla
+de arriba. Está en el roadmap como **4.24**, aplazada a propósito hasta la
+quinta tienda: con tres, el ahorro no paga la superficie de fallo.
+
+**Lo que ese número NO incluye, y hay que decirlo para que no se use mal**:
+crear la cuenta de Google, las fotos del comercio, la respuesta automática de
+WhatsApp, y la prueba de punta a punta con un teléfono real. Antes de ponerle
+precio al servicio hay que medir un despliegue **con** esas cuatro cosas —
+serán las que separen «montado» de «vendiendo».
 
 ---
 
