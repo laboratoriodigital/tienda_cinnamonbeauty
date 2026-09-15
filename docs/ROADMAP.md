@@ -454,7 +454,7 @@ autorizado. Evaluación completa, con las dos formas y las dos condiciones
 nuevas, en `EVALUACION-stub-automatico.md`, sección 8.
 
 
-**4.18 Sincronizar la semilla con las tiendas, sin manos**   [PENDIENTE · intentado y retirado en la 2.13.0]
+**4.18 Sincronizar la semilla con las tiendas, sin manos**   [APLAZADO A PROPÓSITO · a partir de la quinta tienda]
 
 Hoy, poner una tienda al día contra la semilla es copiar archivos a mano.
 Costó su primer accidente el 14 de septiembre de 2026, montando la tienda 2:
@@ -482,6 +482,16 @@ Forma probable: un flujo `sincronizar` en el repositorio de la tienda que baja
 los activos de la última `release` de la semilla, repone lo generado y abre un
 PR con el diff. Mide bien el valor: es el trabajo que se repite por cada tienda
 y por cada versión, así que se paga con la tercera tienda.
+
+**CUÁNDO SE HACE, DECIDIDO: a partir de la quinta tienda en operación.** No
+antes, y la razón es la del patrón 16 de la bitácora — antes de automatizar
+algo, preguntar cuántas veces va a pasar este mes. Con tres tiendas, poner al
+día una es media hora del operador un par de veces al mes; automatizarlo es un
+camino más que se puede caer dentro del flujo del que depende cada despliegue.
+Con cinco o más, la cuenta se da la vuelta.
+
+Hasta entonces, la prioridad es **estabilizar una versión publicable**: que la
+plantilla esté bien, porque es lo que se clona.
 
 **Se intentó en la 2.12.0 y se retiró en la 2.13.0.** El flujo `montaje` bajaba
 `publicar/index.html` de la última versión publicada de la semilla antes de
@@ -663,6 +673,24 @@ crear la cuenta de Google (se hizo antes), las fotos del comercio, la respuesta
 automática de WhatsApp, y la prueba de punta a punta con un teléfono real.
 Antes de ponerle precio al servicio, hay que medir un despliegue **con** esas
 cuatro cosas.
+
+
+**4.24 Sembrar los secretos del repositorio desde el diagnóstico**   [PENDIENTE · después de la quinta tienda]
+
+Sale del cronómetro (4.23): **la mitad del despliegue se va en GitHub**, y la
+mayor parte de esa mitad es copiar cinco secretos de un sitio a otro. Cuatro de
+los cinco —`MAESTRO_URL`, `MAESTRO_TOKEN`, `SCRIPT_ID`, `HOJA_ID`— **los sabe el
+maestro**, y ya salen juntos del Diagnóstico. Escribirlos en los secretos del
+repositorio es una llamada a la API de GitHub, no un trabajo.
+
+Debería bajar el despliegue de 30 a unos 18 minutos, y deja como paso más caro
+la hoja y el Apps Script, que es justo lo que Google no deja tocar por programa.
+
+**No se hace todavía, y es la misma razón que el 4.18**: con tres tiendas, el
+ahorro son doce minutos cada varias semanas. Primero hay que tener una versión
+publicable y estable. Se retoma con la quinta tienda, junto con el 4.18 — son
+el mismo trabajo visto desde dos lados: que montar y mantener una tienda deje
+de pedir manos.
 
 
 ## El techo: hasta dónde aguanta este diseño

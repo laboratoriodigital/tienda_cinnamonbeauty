@@ -112,6 +112,11 @@ export function mensajeDePlanton(accion, extra = {}) {
         '  · O el script se quedó colgado: ábrelo y mira Ejecuciones.');
 }
 
+/* QUÉ ACCIONES HA CONTESTADO YA CADA MAESTRO EN ESTA CORRIDA. No es una caché
+   —no se reutiliza ninguna respuesta— : es lo que le permite a un error decir
+   «esto ya está descartado» en vez de mandar a revisar algo que funciona. */
+const RESPONDIO = new Map();
+
 /** Una llamada al maestro, con los errores dichos en cristiano. */
 export async function alMaestro({ url, token }, accion, extra = {}) {
   const q = new URLSearchParams({ a: accion, t: token, ...extra });
@@ -143,11 +148,36 @@ export async function alMaestro({ url, token }, accion, extra = {}) {
     }
   }
   if (r.status === 404) {
+    /* EL CONSEJO TIENE QUE SER DE LO QUE FALLÓ, Y NO CONTRADECIR LO QUE YA SE
+       VIO FUNCIONAR. Este mensaje decía siempre «casi seguro la implementación
+       quedó con acceso Solo yo» — y en la tienda tres salió DESPUÉS de que el
+       mismo maestro, en la misma corrida, hubiera contestado «identidad»,
+       «bloques» y «fotos». Con acceso «Solo yo» no habría contestado ninguna.
+       El técnico se fue a mirar una implementación que estaba bien.
+       Así que el diagnóstico solo se ofrece cuando no está ya descartado. */
+    const yaContesto = RESPONDIO.has(url);
     throw new Error(
-      'El maestro respondió 404. Casi siempre es que la implementación quedó ' +
-      'con acceso "Solo yo": Implementar > Gestionar implementaciones > lápiz ' +
-      '> Quién tiene acceso: Cualquier persona.');
+      'El maestro respondió 404 a «' + accion + '»' +
+      (extra.id ? ' (id ' + extra.id + ')' : '') + '.\n\n' +
+      (yaContesto
+        ? 'NO es la implementación: este mismo maestro ya contestó bien en esta\n' +
+          'corrida (' + [...RESPONDIO.get(url)].join(', ') + '). Un 404 en UNA\n' +
+          'acción y no en las otras es casi siempre una de dos:\n' +
+          '  · Apps Script sirve los datos desde script.googleusercontent.com,\n' +
+          '    por una redirección que CADUCA. Una respuesta grande o lenta\n' +
+          '    —una foto, un catálogo largo— llega a pedirla tarde y se\n' +
+          '    encuentra un 404. Volver a correr suele bastar.\n' +
+          '  · O lo que se pidió ya no está: una foto borrada del Drive que la\n' +
+          '    hoja todavía nombra.\n\n' +
+          'Mira la pestaña Errores de la hoja y las Ejecuciones del proyecto.'
+        : 'Ninguna acción ha contestado todavía en esta corrida, así que lo\n' +
+          'primero a descartar es el acceso de la implementación:\n' +
+          'Implementar > Gestionar implementaciones > lápiz > Quién tiene\n' +
+          'acceso: Cualquier persona.'));
   }
+  /* Lo que SÍ contestó, para que el mensaje de arriba pueda descartar. */
+  if (!RESPONDIO.has(url)) RESPONDIO.set(url, new Set());
+  RESPONDIO.get(url).add(accion);
   if (!r.ok) throw new Error('El maestro respondió ' + r.status + '.');
 
   const texto = await r.text();

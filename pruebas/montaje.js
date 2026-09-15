@@ -3184,5 +3184,48 @@ const configurar = (g, clave, valor) => {
      })(), 'corren igual: la guarda va después, donde se ve el fallo');
 }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   UNA FOTO QUE NO BAJA NO PUEDE TUMBAR LO QUE EL COMERCIO ESCRIBIÓ
+   --------------------------------------------------------------------------
+   Pasó en la tienda tres: el comercio cambió el título, el <head> se escribió
+   bien, el catálogo estaba al día, el respaldo se repuso — y el paso entero
+   murió con código 1 porque una foto del Drive contestó 404. No se publicó
+   nada. El comerciante cambió su título, apretó el botón, y lo que llegó fue
+   una cruz roja.
+   ══════════════════════════════════════════════════════════════════════════ */
+{
+  const f = fs.readFileSync('../.github/workflows/fotos.yml', 'utf8');
+  const t = fs.readFileSync('../montar/tienda.mjs', 'utf8');
+
+  ok('UNA FOTO QUE NO BAJA no impide publicar lo de la hoja',
+     /traer-fotos\.mjs\s+2>&1 \| tee [^|]*\|\| fallo_fotos=/.test(f),
+     'el título del comercio no depende de que el Drive conteste');
+  ok('  ...pero el <head> sigue siendo o todo o nada',
+     /preparar-index\.mjs\s+2>&1 \| tee [^|]*\|\| estado=/.test(f),
+     'un <head> a medias es una tienda publicada y muda');
+  ok('  ...y el fallo se DICE, en el resumen y en el commit',
+     /::warning::Las fotos no se pudieron traer/.test(f) &&
+     /sinFotos="Las fotos del Drive NO se pudieron traer/.test(f) &&
+     /-m "\$sinFotos"/.test(f),
+     'un fallo que se traga en silencio es peor que uno que para');
+
+  /* Y EL MENSAJE DEL 404, QUE MANDABA AL SITIO EQUIVOCADO. Decía siempre «casi
+     seguro la implementación quedó con acceso Solo yo» — y salió DESPUÉS de
+     que ese mismo maestro contestara «identidad», «bloques» y «fotos» en la
+     misma corrida. Con «Solo yo» no habría contestado ninguna. */
+  ok('EL 404 dice a QUÉ acción le contestó 404',
+     /respondió 404 a «' \+ accion/.test(t),
+     'un 404 sin acción no se puede ni empezar a mirar');
+  ok('  ...y NO culpa a la implementación si ya se descartó',
+     /RESPONDIO\.has\(url\)/.test(t) && /NO es la implementación/.test(t),
+     'mandaba a revisar algo que acababa de funcionar');
+  ok('  ...y ofrece la causa que sí explica un 404 en UNA sola acción',
+     /script\.googleusercontent\.com/.test(t) && /CADUCA/.test(t),
+     'los datos salen de otro dominio, por una redirección con fecha');
+  ok('  ...y cuando NADA ha contestado, sí manda a mirar el acceso',
+     /Ninguna acción ha contestado todavía/.test(t),
+     'ahí el diagnóstico de siempre es el bueno');
+}
+
 console.log(T.join('\n'));
 console.log('\nResultado: ' + T.filter(x => x.startsWith('  OK')).length + '/' + T.length);

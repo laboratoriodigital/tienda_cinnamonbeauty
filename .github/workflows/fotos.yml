@@ -220,17 +220,47 @@ jobs:
           MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
         run: |
           set -o pipefail   # sin esto manda el código de tee y un fallo se pierde
-          estado=0
+          estado=0; fallo_fotos=0
           # EL <head> PRIMERO: es lo que el comercio acaba de cambiar en su hoja
-          # y lo que antes no llegaba por aquí.
+          # y lo que antes no llegaba por aquí. Este SÍ es o todo o nada: un
+          # <head> a medias es una tienda publicada y muda.
           node montar/preparar-index.mjs    2>&1 | tee /tmp/config.txt   || estado=$?
-          node montar/traer-fotos.mjs       2>&1 | tee /tmp/fotos.txt    || estado=$?
+
+          # ── LAS FOTOS PUEDEN FALLAR SIN LLEVARSE LO DEMÁS ─────────────────
+          # Pasó en la tienda tres: el comercio cambió el título, el <head> se
+          # escribió bien, el catálogo estaba al día, el respaldo se repuso — y
+          # el paso entero murió con código 1 porque UNA foto del Drive contestó
+          # 404. No se publicó nada. El comerciante cambió su título, apretó el
+          # botón, y lo que llegó fue una cruz roja.
+          #
+          # Una foto que no baja no invalida lo que el comercio escribió en su
+          # hoja. Así que se sigue, se publica lo que sí está, y se DICE en
+          # grande: un fallo que se traga en silencio es peor que uno que para.
+          node montar/traer-fotos.mjs       2>&1 | tee /tmp/fotos.txt    || fallo_fotos=$?
+
           node montar/catalogo-estatico.mjs 2>&1 | tee /tmp/catalogo.txt || estado=$?
           # Y EL RESPALDO AL FINAL, que es una copia del catálogo que se acaba
           # de hornear. Antes de este flujo solo lo escribía `montaje`, así que
           # un cambio de precio publicado desde la hoja dejaba el respaldo del
           # archivo con los precios de la semana pasada.
           node montar/sembrar-respaldo.mjs  2>&1 | tee /tmp/respaldo.txt || estado=$?
+
+          if [ "$fallo_fotos" != "0" ]; then
+            {
+              echo "### ⚠ Las fotos no se pudieron traer"
+              echo ""
+              echo "Lo demás SÍ se publica: lo que el comercio cambió en su hoja"
+              echo "—el título, el nombre, los colores, los textos, los precios—"
+              echo "llega igual. Lo que no llega son las fotos nuevas del Drive."
+              echo ""
+              echo "El detalle está en el volcado de las fotos, aquí abajo."
+              echo ""
+              echo "Si vuelve a pasar en la siguiente corrida, no es un tropiezo:"
+              echo "mira la pestaña **Errores** de la hoja y las **Ejecuciones**"
+              echo "del proyecto del maestro."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::warning::Las fotos no se pudieron traer; se publica lo demás."
+          fi
           # PASE LO QUE PASE, AL RESUMEN. Este paso se cayó una vez y averiguar
           # por qué costó ir a desplegar el log a mano. Un paso que falla sin
           # decir qué obliga a hacer arqueología.
@@ -408,12 +438,17 @@ jobs:
           # El detalle sale de lo que IMPRIMIERON los dos scripts, no de una
           # frase escrita aquí: si mañana bajan una foto más o cambian tres
           # precios, el cuerpo lo dice sin tocar este archivo.
+          # SI LAS FOTOS FALLARON, EL COMMIT LO DICE. El resumen del flujo se
+          # mira el día que algo va mal; el historial se mira meses después,
+          # cuando alguien pregunta por qué esa foto nunca apareció.
+          sinFotos=""
+          [ "$fallo_fotos" != "0" ] && sinFotos="Las fotos del Drive NO se pudieron traer en esta corrida."
           detalle=$(grep -E '^  [+-] ' /tmp/fotos.txt || true)
           movidos=$(grep -E '^(Catálogo horneado|Productos:|Fotos con medidas)' \
                     /tmp/catalogo.txt || true)
 
           git commit -m "feature/frontend: $resumen" \
-                     -m "$detalle" -m "$movidos"
+                     -m "$sinFotos" -m "$detalle" -m "$movidos"
 
           # ── SI SE VA A FUSIONAR SOLO, NO SE ABRE PULL REQUEST ──────────────
           # Abrir uno y fusionarlo en el mismo segundo no era ceremonia inútil:

@@ -749,3 +749,47 @@ La regla: **una guarda que nunca ha visto el caso que dice cubrir no está
 comprobada, está redactada.** Vale para un `if:` de un flujo igual que para una
 aserción. Si no se puede provocar el caso, al menos hay que dejar escrito que
 no se ha visto nunca.
+
+---
+
+**20 · Un paso que hace cuatro cosas falla entero por la que menos importa.**
+El 15 de septiembre de 2026, la tienda tres. El comercio cambió el título de su
+tienda y apretó «Publicar ahora». El flujo hizo su trabajo: escribió el `<head>`
+con el título nuevo, comprobó que el catálogo estaba al día, repuso el catálogo
+de respaldo. Y murió con código 1, sin publicar nada, porque **una foto del
+Drive contestó 404**.
+
+El paso agrupaba cuatro herramientas bajo un mismo `estado=$?`, así que
+cualquiera de las cuatro tumbaba las otras tres. Visto desde el comerciante:
+cambió su título, apretó el botón, y lo que llegó fue una cruz roja.
+
+La regla: **no todo lo que falla en un paso vale lo mismo.** Un `<head>` a
+medias es una tienda publicada y muda — eso sí para. Una foto que no baja no
+invalida lo que el comercio escribió en su hoja: se publica lo demás y **se dice
+en grande**, en el resumen y en el commit. Un fallo que se traga en silencio es
+peor que uno que para; uno que para por lo que no importa, también.
+
+---
+
+**21 · Un diagnóstico que contradice lo que acaba de pasar delante.** El mismo
+404, mismo día.
+
+El mensaje decía, siempre: *«El maestro respondió 404. Casi siempre es que la
+implementación quedó con acceso Solo yo»*. Y salió **después** de que ese mismo
+maestro, en esa misma corrida, hubiera contestado `identidad`, `bloques` y
+`fotos`. Con acceso «Solo yo» no habría contestado ninguna de las tres.
+
+El operador se fue a revisar una implementación que estaba perfectamente bien.
+Es la tercera vez en dos días que un error apunta al sitio equivocado, y esta
+tiene un agravante: **el propio registro, dos líneas más arriba, desmentía el
+consejo.**
+
+La regla: **un mensaje de error puede mirar lo que ya pasó en esta corrida, y
+debe.** Ahora se recuerda qué acciones contestó cada maestro, y el 404 dice a
+cuál le contestó, descarta explícitamente lo que ya está descartado, y ofrece la
+causa que sí explica un 404 en una sola acción: Apps Script sirve los datos
+desde `script.googleusercontent.com` por una redirección que caduca. Cuando no
+ha contestado nada todavía, el consejo de siempre vuelve a ser el bueno.
+
+Dicho corto: **si el programa tiene delante la prueba de que su consejo es
+falso, no tiene excusa para darlo.**

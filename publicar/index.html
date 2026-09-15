@@ -677,6 +677,21 @@ const PRODUCTOS = [
 ];
 /* ═══ FIN DEL CATÁLOGO DE RESPALDO ═══ */
 
+/* QUÉ DIBUJO SE USA CUANDO UN PRODUCTO NO TIENE FOTO.
+   Sale del formato y la categoría, aquí y en un solo sitio. Antes lo calculaba
+   el Apps Script y lo escribía dentro del respaldo, y lo vivo lo heredaba POR
+   ID de ese respaldo: `base[c.id].forma || "tomate"`. Un producto que no
+   estuviera en el respaldo —o una tienda que no vende tomate— se dibujaba con
+   un tomate. El marcador de una tienda de cosméticos era un tomate. */
+function formaDe(formato, categoria){
+  const t = (String(formato || "") + " " + String(categoria || "")).toLowerCase();
+  if(t.includes("frasco") || t.includes("salsa") || t.includes("conserva")) return "frasco";
+  if(t.includes("botella") || t.includes("bebida")) return "botella";
+  if(t.includes("bolsa") || t.includes("caja")) return "bolsa";
+  return "tomate";
+}
+
+PRODUCTOS.forEach(p => { p.forma = formaDe(p.formato, p.categoria); });
 [PRODUCTOS, ENVIOS].forEach(lista => { lista.forEach(Object.freeze); Object.freeze(lista); });
 
 // ── Catálogo efectivo ──
@@ -792,9 +807,6 @@ function aplicarCatalogo(datos){
   if(datos.fotos && typeof datos.fotos === "object") MEDIDAS = datos.fotos;
 
   if(Array.isArray(datos.productos) && datos.productos.length){
-    
-    const base = {};
-    PRODUCTOS.forEach(p => { base[p.id] = p; });
 
     const lista = datos.productos
       .filter(c => c && c.id && c.nombre && c.activo !== false)
@@ -814,7 +826,7 @@ function aplicarCatalogo(datos){
         precioAntes: (Number(c.precioAntes) || 0) > (Number(c.precio) || 0)
                        ? Number(c.precioAntes) : 0,
         umbralBajo:  Math.max(0, Math.floor(Number(c.umbralBajo) || 0)),
-        forma:       (base[c.id] && base[c.id].forma) || "tomate"
+        forma:       formaDe(c.formato, c.categoria)
       }));
 
     if(lista.length){
@@ -2459,6 +2471,33 @@ document.addEventListener("keydown", e => {
   if(e.key !== "Escape") return;
   if($("#legal").classList.contains("abierta")) cerrarLegal(); else cerrarTodo();
 });
+
+/* ═══ LA PRIMERA PINTADA YA ES LA DE ESTA TIENDA ═══════════════════════════
+   La configuración llega por la red: del catalogo.json del borde, o del
+   maestro. Antes de que llegue, el navegador YA PINTÓ — y pintaba con lo que
+   estuviera escrito en el cuerpo de este archivo, que venía de la plantilla.
+   Una tienda de cosméticos abría diciendo «Orgánico», con el pie de una finca
+   de tomate y ocho tomates en la vitrina, y se corregía sola un instante
+   después. Eso es lo que se veía.
+
+   Lo que NO se veía es el mismo defecto sin red: si el JSON no llega y el
+   maestro no contesta, ese instante es permanente y la tienda se queda
+   vendiendo los productos de otro comercio. Es el patrón 1 —el fallo que
+   funciona— y el 4.20 del roadmap.
+
+   La cura no es reescribir el marcado etiqueta por etiqueta desde el montaje:
+   eso sería una segunda implementación de lo que esta función ya sabe hacer,
+   y de las dos, una se queda atrás (patrón 2). Es al revés: el montaje escribe
+   la configuración de la hoja AQUÍ DENTRO, y se aplica de una vez, sin red.
+   Lo que llegue después manda, como siempre. */
+aplicarConfiguracion(CONFIG_SEMILLA);
+/* QUE SE PUEDA PREGUNTAR SI ESTO PASÓ, y no si la constante existe. Desde que
+   el montaje escribe el respaldo, un archivo ANTERIOR al 4.20 acaba declarando
+   CONFIG_SEMILLA —se la escribe el montaje— sin aplicarla nunca, porque esta
+   línea no está en él. Una comprobación que mire `typeof CONFIG_SEMILLA` da
+   verde en los dos casos: es el patrón 5. Esta bandera solo existe si la
+   configuración se aplicó de verdad. */
+window.SEMILLA_APLICADA = true;
 
 // ── Arranque ──
 pintarFiltros();
