@@ -14,6 +14,10 @@ name: release
 on:
   workflow_dispatch:
 
+# DE DÓNDE SALE LA PLANTILLA, ESCRITO UNA SOLA VEZ.
+env:
+  SEMILLA: laboratoriodigital/organico
+
 permissions:
   contents: write
 
@@ -27,6 +31,46 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+
+      # ── ESTE FLUJO NO ES DE UNA TIENDA ────────────────────────────────────
+      # `release` corta la versión de la PLANTILLA. Una tienda no corta
+      # versiones: nace de la plantilla y consume la suya. Pero el flujo viaja
+      # dentro de la plantilla, así que aparece en la pestaña Actions de cada
+      # tienda — invitando a correrlo, que es exactamente lo razonable cuando
+      # alguien está comprobando el ciclo completo de una tienda nueva.
+      #
+      # Y cuando fallaba, el mensaje mandaba al sitio equivocado: «sube
+      # `version` en package.json». En una tienda ese consejo es falso, y es el
+      # patrón que cerró la tanda de la 2.10: un error que apunta al sitio
+      # equivocado cuesta más que uno que no dice nada. Pasó dos veces.
+      - name: ¿Este repositorio es la semilla?
+        run: |
+          if [ "$GITHUB_REPOSITORY" = "$SEMILLA" ]; then
+            echo "Sí: $GITHUB_REPOSITORY. Adelante."
+            exit 0
+          fi
+          {
+            echo "### \`release\` no es un flujo de tienda"
+            echo ""
+            echo "Este repositorio es **\`$GITHUB_REPOSITORY\`**, y \`release\` corta la"
+            echo "versión de la plantilla — eso solo se hace en **\`$SEMILLA\`**."
+            echo ""
+            echo "Una tienda no corta versiones: nace de la plantilla y consume la"
+            echo "suya. Este flujo aparece aquí porque viaja dentro de la plantilla,"
+            echo "no porque haga falta."
+            echo ""
+            echo "**Lo que sí se corre en una tienda:**"
+            echo ""
+            echo "| Para | Flujo |"
+            echo "|---|---|"
+            echo "| Traer lo que cambió en la hoja o en el Drive | \`montaje\` |"
+            echo "| Lo mismo, desde el botón de la hoja del comercio | \`fotos\` |"
+            echo "| Publicar \`maestro.gs\` | \`montaje\` con \`maestro\` + \`PUBLICAR\` |"
+            echo ""
+            echo "No se rompió nada: este flujo paró antes de tocar el repositorio."
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "::error::release corta la versión de la plantilla y este repositorio no es $SEMILLA."
+          exit 1
 
       - name: Leer la versión
         id: v

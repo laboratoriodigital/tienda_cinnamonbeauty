@@ -626,3 +626,126 @@ La regla: **se comprueba el efecto, no la presencia.** La página pone ahora una
 bandera después de aplicar la configuración, y esa bandera solo existe si el
 trabajo se hizo. Es el patrón 5 en su forma más barata de cometer: mirar si algo
 está escrito en vez de mirar si algo pasó.
+
+---
+
+**16 · Resolver el problema de la etapa siguiente cuesta el doble.** El 14 de
+septiembre de 2026 se automatizó que cada tienda se trajera la página de la
+última versión de la semilla. El código estaba bien y las baterías lo probaban.
+Falló en el primer montaje real con un 404, y se retiró al día siguiente.
+
+El 404 —las versiones de la semilla no son públicas— era el síntoma barato. El
+caro fue otro: **el problema que eso resolvía no existe todavía.** Hoy una
+tienda nueva se crea *a partir de la plantilla* y nace con la página dentro, así
+que lo que esté bien en la semilla llega solo. Actualizar una tienda **ya
+creada** es un problema real, pero llega cuando haya tiendas viejas — y hasta
+entonces, aquel paso solo añadía un camino más que se podía caer, dentro del
+flujo del que depende cada despliegue.
+
+Lo que lo hizo fácil de cometer es que la petición sonaba igual: «que no haya
+pasos manuales». La había, y era cierta — pero en la **entrega de una tienda
+nueva**, no en la actualización de las que ya existen. Dos problemas parecidos,
+uno urgente y otro no, y la solución del segundo se coló en el camino del
+primero.
+
+La regla: **antes de automatizar algo, preguntar cuántas veces va a pasar este
+mes.** Si la respuesta es cero, lo que se está construyendo no es una mejora:
+es una superficie de fallo con un plazo de caducidad. Anotarlo en la hoja de
+ruta es más barato, y ahí no se cae.
+
+Y la mitad que sí se quedó, porque valía por sí sola: **lo que se genera entero
+se puede reemplazar entero**, y para saber si algo llegó completo hay que mirar
+el final —las marcas del principio las trae media descarga—. Las dos están
+escritas en el 4.18 para el día que toque.
+
+---
+
+**17 · El único botón que el comerciante puede apretar no llevaba lo que él
+cambia.** El 15 de septiembre de 2026, recién montada la tienda tres, el
+operador cambió el título del sitio en la hoja y apretó **Publicar ahora**. Salió
+el mensaje de siempre —«tu tienda se está actualizando… se revisan los datos»—
+y no cambió nada. Ningún error, en ninguna parte.
+
+«Publicar ahora» dispara el flujo `fotos`, y lo que ese flujo publica está
+acotado a propósito: `publicar/fotos` y `publicar/catalogo.json`. Es la lista
+que lo deja fusionar sin una persona en medio. Pero **todo lo que se escribe en
+la pestaña Configuración** —el título del sitio, el nombre del comercio, los
+colores, los textos de la portada, el WhatsApp— no vive en ninguna de esas dos
+rutas: vive en el `<head>` y en las constantes del `index.html`, que solo
+escribía `montaje`.
+
+Así que el comerciante tenía un botón que le prometía «se revisan los datos» y
+que, para la mitad de los datos, no hacía nada. El patrón 1 otra vez, y en el
+peor sitio: en la única palanca de la persona que no puede entrar a GitHub.
+
+La regla: **lo que el producto le ofrece cambiar a alguien, tiene que llegar
+por el camino que esa persona puede recorrer.** No basta con que exista un
+flujo que lo haga; tiene que estar en el que ella dispara. Ahora `fotos`
+escribe el `<head>`, mira la Configuración al decidir si hay novedades, y repone
+el respaldo — y la lista de lo publicable sigue siendo una sola.
+
+Y el segundo hallazgo de la misma tarde: el `montaje` abría un pull request y
+esperaba a que alguien lo aprobara. Esa exigencia tenía sentido mientras el
+montaje traía la PÁGINA de la semilla —subir de versión a una tienda es una
+decisión—, y ese paso se había retirado el día anterior. Quedó la ceremonia sin
+el motivo. **Una guarda cuyo motivo desapareció no se queda «por si acaso»: se
+quita, o se convierte en un trámite que la gente aprende a saltarse.**
+
+---
+
+**18 · La tercera vez que la misma lista estaba escrita dos veces, en el mismo
+archivo.** El 15 de septiembre de 2026, montada la tienda tres, el operador
+cambió el título del sitio, apretó «Publicar ahora», el flujo dijo que había
+novedades, publicó las fotos y el catálogo — y el título no llegó.
+
+El día anterior se había ampliado `PUBLICA` para que este flujo publicara
+también `publicar/index.html`, que es donde vive el título. Y publicaba. Lo que
+pasaba estaba unas líneas antes: para rehacer la rama sobre el `main` de ese
+instante, el flujo guarda los archivos generados, hace `git reset --hard` y los
+repone. Esa copia **nombraba dos de las tres rutas a mano**:
+
+```
+cp -r publicar/fotos      "$guardado/publicar/"
+cp publicar/catalogo.json "$guardado/publicar/"
+```
+
+El `reset --hard` se llevaba por delante el `index.html` que el paso anterior
+acababa de escribir desde la hoja. Todo lo demás funcionaba: el paso que decide
+si hay novedades lo miraba, el `git add` lo incluía, las baterías corrían sobre
+él. Solo que para entonces ya era el de antes.
+
+Es el **patrón 2 por tercera vez en este mismo archivo**, y las tres veces con
+la misma forma: alguien amplía la lista de arriba y no ve la copia de más abajo.
+La cura tampoco cambia: guardar y reponer recorriendo `$PUBLICA`.
+
+La regla, afinada: **cuando un archivo ya tuvo dos veces el mismo fallo, la
+tercera no se arregla con cuidado.** Se busca a mano toda ruta escrita en ese
+archivo que debería salir de la lista, y se quita. Ahora hay una aserción por
+cada uno de los tres sitios.
+
+---
+
+**19 · Una condición de trabajo no puede saltarse una corrida que está
+retenida.** El mismo día, en el mismo pull request.
+
+`pruebas.yml` lleva desde el Sprint 5 una condición para no repetirse sobre el
+pull request que abre `fotos`, escrita precisamente porque *«esa corrida queda
+esperando la aprobación de un mantenedor, caduca, y deja una X roja en un pull
+request que ya se fusionó bien»*. La condición está bien escrita y la rama
+coincide.
+
+Y no sirve. GitHub **retiene la corrida entera** esperando aprobación, y eso
+pasa antes de que se evalúe ninguna condición de ningún trabajo. El `if:` nunca
+llega a ejecutarse. Llevábamos semanas creyendo que ese caso estaba cubierto
+porque la condición existía, sin haber comprobado nunca que hiciera algo — el
+patrón 5 aplicado a una condición en vez de a una aserción.
+
+Lo que sí lo resuelve es no abrir el pull request: cuando el flujo va a publicar
+solo, empuja directo a `main`. Las baterías ya corrieron enteras sobre esos
+mismos bytes, así que el pull request no añadía una sola comprobación; solo
+añadía una corrida retenida y una marca roja que no significaba nada.
+
+La regla: **una guarda que nunca ha visto el caso que dice cubrir no está
+comprobada, está redactada.** Vale para un `if:` de un flujo igual que para una
+aserción. Si no se puede provocar el caso, al menos hay que dejar escrito que
+no se ha visto nunca.

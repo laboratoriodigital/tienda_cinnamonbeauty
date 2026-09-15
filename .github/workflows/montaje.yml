@@ -65,10 +65,6 @@ on:
         type: choice
         default: todo
         options: [todo, solo-la-hoja, solo-las-fotos]
-      plantilla:
-        description: '¿Traer también la página de la última versión de la semilla?'
-        type: boolean
-        default: true
       maestro:
         description: '¿Publicar también maestro.gs? Marca esto Y escribe PUBLICAR abajo'
         type: boolean
@@ -76,16 +72,15 @@ on:
       confirmar:
         description: 'Escribe PUBLICAR solo si marcaste la casilla de arriba'
         required: false
+      aprobacion:
+        description: 'Cómo publicar lo que salga'
+        type: choice
+        default: automatica
+        options: [automatica, con-pull-request]
 
 permissions:
   contents: write
   pull-requests: write
-
-# DE DÓNDE SALE LA PLANTILLA, ESCRITO UNA SOLA VEZ.
-# Lo usan el paso que trae la página y la guarda que impide que la semilla se
-# traiga la plantilla a sí misma. En un sitio, para que no haya dos.
-env:
-  SEMILLA: laboratoriodigital/organico
 
 # Nunca a la vez que `fotos`: los dos escriben en publicar/.
 concurrency:
@@ -247,95 +242,6 @@ jobs:
             echo '### Maestro'
             echo '```'
             cat /tmp/maestro.txt
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
-
-      # ── 1.5. LA PÁGINA, DE LA ÚLTIMA VERSIÓN DE LA SEMILLA ────────────────
-      # Actualizar una tienda eran DOS cosas y solo una estaba automatizada. El
-      # código lo trae la sincronización; `publicar/index.html` no, porque no es
-      # código: es el archivo publicado de ese comercio. La guía decía «traer el
-      # archivo nuevo al repositorio de la tienda» — a mano, del navegador.
-      #
-      # Se vio cuando falló: la tienda dos tenía los flujos y las baterías de
-      # una versión y el index.html de la anterior. Todo verde, todo al día, y
-      # la página seguía pintando el comercio de la plantilla al arrancar.
-      #
-      # Se puede reemplazar ENTERO porque todo lo que en ese archivo es de esta
-      # tienda lo vuelven a escribir los tres pasos que siguen: el <head>, las
-      # constantes y la paleta; el catálogo horneado; y el respaldo. No queda un
-      # solo valor que se escriba a mano ahí.
-      #
-      # EN LA SEMILLA NO CORRE. Orgánico es de donde SALE la plantilla: traérsela
-      # a sí mismo sería pisar con la última versión publicada lo que se está
-      # trabajando para la siguiente.
-      - name: La página, de la última versión de la semilla
-        id: plantilla
-        if: >-
-          steps.hay.outputs.sigue == 'si' && inputs.que != 'solo-las-fotos' &&
-          inputs.plantilla != false && github.repository != env.SEMILLA
-        env:
-          SEMILLA: ${{ env.SEMILLA }}
-          # Solo hace falta si las versiones de la semilla NO son públicas. Con
-          # un repositorio público basta el curl de abajo y este secreto no
-          # existe en ninguna tienda.
-          SEMILLA_TOKEN: ${{ secrets.SEMILLA_TOKEN }}
-        run: |
-          set -o pipefail
-          url="https://github.com/$SEMILLA/releases/latest/download/index.html"
-          estado=0
-
-          # 1) Como lo pide un cliente cualquiera. Si la semilla es pública,
-          #    aquí se acaba y no hay un secreto más que poner por tienda.
-          if curl -fsSL --retry 2 --max-time 60 -o /tmp/plantilla.html "$url"; then
-            echo "Bajada de la release pública de $SEMILLA."
-          elif [ -n "$SEMILLA_TOKEN" ] && \
-               GH_TOKEN="$SEMILLA_TOKEN" gh release download --repo "$SEMILLA" \
-                 --pattern index.html --output /tmp/plantilla.html --clobber; then
-            echo "Bajada con SEMILLA_TOKEN: las versiones de $SEMILLA no son públicas."
-          else
-            # NO SE PARA EL MONTAJE POR ESTO. La tienda se queda con la página
-            # que ya tenía —que funciona— y el resto del montaje sigue trayendo
-            # lo de su hoja. Pero se DICE, y en grande: una tienda que se quedó
-            # atrás sin que nadie se entere es justo lo que este paso existe
-            # para que no pase.
-            {
-              echo "### ⚠ No pude traer la página de la semilla"
-              echo ""
-              echo "Intenté \`$url\` sin credenciales y contestó 404 — que es lo"
-              echo "que GitHub responde cuando el repositorio es privado."
-              echo ""
-              echo "**Se arregla UNA vez, no una por tienda.** Dos caminos:"
-              echo ""
-              echo "1. **Un secreto de ORGANIZACIÓN** \`SEMILLA_TOKEN\`: Settings"
-              echo "   de la organización > Secrets and variables > Actions > New"
-              echo "   organization secret, compartido con los repositorios de las"
-              echo "   tiendas. El valor es un token *fine-grained* de **solo**"
-              echo "   \`$SEMILLA\`, con **un solo** permiso: *Contents: Read-only*."
-              echo "   Lo heredan las tiendas de hoy y las que vengan."
-              echo ""
-              echo "2. **Hacer público \`$SEMILLA\`.** No guarda secretos: las"
-              echo "   llaves de pago, los ID de hoja y los tokens viven fuera del"
-              echo "   repositorio a propósito. Entonces basta el \`curl\`."
-              echo ""
-              echo "Esto NO es el llavero común que la arquitectura evita: aquel"
-              echo "es un token de varios repositorios dentro del proyecto de"
-              echo "Apps Script del comerciante, donde las propiedades no están"
-              echo "cifradas. Este es de lectura, de un solo repositorio, y vive"
-              echo "en los secretos de Actions."
-              echo ""
-              echo "El montaje sigue: la tienda se queda con la página que ya"
-              echo "tenía y se le escribe encima lo de su hoja. Lo que NO llega"
-              echo "son los cambios de la plantilla."
-            } >> "$GITHUB_STEP_SUMMARY"
-            echo "::warning::No se pudo traer index.html de $SEMILLA; la tienda sigue con la suya."
-            exit 0
-          fi
-
-          node montar/traer-plantilla.mjs /tmp/plantilla.html 2>&1 | tee /tmp/traer.txt
-          {
-            echo "### La página, de la semilla"
-            echo '```'
-            cat /tmp/traer.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -521,11 +427,59 @@ jobs:
             ```
 
             Todas las baterías ya corrieron **sobre estos archivos**, no sobre
-            los anteriores. Falta lo único que una máquina no puede hacer:
-            mirar la vista previa de Cloudflare antes de fusionar.
+            los anteriores.
           delete-branch: true
           add-paths: |
             publicar/
+
+      # ── 5b. Y SE FUSIONA SOLO ─────────────────────────────────────────────
+      # Este flujo pedía que una persona aprobara el pull request, y la razón
+      # era buena mientras existió: el montaje traía la PÁGINA de la semilla, y
+      # subir de versión a una tienda es una decisión, no un trámite. Ese paso
+      # se retiró en la 2.13.0 —una tienda nueva se crea a partir de la
+      # plantilla y nace con la página dentro—, y con él se fue el motivo.
+      #
+      # Lo que escribe hoy el montaje es, entero, lo que dice la hoja de ESTE
+      # comercio: su <head>, sus constantes, su paleta, su catálogo, sus fotos.
+      # Exactamente la misma clase de cambio que `fotos` fusiona solo desde la
+      # 2.6.0. Pedir una aprobación para eso no protegía de nada y dejaba al
+      # comerciante esperando a que alguien mirara.
+      #
+      # Las guardas que sí protegen siguen todas puestas, y son las mismas que
+      # usa `fotos`: la identidad de la hoja, que solo cambie lo que este flujo
+      # publica, y TODAS las baterías en verde sobre los archivos ya escritos.
+      # Con `aprobacion: con-pull-request` se vuelve al camino de antes.
+      - name: Fusionar
+        if: >-
+          steps.cambios.outputs.hay == 'si' &&
+          inputs.aprobacion != 'con-pull-request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rama=montaje/desde-la-hoja
+          # A DIFERENCIA DE `fotos`, AQUÍ EL PULL REQUEST YA EXISTE cuando se
+          # llega: lo abre la acción del paso anterior. Así que esto lo fusiona
+          # en vez de empujar a main. La X roja de la corrida de `pruebas`
+          # retenida no aparece aquí porque `pruebas.yml` no se salta este pull
+          # request a propósito — es el que puede reescribir el <head>, la
+          # política de seguridad y SCRIPT_URL, y corre una vez por semana.
+          if gh pr merge "$rama" --squash --delete-branch; then
+            echo "Fusionado. Cloudflare despliega solo." >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "### El pull request quedó abierto"
+              echo ""
+              echo "El trabajo está hecho y las baterías pasaron: lo único que"
+              echo "faltó fue la fusión. Suele ser que el repositorio exige una"
+              echo "revisión, o que la casilla **Allow GitHub Actions to create"
+              echo "and approve pull requests** está desmarcada."
+              echo ""
+              echo "Settings > Actions > General > Workflow permissions."
+              echo ""
+              echo "Se puede fusionar a mano sin perder nada."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::warning::No se pudo fusionar solo; el pull request quedó abierto."
+          fi
 
       # ── 6. Si el pull request no se pudo abrir, DECIR POR QUÉ ──
       # GitHub contesta «GitHub Actions is not permitted to create or approve

@@ -82,8 +82,20 @@ jobs:
     # una se queda atrás. La cura no es acordarse de tocar las dos: es que haya
     # una. Los dos pasos leen de aquí, y `montaje.js` comprueba que ninguno de
     # los dos vuelva a escribir rutas por su cuenta.
+    #
+    # ── Y DESDE LA 2.14.0, TAMBIÉN `publicar/index.html` ──────────────────
+    # «Publicar ahora» es el único botón que el COMERCIO puede apretar, y el
+    # mensaje que le sale promete «se revisan los datos». Pero este flujo solo
+    # publicaba las fotos y el catálogo: todo lo que se escribe en la pestaña
+    # Configuración —el título del sitio, el nombre, los colores, los textos de
+    # la portada, el WhatsApp— vive en el `<head>` y en las constantes del
+    # index.html, y por aquí no pasaba nunca.
+    #
+    # El comerciante cambiaba el título de su tienda, apretaba el botón, leía
+    # «tu tienda se está actualizando», y no cambiaba nada. Ningún error en
+    # ninguna parte. Es el patrón 1: el fallo que funciona.
     env:
-      PUBLICA: publicar/fotos publicar/catalogo.json
+      PUBLICA: publicar/fotos publicar/catalogo.json publicar/index.html
 
     steps:
       - uses: actions/checkout@v7
@@ -134,9 +146,13 @@ jobs:
           MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
           MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
         run: |
-          fotos=no; catalogo=no
+          fotos=no; catalogo=no; config=no
           node montar/traer-fotos.mjs      --revisar > /tmp/mirar-fotos.txt 2>&1 || fotos=si
           node montar/catalogo-estatico.mjs --revisar > /tmp/mirar-cat.txt  2>&1 || catalogo=si
+          # Lo que el comercio escribe en la pestaña Configuración. Sin esta
+          # línea, cambiar el título de la tienda y apretar «Publicar ahora»
+          # contestaba «nada nuevo».
+          node montar/preparar-index.mjs   --revisar > /tmp/mirar-cfg.txt   2>&1 || config=si
 
           # UN "NO" TIENE QUE MOSTRAR SU TRABAJO, y este no lo mostraba.
           # El comercio subió dos fotos al Drive, publicó, y este paso contestó
@@ -146,7 +162,7 @@ jobs:
           # El flujo `montaje` ya había aprendido esto; este se quedó fuera.
           # Ahora el detalle sale SIEMPRE, se haya decidido bajar o no.
           {
-            if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ]; then
+            if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ] && [ "$config" = "no" ]; then
               echo "### Nada nuevo: ni fotos en el Drive, ni cambios en la hoja"
               echo ""
               echo "Si acabas de subir fotos y esto dice que no hay nada, la respuesta"
@@ -156,6 +172,7 @@ jobs:
               echo "### Hay novedades"
               echo ""
               echo "Fotos nuevas: **$fotos** · Catálogo desactualizado: **$catalogo**"
+              echo "· Configuración de la hoja cambiada: **$config**"
             fi
             echo ""
             echo "#### Lo que vio en el Drive"
@@ -166,9 +183,13 @@ jobs:
             echo '```'
             cat /tmp/mirar-cat.txt 2>/dev/null || echo "(no llegó a mirar)"
             echo '```'
+            echo "#### Lo que vio en la Configuración"
+            echo '```'
+            cat /tmp/mirar-cfg.txt 2>/dev/null || echo "(no llegó a mirar)"
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-          if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ]; then
+          if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ] && [ "$config" = "no" ]; then
             echo "hay=no" >> "$GITHUB_OUTPUT"
           else
             echo "hay=si" >> "$GITHUB_OUTPUT"
@@ -200,12 +221,24 @@ jobs:
         run: |
           set -o pipefail   # sin esto manda el código de tee y un fallo se pierde
           estado=0
+          # EL <head> PRIMERO: es lo que el comercio acaba de cambiar en su hoja
+          # y lo que antes no llegaba por aquí.
+          node montar/preparar-index.mjs    2>&1 | tee /tmp/config.txt   || estado=$?
           node montar/traer-fotos.mjs       2>&1 | tee /tmp/fotos.txt    || estado=$?
           node montar/catalogo-estatico.mjs 2>&1 | tee /tmp/catalogo.txt || estado=$?
+          # Y EL RESPALDO AL FINAL, que es una copia del catálogo que se acaba
+          # de hornear. Antes de este flujo solo lo escribía `montaje`, así que
+          # un cambio de precio publicado desde la hoja dejaba el respaldo del
+          # archivo con los precios de la semana pasada.
+          node montar/sembrar-respaldo.mjs  2>&1 | tee /tmp/respaldo.txt || estado=$?
           # PASE LO QUE PASE, AL RESUMEN. Este paso se cayó una vez y averiguar
           # por qué costó ir a desplegar el log a mano. Un paso que falla sin
           # decir qué obliga a hacer arqueología.
           {
+            echo "### La configuración de la hoja"
+            echo '```'
+            cat /tmp/config.txt 2>/dev/null || echo "(no llegó a correr)"
+            echo '```'
             echo "### Las fotos"
             echo '```'
             cat /tmp/fotos.txt 2>/dev/null || echo "(no llegó a correr)"
@@ -214,6 +247,10 @@ jobs:
             echo '```'
             cat /tmp/catalogo.txt 2>/dev/null || echo "(no llegó a correr)"
             echo '```'
+            echo "### El respaldo del index"
+            echo '```'
+            cat /tmp/respaldo.txt 2>/dev/null || echo "(no llegó a correr)"
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit $estado
 
@@ -221,7 +258,7 @@ jobs:
       # Se fusiona solo lo que este flujo puede generar y nada más: las fotos y
       # el catálogo horneado. Si aparece cualquier otra cosa, se para y lo dice
       # — un flujo que fusiona solo tiene que saber exactamente qué fusiona.
-      - name: Comprobar que SOLO cambiaron las fotos y el catálogo
+      - name: Comprobar que SOLO cambió lo que este flujo publica
         if: steps.mirar.outputs.hay == 'si'
         id: solo
         run: |
@@ -289,18 +326,32 @@ jobs:
           # planta sobre el `main` de este instante, y lo horneado se vuelve a
           # poner encima. La rama queda siempre a un commit de `main` y el
           # conflicto deja de ser posible.
+          # LO QUE SE GUARDA Y SE REPONE SALE DE $PUBLICA, NO DE UNA LISTA AQUÍ.
+          # Estaba escrito a mano y nombraba dos de las tres rutas: se guardaban
+          # `publicar/fotos` y `publicar/catalogo.json`, y el `reset --hard` de
+          # abajo se llevaba por delante el `publicar/index.html` que el paso
+          # anterior acababa de escribir desde la hoja. Efecto: el comercio
+          # cambiaba el título de su tienda, el flujo decía que había novedades,
+          # publicaba las fotos y el catálogo, y el título no llegaba nunca.
+          # Es el patrón 2 por tercera vez en este mismo archivo, y por tercera
+          # vez la cura es que haya UNA lista.
           guardado=$(mktemp -d)
-          mkdir -p "$guardado/publicar"
-          cp -r publicar/fotos "$guardado/publicar/"
-          cp publicar/catalogo.json "$guardado/publicar/" 2>/dev/null || true
+          for ruta in $PUBLICA; do
+            [ -e "$ruta" ] || continue
+            mkdir -p "$guardado/$(dirname "$ruta")"
+            cp -r "$ruta" "$guardado/$(dirname "$ruta")/"
+          done
 
           git fetch --quiet origin main
           git switch --quiet -c "$rama"
           git reset --hard --quiet FETCH_HEAD
 
-          rm -rf publicar/fotos
-          cp -r "$guardado/publicar/fotos" publicar/
-          cp "$guardado/publicar/catalogo.json" publicar/ 2>/dev/null || true
+          for ruta in $PUBLICA; do
+            [ -e "$guardado/$ruta" ] || continue
+            rm -rf "$ruta"
+            mkdir -p "$(dirname "$ruta")"
+            cp -r "$guardado/$ruta" "$(dirname "$ruta")/"
+          done
           rm -rf "$guardado"
 
           # ── Y LOS PULL REQUESTS DEL BOT QUE QUEDARON ABIERTOS, SE CIERRAN ──
@@ -363,20 +414,46 @@ jobs:
 
           git commit -m "feature/frontend: $resumen" \
                      -m "$detalle" -m "$movidos"
+
+          # ── SI SE VA A FUSIONAR SOLO, NO SE ABRE PULL REQUEST ──────────────
+          # Abrir uno y fusionarlo en el mismo segundo no era ceremonia inútil:
+          # era una X roja garantizada. Un pull request abierto por el bot
+          # dispara `pruebas`, y GitHub RETIENE esa corrida esperando la
+          # aprobación de un mantenedor. `pruebas.yml` tiene una condición para
+          # saltarse justo ese caso — y no sirve de nada, porque la retención
+          # es de la CORRIDA: pasa antes de que se evalúe ninguna condición del
+          # trabajo. Así que caducaba y dejaba una X en un pull request que ya
+          # se había fusionado bien. Una marca roja que no significa nada es
+          # peor que ninguna: enseña a no mirarlas.
+          #
+          # Las baterías ya corrieron, enteras, sobre estos mismos bytes. El
+          # pull request no añadía una sola comprobación. Se va directo a main.
+          if [ "$AUTO" = "true" ]; then
+            if git push --quiet origin "$rama":main; then
+              echo "Publicado en \`main\`. Cloudflare despliega solo." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            # Si `main` está protegido, el push se rechaza y no es un fallo:
+            # es que este repositorio pide pull request. Se hace, y se dice.
+            echo "::warning::No se pudo publicar directo en main; va por pull request."
+            {
+              echo "### Va por pull request"
+              echo ""
+              echo "El push directo a \`main\` se rechazó — normalmente porque la"
+              echo "rama está protegida. No se perdió nada: queda el pull request."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
           git push -u origin "$rama"
 
           cuerpo="Lo que cambió el comercio desde su hoja y su carpeta de Drive."
-          cuerpo+=$'\n\n### Las fotos\n```\n'
+          cuerpo+=$'\n\n### La configuración de la hoja\n```\n'
+          cuerpo+="$(cat /tmp/config.txt 2>/dev/null || echo '(sin cambios)')"
+          cuerpo+=$'\n```\n\n### Las fotos\n```\n'
           cuerpo+="$(cat /tmp/fotos.txt 2>/dev/null || echo '(sin cambios)')"
           cuerpo+=$'\n```\n\n### El catálogo\n```\n'
           cuerpo+="$(cat /tmp/catalogo.txt 2>/dev/null || echo '(sin cambios)')"
           cuerpo+=$'\n```\n\nTodas las baterías ya corrieron sobre estos archivos.'
           gh pr create --base main --head "$rama" \
             --title "feature/frontend: $resumen" --body "$cuerpo"
-
-          if [ "$AUTO" = "true" ]; then
-            gh pr merge "$rama" --squash --delete-branch
-            echo "Fusionado. Cloudflare despliega solo." >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "Pull request abierto, esperando revisión." >> "$GITHUB_STEP_SUMMARY"
-          fi
+          echo "Pull request abierto, esperando revisión." >> "$GITHUB_STEP_SUMMARY"

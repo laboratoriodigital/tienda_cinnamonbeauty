@@ -17,7 +17,6 @@ const { loQueSeMando } = require('../montar/sembrar-configuracion.mjs');
 const { hornear } = require('../montar/catalogo-estatico.mjs');
 const { veredicto } = require('../montar/misma-tienda.mjs');
 const respaldo = require('../montar/sembrar-respaldo.mjs');
-const plantilla = require('../montar/traer-plantilla.mjs');
 const fs = require('fs');
 const T = []; const ok = (n, c, d) => T.push((c ? '  OK  ' : ' FALLA') + ' | ' + n + (d ? '  -> ' + d : ''));
 
@@ -1807,10 +1806,12 @@ const configurar = (g, clave, valor) => {
      /cat \/tmp\/catalogo\.txt/.test(pasoPublicar),
      'el del catálogo es el que dice qué producto se dio de baja');
 
-  /* Y las baterías siguen corriendo ANTES de fusionar: lo que empuja el
-     GITHUB_TOKEN no dispara `pruebas`, así que si no corren aquí no corren. */
-  ok('  ...con las baterías corriendo antes de fusionar',
-     f.indexOf('todas.sh') < f.indexOf('gh pr merge'),
+  /* Y LAS BATERÍAS SIGUEN CORRIENDO ANTES DE PUBLICAR. Desde que este flujo
+     empuja directo a `main` en vez de abrir un pull request y fusionarlo, esta
+     es la ÚNICA vez que corren: lo que empuja el GITHUB_TOKEN no dispara
+     `pruebas`. Si dejaran de correr aquí, no correrían en ninguna parte. */
+  ok('  ...con las baterías corriendo antes de publicar',
+     f.indexOf('todas.sh') < f.indexOf('"$rama":main'),
      'lo que empuja GITHUB_TOKEN no dispara pruebas');
 
   /* Y SI SE CAE, QUE DIGA QUÉ. Este paso se cayó una vez y averiguar por qué
@@ -2758,15 +2759,24 @@ const configurar = (g, clave, valor) => {
   {
     const p = fs.readFileSync('../.github/workflows/pruebas.yml', 'utf8');
     const f = fs.readFileSync('../.github/workflows/fotos.yml', 'utf8');
+    /* LA CONDICIÓN SIGUE PUESTA, Y NO ES LA QUE RESUELVE EL PROBLEMA.
+       Se escribió para saltarse la corrida duplicada del pull request del bot,
+       y NO FUNCIONA para lo que más dolía: GitHub RETIENE esa corrida esperando
+       la aprobación de un mantenedor, y la retención es de la CORRIDA — pasa
+       antes de que se evalúe ninguna condición del trabajo. Caducaba y dejaba
+       una X roja en un pull request que ya se había fusionado bien.
+       Lo que sí lo resuelve es que `fotos` no abra pull request cuando va a
+       publicar solo. Esta condición se queda para el camino
+       `con-pull-request`, donde sí evita la corrida repetida. */
     ok('`pruebas` NO se repite sobre el pull request que abre `fotos`',
        /github-actions\[bot\]/.test(p) && /startsWith\(github\.head_ref, 'fotos\/nuevas-'\)/.test(p),
-       'esa corrida espera aprobación y caduca en rojo');
+       'evita la corrida repetida; la X roja la quita no abrir el PR');
     /* Y LA EXCUSA TIENE QUE SEGUIR SIENDO CIERTA. El salto se justifica SOLO
-       porque `fotos` ya las corrió antes de fusionar. El día que eso deje de
-       pasar, esto fusiona sin haber probado nada. */
-    ok('  ...porque `fotos` YA las corrió antes de fusionar, y eso sigue siendo cierto',
-       f.indexOf('todas.sh') > 0 && f.indexOf('todas.sh') < f.indexOf('gh pr merge'),
-       'sin esto, saltarse pruebas sería fusionar a ciegas');
+       porque `fotos` ya las corrió antes de publicar. El día que eso deje de
+       pasar, esto publicaría sin haber probado nada. */
+    ok('  ...porque `fotos` YA las corrió antes de publicar, y eso sigue siendo cierto',
+       f.indexOf('todas.sh') > 0 && f.indexOf('todas.sh') < f.indexOf('"$rama":main'),
+       'sin esto, saltarse pruebas sería publicar a ciegas');
     ok('  ...y el de `montaje`, que espera a una persona, se sigue comprobando',
        !/montaje\/desde-la-hoja/.test(p),
        'ese es el que puede reescribir el <head> y la política de seguridad');
@@ -2996,85 +3006,182 @@ const configurar = (g, clave, valor) => {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   TRAER LA PÁGINA DE LA SEMILLA (4.18, el tramo del index.html)
+   LA PLANTILLA ES LO QUE SE CLONA, ASÍ QUE LA PLANTILLA TIENE QUE ESTAR BIEN
    --------------------------------------------------------------------------
-   Actualizar una tienda eran DOS cosas y solo una estaba automatizada. El
-   código lo trae la sincronización; `publicar/index.html` no, porque no es
-   código: es el archivo publicado de ese comercio. La guía mandaba a bajarlo
-   del navegador y pegarlo — un paso manual justo donde la premisa del negocio
-   dice que no puede haberlos.
+   Una tienda nueva no descarga nada: se crea un repositorio A PARTIR DE ESTE,
+   con el botón de plantilla de GitHub, y nace con todo dentro —incluido
+   `publicar/index.html`—. Su primer montaje le escribe encima lo suyo.
+
+   Eso pone el listón aquí: lo que no esté bien en este archivo nace mal en
+   todas las tiendas que se creen a partir de hoy. Y al revés, lo que esté bien
+   llega solo, sin que nadie traiga ni copie nada.
+
+   (Poner al día una tienda YA creada cuando cambia la plantilla es otra cosa,
+   y es el 4.18 del roadmap. No es esto.)
    ══════════════════════════════════════════════════════════════════════════ */
 {
-  const html = fs.readFileSync('./index.html', 'utf8');
+  const plantilla = fs.readFileSync('../publicar/index.html', 'utf8');
 
-  ok('LA PLANTILLA DE VERDAD pasa la revisión', plantilla.revisar(html).length === 0,
-     plantilla.revisar(html).join(' · ') || 'las cuatro señas');
+  /* LA BANDERA, QUE ES LO QUE HACE QUE EL 4.20 LLEGUE SOLO. Una tienda creada
+     desde esta plantilla trae la página que aplica su configuración antes de
+     pedir nada por la red. Si esta línea se cayera del archivo, las tiendas
+     nuevas nacerían pintando el comercio de la plantilla y NADA lo diría: el
+     montaje les escribiría el respaldo correcto y la página no lo miraría. */
+  ok('LA PLANTILLA que se clona aplica la configuración sin esperar a la red',
+     /window\.SEMILLA_APLICADA = true/.test(plantilla) &&
+     /aplicarConfiguracion\(CONFIG_SEMILLA\)/.test(plantilla),
+     'una tienda nueva nace con esto o nace pintando otro comercio');
 
-  /* LO QUE ESTO EXISTE PARA QUE NO PASE: que un curl se traiga una página de
-     error, o media descarga, y se escriba encima de la tienda. Dejarla sin
-     sitio es peor que dejarla con la versión anterior, que funciona. */
-  ok('UNA PÁGINA DE ERROR de GitHub NO se escribe encima de la tienda',
-     plantilla.revisar('<html><body>404 Not Found</body></html>').length > 0,
-     'pesa cuatro líneas, y la plantilla pesa más de veinte mil bytes');
-  ok('  ...ni una descarga a medias', (() => {
-       const cortado = html.slice(0, Math.floor(html.length / 2));
-       return plantilla.revisar(cortado).length > 0;
-     })(), 'le faltarían las marcas que buscan los pasos siguientes');
-  ok('  ...ni un archivo que ya no trae las marcas que el montaje busca',
-     plantilla.revisar(html.replace('FIN DEL CATÁLOGO DE RESPALDO', 'x')).length === 1 &&
-     /CATÁLOGO DE RESPALDO/.test(plantilla.revisar(
-        html.replace('FIN DEL CATÁLOGO DE RESPALDO', 'x'))[0]),
-     'y dice CUÁL falta, no «no es la plantilla»');
+  ok('  ...y trae las cuatro marcas que su primer montaje va a buscar',
+     ['<!-- ═══ FIN DE LA CONFIGURACIÓN ═══ -->', 'const SCRIPT_URL',
+      'FIN DEL CATÁLOGO DE RESPALDO', '--rojo:']
+       .every(m => plantilla.indexOf(m) !== -1),
+     'sin una de ellas, el montaje de esa tienda se planta');
 
-  /* LA PRUEBA DE QUE SE PUEDE REEMPLAZAR ENTERO. Es la afirmación de la que
-     cuelga todo este paso: si algo de la tienda se escribiera a mano en ese
-     archivo, traer la plantilla lo borraría. Así que se hace el camino
-     completo —plantilla de Orgánico, hoja de otro comercio— y se mira que no
-     quede nada del comercio de la plantilla en lo que la página va a usar. */
-  {
-    const otra = {
-      productos: [{ id: 'labial', nombre: 'Labial mate', formato: 'Unidad',
-                    categoria: 'Labios', precio: 38000, stock: 5,
-                    descripcion: 'x', imagenes: [] }],
-      envios: [{ id: 'bog', nombre: 'Bogotá', valor: 7000 }],
-      config: { negocio: 'Cinnamon Beauty', whatsapp: '573218550807' }
-    };
-    const puesto = respaldo.aplicar(html, otra, '2026-09-14').html;
-    /* Hasta el FINAL DE LA LÍNEA de la marca de cierre. Contar caracteres a
-       ojo cortaba el comentario por la mitad y dejaba un `/*` sin cerrar: el
-       bloque no compilaba y el fallo no hablaba del bloque. */
-    const desde = puesto.indexOf('/* ═══ CATÁLOGO DE RESPALDO');
-    const hasta = puesto.indexOf('\n', puesto.indexOf('FIN DEL CATÁLOGO DE RESPALDO'));
-    const leido = new Function(puesto.slice(desde, hasta) +
-      '\n; return { c: CONFIG_SEMILLA, p: PRODUCTOS, e: ENVIOS };')();
-    ok('TRAER LA PLANTILLA ENTERA no pierde nada de la tienda',
-       leido.c.negocio === 'Cinnamon Beauty' && leido.p.length === 1 &&
-       leido.e[0].id === 'bog',
-       'lo que la página usa sale de la hoja, no del archivo que se reemplazó');
-  }
+  /* Y QUE SE PUEDA REESCRIBIR ENTERA CON LA HOJA DE OTRO COMERCIO, que es lo
+     único que convierte «se clona» en «queda siendo suya». Se hace el camino
+     completo sobre la plantilla de verdad. */
+  const otra = {
+    productos: [{ id: 'labial', nombre: 'Labial mate', formato: 'Unidad',
+                  categoria: 'Labios', precio: 38000, stock: 5,
+                  descripcion: 'x', imagenes: [] }],
+    envios: [{ id: 'bog', nombre: 'Bogotá', valor: 7000 }],
+    config: { negocio: 'Comercio Tres', whatsapp: '573001112233' }
+  };
+  const suya = respaldo.aplicar(plantilla, otra, '2026-09-14');
+  ok('  ...y su primer montaje la deja siendo de ESE comercio',
+     suya.cambio && suya.negocio === 'Comercio Tres' && suya.productos === 1,
+     'lo que se clona es la página; lo que la hace suya es su hoja');
+}
 
-  ok('DOS VECES no vuelve a escribir: si ya es la de la última, no hay commit',
-     typeof plantilla.version === 'function' &&
-     plantilla.version(html).contrato.length > 0,
-     'dice de qué versión venía y a cuál va, para que el PR se entienda');
+/* ══════════════════════════════════════════════════════════════════════════
+   «PUBLICAR AHORA» TIENE QUE LLEVAR TODO LO QUE EL COMERCIO PUEDE CAMBIAR
+   --------------------------------------------------------------------------
+   Es el único botón que el comerciante puede apretar, y el mensaje que le sale
+   promete «se revisan los datos, se preparan las fotos y se publica». Pero el
+   flujo `fotos` solo publicaba `publicar/fotos` y `publicar/catalogo.json`:
+   todo lo que se escribe en la pestaña Configuración —el título del sitio, el
+   nombre, los colores, los textos de la portada, el WhatsApp— vive en el
+   `<head>` y en las constantes del `index.html`, y por ahí no pasaba nunca.
 
-  /* Y QUE EL FLUJO NO SE LO HAGA A LA SEMILLA. Orgánico es de donde SALE la
-     plantilla: traérsela a sí mismo sería pisar con la última versión
-     publicada lo que se está trabajando para la siguiente. */
-  const yml = fs.readFileSync('../.github/workflows/montaje.yml', 'utf8');
-  ok('EL FLUJO NO trae la plantilla en la semilla',
-     /github\.repository != env\.SEMILLA/.test(yml) &&
-     /SEMILLA: laboratoriodigital\/organico/.test(yml),
-     'y el nombre de la semilla está escrito una sola vez');
-  ok('  ...y si no la puede traer, NO para el montaje: lo dice y sigue',
-     /::warning::/.test(yml) && /exit 0/.test(yml),
-     'la tienda se queda con la página que tenía, que funciona');
-  ok('  ...y va ANTES de escribir el <head>, que si no lo pisaría',
-     yml.indexOf('traer-plantilla.mjs') < yml.indexOf('preparar-index.mjs'),
-     'traer la página después sería borrar lo que se acaba de escribir');
-  ok('  ...y el respaldo va DESPUÉS de hornear el catálogo',
-     yml.indexOf('catalogo-estatico.mjs') < yml.indexOf('sembrar-respaldo.mjs'),
-     'el respaldo es una copia del catálogo que se acaba de hornear');
+   El comerciante cambió el título de su tienda, apretó el botón, leyó «tu
+   tienda se está actualizando», y no cambió nada. Ningún error en ningún
+   sitio. Es el patrón 1: el fallo que funciona.
+   ══════════════════════════════════════════════════════════════════════════ */
+{
+  const fotos = fs.readFileSync('../.github/workflows/fotos.yml', 'utf8');
+  const mont  = fs.readFileSync('../.github/workflows/montaje.yml', 'utf8');
+
+  ok('«PUBLICAR AHORA» publica también el index.html',
+     /PUBLICA: publicar\/fotos publicar\/catalogo\.json publicar\/index\.html/.test(fotos),
+     'sin esto, un cambio de título no llega nunca y el botón miente');
+  ok('  ...y ESCRIBE el <head> desde la hoja antes de publicarlo',
+     /node montar\/preparar-index\.mjs\s+2>&1/.test(fotos),
+     'publicar el archivo sin reescribirlo sería publicar lo de antes');
+  ok('  ...y lo MIRA al decidir si hay algo nuevo',
+     /preparar-index\.mjs\s+--revisar/.test(fotos),
+     'sin esto contesta «nada nuevo» y no vuelve a mirar');
+  ok('  ...y repone el respaldo, que es copia del catálogo recién horneado',
+     fotos.indexOf('catalogo-estatico.mjs') < fotos.lastIndexOf('sembrar-respaldo.mjs'),
+     'un cambio de precio dejaba el respaldo con los precios de la semana pasada');
+
+  /* LO QUE SE GUARDA ANTES DEL `reset --hard` ES LA MISMA LISTA.
+     Aquí se rehace la rama sobre el `main` de ese instante, y para eso se
+     guardan los archivos generados y se reponen encima. Esa copia nombraba DOS
+     de las tres rutas a mano, así que el reset se llevaba por delante el
+     `publicar/index.html` que el paso anterior acababa de escribir desde la
+     hoja: el comercio cambiaba el título de su tienda, el flujo decía que
+     había novedades, publicaba fotos y catálogo, y el título no llegaba nunca.
+     Tercera vez del patrón 2 en este mismo archivo. */
+  ok('  ...y lo que se guarda antes de rehacer la rama sale de esa lista',
+     /for ruta in \$PUBLICA; do[\s\S]{0,200}guardado/.test(fotos) &&
+     !/cp -r publicar\/fotos "\$guardado/.test(fotos),
+     'nombrarlas a mano se comió el index.html recién escrito');
+
+  /* Y EL PULL REQUEST QUE SE FUSIONABA SOLO, QUE NO ERA CEREMONIA INÚTIL SINO
+     UNA X ROJA GARANTIZADA. Un pull request abierto por el bot dispara
+     `pruebas`, y GitHub RETIENE esa corrida esperando aprobación. La condición
+     de `pruebas.yml` para saltárselo no sirve: la retención es de la CORRIDA y
+     pasa antes de evaluar ninguna condición del trabajo. */
+  ok('  ...y si va a fusionar solo, NO abre pull request: empuja a main',
+     /git push --quiet origin "\$rama":main/.test(fotos),
+     'un pull request del bot deja una X roja que no significa nada');
+  ok('  ...y si main está protegido, cae al pull request y lo dice',
+     /No se pudo publicar directo en main/.test(fotos),
+     'que el push se rechace no es un fallo: es que el repositorio pide PR');
+
+  /* LAS DOS LISTAS SON LA MISMA LISTA. El guardia que comprueba que no se
+     cuele nada y el `git add` que hace el commit leen los dos de `PUBLICA`.
+     Escrito dos veces, una se queda atrás — ya pasó, y costó un catálogo que
+     no se publicaba (2.9.2). */
+  /* SIN CONTAR LOS COMENTARIOS, que es donde se explica por qué está. Contar
+     el texto a secas daba dos y acusaba al archivo de tener dos listas cuando
+     la segunda es una frase en prosa: una comprobación que se cae por algo que
+     está bien es peor que ninguna. */
+  const sinComentarios = fotos.split('\n')
+    .filter(l => !/^\s*#/.test(l)).join('\n');
+  ok('  ...y la lista de lo publicable sigue escrita UNA sola vez',
+     (sinComentarios.match(/publicar\/index\.html/g) || []).length === 1,
+     'la usan el guardia y el git add; dos copias es el patrón 2');
+
+  /* EL MONTAJE FUSIONA SOLO. Pedía que una persona aprobara el pull request, y
+     la razón era buena mientras el montaje traía la PÁGINA de la semilla: subir
+     de versión a una tienda es una decisión. Ese paso se retiró en la 2.13.0 y
+     con él el motivo. Lo que escribe hoy es, entero, lo que dice la hoja de ese
+     comercio — la misma clase de cambio que `fotos` fusiona solo. */
+  ok('EL MONTAJE fusiona solo, como `fotos`',
+     /gh pr merge "\$rama" --squash --delete-branch/.test(mont) &&
+     /inputs\.aprobacion != 'con-pull-request'/.test(mont),
+     'el comerciante no espera a que alguien mire');
+  ok('  ...y se puede volver al pull request cuando se quiera',
+     /options: \[automatica, con-pull-request\]/.test(mont));
+  ok('  ...pero NO sin haber corrido todas las baterías sobre lo ya escrito',
+     mont.indexOf('todas.sh') < mont.indexOf('gh pr merge'),
+     'fusionar sin probar es lo que ninguna de las dos guardas puede recuperar');
+  ok('  ...ni sin comprobar que la hoja es la de esta tienda',
+     mont.indexOf('misma-tienda.mjs') < mont.indexOf('gh pr merge'),
+     'dos tiendas montadas a la vez y los cambios de una salen en la otra');
+  ok('  ...y si no puede fusionar, lo DICE en vez de dejarlo colgado',
+     /::warning::No se pudo fusionar solo/.test(mont) &&
+     /Allow GitHub Actions to create/.test(mont),
+     'un pull request abierto que nadie espera es una tienda que no se actualizó');
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   `release` NO ES UN FLUJO DE TIENDA (4.19)
+   --------------------------------------------------------------------------
+   Corta la versión de la PLANTILLA. Una tienda no corta versiones: nace de la
+   plantilla y consume la suya. Pero el flujo viaja dentro de la plantilla, así
+   que aparece en la pestaña Actions de cada tienda — invitando a correrlo, que
+   es exactamente lo razonable cuando alguien comprueba el ciclo completo de
+   una tienda nueva.
+
+   Y cuando fallaba, el mensaje mandaba al sitio equivocado: «sube `version` en
+   package.json». En una tienda ese consejo es falso. Pasó dos veces.
+   ══════════════════════════════════════════════════════════════════════════ */
+{
+  const rel = fs.readFileSync('../.github/workflows/release.yml', 'utf8');
+
+  ok('`release` se niega a correr fuera de la semilla',
+     /GITHUB_REPOSITORY" = "\$SEMILLA/.test(rel) && /exit 1/.test(rel),
+     'una tienda cortaría una etiqueta paralela a la de la plantilla');
+  ok('  ...y el nombre de la semilla está escrito UNA sola vez',
+     (rel.split('\n').filter(l => !/^\s*#/.test(l))
+         .join('\n').match(/laboratoriodigital\/organico/g) || []).length === 1,
+     'dos copias y un día se separan');
+  ok('  ...y DICE qué correr en su lugar, en vez de mandar a package.json',
+     /montaje/.test(rel) && /Lo que sí se corre en una tienda/.test(rel),
+     'un error que apunta al sitio equivocado cuesta más que uno mudo');
+  ok('  ...y para ANTES de tocar el repositorio',
+     rel.indexOf('¿Este repositorio es la semilla?') < rel.indexOf('gh release create'),
+     'pararse después de etiquetar no sirve de nada');
+  ok('  ...sin gastar una corrida de baterías para nada', (() => {
+       /* Las baterías son el `needs` de este trabajo, así que corren igual.
+          Es el precio de que la guarda viva donde se ve el fallo, y se acepta:
+          son dos minutos frente a una etiqueta paralela en el repositorio de
+          un cliente. Se anota para que no parezca un descuido. */
+       return /needs: pruebas/.test(rel);
+     })(), 'corren igual: la guarda va después, donde se ve el fallo');
 }
 
 console.log(T.join('\n'));

@@ -454,7 +454,7 @@ autorizado. Evaluación completa, con las dos formas y las dos condiciones
 nuevas, en `EVALUACION-stub-automatico.md`, sección 8.
 
 
-**4.18 Sincronizar la semilla con las tiendas, sin manos**   [LA PÁGINA, HECHA · 2.12.0 · el código, pendiente]
+**4.18 Sincronizar la semilla con las tiendas, sin manos**   [PENDIENTE · intentado y retirado en la 2.13.0]
 
 Hoy, poner una tienda al día contra la semilla es copiar archivos a mano.
 Costó su primer accidente el 14 de septiembre de 2026, montando la tienda 2:
@@ -483,24 +483,40 @@ los activos de la última `release` de la semilla, repone lo generado y abre un
 PR con el diff. Mide bien el valor: es el trabajo que se repite por cada tienda
 y por cada versión, así que se paga con la tercera tienda.
 
-**Lo que ya está hecho (2.12.0): la página.** El flujo `montaje` de cada tienda
-trae `publicar/index.html` de la última versión publicada de la semilla y le
-escribe encima lo de esa hoja —el `<head>`, las constantes, la paleta y el
-catálogo de respaldo—. Se puede reemplazar entero porque no queda ahí ni un
-valor escrito a mano. En la semilla no corre: Orgánico es de donde sale la
-plantilla. Si no se puede traer, el montaje **no se para**: avisa y sigue con la
-página que la tienda ya tenía.
+**Se intentó en la 2.12.0 y se retiró en la 2.13.0.** El flujo `montaje` bajaba
+`publicar/index.html` de la última versión publicada de la semilla antes de
+escribirle encima lo de esa hoja. El código funcionaba y las baterías lo
+probaban; falló en el primer montaje real, con un 404: las versiones de la
+semilla no son públicas, y GitHub contesta 404 a quien no tiene acceso.
 
-**Lo que falta: el código.** `montar/`, `pruebas/`, `.github/workflows/`,
-`maestro.gs`, `panel.gs`, `docs/` siguen copiándose a mano de la semilla al
-repositorio de cada tienda. Es lo que queda de este punto, y es lo que se paga
-con la tercera tienda.
+Pero el 404 no fue el error. El error fue **resolver un problema que esta etapa
+del proyecto no tiene.** Hoy una tienda nueva se crea **a partir de la
+plantilla** y nace con la página dentro: lo que esté bien en la semilla llega
+solo a toda tienda que se cree desde ella. Poner al día una tienda YA creada es
+un problema real, pero llega cuando haya tiendas viejas que actualizar — y a
+cambio, aquel paso metió un camino más que se podía caer, en el flujo del que
+depende cada despliegue.
+
+**Lo que hay que decidir ANTES de volver a intentarlo**, y es lo que lo hace
+difícil: cómo lee una tienda el repositorio de la semilla. Un **secreto de
+organización** con un token *fine-grained* de solo ese repositorio y permiso
+*Contents: Read-only* —una vez, no una por tienda—, o **hacer pública la
+semilla**, que no guarda secretos. Es una decisión de negocio, no de código.
+
+Lo demás del diseño sigue en pie, y está medido:
+
+- Se puede reemplazar el `index.html` entero porque no queda en él un valor de
+  la tienda escrito a mano. Eso lo comprueba `pruebas/montaje.js`.
+- Antes de escribir hay que mirar que lo descargado SEA la plantilla, y mirando
+  el **final** del archivo: las marcas del principio las trae media descarga.
+- El código —`montar/`, `pruebas/`, `.github/`, `maestro.gs`, `panel.gs`,
+  `docs/`— sigue copiándose a mano. Es el grueso de este punto.
 
 Relacionado: **`release` no es un flujo de tienda** y hoy nada lo impide. Ver
 4.19.
 
 
-**4.19 `release` se niega a correr fuera de la semilla**   [PENDIENTE, barato]
+**4.19 `release` se niega a correr fuera de la semilla**   [HECHO · 2.15.0]
 
 `release` corta la versión de la plantilla. Una tienda no corta versiones: las
 consume. Pero el flujo viaja en la plantilla, así que aparece en la pestaña
@@ -601,6 +617,52 @@ desde una máquina —o que se quiera automatizar el paso 2 del despliegue— va
 apuntar al Worker equivocado.
 
 Barato: sale del mismo `?a=bloques` que ya trae lo demás. Va detrás de 4.20.
+
+
+**4.22 «Publicar ahora» y el flujo `montaje` hacen ya lo mismo**   [PENDIENTE, menor]
+
+Desde la 2.14.0 los dos escriben el `<head>`, las fotos, el catálogo y el
+respaldo, y los dos fusionan solos con las mismas guardas. Lo que queda distinto
+es el disparador y la cadencia: `fotos` cada cuatro horas y desde el botón de la
+hoja; `montaje` semanal, desde Actions, y además puede publicar `maestro.gs`.
+
+Dos flujos que hacen lo mismo son dos sitios donde arreglar el mismo fallo
+(patrón 2). Conviene fundirlos —un flujo con un parámetro— antes de que se
+separen. No corre prisa mientras las baterías comprueben que los dos publican la
+misma lista, que es lo que hay hoy.
+
+
+**4.23 El cronómetro: 30 minutos, y dónde se fueron**   [MEDIDO · 15 de septiembre de 2026]
+
+La tienda tres —LA MIGUERIA— se montó de punta a punta en **30 minutos**, con
+el proceso funcionando y dos fallos encontrados por el camino que no cuentan
+aquí. El desglose es el dato que faltaba para todo lo demás:
+
+| Paso | Reloj | ¿Se puede automatizar? |
+|---|---|---|
+| **GitHub**: repositorio, secretos, token de «Publicar ahora», correr los flujos | **15 min** | **Sí, y es la mitad del tiempo.** El flujo *tienda nueva* de `laboratoriodigital/tiendas` ya crea el repositorio; lo que queda a mano son los cinco secretos y el token de grano fino |
+| Hoja nueva, proyecto de Apps Script, pegar `maestro.gs`, implementar | 8 min | Solo a medias: la implementación es un diálogo del navegador |
+| Llenar la información en la hoja | 5 min | No del todo, y no conviene: es la información del comercio |
+| `clasp login` | 2 min | 4.14, y es lo más barato de los cuatro |
+
+**Lo que dice este reparto.** La mitad del reloj se va en GitHub, y es la mitad
+que menos tiene que ver con el comercio: son cinco secretos que el operador
+copia de un sitio a otro. Cuatro de los cinco —`MAESTRO_URL`, `MAESTRO_TOKEN`,
+`SCRIPT_ID`, `HOJA_ID`— **los sabe el maestro**, y ya salen juntos del
+Diagnóstico. Escribirlos en los secretos del repositorio es una llamada a la
+API de GitHub, no un trabajo.
+
+Así que la siguiente automatización que se paga sola es **sembrar los secretos
+del repositorio desde el diagnóstico**, no ninguna de las que estaban antes en
+la lista. Con eso el despliegue debería bajar de 30 a unos 18 minutos, y el
+paso que más queda —la hoja y el Apps Script— es justo el que Google no deja
+tocar por programa.
+
+**Lo que este número NO incluye**, y hay que decirlo para que no se use mal:
+crear la cuenta de Google (se hizo antes), las fotos del comercio, la respuesta
+automática de WhatsApp, y la prueba de punta a punta con un teléfono real.
+Antes de ponerle precio al servicio, hay que medir un despliegue **con** esas
+cuatro cosas.
 
 
 ## El techo: hasta dónde aguanta este diseño

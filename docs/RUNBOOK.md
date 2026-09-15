@@ -254,9 +254,9 @@ Pestañas **Catálogo**, **Envíos**, **Cupones**:
 | Campo | Déjalo así | Para qué está |
 |---|---|---|
 | `que` | `todo` | `solo-la-hoja` o `solo-las-fotos` para una corrida parcial |
-| `plantilla` | **marcado** | Trae la página de la última versión de la semilla. Desmárcalo solo para no moverla de versión en esta corrida |
 | `maestro` | **sin marcar** | Publicar `maestro.gs` desde aquí. Pide tres secretos más, que no se pueden sacar de un navegador |
 | `confirmar` | vacío | Solo si marcaste `maestro`: hay que escribir `PUBLICAR` |
+| `aprobacion` | `automatica` | El flujo fusiona solo cuando todo está verde. `con-pull-request` deja el PR abierto para mirarlo antes |
 
 En un despliegue nuevo el maestro ya se pegó a mano en el bloque D3, así que
 aquí no hay nada que publicar.

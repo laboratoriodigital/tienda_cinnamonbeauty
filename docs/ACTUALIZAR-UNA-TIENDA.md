@@ -21,54 +21,33 @@ Cómo saber qué versión tiene cada una: en el panel de tiendas, columna
 
 ---
 
-## Desde la 2.12.0: la página ya no se copia a mano
+## Qué es una tienda nueva y qué es una tienda que se actualiza
 
-Actualizar una tienda eran **dos** cosas y solo una estaba automatizada. El
-código lo trae la sincronización; `publicar/index.html` no, porque no es código:
-es el archivo publicado de ese comercio. Así que esta misma guía mandaba a bajar
-el archivo del navegador y pegarlo.
+No son el mismo problema y conviene no mezclarlos.
 
-Se vio cuando falló. La tienda dos quedó con los flujos, la herramienta y las
-baterías de una versión, y la página de la anterior. Nada roto, nada avisando,
-el marcador en verde — y la tienda abriendo con el comercio de la plantilla.
+**Una tienda NUEVA no trae ni copia nada.** Se crea un repositorio **a partir
+de esta plantilla** —el botón de GitHub, o el flujo *tienda nueva* de
+`laboratoriodigital/tiendas`— y nace con todo dentro, `publicar/index.html`
+incluido. Su primer `montaje` le escribe encima lo suyo: el `<head>`, las cinco
+constantes, la paleta, el catálogo horneado y el catálogo de respaldo. Desde ese
+momento es su tienda.
 
-Ahora el flujo **`montaje`** lo hace solo, en este orden:
+Lo que eso implica, y es la regla que manda hoy: **lo que esté bien en la
+plantilla llega solo a todas las tiendas que se creen desde ella.** Y lo que
+esté mal, también.
 
-```
-1. trae publicar/index.html de la última release de la semilla
-2. le escribe el <head>, las cinco constantes y la paleta de ESTA hoja
-3. hornea publicar/catalogo.json desde ESTA hoja
-4. le escribe el catálogo de respaldo y CONFIG_SEMILLA desde ese catálogo
-```
+**Una tienda YA CREADA no se mueve sola**, y ponerla al día sigue siendo el
+trabajo manual de la tabla de arriba. Automatizarlo es el **4.18** del roadmap,
+y no está hecho: hace falta decidir antes cómo lee una tienda el repositorio de
+la semilla —un secreto de organización, o hacer pública la semilla— y eso es una
+decisión de negocio, no de código.
 
-**Por qué se puede reemplazar entero.** Porque no queda en ese archivo un solo
-valor de la tienda escrito a mano: todo lo suyo lo vuelven a poner los pasos 2 a
-4, desde su hoja, unos segundos después. El día que alguien meta ahí un valor a
-mano, esto se rompe en silencio.
-
-**Si no se puede traer** —la release no tiene el archivo, o este repositorio no
-puede leerla—, el montaje **no se para**: la tienda se queda con la página que
-ya tenía, que funciona, y sale un aviso en el resumen del flujo.
-
-**Si las versiones de la semilla no son públicas** —GitHub contesta 404 a quien
-no tiene acceso—, se arregla **una vez, no una por tienda**. Dos caminos:
-
-1. **Un secreto de organización `SEMILLA_TOKEN`.** Settings de la organización
-   → Secrets and variables → Actions → New organization secret, compartido con
-   los repositorios de las tiendas. El valor es un token *fine-grained* de
-   **solo** `laboratoriodigital/organico`, con **un solo** permiso: *Contents:
-   Read-only*. Lo heredan las tiendas de hoy y las que vengan.
-2. **Hacer público el repositorio de la semilla.** No guarda secretos: la llave
-   de pago, los ID de hoja y los tokens viven fuera a propósito. Entonces basta
-   el `curl` y no hace falta ningún token.
-
-**Esto no es el llavero común que la arquitectura evita.** Aquel es un token de
-varios repositorios dentro del proyecto de Apps Script del comerciante, donde
-las propiedades **no están cifradas**. Este es de lectura, de un solo
-repositorio, y vive en los secretos de Actions, donde el comerciante no entra.
-
-**Para no moverla de versión en una corrida**, se desmarca `plantilla` en el
-formulario del flujo.
+> Se intentó de un tirón en la 2.12.0 y se retiró en la 2.13.0: el flujo
+> `montaje` bajaba la página de la última versión publicada. Funcionaba en el
+> papel y falló en el primero real, porque las versiones de la semilla no son
+> públicas. Lo caro no fue el código: fue que **resolvió un problema que esta
+> etapa del proyecto no tiene** —hoy solo hay tiendas nuevas— y a cambio metió
+> un camino más que se puede caer. Está anotado en la bitácora.
 
 ---
 

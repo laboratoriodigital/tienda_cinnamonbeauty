@@ -223,11 +223,39 @@ pegar el archivo. Es el único de los cinco que se muere solo.
 | `GITHUB_TOKEN` de «Publicar ahora» | Script Properties del maestro de **esa** tienda | lo lee `publicarAhora()`. **Las Script Properties no están cifradas**: de grano fino, **uno por tienda**, limitado a ese repositorio, con `Actions: Read and write` y nada más, y **con vencimiento**. Se crea en *GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens* |
 | La llave de pago (`pago_llave`) | La pestaña `Configuración` de la hoja, y de ahí **a ninguna parte** | el filtro `pago_*` la borra antes de que salga por cualquier puerta. No va en la página ni en el repositorio: llega al comprador por la respuesta automática de WhatsApp (paso 14) |
 
-### Y una fila en el panel
+### Y una fila en el panel de administración  · ~2 min
 
-En la pestaña `Tiendas` del panel: el comercio, el **Servicio** y el **Token**
-— los mismos dos valores del paso 9. Es el tercer sitio donde vive el token, y
-el que se olvida al rotarlo.
+El panel es **tu** hoja, la que no se comparte con ningún cliente. Sin la fila,
+la tienda funciona igual — y desaparece de todo lo que te avisa: no sale en el
+correo de las 7, no cuenta para «Tiendas sin responder», y su respaldo semanal
+no se vigila. Una tienda que no está en el panel es una tienda que nadie mira.
+
+Pestaña **`Tiendas`**, una fila. Es el **único sitio del panel que se llena a
+mano**: todo lo demás lo escribe el script y se sobrescribe en cada
+actualización.
+
+| Columna | Qué va | De dónde sale |
+|---|---|---|
+| `Estado` | `En montaje` hasta la entrega, después `Activa` | — |
+| `Comercio` | El nombre, igual que en la hoja | `Configuración > negocio` |
+| `Contacto` · `Celular` · `Correo` | Con quién se habla en ese comercio | — |
+| `Plan` · `Precio mensual` · `Día de cobro` | Lo comercial. `Cortesía` y `0` mientras no se cobre | — |
+| `Alta` | La fecha de hoy | — |
+| `Sitio` | La URL pública de la tienda | `Configuración > sitio_url` |
+| `Servicio (URL /exec)` | La puerta del maestro | **Paso 9**, línea *Servicio* del diagnóstico |
+| `Token` | El token de esa tienda | **Paso 9**, línea *Token* |
+| `Cuenta Google` | El correo de la cuenta dueña de esa tienda | La que creaste en el paso 3 |
+| `Repositorio` | `dueño/repositorio` | El del paso 1 |
+| `Notas` | Lo que haya que recordar | — |
+
+Después: menú del panel → **`actualizar()`**. Si la fila está bien, la tienda
+aparece con sus métricas en un par de segundos. Si no responde, ahí se ve — y
+es mejor verlo ahora que en el correo del lunes.
+
+> **El token vive en TRES sitios**: los secretos del repositorio, las
+> propiedades del maestro, y esta columna. Es el que se olvida al rotarlo, y el
+> panel lo dice cuando pasa: la columna de estado avisa de que el token de la
+> pestaña `Tiendas` se quedó con el viejo.
 
 ## 11 · El primer montaje  · Actions · ~5 min de reloj
 
@@ -237,7 +265,6 @@ Hace, en este orden:
 
 ```
 publica el maestro
-trae publicar/index.html de la última versión de la semilla
 le escribe el <head>, las cinco constantes y la paleta de ESTA hoja
 trae las fotos del Drive
 hornea publicar/catalogo.json desde ESTA hoja
@@ -246,21 +273,19 @@ corre todas las baterías SOBRE LOS ARCHIVOS YA MODIFICADOS
 abre el pull request
 ```
 
-> **Nadie copia el `index.html` a mano, y conviene entender por qué se puede.**
-> Ese archivo no es código: es la página publicada de ese comercio. La
-> **plantilla** sale de `release` en la semilla, que la adjunta como
-> `index.html`; el `montaje` de cada tienda se la trae y le escribe encima lo
-> suyo. Se puede reemplazar entero porque **no queda en él un solo valor de la
-> tienda escrito a mano**: el `<head>`, las constantes, la paleta y el respaldo
-> los ponen los tres pasos siguientes desde la hoja.
+> **De dónde salió el `publicar/index.html` sobre el que escribe, y por qué
+> nadie lo copia.** Del repositorio, que nació **a partir de la plantilla**: una
+> tienda nueva se crea con el botón de plantilla de GitHub y viene con la página
+> dentro. Lo que llega ahí es el archivo de Orgánico — y deja de serlo en este
+> mismo paso, porque los cinco renglones de arriba lo reescriben con lo que diga
+> la hoja de este comercio.
 >
 > De ahí la regla que no se puede olvidar: **nada de la tienda se escribe a mano
-> en `publicar/index.html`.** El día que alguien lo haga, el siguiente montaje
-> lo borra sin decir nada.
+> en `publicar/index.html`.** Todo lo suyo lo pone el montaje. El día que
+> alguien meta ahí un valor a mano, el siguiente montaje lo borra sin decir nada.
 >
-> Si la tienda no puede leer las versiones de la semilla, el montaje **no se
-> para**: avisa en el resumen y sigue con la página que ya tenía. Cómo se
-> arregla —una vez, no una por tienda— está en `ACTUALIZAR-UNA-TIENDA.md`.
+> Poner al día una tienda YA creada cuando cambia la plantilla es otro problema
+> —el 4.18 del roadmap— y hoy es manual. Ver `ACTUALIZAR-UNA-TIENDA.md`.
 
 Revisar la vista previa de Cloudflare y fusionar.
 
