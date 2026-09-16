@@ -1,21 +1,21 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-16T16:30:58.614Z",
+ "generado": "2026-09-16T23:37:06.860Z",
  "productos": [
   {
-   "id": "labial",
-   "nombre": "Labial normal",
-   "formato": "Canasta 1 kg",
-   "categoria": "Frescos",
-   "precio": 8900,
-   "stock": 24,
-   "descripcion": "El tomate de todos los días: pulpa jugosa, piel delgada y acidez media. Cortado la mañana del despacho. Ideal para guisos, sofritos y ensaladas.",
+   "id": "MG124",
+   "nombre": "Kit Arruru X2",
+   "formato": "Unidad",
+   "categoria": "Splash",
+   "precio": 41000,
+   "stock": 8,
+   "descripcion": "✨ KIT ARRURRÚ: Mantequilla + Splash ✨\n\nUna combinación deliciosa para consentir tu piel y dejarla con un aroma irresistible. 💖\nIncluye mantequilla corporal + splash, perfectos para complementar tu rutina de cuidado y disfrutar una sensación de suavidad y frescura durante el día. 🧴✨",
    "imagenes": [
-    "labial.jpg"
+    "KIT-ARRURU-ROSADO-MG124.PNG"
    ],
    "destacado": true,
-   "referencia": "",
+   "referencia": "COLONIA+CREMA CORPORAL",
    "precioAntes": 0,
    "umbralBajo": 0
   },
@@ -189,11 +189,6 @@
   "tope_pago": "12110000"
  },
  "fotos": {
-  "labial.jpg": [
-   160,
-   600,
-   900
-  ],
   "cosmeticos1.jpg": [
    160,
    600,
