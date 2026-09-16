@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-16T23:39:36.266Z",
+ "generado": "2026-09-16T23:52:46.019Z",
  "productos": [
   {
    "id": "MG124",
@@ -144,11 +144,6 @@
    "id": "principal",
    "nombre": "Bogotá, Cali, Barranquilla",
    "valor": 15000
-  },
-  {
-   "id": "resto",
-   "nombre": "Resto del país",
-   "valor": 19000
   }
  ],
  "config": {
@@ -162,7 +157,7 @@
   "color_secundario": "#F1C232",
   "color_alterno": "#CC0000",
   "pie_descripcion": "Tienda Virtual - Envio a todo el país",
-  "como_compras": "Armas tu carrito aquí|Confirmas por WhatsApp|Pagas como acordemos por el chat|Recibes en 24 a 72 horas",
+  "como_compras": "Armas tu carrito aquí|Confirmas por WhatsApp|Realizas tu pago |Recibes en 24 a 72 horas",
   "empresa_razon": "Cinnamon Beauty",
   "empresa_nit": "[NIT O CÉDULA]",
   "empresa_correo": "cinnamonbeauty.tienda@gmail.com",
