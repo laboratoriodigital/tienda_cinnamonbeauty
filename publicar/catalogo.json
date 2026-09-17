@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-17T23:38:38.370Z",
+ "generado": "2026-09-17T23:45:28.940Z",
  "productos": [
   {
    "id": "MG124",
@@ -47,7 +47,7 @@
    "imagenes": [
     "PERFUME-CAPILAR-MIEL-CLICK-HAIR-OC400.PNG"
    ],
-   "destacado": true,
+   "destacado": false,
    "referencia": "PERFUME DE MIEL",
    "precioAntes": 0,
    "umbralBajo": 0
@@ -61,9 +61,9 @@
    "stock": 10,
    "descripcion": "✨ SPLASH FANTILUNA ✨\n\nUna colección de fragancias deliciosas para acompañarte todos los días. 💕 Elige tu favorito: Blue Kiss, Seducción, Bon Bon o Sandía. Aromas frescos, dulces y encantadores para darle un toque especial a tu rutina. 🍉💙",
    "imagenes": [
-    "PERFUME-CORPORAL-FANTILUNA-MG115.PNG"
+    "SPLASH-FANTILUNA-MG115.PNG"
    ],
-   "destacado": true,
+   "destacado": false,
    "referencia": "SPLASH CORPORAL",
    "precioAntes": 0,
    "umbralBajo": 0
@@ -79,7 +79,7 @@
    "imagenes": [
     "SPLASH-FANTILUNA-MINI-MG116.PNG"
    ],
-   "destacado": true,
+   "destacado": false,
    "referencia": "SPLASH CORPORAL MINI",
    "precioAntes": 0,
    "umbralBajo": 0
