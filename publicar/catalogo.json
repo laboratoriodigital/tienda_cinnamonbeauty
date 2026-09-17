@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-17T23:25:36.527Z",
+ "generado": "2026-09-17T23:30:43.378Z",
  "productos": [
   {
    "id": "MG124",
@@ -28,7 +28,7 @@
    "stock": 6,
    "descripcion": "✨ Perfume Capilar Click Hair\n\nPerfuma tu cabello con un aroma delicioso y duradero, mientras aporta brillo, suavidad y control del frizz. Su fórmula con argán, queratina y termoprotector complementa tu rutina capilar sin dejar sensación grasosa.",
    "imagenes": [
-    "PERFUME-CAPILAR-CLICK-HAIR-MINI-BRILLOS-OC403.PNG"
+    "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-OC403.PNG"
    ],
    "destacado": true,
    "referencia": "PERFUME CAPILAR  MINI",
@@ -48,6 +48,38 @@
    ],
    "destacado": true,
    "referencia": "PERFUME DE MIEL",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "MG115",
+   "nombre": "Splash Fantiluna",
+   "formato": "unidad",
+   "categoria": "perfumes corporales y capilares",
+   "precio": 22500,
+   "stock": 10,
+   "descripcion": "✨ SPLASH FANTILUNA ✨\n\nUna colección de fragancias deliciosas para acompañarte todos los días. 💕 Elige tu favorito: Blue Kiss, Seducción, Bon Bon o Sandía. Aromas frescos, dulces y encantadores para darle un toque especial a tu rutina. 🍉💙",
+   "imagenes": [
+    "PERFUME-CORPORAL-FANTILUNA-MG115.PNG"
+   ],
+   "destacado": true,
+   "referencia": "SPLASH CORPORAL",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "MG116",
+   "nombre": "Splash Fantiluna Mini",
+   "formato": "unidad",
+   "categoria": "perfumes corporales y capilares",
+   "precio": 14500,
+   "stock": 10,
+   "descripcion": "✨ SPLASH FANTILUNA  MINI✨\n\nUna colección de fragancias deliciosas para acompañarte todos los días. 💕 Elige tu favorito: Blue Kiss, Seducción, Bon Bon o Sandía. Aromas frescos, dulces y encantadores para darle un toque especial a tu rutina. 🍉💙",
+   "imagenes": [
+    "SPLASH-FANTILUNA-MINI-MG116.PNG"
+   ],
+   "destacado": true,
+   "referencia": "SPLASH CORPORAL MINI",
    "precioAntes": 0,
    "umbralBajo": 0
   },
@@ -129,6 +161,11 @@
    900
   ],
   "PERFUME-CAPILAR-MIEL-CLICK-HAIR-OC400.PNG": [
+   160,
+   600,
+   900
+  ],
+  "SPLASH-FANTILUNA-MINI-MG116.PNG": [
    160,
    600,
    900
