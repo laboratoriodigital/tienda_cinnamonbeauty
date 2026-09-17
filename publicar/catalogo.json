@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-17T23:07:44.461Z",
+ "generado": "2026-09-17T23:25:36.527Z",
  "productos": [
   {
    "id": "MG124",
@@ -36,6 +36,22 @@
    "umbralBajo": 0
   },
   {
+   "id": "oc400",
+   "nombre": "Perfume Capilar Clik Hair de Miel",
+   "formato": "Unidad",
+   "categoria": "perfumes corporales y capilares",
+   "precio": 58000,
+   "stock": 8,
+   "descripcion": "🍯 Perfume Capilar de Miel Click Hair\n\nAroma dulce y envolvente con notas de miel, caramelo, ámbar y vainilla. Perfuma tu cabello mientras aporta brillo, suavidad y una sensación de frescura irresistible. ✨",
+   "imagenes": [
+    "PERFUME-CAPILAR-MIEL-CLICK-HAIR-OC400.PNG"
+   ],
+   "destacado": true,
+   "referencia": "PERFUME DE MIEL",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
    "id": "MG118",
    "nombre": "Crema Corporal Fantiluna Mini",
    "formato": "unidad",
@@ -61,12 +77,12 @@
   {
    "id": "norte",
    "nombre": "copacabana-girardota-barbosa",
-   "valor": 0
+   "valor": 16000
   },
   {
    "id": "sur",
    "nombre": "envigado-itagui-sabaneta-caldas-estrella",
-   "valor": 0
+   "valor": 18000
   }
  ],
  "config": {
@@ -108,6 +124,11 @@
  },
  "fotos": {
   "KIT-ARRURU-ROSADO-MG124.PNG": [
+   160,
+   600,
+   900
+  ],
+  "PERFUME-CAPILAR-MIEL-CLICK-HAIR-OC400.PNG": [
    160,
    600,
    900
