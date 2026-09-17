@@ -45,7 +45,8 @@ La llave de pago sale de la página a propósito: se entrega solo por el chat. S
 la respuesta automática no está puesta, el comprador termina el pedido y **no
 tiene cómo pagar**. Es el único paso donde el diseño de seguridad se convierte
 en un agujero funcional si se olvida. WhatsApp Business > Herramientas para la
-empresa > Mensaje de ausencia. El texto está en `CONTEXTO.md`.
+empresa > Mensaje de ausencia. La plantilla del texto está en `DESPLIEGUE.md`,
+paso 14.
 
 **2. Qué pasa si Apps Script no responde justo al enviar el pedido.**
 Hay que provocarlo, no suponerlo: apagar la implementación un minuto y hacer un

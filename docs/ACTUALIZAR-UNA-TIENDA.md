@@ -263,7 +263,7 @@ escrito. Compruébalo de todos modos:
 
 El menú no cambió. Lo que cambió es **qué token lleva el stub**: hasta ahora
 llevaba el de montaje, que abre todas las puertas, y el comerciante lo lee en el
-editor de su propia hoja. Ver `docs/SPRINT-5.md`, S5-5.
+editor de su propia hoja.
 
 Nada se apaga el día del despliegue: `?a=menu` sigue aceptando el token viejo a
 propósito. Pero la migración **no está hecha hasta el paso 6**.
@@ -324,8 +324,7 @@ toca una opción y le contestan que no existe.
 
 ## La 2.8.0 cambia los estados del pedido: hay que ejecutar `instalar()`
 
-El vocabulario de la columna **Estado** pasa de tres a seis. Ver
-`docs/SPRINT-6.md`.
+El vocabulario de la columna **Estado** pasa de tres a seis.
 
 | Antes | Ahora |
 |---|---|

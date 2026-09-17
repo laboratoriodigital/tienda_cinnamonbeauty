@@ -3,16 +3,16 @@
 **Este documento es el mapa.** Dice todo lo que pasa desde que no existe nada
 hasta que el comercio está vendiendo, en orden, y con quién hace cada cosa.
 
-> **Por qué existe.** Había cuatro documentos describiendo tramos de este mismo
-> procedimiento —`RUNBOOK.md`, `DESPLIEGUE-CLIENTE.md`, `MONTAJE.md`,
-> `INSTALAR.md`— y **ninguno de los cuatro menciona «Publicar ahora»**, que es
-> el botón que hace que un cambio de precio llegue a la tienda y que existe
-> desde la 2.6.0. Tres todavía hablan de «Confirmado», que dejó de existir en la
-> 2.8.0. Es el patrón 2 de la bitácora a escala de documentación: cuatro copias
-> del mismo procedimiento, y todas se quedaron atrás.
->
-> Este mapa manda. Los otros cuatro quedan como detalle de su tramo, y hay una
-> deuda anotada de consolidarlos.
+> **Por qué existe, y por qué es el único.** Hasta la 3.0.0 había cuatro
+> documentos más describiendo tramos de este mismo procedimiento —`RUNBOOK.md`,
+> `DESPLIEGUE-CLIENTE.md`, `MONTAJE.md`, `INSTALAR.md`— y los cuatro se habían
+> quedado atrás en distintos puntos: uno seguía enseñando fotos por Cloudinary
+> en vez de Drive, otro decía que el catálogo se lee en vivo cuando hace tiempo
+> se hornea, otro llamaba «Confirmado» a un estado que se renombró a «Pagado».
+> Es el patrón 2 de la bitácora a escala de documentación: varias copias del
+> mismo procedimiento, y siempre una se queda atrás sin que nadie lo note,
+> porque un documento no se cae cuando miente. Se consolidó todo lo que seguía
+> siendo cierto en este único archivo, y los cuatro se borraron.
 
 ---
 
@@ -54,17 +54,30 @@ invierten. Están marcados con ⚠ más abajo.
 - El repositorio de servicio `laboratoriodigital/tiendas`, donde vive
   `ALTA_TOKEN`. **Ese secreto no se copia a ninguna otra parte.**
 
-Detalle: `RUNBOOK.md` sección A.
-
 ---
 
 ## 1 · El repositorio de la tienda  · GitHub · ~5 min
 
-Desde la plantilla. Nombre `organico-<comercio>`.
+Desde la plantilla. Nombre `organico-<comercio>`. **Pública**: Actions es
+gratis e ilimitado en repositorios públicos; en privados son 2.000 minutos al
+mes para toda la cuenta, repartidos entre todas las tiendas.
+
+> Hay un flujo que hace este paso solo, `servicio/tienda-nueva.yml`, y está
+> aparcado a propósito — ver `ROADMAP.md`, 4.6. Con pocas tiendas, hacerlo a
+> mano cuesta menos que mantenerlo.
 
 Y **la casilla que se olvida siempre**: Settings → Actions → General →
 *Allow GitHub Actions to create and approve pull requests*. Sin ella el flujo
-`montaje` corre entero, funciona, y falla en la última línea.
+`montaje` corre entero, funciona, y falla en la última línea al abrir el pull
+request — GitHub lo dice en una anotación al pie de la corrida, que solo ve
+quien sabe que está ahí. **Esto vale también para `organico`, el repositorio
+semilla**, si algún día abre su propio pull request.
+
+> **⚠ Editar `wrangler.jsonc` antes del primer despliegue.** En el editor web
+> de GitHub (el lápiz), cambiar `"name": "organico"` por
+> `"name": "organico-<comercio>"` y hacer commit directo a `main`. **Dos
+> tiendas con el mismo `name` son el mismo sitio en Cloudflare, y la segunda
+> pisa a la primera** — y nada avisa: las dos siguen desplegando en verde.
 
 ## 2 · Cloudflare  · ~3 min
 
@@ -92,6 +105,16 @@ Implementar → Nueva implementación → Aplicación web.
 
 > **⚠ Esta es la única vez que se crea una implementación NUEVA.** Una
 > implementación nueva **estrena URL** y deja la tienda muda.
+
+Comprueba con dos ventanas, no una:
+
+- **En incógnito**, abrir `<URL>?a=version` → debe devolver
+  `{"ok":true,"version":"..."}`. Esta detecta el fallo más común y más
+  silencioso: el acceso quedado en «Solo yo». Con eso mal, la tienda igual
+  carga —se cae al catálogo de respaldo que lleva dentro—, se ve perfecta y no
+  registra un solo pedido.
+- **En tu navegador normal**, abrir la misma URL una vez. Es el paso 6 de
+  abajo: sin él el maestro no sabe su propia dirección.
 
 ### Y después, ¿hay que volver a tocar «Implementar»? Casi nunca
 
@@ -130,6 +153,15 @@ Es idempotente: se puede repetir.
 > en que se necesitan**.
 
 ## 8 · Llenar la hoja · ~12 min
+
+`A0_instalar()` (paso 7) crea nueve pestañas, siempre las mismas: `Configuración
+· Catálogo · Envíos · Cupones · Validaciones · Pedidos · Más vendidos · Tablero
+· Errores`.
+
+> **No insertar columnas en medio de ninguna pestaña.** El maestro lee por
+> posición fija (`getRange(fila, columna, …)`), no por el nombre del
+> encabezado: una columna metida en medio corre todas las de la derecha un
+> puesto y nada avisa. Agregar columnas **al final** es seguro.
 
 Pestaña `Configuración`. **Dieciséis claves**, y el sistema sabe cuáles faltan.
 
@@ -259,7 +291,15 @@ es mejor verlo ahora que en el correo del lunes.
 
 ## 11 · El primer montaje  · Actions · ~5 min de reloj
 
-Actions → `montaje` → Run workflow. Marcar `maestro` **y** escribir `PUBLICAR`.
+Actions → `montaje` → Run workflow, con cuatro campos. En un despliegue nuevo,
+todos como vienen salvo dos:
+
+| Campo | En este paso | Para qué está |
+|---|---|---|
+| `que` | `todo` — como viene | `solo-la-hoja` o `solo-las-fotos` sirven para una corrida parcial más adelante |
+| `maestro` | **marcarlo** | Publica `maestro.gs` desde aquí. Pide los tres secretos de la sección anterior |
+| `confirmar` | escribir `PUBLICAR` | Solo hace falta si marcaste `maestro`: es la confirmación de que sí |
+| `aprobacion` | `automatica` — sin marcar lo contrario | El flujo fusiona solo cuando todo sale verde. `con-pull-request` deja el PR abierto para mirarlo antes |
 
 Hace, en este orden:
 
@@ -289,6 +329,16 @@ abre el pull request
 
 Revisar la vista previa de Cloudflare y fusionar.
 
+> **Alternativa: desde tu equipo, sin Actions.** `npm run tienda` escribe
+> `tienda.json` y `montar/.clasp.json` preguntándole al maestro sus propios
+> datos. `npm run montar` hace, en tu equipo, las mismas cuatro cosas que hace
+> el flujo — `npm run index` (el `<head>` y las cinco constantes), `npm run
+> catalogo` (hornea `publicar/catalogo.json`), `npm run fotos:drive` (baja y
+> convierte las fotos) y `npm run respaldo` (el catálogo de respaldo, al
+> final, porque lee del catálogo que acaba de hornear el paso anterior).
+> `npm run maestro` publica el Apps Script. Ninguno de los cuatro hace commit:
+> eso lo cierras tú con rama, `git commit`, `git push` y pull request.
+
 > **La primera corrida después de publicar el maestro es LENTA, y es normal.**
 > Apps Script queda «frío» al actualizar una implementación: la primera
 > petición a la `/exec` puede tardar cuarenta segundos o más. Las herramientas
@@ -298,12 +348,27 @@ Revisar la vista previa de Cloudflare y fusionar.
 
 ## 12 · ⚠ `A1_generarStub()` — y el orden importa
 
-**Genera el stub a partir del maestro que está PUBLICADO**, no del que está en
-el repositorio. Hacerlo antes del paso 11 devuelve el stub viejo y parece que la
-versión nueva no trae nada.
+**En el editor del MAESTRO** (no en el de la hoja), seleccionar la función
+`A1_generarStub` → Ejecutar. Genera el stub a partir del maestro que está
+**PUBLICADO**, no del que está en el repositorio: hacerlo antes del paso 11
+devuelve el stub viejo y parece que la versión nueva no trae nada.
 
-Copiar lo que imprime → hoja del comercio → Extensiones → Apps Script → pegar
-encima de todo → guardar.
+En el **Registro de ejecución**, copiar el bloque completo bajo
+`═══ PEGA ESTO EN LA HOJA ═══` → hoja del comercio → Extensiones → Apps
+Script → pegar encima de todo → guardar.
+
+> **Mirar el menú no comprueba nada.** Sigue teniendo las mismas opciones antes
+> y después de pegar — eso se decidió en el **Sprint 5** y no cambia con cada
+> stub. Lo que sí comprueba: si el botón **Guardar no se activa** al pegar, es
+> que lo pegado era idéntico a lo que ya había — no es un fallo, ya estaba al
+> día. Y `var NEGOCIO = '...';` debajo de `var MAESTRO` y `var TOKEN`, en el
+> editor de la hoja, es la marca de que quedó el stub nuevo.
+
+**Renombrar ese proyecto con el nombre del comercio.** Es el nombre que Google
+le muestra al comerciante en la pantalla de permisos la primera vez que toca el
+menú. Sale de `negocio` en Configuración en el momento de generar el stub: si
+todavía no lo has puesto, el menú aparece como «Tienda» — vuelve a generar el
+stub cuando lo pongas y pégalo otra vez.
 
 **Abrir el menú de la hoja una vez.** Ese clic es lo que deja constancia de que
 la hoja ya entra con el token del menú; sin él, el panel no distingue una hoja
@@ -311,9 +376,16 @@ migrada de una que nadie ha tocado.
 
 ## 13 · Las fotos
 
-Al Drive de la cuenta de la tienda, en la carpeta que diga
-`Configuración > fotos_drive`, **con el nombre exacto** que lleve la columna
-`Imágenes` del catálogo, mayúsculas incluidas. Formatos: JPG, PNG, WebP.
+Carpeta en el Drive de la cuenta de la tienda, **compartida con el correo
+personal del comerciante como editor** — así puede subir sus propias fotos
+después sin pedirte nada. Su enlace va en `Configuración > fotos_drive`.
+
+Aparte, comparte también `backup_tiendas` con **esta cuenta de la tienda**
+como editor. Sin eso el respaldo semanal de la hoja falla en silencio: se ve
+el domingo siguiente en Diagnóstico → *Último respaldo*.
+
+Las fotos van con **el nombre exacto** que lleve la columna `Imágenes` del
+catálogo, mayúsculas incluidas. Formatos: JPG, PNG, WebP.
 
 Después, menú de la hoja → **Publicar ahora**.
 
@@ -331,7 +403,23 @@ pedido y no tiene cómo pagar**.
 
 WhatsApp Business → Herramientas para la empresa → Mensaje de ausencia. El texto
 sale de `pago_texto`, o se arma con `pago_llave`, `pago_titular` y
-`pago_entidad`.
+`pago_entidad`. Plantilla, si se escribe a mano:
+
+    ¡Gracias por tu pedido! 🛍
+    Lo estoy revisando y en un momento te confirmo disponibilidad y el
+    total definitivo.
+
+    Cuando te confirme el total, puedes transferir a:
+    *Llave <LLAVE>* — <NOMBRE>
+
+    Envíame el *comprobante* por aquí y con eso despacho.
+
+    ⚠️ Solo confirmo datos de pago por este chat. Si ves una llave o una
+    cuenta distinta en cualquier otro lado, no transfieras y escríbeme.
+
+> La última línea no es decoración: es lo que hace inútil un sitio clonado,
+> porque el cliente sabe que el pago siempre espera la confirmación por este
+> chat.
 
 ## 15 · Las cuatro comprobaciones, antes de entregar
 
@@ -351,8 +439,7 @@ sale de `pago_texto`, o se arma con `pago_llave`, `pago_titular` y
 ## 16 · La entrega
 
 - La **guía de una página** impresa (`docs/manuales/Guia-de-una-pagina.html`).
-  Es lo que se explica; el manual del dueño es para después.
-- El **manual del dueño**, en PDF.
+  Es corta a propósito: lo que no cabe ahí, se explica de viva voz.
 - Compartir la hoja con el correo del comercio **como editor**.
 - Enseñarle las tres cosas del día a día: cambiar un precio → **Publicar
   ahora**; pedido nuevo → **Pagado**; algo raro → **Diagnóstico**.
@@ -371,6 +458,11 @@ El menú de su hoja tiene seis opciones, y conviene nombrárselas todas una vez:
 > **Si explicar esto toma más de 30 minutos, el hallazgo es de diseño, no del
 > comerciante. Anótalo.**
 
+- [ ] **El domingo siguiente a la entrega:** Diagnóstico → *Último respaldo*.
+      Si dice «nunca» o «falló», la cuenta de la tienda no tiene permiso sobre
+      `backup_tiendas` (paso 13) o falta correr `A0_instalar()` con el maestro
+      nuevo.
+
 ---
 
 ## Después: qué corre solo y qué se opera
@@ -383,6 +475,59 @@ El menú de su hoja tiene seis opciones, y conviene nombrárselas todas una vez:
 | domingos 2:00 | respaldo de la hoja |
 | a diario, el comercio | precios y stock → **Publicar ahora**; pedidos → **Pagado** |
 | cuando cambie el maestro | `ACTUALIZAR-UNA-TIENDA.md` |
+
+**Por qué `fotos` fusiona sola y `montaje` no.** `montaje` puede reescribir el
+`<head>`, la política de seguridad y `SCRIPT_URL`: si la configuración de la
+hoja quedó mal, la tienda se cae, y por eso hay una persona en el medio. Una
+foto no puede hacer eso — lo peor que pasa es que se vea una foto fea, y se
+corrige subiendo otra. El flujo `fotos` además **comprueba** que el cambio no
+salga de `publicar/fotos/` antes de fusionar; si algo más cambió, no fusiona y
+deja el pull request esperando.
+
+**Por qué `maestro` no está programado y pide escribir `PUBLICAR` a mano.**
+Los demás flujos dejan un pull request: nada llega al cliente sin que alguien
+diga que sí. `maestro` no — cuando termina, el backend nuevo ya está
+atendiendo pedidos, sin vista previa ni vuelta atrás de un clic. Y
+`MAESTRO_TOKEN` solo lee configuración y fotos; `CLASPRC` es una credencial de
+Google con permiso sobre el Apps Script y el Drive de esa cuenta — cuanto
+menos viva guardada en un servidor, mejor.
+
+---
+
+## Fallos comunes
+
+| Qué ves | Qué es | Cómo se arregla |
+|---|---|---|
+| La tienda carga pero sin productos, o el menú dice *contestó una página web* | La implementación quedó en «Solo yo» | Implementar → Gestionar → lápiz → Acceso: **Cualquier persona**. Comprobar con `<URL>?a=version` en incógnito |
+| El menú dice *Unexpected token '<'* | Un maestro viejo, de antes de que el stub supiera explicarlo | Publica el maestro nuevo y vuelve a pegar el stub |
+| El menú falla pero **la tienda funciona bien** | El stub quedó con una URL fabricada a partir de la `/dev` | Abre la `/exec` una vez en el navegador, ejecuta `A1_generarStub()` y pega el stub nuevo |
+| `A1_generarStub()` imprime `TODAVÍA_NO_SE_SABE_LA_URL` | El maestro aún no ha atendido ninguna petición | Abre la `/exec` una vez en el navegador (paso 6) y vuelve a generarlo |
+| `montaje` falla en «Las fotos nuevas» con *Falta fotos_drive* | La clave está vacía en la hoja | Pega el enlace de la carpeta en `Configuración > fotos_drive` |
+| `montaje` falla con *no está en la carpeta* | La foto está en el Drive pero fuera de la carpeta configurada | Muévela dentro |
+| `montaje` falla con *La foto pesa 20 MB* | El tope son 8 MB | Pídele al comercio una versión más liviana |
+| Un producto sale con su dibujo en vez de su foto | La hoja nombra una foto que no está en el Drive | `npm run fotos:drive` (o el resumen del flujo) avisa por nombre; súbela o corrige la columna Imágenes |
+| `fotos` corrió pero no fusionó | Cambió algo fuera de `publicar/fotos/` | Está bien: revisa el pull request que dejó abierto |
+| El panel dice *403, se acabaron las 60 peticiones por hora* | Sin token, GitHub limita por IP y Apps Script comparte las suyas | Pon un token de grano fino con `Actions: read-only`. Sube a 5.000/hora |
+| Las pruebas fallan con *La versión sigue en X* | Tocaste algo desplegable sin subir `version` en `package.json` | Súbela y vuelve a empujar |
+| El panel dice **NO RESPONDE** y en Versión sale *Falta HOJA_ID* | El maestro publicado se quedó sin `HOJA_ID` — la tienda se ve bien porque cae a su catálogo de respaldo, pero no lee la hoja ni registra pedidos | Pegar el `HOJA_ID` en el editor del maestro y publicar versión nueva (o `npm run maestro` con esa cuenta) |
+| El panel dice **FALLÓ** en Último respaldo | La cuenta de la tienda no tiene permiso sobre `backup_tiendas` | Paso 13 |
+
+## Cuándo hay que reimplementar y cuándo no
+
+Todo sale de una regla: **los disparadores corren el código guardado; la
+aplicación web sirve el código implementado.**
+
+| Lo que cambiaste | Pegar y guardar | `A0_instalar()` | Nueva **versión** de la implementación |
+|---|---|---|---|
+| Cualquier cosa del maestro | ✅ siempre | | |
+| Pestañas, claves de Configuración, formatos, disparadores | ✅ | ✅ | |
+| Algo que la tienda pide por `/exec` (catálogo, validar, registrar) | ✅ | | ✅ |
+| Algo que use el **menú** de la hoja o el **panel** (`?a=panel`) | ✅ | | ✅ |
+
+En la práctica, casi siempre toca reimplementar: hasta el menú de la hoja pasa
+por `/exec`. La regla corta: *si algo fuera del editor lo va a usar,
+reimplementa*. `npm run maestro` hace las dos cosas de una — sube el archivo y
+publica la versión nueva sobre la misma implementación, nunca una nueva.
 
 ---
 

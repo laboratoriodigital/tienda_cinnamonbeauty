@@ -812,3 +812,39 @@ suite verde es una hipótesis, no un hecho.** Dice que cada pieza hace lo que
 alguien escribió que hiciera. No dice que el comprador pueda pagar. Eso solo lo
 dice un comprador pagando, y hay que ir a buscarlo — una vez, a propósito, antes
 de que lo haga uno de verdad.
+
+---
+
+**23 · Un documento no lanza una excepción cuando miente.** El 16 de septiembre
+de 2026, al revisar toda la documentación para el cierre de la 3.0.0, aparecieron
+cinco guías de despliegue distintas — `RUNBOOK.md`, `DESPLIEGUE-CLIENTE.md`,
+`MONTAJE.md`, `INSTALAR.md`, `FOTOS.md` — y dos manuales largos para el
+comerciante, cada uno contando una versión distinta de la misma tienda. Tres
+enseñaban a subir fotos a Cloudinary cuando llevan meses yendo a Drive. Tres
+decían que el catálogo «se lee en vivo, cambias la celda y en un minuto está en
+línea» cuando se hornea desde el Sprint 2 y necesita **Publicar ahora**. Uno
+llamaba «Confirmado» a un estado que se renombró a «Pagado» hace varias
+versiones. Un ADR de `DECISIONES.md` describía el catálogo en vivo como el
+presente y lo estático como una condición futura, cuando la migración ya había
+pasado. Ninguno de estos siete documentos daba un error al abrirlo. Todos se
+veían terminados, con capturas, con tablas, con el mismo tono seguro que un
+documento correcto.
+
+Ya se había visto esta forma exacta de fallo — RUNBOOK.md enseñando un menú
+derogado (patrón 2, primera vez), el manual del dueño con el mismo error
+(patrón 2, tercera). Lo que este día enseñó es la escala: no era un documento
+atrasado, era **la mayoría de los documentos que explican cómo se usa el
+producto**, acumulados sin que nadie los borrara cuando quedaron cubiertos por
+uno mejor. Cada aviso de "esto está atrasado, ver DESPLIEGUE.md" que se le fue
+agregando encima era honesto y no arreglaba nada: el documento seguía ahí,
+segundos de una búsqueda, dispuesto a que alguien lo leyera primero.
+
+La regla: **un documento redundante no se marca como atrasado, se borra.** Un
+aviso en la cabecera es una curita sobre una fuente que sigue mintiendo debajo;
+borrar es la única corrección que no se puede volver a saltar por accidente.
+Antes de borrar, se rescata lo que seguía siendo cierto y no vivía en ningún
+otro lado —una advertencia sobre `wrangler.jsonc`, una tabla de fallos comunes,
+una decisión de diseño deliberada— y se le da una sola casa nueva. El objetivo
+declarado no es "mantener las guías al día": es que **cada procedimiento tenga
+un solo documento que lo cuente**, porque un documento que no puede fallar en
+rojo solo se corrige si deja de tener con quién competir.

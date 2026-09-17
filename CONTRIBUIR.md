@@ -89,6 +89,18 @@ git push -u origin hotfix/frontend-total-mal
 Igual pasa por pull request. La diferencia del `hotfix` es la prioridad de la
 revisión, no saltarse el proceso: `main` va directo a los clientes.
 
+## Reglas de despliegue, siempre
+
+- **Nada al backend un viernes después de mediodía ni en fecha comercial
+  alta.** Un error se nota mejor un martes en la mañana que un sábado.
+- **Todo cambio de `maestro.gs` arranca en la tienda cero y espera una hora**
+  antes de tocar cualquier otra.
+- **Prohibido renombrar o reordenar columnas de la hoja.** Solo agregar al
+  final — el maestro lee por posición, no por nombre.
+- **Un cambio de esquema nunca en un paso**: primero la versión que acepta las
+  dos formas, después la migración, y solo entonces se retira el soporte
+  viejo.
+
 ## Ojo con esto
 
 - **La versión del contrato.** `VERSION` en `maestro.gs` y `SCRIPT_VERSION` en

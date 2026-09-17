@@ -52,7 +52,8 @@ Nunca se ha hecho. Las pruebas automáticas corren a 375px en un navegador
 de escritorio, que no es lo mismo que un pulgar sobre datos móviles.
 
 **0.4 Respuesta automática de WhatsApp Business**
-El texto ya está escrito en CONTEXTO.md. Falta pegarlo.
+La plantilla del texto está en `DESPLIEGUE.md`, paso 14. Falta pegarlo, por
+tienda.
 
 **0.5 Dominio propio**
 El único costo real del proyecto.
@@ -144,9 +145,13 @@ el navegador descarga es público), agrega un modo de falla silencioso
 lo difícil, porque las etiquetas Open Graph tienen que ser estáticas de
 todos modos.
 
-**3.2 Manual del dueño, uno solo**   [HECHO]
-Hoy hay CONTEXTO.md, INSTALAR.md y FOTOS.md. Para alguien nuevo eso son
-tres puertas. Un solo manual con el orden real de las cosas.
+**3.2 Manual del dueño, uno solo**   [HECHO, y superado]
+En su momento había CONTEXTO.md, INSTALAR.md y FOTOS.md: para alguien nuevo,
+tres puertas. Se juntaron en un solo manual del dueño. En la limpieza de
+documentación de la 3.0.0 ese manual también se borró —tenía tres
+contradicciones con la arquitectura vigente (Cloudinary, catálogo «en vivo»,
+«Confirmado»)— y lo que quedó fue más corto: `GUIA-COMERCIANTE.md`, de una
+página, sin nada que envejecer mal porque no explica mecanismos internos.
 
 **3.3 Lista de arranque de 45 minutos**
 Del cero a la tienda publicada, paso por paso y cronometrado. Si no cabe
@@ -157,9 +162,9 @@ La paleta ya está en variables CSS. Falta exponerla en el bloque CONFIG
 para cambiar la marca sin tocar estilos.
 
 
-> **Buena parte de esta fase la absorbe `PLAN.md`**, que es el plan de
-> migración a la arquitectura v3. Lo que sigue aquí es lo que queda fuera de
-> esa migración o se retomó después.
+> **Buena parte de esta fase la absorbió `PLAN.md`**, el plan de migración a la
+> arquitectura v3 — cerrado y borrado al terminar la migración en la 3.0.0. Lo
+> que sigue aquí es lo que queda fuera de esa migración o se retomó después.
 
 ## Fase 4 — De plantilla a producto vendible
 
@@ -709,6 +714,21 @@ publicable y estable. Se retoma con la quinta tienda, junto con el 4.18 — son
 el mismo trabajo visto desde dos lados: que montar y mantener una tienda deje
 de pedir manos.
 
+**4.25 Ideas sin madurar**   [SIN EMPEZAR, rescatadas de PLAN.md y ADOPCION.md
+al borrarlos en la limpieza de documentación de la 3.0.0]
+
+Ninguna tiene un dueño ni una fecha; están aquí para que no se pierdan, no
+para que se empiecen:
+
+- Hoja `movimientos` como libro mayor de la tienda.
+- Despliegue por anillos, una vez haya uso real que lo justifique.
+- Simulacro trimestral de reversión (volver una tienda a la versión anterior).
+- Catálogo de personalización, para variantes de un mismo producto.
+- Procedimiento de salida de un cliente (qué se borra, qué se le entrega).
+- Migrar el origen de las fotos a R2 cuando alguna tienda pase las 800 fotos.
+- QR estático imprimible, para el mostrador.
+- Correr `pruebas/todas.sh` también en Windows, no solo en Linux/macOS.
+
 
 ## El techo: hasta dónde aguanta este diseño
 
@@ -722,12 +742,14 @@ Números oficiales de Google para cuentas gratuitas (gmail.com):
 
 Qué significa para esta tienda:
 
-- **Las visitas no son el problema.** El catálogo se guarda en caché 60
-  segundos, así que cien visitantes en un minuto son UNA lectura de la
-  hoja.
+- **Las visitas no son el problema, y desde la 2.11.0 ni siquiera tocan
+  Apps Script.** El catálogo se sirve estático desde Cloudflare —horneado por
+  `montar/catalogo-estatico.mjs`, actualizado con «Publicar ahora» o cada 4
+  horas—, así que mil visitantes en un minuto son CERO lecturas de la hoja.
 - **El límite que se toca primero son las 30 ejecuciones simultáneas.**
-  Pasa si mucha gente arma el carrito al mismo tiempo, no si mucha gente
-  mira.
+  Hoy las consumen enviar un pedido, aplicar un cupón, o abrir el menú o el
+  panel — no mirar la tienda. Pasa si mucha gente **compra** al mismo tiempo,
+  no si mucha gente mira. (Ver `ARQUITECTURA.md` §10.)
 - **Los 90 minutos de disparadores** los consumen el resumen horario y el
   movimiento de inventario. Con decenas de pedidos al mes sobra. Con
   miles, las relecturas completas de la hoja empiezan a pesar, porque hoy

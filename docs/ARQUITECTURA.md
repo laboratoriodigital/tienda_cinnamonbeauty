@@ -1,9 +1,10 @@
 # Arquitectura y modelo de despliegue
 
-> ⚠ **Este documento describe el diseño de hoy, que está en migración.**
-> La arquitectura objetivo y qué se adopta de ella están en `ADOPCION.md`;
-> el orden de ejecución, en `PLAN.md`. Los cambios puntuales con su
-> disparador siguen en `DECISIONES.md`.
+> La migración a la arquitectura v3 —multi-tenant, GitHub Actions, panel de
+> administración— terminó en la 3.0.0: es la que describe todo este archivo.
+> `ADOPCION.md` y `PLAN.md`, que documentaban esa migración en marcha, se
+> borraron al cerrarse. Los cambios puntuales con su condición de disparo
+> siguen en `DECISIONES.md`.
 
 Este archivo responde una sola pregunta: **qué vive dónde, de quién es la
 cuenta, y por qué**. Es el que hay que leer antes de montar la tienda número
@@ -105,6 +106,26 @@ Las consultas van con `fetchAll`, todas a la vez. En serie, veinte tiendas a
 dos segundos son cuarenta segundos de ejecución contra un corte de seis
 minutos; en paralelo son dos segundos y el presupuesto diario deja de ser el
 techo del negocio.
+
+### La columna «Sin terminar»
+
+El diagnóstico distingue dos preguntas que antes se contestaban como una sola:
+¿la tienda **funciona**? y ¿la tienda **está terminada**? Al escribir el
+`index.html` solo se comprobaban las cinco constantes; las otras once claves de
+Configuración no las miraba nadie, y una tienda podía salir al aire sin llave
+de pago —el comprador termina el pedido y no tiene cómo pagar— sin que se
+notara hasta que un cliente se quejaba.
+
+Hoy son dos niveles (el detalle de cuáles bloquean y cuáles avisan está en
+`DESPLIEGUE.md` paso 8): lo que **bloquea** hace que el montaje se niegue a
+escribir el index; lo que **avisa** deja la tienda vendiendo pero a medias, y
+sale en el registro y en el panel sin detener nada. La fila de cada tienda en
+el panel lleva una columna **Sin terminar**, junto al nombre del comercio —no
+al final, porque si una tienda no puede vender el resto de su fila da igual—:
+en blanco si está completa, `NO PUEDE VENDER: <clave>` si falta algo que
+bloquea, o `faltan N: <claves>` si solo avisa. Por esa columna **viajan las
+claves que faltan, nunca los valores**: mandar valores mandaría la llave de
+pago de cada comercio a una hoja donde no pinta nada.
 
 ---
 
@@ -313,3 +334,114 @@ request toca algo desplegable.
 Lo único que cuesta es tiempo de montaje, y ese es el número que hay que medir
 —con cronómetro, montando una tienda de verdad— antes de ponerle precio al
 servicio.
+
+---
+
+## 8. Idempotencia y concurrencia
+
+Cinco mecanismos, cada uno por un bug real de producción, no por precaución
+teórica:
+
+| Mecanismo | Problema que resuelve |
+|---|---|
+| Número de pedido estable | Se calcula una vez por carrito y solo se reinicia cuando el carrito queda vacío. Antes se generaba en cada envío y un doble toque creaba dos pedidos |
+| Deduplicación en el servidor | `registrar` ignora un número de pedido ya grabado. Tres envíos del mismo pedido dejan una sola entrada |
+| `LockService` + upsert por número | `Validaciones` se escribe leyendo-y-escribiendo bajo candado. Sin él, dos validaciones simultáneas creaban dos filas con códigos distintos |
+| Columna `Inventario` | Marca cada línea como *Descontado* o *Devuelto*. Hace que confirmar, anular y volver a confirmar no descuadre el stock, y que la rutina se pueda correr mil veces sin efecto |
+| Congelado tras el envío | Una fila de `Validaciones` cuyo pedido ya se registró no se puede reescribir |
+
+El inventario **no** se descuenta al enviar el pedido, a propósito: un pedido
+abierto en WhatsApp no es una venta, y si descontara ahí, cualquiera podría
+dejar el inventario en cero abriendo pedidos que nunca paga.
+
+## 9. Seguridad
+
+El modelo de amenaza parte de un hecho: **todo lo que está en el navegador es
+del atacante.** El HTML se lee, el JavaScript se edita, la consola está
+abierta.
+
+| Riesgo | Mitigación |
+|---|---|
+| Alterar el total desde la consola | El servidor recalcula todo con los precios de la hoja. La tienda nunca es la autoridad sobre el precio. Además `Object.freeze` sobre catálogo, cupones y envíos |
+| Inventar o reutilizar un cupón | Los cupones viven solo en la hoja, con vigencia, mínimo y tope de usos |
+| Clonar el sitio y cambiar la llave de pago | Los datos de pago no están en la página. Se entregan por respuesta automática de WhatsApp, que además advierte al cliente que no transfiera si ve otra llave. Eso hace inútil una copia |
+| Inyección de fórmulas en Sheets | `celdaSegura()` antepone un apóstrofo a todo valor que empiece por `=`, `+`, `-`, `@` o un carácter de control, y recorta a 60 caracteres |
+| XSS y carga de recursos ajenos | CSP en la etiqueta `meta` y en `_headers`: `default-src 'none'`, con lista explícita para estilos, tipografías, imágenes y `connect-src`. `frame-ancestors` solo funciona en cabecera, por eso existe `_headers` |
+| Payloads absurdos al backend | Tope de 30 ítems, cantidad máxima 200, total máximo 5.000.000, IDs que no estén en el catálogo se descartan, duplicados se colapsan y el `Estado` nunca lo decide quien envía |
+| Datos personales | La hoja **sí** guarda nombre, celular y dirección — es tratamiento de datos personales y en Colombia lo regula la Ley 1581 de 2012, con el aviso que arman las claves `empresa_*` de Configuración. No hay CRM ni historial cruzado entre tiendas: cada hoja es de un solo comercio, con un solo editor |
+
+> **Lo que este diseño NO puede impedir.** `wa.me` solo rellena la caja de
+> texto: **el cliente puede editar el mensaje antes de enviarlo.** Por eso el
+> mensaje es lo que el cliente decidió escribir, no un documento con validez.
+> El código de verificación permite cruzar contra la fila de `Validaciones`,
+> pero el punto de control final es el dueño revisando el total antes de
+> despachar — es el paso "Antes de despachar, siempre" de `GUIA-COMERCIANTE.md`.
+
+## 10. Límites nativos de Google
+
+Números que no dependen de Cloudflare, Drive ni de ningún proveedor de fotos:
+son cuotas del lado de Apps Script y Sheets, y las únicas que no cambian con
+cada rediseño del frontend.
+
+| Recurso | Tope | Qué significa aquí |
+|---|---|---|
+| Google Sheets | 10 millones de celdas | Muy por encima del tope que impone el propio script |
+| Filas de `Pedidos` | 20.000 (`MAX_FILAS`) | Una fila por línea de pedido: **6.000 a 10.000 pedidos**. Al llegar, el script se niega a escribir con un mensaje claro en vez de corromper la hoja: hay que archivar y vaciar |
+| Correo | 100 al día | El resumen gasta 1 |
+| Disparadores | 90 minutos al día | El recálculo horario tarda segundos. Sobra |
+| Ejecución | 6 minutos cada una | La más lenta —recalcular tablero con miles de filas— va muy por debajo |
+| Concurrencia | 30 ejecuciones simultáneas por cuenta de Google | Ya no la consume cada visita: el catálogo se sirve estático desde Cloudflare. La consumen enviar un pedido, aplicar un cupón, abrir el menú o el panel — sucesos, no visitas |
+
+> Con el catálogo horneado (§6) la tienda deja de golpear Apps Script en cada
+> visita, así que el techo de concurrencia de arriba deja de ser el límite
+> práctico del tráfico del sitio — la sirve Cloudflare — y pasa a ser el
+> límite de cuántos **pedidos y validaciones a la vez** aguanta una tienda. No
+> hay una medición reciente de ese número con la arquitectura de hoy: si una
+> tienda concentra pedidos en picos (una promoción por WhatsApp a muchos a la
+> vez), es lo primero que habría que volver a medir.
+
+## 11. Cómo se prueba: el emulador `gas.js`
+
+La pieza que hace que `pruebas/todas.sh` pruebe el producto y no una imitación
+de él es `pruebas/gas.js`: un emulador de Google Apps Script y Sheets que
+**carga `maestro.gs` tal cual** y le inyecta el entorno de Google
+(`SpreadsheetApp`, `CacheService`, `LockService`, `MailApp`, `HtmlService`…).
+Existe porque una versión anterior del banco de pruebas reimplementaba el
+backend a mano: validaba la imitación, no el código real. El servidor de
+pruebas sirve `index.html` reescribiendo `SCRIPT_URL`, de modo que el
+navegador habla con el backend real, emulado pero no reescrito.
+
+## 12. Decisiones de diseño que ya se tomaron, sin condición de disparo
+
+Distinto de `DECISIONES.md`: esto no va a cambiar con un umbral que se cruce,
+es la forma que tiene el producto hoy y por qué.
+
+- **La hoja es la única fuente de verdad** de precios, stock, envíos, cupones,
+  marca y textos. `publicar/index.html` solo guarda un respaldo —el que
+  escribe `montar/sembrar-respaldo.mjs`— que evita que la tienda se caiga si
+  Google no responde.
+- **Fallo cerrado en cupones**: si la hoja no responde, no se aplica
+  descuento. Un cupón aplicado sin validar es plata perdida.
+- **Fallo abierto en catálogo**: si la hoja no responde, la tienda sirve el
+  catálogo de respaldo horneado en el archivo. Una tienda vacía es peor que
+  una desactualizada — es la razón de ser de la 4.20 (`BITACORA.md`).
+- **Los gráficos del tablero se dibujan con bloques** (`█`) y no con
+  `SPARKLINE`: las fórmulas de Sheets cambian de separador según el idioma de
+  la hoja, y una fórmula escrita desde el script se rompe con solo cambiar el
+  idioma. Un bloque de texto se ve igual en todas partes.
+- **El correo se revisa cada hora** en vez de programar un disparador a una
+  hora fija, porque la hora vive en la hoja. Se cura solo si Google se salta
+  una ejecución.
+
+Límites conocidos, aceptados y no accidentales:
+
+- **La vista previa de un enlace de producto** es la de la tienda, no la del
+  producto: los rastreadores no ejecutan JavaScript. Arreglarlo pediría una
+  página por producto y un paso de build.
+- **El total del mensaje de WhatsApp es editable** por el cliente antes de
+  enviarlo. Mitigado con el código de verificación y el paso de revisión del
+  dueño (§9).
+- **El contador de usos de un cupón** se actualiza cada hora: uno de un solo
+  uso conviene apagarlo a mano apenas se use.
+- **Sin pasarela de pagos.** El cobro se acuerda por chat. Es parte de la
+  premisa de costo cero, no una omisión.

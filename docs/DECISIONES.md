@@ -12,8 +12,17 @@ cambiar, y cuándo.
 
 ## 01 · El catálogo se sirve en vivo hoy, y estático cuando el tráfico lo pida
 
-**Estado:** ADOPTADA sin esperar el disparador · **Escrita:** 6 de septiembre
-de 2026 · **Revisada:** 8 de septiembre de 2026
+**Estado:** EJECUTADA en el Sprint 2 · **Escrita:** 6 de septiembre de 2026 ·
+**Revisada:** 8 de septiembre de 2026 · **Actualizada:** 16 de septiembre de
+2026
+
+> **Actualización.** Esta decisión ya se ejecutó: el catálogo se sirve
+> **estático** desde Cloudflare, horneado por `montar/catalogo-estatico.mjs` y
+> `montar/sembrar-respaldo.mjs`, y se actualiza con el botón **Publicar
+> ahora** de la hoja o solo cada 4 horas (flujo `fotos`) — no en cada visita.
+> Lo que sigue abajo describe el razonamiento que llevó ahí y por qué no hizo
+> falta esperar al umbral de tráfico; para el comportamiento de hoy, ver
+> `ARQUITECTURA.md` §6 y §10, y `GUIA-COMERCIANTE.md`.
 
 ### Qué hace hoy
 

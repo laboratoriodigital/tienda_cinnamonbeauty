@@ -1352,32 +1352,39 @@ const configurar = (g, clave, valor) => {
      'normalizar y después usar el original es peor que no normalizar');
 
   /* APARCADO, y eso también se comprueba. Un flujo escrito, probado y fuera del
-     camino es útil; un flujo escrito, probado y que el runbook manda a usar sin
-     que nadie lo haya corrido contra una tienda de verdad, no. */
+     camino es útil; un flujo escrito, probado y que el mapa de despliegue
+     manda a usar sin que nadie lo haya corrido contra una tienda de verdad,
+     no. Desde la 3.0.0 el mapa es un solo documento, DESPLIEGUE.md — los
+     cuatro que existían antes se consolidaron ahí y se borraron. */
   {
-    const runbook = fs.readFileSync('../docs/RUNBOOK.md', 'utf8');
+    const mapa = fs.readFileSync('../docs/DESPLIEGUE.md', 'utf8');
     const roadmap = fs.readFileSync('../docs/ROADMAP.md', 'utf8');
+    /* Solo el tramo del repositorio (paso 1), no el documento entero: más
+       abajo el mapa vuelve a decir «tienda nueva» hablando de clonar la
+       plantilla, que no tiene nada que ver con el flujo aparcado, y una
+       regla sin acotar lo confundía con una instrucción a usarlo. */
+    const paso1 = mapa.slice(0, mapa.indexOf('## 2 ·'));
     ok('EL ALTA ESTÁ APARCADA, y el roadmap dice por qué',
        /APARCADO/.test(roadmap) && /tienda-nueva\.yml/.test(roadmap));
-    ok('  ...y el runbook no manda a usarla como camino normal',
-       !/tiendas.*Actions.*tienda nueva/s.test(runbook.split('## C.')[0]) &&
-       /aparcado a propósito/.test(runbook),
+    ok('  ...y el mapa de despliegue no manda a usarla como camino normal',
+       /aparcado a propósito/.test(paso1),
        'el camino documentado es el que se ha corrido de verdad');
   }
 
-  /* Aquí SÍ tiene que coincidir: el flujo que el runbook manda a disparar en
-     cada despliegue. El documento hablaba de dos campos cuando el formulario
-     tenía cinco, y ese desajuste costó una corrida. */
+  /* Aquí SÍ tiene que coincidir: el flujo que el mapa manda a disparar en cada
+     despliegue. Antes esto vivía en RUNBOOK.md; el documento hablaba de dos
+     campos cuando el formulario tenía cinco, y ese desajuste costó una
+     corrida. */
   {
-    const runbook = fs.readFileSync('../docs/RUNBOOK.md', 'utf8');
+    const mapa = fs.readFileSync('../docs/DESPLIEGUE.md', 'utf8');
     const flujo = fs.readFileSync('../.github/workflows/montaje.yml', 'utf8');
     const campos = (flujo.match(/^      ([a-z_]+):$/gm) || [])
       .map(l => l.trim().replace(':', ''));
-    ok('EL RUNBOOK nombra TODOS los campos del formulario de montaje',
-       campos.length === 4 && campos.every(c => runbook.indexOf('`' + c + '`') !== -1),
+    ok('DESPLIEGUE.md nombra TODOS los campos del formulario de montaje',
+       campos.length === 4 && campos.every(c => mapa.indexOf('`' + c + '`') !== -1),
        campos.join(', '));
     ok('  ...y dice cuáles se dejan como vienen en un despliegue normal',
-       /como vienen/.test(runbook) && /sin marcar/.test(runbook));
+       /como vienen/.test(mapa) && /sin marcar/.test(mapa));
   }
 }
 
@@ -1441,7 +1448,7 @@ const configurar = (g, clave, valor) => {
   /* Y los dos que mandan a pegarlo tienen que decir tambi\u00e9n c\u00f3mo comprobar
      que se peg\u00f3 el bueno. \u00abNo hay cambios que guardar\u00bb es un s\u00edntoma, no un
      final feliz: significa que lo pegado era id\u00e9ntico a lo que ya estaba. */
-  for (const f of ['ACTUALIZAR-UNA-TIENDA.md', 'SPRINT-0.md']) {
+  for (const f of ['ACTUALIZAR-UNA-TIENDA.md', 'DESPLIEGUE.md']) {
     const t = fs.readFileSync('../docs/' + f, 'utf8');
     ok('  ...y ' + f + ' manda a ejecutar generarStub en el editor del maestro',
        /generarStub/.test(t) && /MAESTRO/.test(t) && /Registro de ejecuci/.test(t));
@@ -1481,8 +1488,8 @@ const configurar = (g, clave, valor) => {
 
   /* Los flujos también: ahí estaba escrita cuatro veces más y la aserción no
      los miraba, así que la cifra sobrevivió donde nadie la buscaba. */
-  const donde = ['../README.md', '../docs/RUNBOOK.md', '../docs/SPRINT-0.md',
-                 '../docs/ANTES-DE-SALIR.md', '../docs/PLAN.md', '../docs/CONTRATOS.md',
+  const donde = ['../README.md', '../docs/DESPLIEGUE.md', '../docs/ROADMAP.md',
+                 '../docs/ANTES-DE-SALIR.md', '../docs/CONTRATOS.md',
                  '../.github/workflows/montaje.yml', '../.github/workflows/pruebas.yml',
                  '../.github/workflows/release.yml'];
   const conCifra = donde.filter(f => fs.existsSync(f) &&
@@ -2178,16 +2185,14 @@ const configurar = (g, clave, valor) => {
 {
   const g = nuevo();
   const vivas = g.api.menuDeLaHoja().map(o => o.rotulo);
-  /* El mapa de despliegue entra en la lista de papeles vigilados. Los cuatro
-     documentos viejos —RUNBOOK, DESPLIEGUE-CLIENTE, MONTAJE, INSTALAR— NO
-     están aquí y es a propósito: los cuatro se quedaron atrás, ninguno nombra
-     «Publicar ahora», y meterlos hoy los pondría rojos sin arreglarlos.
-     Llevan un aviso al principio que dice que el mapa manda, y su consolidación
-     está anotada como deuda en el plan. Poner un guardián que se sabe rojo es
-     enseñar a ignorarlo. */
+  /* El manual del dueño (HTML+PDF) se borró en la limpieza de documentación de
+     la 3.0.0: tenía, él solo, tres contradicciones internas —catálogo «en
+     vivo» cuando se hornea, fotos por Cloudinary cuando van por Drive, el
+     estado «Confirmado» que se renombró a «Pagado»— y la guía de una página
+     ya cubre lo mismo sin ninguna. Los papeles vigilados hoy son solo los que
+     de verdad se le entregan al comercio y al técnico. */
   const papeles = ['../docs/GUIA-COMERCIANTE.md',
-                   '../docs/DESPLIEGUE.md',
-                   '../docs/manuales/Manual-del-dueno-Organico.html'];
+                   '../docs/DESPLIEGUE.md'];
 
   papeles.forEach(ruta => {
     const nombre = ruta.split('/').pop();
@@ -2239,6 +2244,12 @@ const configurar = (g, clave, valor) => {
   ok('  ...y la versión imprimible dice lo mismo que la escrita',
      vivas.every(r => impresa.indexOf(r) !== -1) && /@page/.test(impresa),
      'dos copias que se separan es el patrón 2 otra vez');
+
+  ['Manual-del-dueno-Organico.html', 'Manual-del-dueno-Organico.pdf'].forEach(n => {
+    ok('  ...y «' + n + '», con sus contradicciones, ya no existe',
+       !fs.existsSync('../docs/manuales/' + n),
+       'un manual largo y atrasado enseña peor que uno corto y al día');
+  });
 }
 
 /* ═══ 26. EL PULL REQUEST DEL BOT TIENE QUE DECIR QUÉ TRAE ═══
@@ -2381,14 +2392,18 @@ const configurar = (g, clave, valor) => {
      primera + ' — es la que corre si le dan a Ejecutar sin escoger');
 }
 
-/* ═══ 29. EL MAPA DE DESPLIEGUE, Y LOS CUATRO QUE SE QUEDARON ATRÁS ═══
-   Había cuatro documentos describiendo tramos del mismo procedimiento y
-   NINGUNO nombra «Publicar ahora». Es el patrón 2 a escala de documentación:
-   cuatro copias, todas atrasadas. El mapa nuevo es la fuente; los cuatro llevan
-   un aviso que lo dice. */
+/* ═══ 29. EL MAPA DE DESPLIEGUE, Y LOS CINCO QUE SE QUEDARON ATRÁS ═══
+   Había cinco documentos describiendo tramos del mismo procedimiento y
+   NINGUNO nombra «Publicar ahora» correctamente — alguno hasta enseñaba fotos
+   por Cloudinary y catálogo «en vivo», los dos falsos desde hace versiones.
+   Es el patrón 2 a escala de documentación: varias copias, todas atrasadas.
+   En la 3.0.0 se consolidó lo vigente de los cinco en este único mapa y se
+   borraron: un documento atrasado sin borrar se lee como si estuviera al
+   día, y borrarlo es la única forma de que deje de mentir. */
 {
   const mapa = fs.readFileSync('../docs/DESPLIEGUE.md', 'utf8');
-  const viejos = ['RUNBOOK.md', 'DESPLIEGUE-CLIENTE.md', 'MONTAJE.md', 'INSTALAR.md'];
+  const viejos = ['RUNBOOK.md', 'DESPLIEGUE-CLIENTE.md', 'MONTAJE.md',
+                  'INSTALAR.md', 'FOTOS.md'];
 
   ok('EL MAPA cubre del repositorio a la entrega, no un tramo',
      /## 1 · El repositorio/.test(mapa) && /## 16 · La entrega/.test(mapa),
@@ -2440,10 +2455,9 @@ const configurar = (g, clave, valor) => {
      'los secretos, la clave de la hoja y el proyecto de Cloudflare');
 
   viejos.forEach(n => {
-    const doc = fs.readFileSync('../docs/' + n, 'utf8');
-    ok('  ...y «' + n + '» avisa de que está atrasado y remite al mapa',
-       /docs\/DESPLIEGUE\.md/.test(doc) && /atrasado/.test(doc),
-       'un documento atrasado sin aviso se lee como si estuviera al día');
+    ok('  ...y «' + n + '», que se quedó atrás, ya no existe: se consolidó aquí',
+       !fs.existsSync('../docs/' + n),
+       'un documento atrasado sin borrar se lee como si estuviera al día');
   });
 }
 

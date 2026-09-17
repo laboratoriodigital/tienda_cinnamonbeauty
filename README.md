@@ -23,19 +23,18 @@ Primera tienda en línea con esto:
 | `.github/workflows/` | Los mismos pasos, corriendo desde GitHub Actions. |
 | `servicio/` | El alta de una tienda. **No corre aquí**: va copiado en `laboratoriodigital/tiendas`, que es el único repositorio con permiso para crear repositorios. |
 | `pruebas/` | Baterías sobre el código real, no sobre una copia. `./pruebas/todas.sh` |
-| `docs/` | `PLAN.md`: qué se construye y en qué orden. `SPRINT-0.md`: el sprint en curso, con su avance. `ADOPCION.md`: qué se adopta de la arquitectura v3 y qué se controvierte. **`CONTRATOS.md`: el contrato de datos, normativo.** `SPRINT-1.md` y `SPRINT-2.md`: los sprints en curso. `ARQUITECTURA.md`: el porqué del diseño de hoy. `DECISIONES.md`, `BITACORA.md`, despliegue, montaje, manuales y hoja de ruta. |
+| `docs/` | `DESPLIEGUE.md`: el mapa, de punta a punta. `ARQUITECTURA.md`: el porqué del diseño de hoy. **`CONTRATOS.md`: el contrato de datos, normativo.** `DECISIONES.md`: lo que va a cambiar y cuándo. `ROADMAP.md`: qué se construye y en qué orden. `BITACORA.md`: incidentes reales y la lección que dejaron. `ANTES-DE-SALIR.md`, `ACTUALIZAR-UNA-TIENDA.md`, `TRASPASO.MD`, `GUIA-COMERCIANTE.md` y `manuales/`. |
 | `originales/` | Fotos pesadas. **No se versiona**: viven en el Drive del comercio. |
 
 ## Poner a andar una tienda
 
-Hay dos guías, y se eligen por el equipo que tengas delante:
+**`docs/DESPLIEGUE.md`** — el mapa de punta a punta, en orden, con quién hace
+cada cosa, los tres sitios donde el orden cuesta una hora y los fallos
+comunes. Es el único; hasta la 3.0.0 había cuatro más describiendo tramos de
+lo mismo y se quedaban atrás sin que nadie lo notara — se consolidaron ahí y
+se borraron.
 
-- **`docs/RUNBOOK.md`** — la ruta corta: solo navegador y GitHub Actions, sin
-  instalar nada.
-- **`docs/DESPLIEGUE-CLIENTE.md`** — la lista larga, con el porqué de cada paso,
-  las capturas y los fallos comunes.
-
-En cualquiera de las dos, el esqueleto es el mismo:
+El esqueleto:
 
 1. Repositorio nuevo a partir de esta plantilla —el flujo **tienda nueva** de
    `laboratoriodigital/tiendas` lo hace y lo deja configurado—, y conectarlo a
@@ -51,26 +50,14 @@ En cualquiera de las dos, el esqueleto es el mismo:
 Para poner al día una tienda que **ya** está montada cuando sale una versión
 nueva: `docs/ACTUALIZAR-UNA-TIENDA.md`. Ninguna se mueve sola.
 
-Las órdenes del día a día, en `docs/MONTAJE.md`. El porqué de cada decisión, en
-`docs/ARQUITECTURA.md`. Lo que falta mirar antes del primer comprador real, en
-`docs/ANTES-DE-SALIR.md`.
+El porqué de cada decisión, en `docs/ARQUITECTURA.md`. Lo que falta mirar antes
+del primer comprador real, en `docs/ANTES-DE-SALIR.md`.
 
 ## Cómo trabajamos
 
-GitHub Flow: `main` siempre desplegable, una rama por cambio, pull request corto.
-
-```
-feature/frontend: paginación de 25, 50 y 100 productos
-bugfix/backend: el cupón se aplicaba sin validar cuando la hoja no respondía
-hotfix/frontend: el emoji rompía la caja de escritura de WhatsApp
-refactor/backend: el maestro sale de la hoja y abre por ID
-```
-
-Tipos: `feature` · `bugfix` · `hotfix` · `refactor`
-Ámbitos: `frontend` (la tienda) · `backend` (el maestro) · `bd` (estructura de la hoja)
-
-**Antes de abrir el pull request:** `./pruebas/todas.sh` en verde.
-Cada rama publica una vista previa propia en Cloudflare; `main` publica producción.
+GitHub Flow: `main` siempre desplegable, una rama por cambio, pull request
+corto, `./pruebas/todas.sh` en verde antes de abrirlo. El detalle —tipos de
+rama, mensaje de commit, cómo cortar una versión— en `CONTRIBUIR.md`.
 
 ## Lo que no se versiona
 
