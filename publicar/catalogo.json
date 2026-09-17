@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-17T23:48:01.870Z",
+ "generado": "2026-09-17T23:53:18.798Z",
  "productos": [
   {
    "id": "MG124",
@@ -95,7 +95,7 @@
    "imagenes": [
     "CREMA-CORPORAL-MINI-MG118.PNG"
    ],
-   "destacado": true,
+   "destacado": false,
    "referencia": "CREMA CORPORAL MINI",
    "precioAntes": 0,
    "umbralBajo": 0
@@ -167,6 +167,11 @@
    900
   ],
   "PERFUME-CAPILAR-MIEL-CLICK-HAIR-OC400.PNG": [
+   160,
+   600,
+   900
+  ],
+  "SPLASH-FANTILUNA-MG115.PNG": [
    160,
    600,
    900
