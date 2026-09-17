@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-17T21:09:30.408Z",
+ "generado": "2026-09-17T21:28:09.036Z",
  "productos": [
   {
    "id": "MG124",
@@ -33,6 +33,22 @@
    ],
    "destacado": true,
    "referencia": "PERFUME CAPILAR  MINI",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "MG118",
+   "nombre": "Crema Corporal Fantiluna Mini",
+   "formato": "unidad",
+   "categoria": "Cremas y Mantequillas",
+   "precio": 14500,
+   "stock": 0,
+   "descripcion": "✨ CREMA CORPORAL FANTILUNA  MINI✨\n\nHidrata y cuida tu piel, dejándola suave, delicadamente perfumada y con una sensación agradable. 💕 Disponible en rosado y morado, para que elijas tu favorito.",
+   "imagenes": [
+    "CREMA-CORPORAL-MINI-MG118"
+   ],
+   "destacado": true,
+   "referencia": "CREMA CORPORAL MINI",
    "precioAntes": 0,
    "umbralBajo": 0
   }
