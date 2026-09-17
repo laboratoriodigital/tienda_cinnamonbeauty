@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-17T22:59:25.445Z",
+ "generado": "2026-09-17T23:05:13.842Z",
  "productos": [
   {
    "id": "MG124",
@@ -28,8 +28,7 @@
    "stock": 6,
    "descripcion": "✨ Perfume Capilar Click Hair\n\nPerfuma tu cabello con un aroma delicioso y duradero, mientras aporta brillo, suavidad y control del frizz. Su fórmula con argán, queratina y termoprotector complementa tu rutina capilar sin dejar sensación grasosa.",
    "imagenes": [
-    "PERFUME-CAPILAR-CLICK-HAIR-MINI-BRILLOS-OC403.PNG",
-    "PERFUME-CAPILAR-CLICK-HAIR-MINI-OC403.PNG"
+    "PERFUME-CAPILAR-CLICK-HAIR-MINI-BRILLOS-OC403.PNG"
    ],
    "destacado": true,
    "referencia": "PERFUME CAPILAR  MINI",
@@ -45,7 +44,7 @@
    "stock": 0,
    "descripcion": "✨ CREMA CORPORAL FANTILUNA  MINI✨\n\nHidrata y cuida tu piel, dejándola suave, delicadamente perfumada y con una sensación agradable. 💕 Disponible en rosado y morado, para que elijas tu favorito.",
    "imagenes": [
-    "CREMA-CORPORAL-MINI-MG118"
+    "CREMA-CORPORAL-MINI-MG118.PNG"
    ],
    "destacado": true,
    "referencia": "CREMA CORPORAL MINI",
@@ -113,12 +112,7 @@
    600,
    900
   ],
-  "PERFUME-CAPILAR-CLICK-HAIR-MINI-OC403.PNG": [
-   160,
-   600,
-   900
-  ],
-  "CREMA-CORPORAL-MINI-MG118": [
+  "CREMA-CORPORAL-MINI-MG118.PNG": [
    160,
    600,
    900
