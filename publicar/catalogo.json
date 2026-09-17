@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-17T21:05:11.625Z",
+ "generado": "2026-09-17T21:09:30.408Z",
  "productos": [
   {
    "id": "MG124",
@@ -17,6 +17,23 @@
    "destacado": true,
    "referencia": "COLONIA+CREMA CORPORAL",
    "precioAntes": 50000,
+   "umbralBajo": 0
+  },
+  {
+   "id": "OC403",
+   "nombre": "Perfume Capilar Clik Hair Mini",
+   "formato": "Unidad",
+   "categoria": "perfumes corporales y capilares",
+   "precio": 17000,
+   "stock": 6,
+   "descripcion": "✨ Perfume Capilar Click Hair\n\nPerfuma tu cabello con un aroma delicioso y duradero, mientras aporta brillo, suavidad y control del frizz. Su fórmula con argán, queratina y termoprotector complementa tu rutina capilar sin dejar sensación grasosa.",
+   "imagenes": [
+    "PERFUME-CAPILAR-CLICK-HAIR-MINI-BRILLOS-OC403.PNG",
+    "PERFUME-CAPILAR-CLICK-HAIR-MINI-OC403.PNG"
+   ],
+   "destacado": true,
+   "referencia": "PERFUME CAPILAR  MINI",
+   "precioAntes": 0,
    "umbralBajo": 0
   }
  ],
@@ -76,6 +93,11 @@
  },
  "fotos": {
   "KIT-ARRURU-ROSADO-MG124.PNG": [
+   160,
+   600,
+   900
+  ],
+  "PERFUME-CAPILAR-CLICK-HAIR-MINI-OC403.PNG": [
    160,
    600,
    900
