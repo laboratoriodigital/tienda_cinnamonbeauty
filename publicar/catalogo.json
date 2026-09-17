@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-17T20:16:49.476Z",
+ "generado": "2026-09-17T20:29:49.621Z",
  "productos": [
   {
    "id": "MG124",
@@ -22,24 +22,19 @@
  ],
  "envios": [
   {
-   "id": "finca",
+   "id": "medellin",
    "nombre": "Contraentrega Medellín - Bello",
    "valor": 15000
   },
   {
-   "id": "medellin",
-   "nombre": "Medellín y Valle de Aburrá",
-   "valor": 9000
+   "id": "norte",
+   "nombre": "copacabana-girardota-barbosa",
+   "valor": 0
   },
   {
-   "id": "oriente",
-   "nombre": "Rionegro y Oriente antioqueño",
-   "valor": 10000
-  },
-  {
-   "id": "principal",
-   "nombre": "Bogotá, Cali, Barranquilla",
-   "valor": 15000
+   "id": "sur",
+   "nombre": "envigado-itagui-sabaneta-caldas-estrella",
+   "valor": 0
   }
  ],
  "config": {
@@ -50,7 +45,7 @@
   "portada_texto": "Makeup Beauty - Profesional Products",
   "portada_puntos": "Producto de la semana|Entregas a todo el país|Pides y confirmas por WhatsApp",
   "color_principal": "#EA9999",
-  "color_secundario": "#F1C232",
+  "color_secundario": "#BF9000",
   "color_alterno": "#CC0000",
   "pie_descripcion": "Tienda Virtual - Envio a todo el país",
   "como_compras": "Armas tu carrito aquí|Confirmas por WhatsApp|Realizas tu pago |Recibes en 24 a 72 horas",
