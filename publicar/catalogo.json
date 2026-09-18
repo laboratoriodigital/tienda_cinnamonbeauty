@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T22:52:54.365Z",
+ "generado": "2026-09-18T22:57:07.245Z",
  "productos": [
   {
    "id": "MG124",
@@ -418,6 +418,22 @@
    "referencia": "TRATAMIENTO DE PESTAÑAS BIOAQUA",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG122",
+   "nombre": "Pestañina Prosa",
+   "formato": "unidad",
+   "categoria": "Cuidado de la Piel",
+   "precio": 18000,
+   "stock": 15,
+   "descripcion": "✨ PESTAÑINA PROSA ✨\n\nRealza tu mirada con color intenso, definición y un acabado uniforme. Su fórmula ayuda a destacar las pestañas para lograr una mirada más expresiva. 👁️💗",
+   "imagenes": [
+    "PESTAÑIÑA-PROSA-MG122.png"
+   ],
+   "destacado": false,
+   "referencia": "PESTAÑINAS PROSA",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -591,6 +607,11 @@
    900
   ],
   "SERUM-DE-PESTAÑAS-FM026.png": [
+   160,
+   600,
+   900
+  ],
+  "PESTAÑIÑA-PROSA-MG122.png": [
    160,
    600,
    900
