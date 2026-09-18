@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T23:01:38.338Z",
+ "generado": "2026-09-18T23:06:30.699Z",
  "productos": [
   {
    "id": "MG124",
@@ -407,7 +407,7 @@
    "id": "FM026",
    "nombre": "Tratamiento para pestañas Bioaqua",
    "formato": "unidad",
-   "categoria": "Cuidado de la Piel",
+   "categoria": "Maquillaje",
    "precio": 7000,
    "stock": 10,
    "descripcion": "👁️✨ TRATAMIENTO PARA PESTAÑAS BIOAQUA ✨\n\nCuida tus pestañas desde la raíz, ayudando a mantenerlas más hidratadas, acondicionadas y de apariencia saludable. 🌿\n\n💗 Ideal para complementar tu rutina de belleza y cuidar tus pestañas diariamente.",
@@ -423,7 +423,7 @@
    "id": "MG122",
    "nombre": "Pestañina Prosa",
    "formato": "unidad",
-   "categoria": "Cuidado de la Piel",
+   "categoria": "Maquillaje",
    "precio": 18000,
    "stock": 15,
    "descripcion": "✨ PESTAÑINA PROSA ✨\n\nRealza tu mirada con color intenso, definición y un acabado uniforme. Su fórmula ayuda a destacar las pestañas para lograr una mirada más expresiva. 👁️💗",
@@ -439,7 +439,7 @@
    "id": "MG182",
    "nombre": "Gel de cejas Melu",
    "formato": "unidad",
-   "categoria": "Cuidado de la Piel",
+   "categoria": "Maquillaje",
    "precio": 18000,
    "stock": 12,
    "descripcion": "✨ GEL DE CEJAS MELU ✨\n\nDefine, peina y fija tus cejas para lograr un acabado ordenado, natural y duradero. Ideal para mantener cada pelito en su lugar y resaltar tu mirada. 🤎",
@@ -448,6 +448,22 @@
    ],
    "destacado": false,
    "referencia": "GEL DE CEJAS MELU",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "MG176",
+   "nombre": "Gel de cejas Got 2b",
+   "formato": "unidad",
+   "categoria": "Maquillaje",
+   "precio": 26000,
+   "stock": 13,
+   "descripcion": "✨ GEL DE CEJAS GOT2B ✨\n\nPara peinar, definir y fijar tus cejas con una sujeción potente. Ideal para lograr el efecto “cejas laminadas” y mantener cada pelito en su lugar. 🤎✨",
+   "imagenes": [
+    "GEL-DE-CEJAS-GOT2B-MG176.png"
+   ],
+   "destacado": false,
+   "referencia": "GEL DE CEJAS GOT 2B",
    "precioAntes": 0,
    "umbralBajo": 0
   }
@@ -633,6 +649,11 @@
    900
   ],
   "GEL-DE-CEJAS-MELU-MG182.png": [
+   160,
+   600,
+   900
+  ],
+  "GEL-DE-CEJAS-GOT2B-MG176.png": [
    160,
    600,
    900
