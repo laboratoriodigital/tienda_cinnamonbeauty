@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T18:05:59.356Z",
+ "generado": "2026-09-18T18:17:40.282Z",
  "productos": [
   {
    "id": "MG124",
@@ -16,7 +16,7 @@
    ],
    "destacado": true,
    "referencia": "COLONIA+CREMA CORPORAL",
-   "precioAntes": 50000,
+   "precioAntes": 0,
    "umbralBajo": 0
   },
   {
@@ -226,6 +226,11 @@
    900
   ],
   "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-OC403.jpg": [
+   160,
+   600,
+   900
+  ],
+  "PERFUME-CAPILAR-CLICK-HAIR-MINI-OC403.png": [
    160,
    600,
    900
