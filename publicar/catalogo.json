@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T23:19:28.511Z",
+ "generado": "2026-09-18T23:25:32.664Z",
  "productos": [
   {
    "id": "MG124",
@@ -498,6 +498,22 @@
    "referencia": "GLOSS HUXA EN CAJA CON LLAVERO",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM019",
+   "nombre": "Balsamo labial acido hialuronico",
+   "formato": "unidad",
+   "categoria": "Maquillaje",
+   "precio": 5000,
+   "stock": 12,
+   "descripcion": "💧💋 BÁLSAMO LABIAL BIOAQUA CON ÁCIDO HIALURÓNICO ✨\n\nAyuda a hidratar, suavizar y mantener los labios confortables, aportando una apariencia más tersa y saludable. Ideal para el cuidado diario. 💗",
+   "imagenes": [
+    "BALSAMO-LABIAL-HIALURONICO-BIOAQUA-FM019.png"
+   ],
+   "destacado": false,
+   "referencia": "BALSAMO LABIAL  ACIDO HIALURONICO BIOAQUA",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -696,6 +712,11 @@
    900
   ],
   "GLOSS-EN-CAJA-CON-LLAVERO-FM022.png": [
+   160,
+   600,
+   900
+  ],
+  "BALSAMO-LABIAL-HIALURONICO-BIOAQUA-FM019.png": [
    160,
    600,
    900
