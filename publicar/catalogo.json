@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T18:17:40.282Z",
+ "generado": "2026-09-18T18:20:24.103Z",
  "productos": [
   {
    "id": "MG124",
@@ -28,8 +28,7 @@
    "stock": 6,
    "descripcion": "✨ Perfume Capilar Click Hair\n\nPerfuma tu cabello con un aroma delicioso y duradero, mientras aporta brillo, suavidad y control del frizz. Su fórmula con argán, queratina y termoprotector complementa tu rutina capilar sin dejar sensación grasosa.",
    "imagenes": [
-    "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-OC403.jpg",
-    "PERFUME-CAPILAR-CLICK-HAIR-MINI-OC403.png"
+    "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-OC403.jpg"
    ],
    "destacado": true,
    "referencia": "PERFUME CAPILAR  MINI",
@@ -226,11 +225,6 @@
    900
   ],
   "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-OC403.jpg": [
-   160,
-   600,
-   900
-  ],
-  "PERFUME-CAPILAR-CLICK-HAIR-MINI-OC403.png": [
    160,
    600,
    900
