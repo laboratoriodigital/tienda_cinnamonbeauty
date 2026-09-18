@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T18:59:30.505Z",
+ "generado": "2026-09-18T19:35:12.336Z",
  "productos": [
   {
    "id": "MG124",
@@ -194,6 +194,22 @@
    "referencia": "PERFUME TERMOPROTECTOR ORIGNEN BOTANICO",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "OC401",
+   "nombre": "Mascarilla de miel click hair",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 46000,
+   "stock": 8,
+   "descripcion": "🍯✨ MASCARILLA DE MIEL CLICK HAIR ✨🍯\n\nDale a tu cabello una dosis de nutrición y cuidado con la Mascarilla de Miel Click Hair. 💛\n\nSu fórmula con miel es ideal para complementar tu rutina capilar, ayudando a que el cabello luzca más suave, manejable, brillante y con una apariencia saludable. ✨",
+   "imagenes": [
+    "MASCARILLA-DE-MIEL-CLICK-HAIR-OC401.png"
+   ],
+   "destacado": false,
+   "referencia": "MASCARILLA DE MIEL CLICK HAIR BRILLO INTENSO",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -231,14 +247,14 @@
   "empresa_direccion": "TIENDA VIRTUAL",
   "empresa_ciudad": "Medellín",
   "empresa_tel": "3218550807",
-  "legal_actualizado": "Fri Sep 11 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "legal_actualizado": "Fri Sep 11 2026 00:00:00 GMT-0500 (hora estándar de Colombia)",
   "sitio_url": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev",
   "sitio_titulo": "Cinnamon Beauty - Professional Makeup",
   "sitio_descripcion": "Maquillaje profesional a los mejores precios",
   "correo_resumen": "dcbs.1323@gmail.com",
   "correo_hora": "7",
   "correo_siempre": "No",
-  "correo_ultimo": "Fri Sep 18 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "correo_ultimo": "Fri Sep 18 2026 00:00:00 GMT-0500 (hora estándar de Colombia)",
   "fotos_origen": "",
   "fotos_cdn": "",
   "respaldo_carpeta": "https://drive.google.com/drive/folders/1VVXb4WTKB4tYk7EuWkluHHirQYlNhhc8?usp=sharing",
@@ -297,6 +313,11 @@
    900
   ],
   "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png": [
+   160,
+   600,
+   900
+  ],
+  "MASCARILLA-DE-MIEL-CLICK-HAIR-OC401.png": [
    160,
    600,
    900
