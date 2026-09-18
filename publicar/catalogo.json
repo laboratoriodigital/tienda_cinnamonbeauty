@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T23:06:30.699Z",
+ "generado": "2026-09-18T23:10:09.124Z",
  "productos": [
   {
    "id": "MG124",
@@ -466,6 +466,22 @@
    "referencia": "GEL DE CEJAS GOT 2B",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG184",
+   "nombre": "Gel de cejas anik",
+   "formato": "unidad",
+   "categoria": "Maquillaje",
+   "precio": 21500,
+   "stock": 0,
+   "descripcion": "",
+   "imagenes": [
+    "GEL-DE-CEJAS-ANIK-MG184.png"
+   ],
+   "destacado": false,
+   "referencia": "",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -654,6 +670,11 @@
    900
   ],
   "GEL-DE-CEJAS-GOT2B-MG176.png": [
+   160,
+   600,
+   900
+  ],
+  "GEL-DE-CEJAS-ANIK-MG184.png": [
    160,
    600,
    900
