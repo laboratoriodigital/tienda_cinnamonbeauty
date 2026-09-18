@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T22:48:29.123Z",
+ "generado": "2026-09-18T22:52:54.365Z",
  "productos": [
   {
    "id": "MG124",
@@ -402,6 +402,22 @@
    "referencia": "COLAGENO BIOAQUA MORADO",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM026",
+   "nombre": "Tratamiento para pestañas Bioaqua",
+   "formato": "unidad",
+   "categoria": "Cuidado de la Piel",
+   "precio": 7000,
+   "stock": 10,
+   "descripcion": "👁️✨ TRATAMIENTO PARA PESTAÑAS BIOAQUA ✨\n\nCuida tus pestañas desde la raíz, ayudando a mantenerlas más hidratadas, acondicionadas y de apariencia saludable. 🌿\n\n💗 Ideal para complementar tu rutina de belleza y cuidar tus pestañas diariamente.",
+   "imagenes": [
+    "SERUM-DE-PESTAÑAS-FM026.png"
+   ],
+   "destacado": false,
+   "referencia": "TRATAMIENTO DE PESTAÑAS BIOAQUA",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -570,6 +586,11 @@
    900
   ],
   "COLAGENO-BIOAQUA-FM.png": [
+   160,
+   600,
+   900
+  ],
+  "SERUM-DE-PESTAÑAS-FM026.png": [
    160,
    600,
    900
