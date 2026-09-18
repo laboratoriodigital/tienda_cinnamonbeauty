@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T23:29:09.172Z",
+ "generado": "2026-09-18T23:32:59.608Z",
  "productos": [
   {
    "id": "MG124",
@@ -530,6 +530,22 @@
    "referencia": "LIP GLOSS CON ESPEJITO",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG188",
+   "nombre": "Lip gloss",
+   "formato": "unidad",
+   "categoria": "Maquillaje",
+   "precio": 8500,
+   "stock": 12,
+   "descripcion": "💋✨ LIP GLOSS  ✨\n\nBrillo irresistible para unos labios con apariencia jugosa, suave y luminosa. 💗 Su práctico espejito lo hace perfecto para llevarlo contigo y retocar tu look donde quieras.",
+   "imagenes": [
+    "LIP-GLOSS-MG188.jpg"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -738,6 +754,11 @@
    900
   ],
   "LIP-GLOSS-CON-ESPEJITO-FM023.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-MG188.jpg": [
    160,
    600,
    900
