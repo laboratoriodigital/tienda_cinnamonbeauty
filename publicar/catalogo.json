@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T22:57:07.245Z",
+ "generado": "2026-09-18T23:01:38.338Z",
  "productos": [
   {
    "id": "MG124",
@@ -434,6 +434,22 @@
    "referencia": "PESTAÑINAS PROSA",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG182",
+   "nombre": "Gel de cejas Melu",
+   "formato": "unidad",
+   "categoria": "Cuidado de la Piel",
+   "precio": 18000,
+   "stock": 12,
+   "descripcion": "✨ GEL DE CEJAS MELU ✨\n\nDefine, peina y fija tus cejas para lograr un acabado ordenado, natural y duradero. Ideal para mantener cada pelito en su lugar y resaltar tu mirada. 🤎",
+   "imagenes": [
+    "GEL-DE-CEJAS-MELU-MG182.png"
+   ],
+   "destacado": false,
+   "referencia": "GEL DE CEJAS MELU",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -612,6 +628,11 @@
    900
   ],
   "PESTAÑIÑA-PROSA-MG122.png": [
+   160,
+   600,
+   900
+  ],
+  "GEL-DE-CEJAS-MELU-MG182.png": [
    160,
    600,
    900
