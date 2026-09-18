@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T22:35:35.065Z",
+ "generado": "2026-09-18T22:43:09.066Z",
  "productos": [
   {
    "id": "MG124",
@@ -325,7 +325,7 @@
   },
   {
    "id": "FM003",
-   "nombre": "KIT BIOAQUA  CAMELLIAS",
+   "nombre": "Kit Bioaqua Camellias",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
    "precio": 48000,
@@ -341,7 +341,7 @@
   },
   {
    "id": "MG100",
-   "nombre": "KIT BIOAQUA ARROZ",
+   "nombre": "Kit Bioaqua de Arroz",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
    "precio": 48000,
@@ -357,7 +357,7 @@
   },
   {
    "id": "FM002",
-   "nombre": "KIT BIOAQUA ROSA Y ACIDO HIALURONICO",
+   "nombre": "Kit Bioaqua Rosa+Acido Hialuronico",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
    "precio": 48000,
@@ -368,6 +368,38 @@
    ],
    "destacado": false,
    "referencia": "KIT BIOAQUA ROSAS+ACIDO HIALURONICO",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "FM027",
+   "nombre": "Contorno de ojos en rollon Bioaqua",
+   "formato": "unidad",
+   "categoria": "Cuidado de la Piel",
+   "precio": 10000,
+   "stock": 12,
+   "descripcion": "👁️✨ CONTORNO DE OJOS BIOAQUA EN ROLL-ON ✨\n\nAyuda a hidratar, refrescar y suavizar la delicada zona del contorno de ojos. Su aplicador roll-on proporciona una sensación fresca y agradable. 💧🌸",
+   "imagenes": [
+    "CONTORNO-DE-OJOS-BIOAQUA-FM027.png"
+   ],
+   "destacado": false,
+   "referencia": "CONTRORNO DE OJOS ROLLON  BIOAQUA",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "FM038",
+   "nombre": "Colageno Bioaqua",
+   "formato": "unidad",
+   "categoria": "Cuidado de la Piel",
+   "precio": 13000,
+   "stock": 12,
+   "descripcion": "✨ BIOAQUA COLÁGENO – CUIDADO FACIAL ✨\n\nUn aliado para una piel de apariencia más firme, tersa y revitalizada. Su fórmula ayuda a mantener la hidratación y a mejorar la apariencia de líneas de expresión y textura. 💧\n\n🌸 Ideal para piel madura, seca o con signos de deshidratación.",
+   "imagenes": [
+    "COLAGENO-BIOAQUA-FM.png"
+   ],
+   "destacado": false,
+   "referencia": "COLAGENO BIOAQUA MORADO",
    "precioAntes": 0,
    "umbralBajo": 0
   }
@@ -399,7 +431,7 @@
   "color_principal": "#EA9999",
   "color_secundario": "#BF9000",
   "color_alterno": "#CC0000",
-  "pie_descripcion": "Tienda Virtual - Envio a todo el país",
+  "pie_descripcion": "Tienda Virtual - Pago contraentrega en Medellin",
   "como_compras": "Armas tu carrito aquí|Confirmas por WhatsApp|Realizas tu pago |Recibes en 24 a 72 horas",
   "empresa_razon": "Cinnamon Beauty",
   "empresa_nit": "[NIT O CÉDULA]",
@@ -528,6 +560,11 @@
    900
   ],
   "KIT-SKIN-CARE-ACIDO-HIALURONICO-Y-ROSA-FM002.png": [
+   160,
+   600,
+   900
+  ],
+  "CONTORNO-DE-OJOS-BIOAQUA-FM027.png": [
    160,
    600,
    900
