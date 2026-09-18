@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T20:15:16.445Z",
+ "generado": "2026-09-18T20:29:40.769Z",
  "productos": [
   {
    "id": "MG124",
@@ -262,7 +262,7 @@
   {
    "id": "OC412",
    "nombre": "Termoprotector de leche y miel Click Hair",
-   "formato": "",
+   "formato": "unidad",
    "categoria": "cuidado capilar",
    "precio": 49000,
    "stock": 8,
@@ -387,6 +387,16 @@
    900
   ],
   "SHAMPOO-DE-MIEL-CLICK HAIR-OC402.png": [
+   160,
+   600,
+   900
+  ],
+  "MIEL-CAPILAR-CLICK-HAIR-PEQUEÑA-OC411.png": [
+   160,
+   600,
+   900
+  ],
+  "MIEL-CAPILAR-CLICK-HAIR-GRANDE-OC412.png": [
    160,
    600,
    900
