@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T18:20:24.103Z",
+ "generado": "2026-09-18T18:26:41.052Z",
  "productos": [
   {
    "id": "MG124",
@@ -162,6 +162,22 @@
    "referencia": "AMPOPLLA RESCATE MILAGROS",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG119",
+   "nombre": "Perfume capilar milagros",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 12000,
+   "stock": 12,
+   "descripcion": "✨ PERFUME CAPILAR MILAGROS ✨\n\n¡Cabello que huele delicioso, en todo momento! 💕🌸\n\nEl Perfume Capilar Milagros es el toque final perfecto para tu rutina de belleza. Aporta una deliciosa fragancia al cabello, dejando una sensación fresca, femenina y encantadora.",
+   "imagenes": [
+    "PERFUME-CAPILAR-MILAGROS-MG119.png"
+   ],
+   "destacado": false,
+   "referencia": "PERFUME CAPILAR MILAGROS",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -255,6 +271,11 @@
    900
   ],
   "MANTEQUILLAS-FANTILUNA-MINI-MG113.png": [
+   160,
+   600,
+   900
+  ],
+  "PERFUME-CAPILAR-MILAGROS-MG119.png": [
    160,
    600,
    900
