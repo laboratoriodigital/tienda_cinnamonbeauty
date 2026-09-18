@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T23:12:58.652Z",
+ "generado": "2026-09-18T23:19:28.511Z",
  "productos": [
   {
    "id": "MG124",
@@ -473,13 +473,29 @@
    "formato": "unidad",
    "categoria": "Maquillaje",
    "precio": 21500,
-   "stock": 0,
+   "stock": 8,
    "descripcion": "✨ GEL DE CEJAS ANIK ✨\n\nPeina, define y fija tus cejas para un acabado pulido, natural y bien estructurado. Ideal para mantener los pelitos en su lugar durante el día. 🤎",
    "imagenes": [
     "GEL-DE-CEJAS-ANIK-MG184.png"
    ],
    "destacado": false,
    "referencia": "GEL DE CEJAS ANIK",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "FM022",
+   "nombre": "Gloss  en caja con llavero huxa",
+   "formato": "unidad",
+   "categoria": "Maquillaje",
+   "precio": 10000,
+   "stock": 12,
+   "descripcion": "💋✨ GLOSS HUXA + LLAVERO ✨\n\nUn detalle lindo y práctico para llevar contigo. 💗 Gloss para dar brillo y un toque especial a tus labios, acompañado de un divertido llavero.\n\n🎁 ¡Ideal para regalar o consentirte!",
+   "imagenes": [
+    "GLOSS-EN-CAJA-CON-LLAVERO-FM022.png"
+   ],
+   "destacado": false,
+   "referencia": "GLOSS HUXA EN CAJA CON LLAVERO",
    "precioAntes": 0,
    "umbralBajo": 0
   }
@@ -675,6 +691,11 @@
    900
   ],
   "GEL-DE-CEJAS-ANIK-MG184.png": [
+   160,
+   600,
+   900
+  ],
+  "GLOSS-EN-CAJA-CON-LLAVERO-FM022.png": [
    160,
    600,
    900
