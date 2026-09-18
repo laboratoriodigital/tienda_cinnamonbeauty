@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T19:38:55.317Z",
+ "generado": "2026-09-18T19:55:32.811Z",
  "productos": [
   {
    "id": "MG124",
@@ -224,6 +224,38 @@
    ],
    "destacado": false,
    "referencia": "SHAMPOO DE MIEL CLICK HAIR",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "OC411",
+   "nombre": "Miel para el cabello 20ml",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 30000,
+   "stock": 8,
+   "descripcion": "\"💛 La Miel para el Cabello Click Hair es ese pequeño paso que puede transformar el acabado de tu cabello.\n\n🍯 Ayuda a retener la humedad del cabello.\n✨ Aporta brillo intenso y efecto brillo espejo.\n💧 Ayuda a hidratar y nutrir la fibra capilar.\n💆‍♀️ Favorece una sensación de suavidad y cabello más manejable.\n🌸 Ayuda a disminuir el frizz.\n✂️ Ayuda a mejorar la apariencia de las puntas secas y abiertas y a sellarlas visualmente.\n💛 Ideal para cabello seco, opaco, maltratado, con frizz, liso, ondulado o rizado.\n\n🌿 Sus ingredientes destacados: miel natural + aceite de argán + aceite de macadamia.\"",
+   "imagenes": [
+    "MIEL-CAPILAR-CLICK-HAIR-PEQUEÑA-OC411.png"
+   ],
+   "destacado": false,
+   "referencia": "MIEL PARA EL CABELLO PEQUEÑA",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "OC412",
+   "nombre": "Miel para el cabello 50ML",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 60000,
+   "stock": 8,
+   "descripcion": "💛 La Miel para el Cabello Click Hair es ese pequeño paso que puede transformar el acabado de tu cabello.\n\n🍯 Ayuda a retener la humedad del cabello.\n✨ Aporta brillo intenso y efecto brillo espejo.\n💧 Ayuda a hidratar y nutrir la fibra capilar.\n💆‍♀️ Favorece una sensación de suavidad y cabello más manejable.\n🌸 Ayuda a disminuir el frizz.\n✂️ Ayuda a mejorar la apariencia de las puntas secas y abiertas y a sellarlas visualmente.\n💛 Ideal para cabello seco, opaco, maltratado, con frizz, liso, ondulado o rizado.\n\n🌿 Sus ingredientes destacados: miel natural + aceite de argán + aceite de macadamia.",
+   "imagenes": [
+    "MIEL-CAPILAR-CLICK-HAIR-GRANDE-OC412.png"
+   ],
+   "destacado": false,
+   "referencia": "MIEL PARA EL CABELLO GRANDE",
    "precioAntes": 0,
    "umbralBajo": 0
   }
