@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T18:26:41.052Z",
+ "generado": "2026-09-18T18:59:30.505Z",
  "productos": [
   {
    "id": "MG124",
@@ -178,6 +178,22 @@
    "referencia": "PERFUME CAPILAR MILAGROS",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG106",
+   "nombre": "Perfume termoprotector origen botanico",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 26000,
+   "stock": 12,
+   "descripcion": "✨ PERFUME TERMOPROTECTOR ORIGEN BOTÁNICO ✨\n\nCuida tu cabello y dale ese toque delicioso que tanto te gusta. 🌿💖\n\nEl Perfume Termoprotector Origen Botánico combina el cuidado capilar con una agradable fragancia, convirtiéndose en el aliado perfecto para complementar tu rutina de belleza. ✨",
+   "imagenes": [
+    "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png"
+   ],
+   "destacado": false,
+   "referencia": "PERFUME TERMOPROTECTOR ORIGNEN BOTANICO",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -276,6 +292,11 @@
    900
   ],
   "PERFUME-CAPILAR-MILAGROS-MG119.png": [
+   160,
+   600,
+   900
+  ],
+  "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png": [
    160,
    600,
    900
