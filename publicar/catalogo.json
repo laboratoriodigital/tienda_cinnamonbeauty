@@ -1,13 +1,13 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T22:27:07.928Z",
+ "generado": "2026-09-18T22:32:55.911Z",
  "productos": [
   {
    "id": "MG124",
    "nombre": "Kit Arruru X2",
    "formato": "Unidad",
-   "categoria": "kits",
+   "categoria": "Cremas-Mantequillas y Splash",
    "precio": 41000,
    "stock": 12,
    "descripcion": "✨ KIT ARRURRÚ: Mantequilla + Splash ✨\n\nUna combinación deliciosa para consentir tu piel y dejarla con un aroma irresistible. 💖\nIncluye mantequilla corporal + splash, perfectos para complementar tu rutina de cuidado y disfrutar una sensación de suavidad y frescura durante el día. 🧴✨",
@@ -338,6 +338,38 @@
    "referencia": "KIT BIOAQUA CAMELLIAS",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG100",
+   "nombre": "KIT BIOAQUA ARROZ",
+   "formato": "unidad",
+   "categoria": "Cuidado de la Piel",
+   "precio": 48000,
+   "stock": 4,
+   "descripcion": "🌾✨ KIT DE ARROZ BIOAQUA ✨🌾\n\nRutina facial que ayuda a hidratar, suavizar e iluminar la piel, mejorando la apariencia de una piel opaca y dejando un aspecto más uniforme y luminoso. 💗\n\n🌸 Ideal para piel normal, seca, mixta u opaca.",
+   "imagenes": [
+    "KIT-SKIN-CARE-ARROZ-MG100.png"
+   ],
+   "destacado": false,
+   "referencia": "KIT BIOAQUA ARROZ",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "FM002",
+   "nombre": "KIT BIOAQUA ROSA Y ACIDO HIALURONICO",
+   "formato": "unidad",
+   "categoria": "Cuidado de la Piel",
+   "precio": 48000,
+   "stock": 6,
+   "descripcion": "🌹💧 KIT BIOAQUA ROSAS + ÁCIDO HIALURÓNICO ✨\n\nRutina facial que ayuda a hidratar, suavizar y refrescar la piel, aportando una apariencia más luminosa y saludable. 💗\n\n💧 Ideal para pieles secas, deshidratadas y opacas.",
+   "imagenes": [
+    "KIT-SKIN-CARE-ACIDO-HIALURONICO-Y-ROSA-FM002.png"
+   ],
+   "destacado": false,
+   "referencia": "KIT BIOAQUA ROSAS+ACIDO HIALURONICO",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -486,6 +518,16 @@
    900
   ],
   "KIT-SKIN-CARE-CAMELLIAS-FM003.png": [
+   160,
+   600,
+   900
+  ],
+  "KIT-SKIN-CARE-ARROZ-MG100.png": [
+   160,
+   600,
+   900
+  ],
+  "KIT-SKIN-CARE-ACIDO-HIALURONICO-Y-ROSA-FM002.png": [
    160,
    600,
    900
