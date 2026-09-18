@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T20:42:23.974Z",
+ "generado": "2026-09-18T20:47:50.924Z",
  "productos": [
   {
    "id": "MG124",
@@ -290,6 +290,22 @@
    "referencia": "TRATAMIENTO DE BABOSA SKALA",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG129",
+   "nombre": "Cera Nativos Roja",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 28000,
+   "stock": 12,
+   "descripcion": "✨🌿 CERA NATIVOS WATER WAVE 🌿✨\n\n¡Define tu estilo y mantén tu cabello bajo control! 💇‍♀️✨\n\nLa Cera Nativos Water Wave es ideal para crear y fijar peinados, ayudando a controlar el cabello y mantener el look durante el día, con un acabado definido y cuidado.",
+   "imagenes": [
+    "CERA-NATIVOS-MG129.png"
+   ],
+   "destacado": false,
+   "referencia": "CERA NATIVOS ROJA",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -418,6 +434,11 @@
    900
   ],
   "SKALA-BABOSA-FM018.png": [
+   160,
+   600,
+   900
+  ],
+  "CERA-NATIVOS-MG129.png": [
    160,
    600,
    900
