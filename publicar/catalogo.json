@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T23:10:09.124Z",
+ "generado": "2026-09-18T23:12:58.652Z",
  "productos": [
   {
    "id": "MG124",
@@ -474,12 +474,12 @@
    "categoria": "Maquillaje",
    "precio": 21500,
    "stock": 0,
-   "descripcion": "",
+   "descripcion": "✨ GEL DE CEJAS ANIK ✨\n\nPeina, define y fija tus cejas para un acabado pulido, natural y bien estructurado. Ideal para mantener los pelitos en su lugar durante el día. 🤎",
    "imagenes": [
     "GEL-DE-CEJAS-ANIK-MG184.png"
    ],
    "destacado": false,
-   "referencia": "",
+   "referencia": "GEL DE CEJAS ANIK",
    "precioAntes": 0,
    "umbralBajo": 0
   }
