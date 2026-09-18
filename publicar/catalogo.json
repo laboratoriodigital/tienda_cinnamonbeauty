@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T20:29:40.769Z",
+ "generado": "2026-09-18T20:39:37.430Z",
  "productos": [
   {
    "id": "MG124",
@@ -274,6 +274,22 @@
    "referencia": "TERMOPROTECTOR DE LECHE Y MIEL CLICK HAIR",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM018",
+   "nombre": "Skala Babosa",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 27000,
+   "stock": 6,
+   "descripcion": "✨ TRATAMIENTO BRASILEÑO SKALA ✨\n\n 💕 El Tratamiento Brasileño de Skala es ideal para complementar tu rutina capilar y ayudar a que tu cabello luzca más hidratado, suave, brillante y fácil de peinar.\n\n💧 Ayuda a aportar hidratación y suavidad\n✨ Deja el cabello con una apariencia más brillante\n💆‍♀️ Facilita el desenredado y el peinado",
+   "imagenes": [
+    "SKALA-BABOSA-FM018.png"
+   ],
+   "destacado": false,
+   "referencia": "TRATAMIENTO DE BABOSA SKALA",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -397,6 +413,11 @@
    900
   ],
   "MIEL-CAPILAR-CLICK-HAIR-GRANDE-OC412.png": [
+   160,
+   600,
+   900
+  ],
+  "SKALA-BABOSA-FM018.png": [
    160,
    600,
    900
