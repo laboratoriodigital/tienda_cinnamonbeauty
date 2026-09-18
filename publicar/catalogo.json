@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T22:43:09.066Z",
+ "generado": "2026-09-18T22:48:29.123Z",
  "productos": [
   {
    "id": "MG124",
@@ -565,6 +565,11 @@
    900
   ],
   "CONTORNO-DE-OJOS-BIOAQUA-FM027.png": [
+   160,
+   600,
+   900
+  ],
+  "COLAGENO-BIOAQUA-FM.png": [
    160,
    600,
    900
