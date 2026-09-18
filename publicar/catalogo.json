@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T23:25:32.664Z",
+ "generado": "2026-09-18T23:29:09.172Z",
  "productos": [
   {
    "id": "MG124",
@@ -514,6 +514,22 @@
    "referencia": "BALSAMO LABIAL  ACIDO HIALURONICO BIOAQUA",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM023",
+   "nombre": "Lip gloss con espejito",
+   "formato": "unidad",
+   "categoria": "Maquillaje",
+   "precio": 8500,
+   "stock": 12,
+   "descripcion": "💋✨ LIP GLOSS CON ESPEJITO ✨\n\nBrillo irresistible para unos labios con apariencia jugosa, suave y luminosa. 💗 Su práctico espejito lo hace perfecto para llevarlo contigo y retocar tu look donde quieras.",
+   "imagenes": [
+    "LIP-GLOSS-CON-ESPEJITO-FM023.png"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS CON ESPEJITO",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -717,6 +733,11 @@
    900
   ],
   "BALSAMO-LABIAL-HIALURONICO-BIOAQUA-FM019.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-CON-ESPEJITO-FM023.png": [
    160,
    600,
    900
