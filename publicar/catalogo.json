@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T19:35:12.336Z",
+ "generado": "2026-09-18T19:38:55.317Z",
  "productos": [
   {
    "id": "MG124",
@@ -210,6 +210,22 @@
    "referencia": "MASCARILLA DE MIEL CLICK HAIR BRILLO INTENSO",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "OC402",
+   "nombre": "Shampoo de miel click hair",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 45000,
+   "stock": 6,
+   "descripcion": "🍯✨ SHAMPOO DE MIEL CLICK HAIR ✨🍯\n\nDale a tu cabello el cuidado que necesita con el Shampoo de Miel Click Hair. 💛🌿\n\nSu fórmula con miel ayuda a complementar tu rutina de cuidado capilar, dejando el cabello con una apariencia más suave, brillante y saludable. ✨",
+   "imagenes": [
+    "SHAMPOO-DE-MIEL-CLICK HAIR-OC402.png"
+   ],
+   "destacado": false,
+   "referencia": "SHAMPOO DE MIEL CLICK HAIR",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -247,14 +263,14 @@
   "empresa_direccion": "TIENDA VIRTUAL",
   "empresa_ciudad": "Medellín",
   "empresa_tel": "3218550807",
-  "legal_actualizado": "Fri Sep 11 2026 00:00:00 GMT-0500 (hora estándar de Colombia)",
+  "legal_actualizado": "Fri Sep 11 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
   "sitio_url": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev",
   "sitio_titulo": "Cinnamon Beauty - Professional Makeup",
   "sitio_descripcion": "Maquillaje profesional a los mejores precios",
   "correo_resumen": "dcbs.1323@gmail.com",
   "correo_hora": "7",
   "correo_siempre": "No",
-  "correo_ultimo": "Fri Sep 18 2026 00:00:00 GMT-0500 (hora estándar de Colombia)",
+  "correo_ultimo": "Fri Sep 18 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
   "fotos_origen": "",
   "fotos_cdn": "",
   "respaldo_carpeta": "https://drive.google.com/drive/folders/1VVXb4WTKB4tYk7EuWkluHHirQYlNhhc8?usp=sharing",
@@ -318,6 +334,11 @@
    900
   ],
   "MASCARILLA-DE-MIEL-CLICK-HAIR-OC401.png": [
+   160,
+   600,
+   900
+  ],
+  "SHAMPOO-DE-MIEL-CLICK HAIR-OC402.png": [
    160,
    600,
    900
