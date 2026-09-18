@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T20:47:50.924Z",
+ "generado": "2026-09-18T21:11:14.538Z",
  "productos": [
   {
    "id": "MG124",
@@ -306,6 +306,22 @@
    "referencia": "CERA NATIVOS ROJA",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG196",
+   "nombre": "Mascarilla Bomba Origen Botanico",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 38000,
+   "stock": 5,
+   "descripcion": "🌿✨ Mascarilla Botánica S.O.S. – Origen Botánico ✨\n\nTratamiento ideal para cabellos dañados, frágiles y propensos al frizz. Su fórmula ayuda a fortalecer, reparar y mejorar la apariencia del cabello, dejándolo más suave, manejable y brillante. 💚\n\n💆‍♀️ 400 ml | Cuidado intensivo",
+   "imagenes": [
+    "MASCARILLA-BOMBA-ORIGEN-BOTANICO-MG196.png"
+   ],
+   "destacado": false,
+   "referencia": "MASCARILLA BOMBA ORIGEN BOTANICO",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -439,6 +455,11 @@
    900
   ],
   "CERA-NATIVOS-MG129.png": [
+   160,
+   600,
+   900
+  ],
+  "MASCARILLA-BOMBA-ORIGEN-BOTANICO-MG196.png": [
    160,
    600,
    900
