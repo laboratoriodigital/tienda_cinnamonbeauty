@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T22:17:11.207Z",
+ "generado": "2026-09-19T22:28:51.999Z",
  "productos": [
   {
    "id": "MG124",
@@ -578,6 +578,38 @@
    "referencia": "SOMBRAS DE CEJAS X4 TONOS",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM032",
+   "nombre": "Tinta Gelatina Jelly Blish",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 8000,
+   "stock": 0,
+   "descripcion": "🍓✨ TINTA GELATINA JELLY BLISH ✨🍓\n\nAporta un toque de color fresco y natural a tus labios y mejillas, con una textura tipo gelatina fácil de difuminar. 💕 Perfecta para lograr un look jugoso, delicado y lleno de vida.",
+   "imagenes": [
+    "TINTA-GELATINA-JELLY-BLISH-FM032.png"
+   ],
+   "destacado": false,
+   "referencia": "TINTA GELATINA JELLY BLISH",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "MG188",
+   "nombre": "Lip Gloss Oil",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 8500,
+   "stock": 6,
+   "descripcion": "✨💋 LIP GLOSS OIL 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial.",
+   "imagenes": [
+    "LIP-GLOSS-OIL-MG188.jpg"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS OIL",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -801,6 +833,16 @@
    900
   ],
   "SOMBRAS-DE-CEJAS-X4-FR607.png": [
+   160,
+   600,
+   900
+  ],
+  "TINTA-GELATINA-JELLY-BLISH-FM032.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-OIL-MG188.jpg": [
    160,
    600,
    900
