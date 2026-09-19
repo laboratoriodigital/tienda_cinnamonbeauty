@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T23:12:06.929Z",
+ "generado": "2026-09-19T23:14:49.833Z",
  "productos": [
   {
    "id": "MG124",
@@ -738,6 +738,22 @@
    "referencia": "POLVO+CORRECTOR SAS",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FR602",
+   "nombre": "Polvo de Hadas",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 7500,
+   "stock": 12,
+   "descripcion": "",
+   "imagenes": [
+    "POLVO-DE-HADAS-FR602.png"
+   ],
+   "destacado": false,
+   "referencia": "POLVO DE HADAS",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -1011,6 +1027,11 @@
    900
   ],
   "POLVO+CORRECTOR-SAS-FR610.png": [
+   160,
+   600,
+   900
+  ],
+  "POLVO-DE-HADAS-FR602.png": [
    160,
    600,
    900
