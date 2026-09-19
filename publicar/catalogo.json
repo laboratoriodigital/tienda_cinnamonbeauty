@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-18T23:32:59.608Z",
+ "generado": "2026-09-19T16:30:22.112Z",
  "productos": [
   {
    "id": "MG124",
@@ -590,7 +590,7 @@
   "correo_resumen": "dcbs.1323@gmail.com",
   "correo_hora": "7",
   "correo_siempre": "No",
-  "correo_ultimo": "Fri Sep 18 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "correo_ultimo": "Sat Sep 19 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
   "fotos_origen": "",
   "fotos_cdn": "",
   "respaldo_carpeta": "https://drive.google.com/drive/folders/1VVXb4WTKB4tYk7EuWkluHHirQYlNhhc8?usp=sharing",
