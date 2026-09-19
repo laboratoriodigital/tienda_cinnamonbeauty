@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T22:07:39.519Z",
+ "generado": "2026-09-19T22:17:11.207Z",
  "productos": [
   {
    "id": "MG124",
@@ -562,6 +562,22 @@
    "referencia": "SOMBRAS DE CEJAS X3 TONOS",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FR607",
+   "nombre": "Sombra de cejas x4",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 11000,
+   "stock": 6,
+   "descripcion": "\"✨ SOMBRAS DE CEJAS X4 TONOS 🤎✨\n\nDefine, rellena y da forma a tus cejas con 3 tonos para crear un acabado más natural y personalizado. Perfectas para lograr cejas bonitas y bien definidas. 💕\"",
+   "imagenes": [
+    "SOMBRAS-DE-CEJAS-X4-FR607.png"
+   ],
+   "destacado": false,
+   "referencia": "SOMBRAS DE CEJAS X4 TONOS",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -780,6 +796,11 @@
    900
   ],
   "SOMBRAS-DE-CEJAS-X3-FR606.png": [
+   160,
+   600,
+   900
+  ],
+  "SOMBRAS-DE-CEJAS-X4-FR607.png": [
    160,
    600,
    900
