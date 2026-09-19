@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T22:53:36.946Z",
+ "generado": "2026-09-19T23:04:49.458Z",
  "productos": [
   {
    "id": "MG124",
@@ -690,6 +690,22 @@
    "referencia": "TINTA  TAPA CORAZON",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG104",
+   "nombre": "Lip Gloss con Espejo Bloomshell",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 25000,
+   "stock": 5,
+   "descripcion": "✨💋 LIP GLOSS CON ESPEJO BLOOM SHELL 💋✨\n\nBrillo intenso y acabado jugoso para unos labios irresistibles. 💕 Su práctico espejito integrado lo hace perfecto para llevar en el bolso y retocar tu look en cualquier momento.",
+   "imagenes": [
+    "LIP-GLOSS-CON-ESPEJO-BLOOMSHELL-MG104.png"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS CON ESPEJO BLOOMSHELL",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -948,6 +964,11 @@
    900
   ],
   "TINTA-TAPA-CORAZON-FM001.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-CON-ESPEJO-BLOOMSHELL-MG104.png": [
    160,
    600,
    900
