@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T22:39:23.025Z",
+ "generado": "2026-09-19T22:48:24.629Z",
  "productos": [
   {
    "id": "MG124",
@@ -626,6 +626,54 @@
    "referencia": "LABIALES",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM031",
+   "nombre": "Tinta Scarlet Tint Purpure",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 10000,
+   "stock": 6,
+   "descripcion": "💋❤️ TINTA DE LABIOS PURPURE  ❤️💋\n\nColor intenso y duradero con un acabado ligero y natural. Su diseño de corazón la hace tan linda como práctica, perfecta para darle a tus labios un toque de color fresco y encantador. ✨",
+   "imagenes": [
+    "TINTAS-LABIALES-FM031.png"
+   ],
+   "destacado": false,
+   "referencia": "TINTA LABIAL PURPURE TAPA CORAZON",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "MG188",
+   "nombre": "Lip Gloss",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 8500,
+   "stock": 8,
+   "descripcion": "✨💋 LIP GLOSS 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial.",
+   "imagenes": [
+    "LIP-GLOSS-MG188.png"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS",
+   "precioAntes": 0,
+   "umbralBajo": 0
+  },
+  {
+   "id": "MG188",
+   "nombre": "Lip Gloss Fresitas",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 8500,
+   "stock": 6,
+   "descripcion": "✨💋 LIP GLOSS 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial.",
+   "imagenes": [
+    "LIP-GLOSS-FRESITAS-MG188.png"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS FRESITAS",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -864,6 +912,21 @@
    900
   ],
   "LABIALES-EN-BARRA-SURTIDOS-MG188.jpg": [
+   160,
+   600,
+   900
+  ],
+  "TINTAS-LABIALES-FM031.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-MG188.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-FRESITAS-MG188.png": [
    160,
    600,
    900
