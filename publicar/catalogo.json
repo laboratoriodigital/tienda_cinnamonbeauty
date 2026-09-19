@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T23:07:29.642Z",
+ "generado": "2026-09-19T23:12:06.929Z",
  "productos": [
   {
    "id": "MG124",
@@ -722,6 +722,22 @@
    "referencia": "LIP GLOSS VOLUMINIZADOR",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "fr610",
+   "nombre": "Polvo+Corrector SAS",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 20000,
+   "stock": 12,
+   "descripcion": "✨🤎 POLVO + CORRECTOR SAS 🤎✨\n\nDos productos en uno para unificar el tono, disimular imperfecciones y lograr un acabado más uniforme y bonito. 💕 Perfecto para complementar tu maquillaje diario.",
+   "imagenes": [
+    "POLVO+CORRECTOR-SAS-FR610.png"
+   ],
+   "destacado": false,
+   "referencia": "POLVO+CORRECTOR SAS",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -990,6 +1006,11 @@
    900
   ],
   "LIP-GLOSS-VOLUMINIZADOR-FM029.png": [
+   160,
+   600,
+   900
+  ],
+  "POLVO+CORRECTOR-SAS-FR610.png": [
    160,
    600,
    900
