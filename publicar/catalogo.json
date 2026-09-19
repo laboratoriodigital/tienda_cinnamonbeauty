@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T23:17:20.270Z",
+ "generado": "2026-09-19T23:25:41.912Z",
  "productos": [
   {
    "id": "MG124",
@@ -754,6 +754,22 @@
    "referencia": "POLVO DE HADAS",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM016",
+   "nombre": "Polvo de Hadas",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 14400,
+   "stock": 8,
+   "descripcion": "✨🧚‍♀️ POLVO DE HADAS PURPURE 🧚‍♀️✨\n\nDale a tu piel un toque de luz y brillo mágico. 💖 Su textura ligera ayuda a resaltar el rostro, escote y cuerpo con un acabado radiante y hermoso. ✨",
+   "imagenes": [
+    "POLVO-DE-HADAS-PURPURE-FM016.png"
+   ],
+   "destacado": false,
+   "referencia": "POLVO DE HADAS PURPURE",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -1032,6 +1048,11 @@
    900
   ],
   "POLVO-DE-HADAS-FR602.png": [
+   160,
+   600,
+   900
+  ],
+  "POLVO-DE-HADAS-PURPURE-FM016.png": [
    160,
    600,
    900
