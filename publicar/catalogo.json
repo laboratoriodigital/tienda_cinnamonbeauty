@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T22:28:51.999Z",
+ "generado": "2026-09-19T22:39:23.025Z",
  "productos": [
   {
    "id": "MG124",
@@ -610,6 +610,22 @@
    "referencia": "LIP GLOSS OIL",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "MG188",
+   "nombre": "Labiales en barra surtidos",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 8500,
+   "stock": 8,
+   "descripcion": "💋✨ LABIALES HIDRATANTES ✨💋\n\nColor y cuidado en un solo producto. 💕 Aportan un toque de color hermoso mientras ayudan a mantener tus labios suaves, hidratados y con una sensación confortable.\n\n💰 Precio detal:",
+   "imagenes": [
+    "LABIALES-EN-BARRA-SURTIDOS-MG188.jpg"
+   ],
+   "destacado": false,
+   "referencia": "LABIALES",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -843,6 +859,11 @@
    900
   ],
   "LIP-GLOSS-OIL-MG188.jpg": [
+   160,
+   600,
+   900
+  ],
+  "LABIALES-EN-BARRA-SURTIDOS-MG188.jpg": [
    160,
    600,
    900
