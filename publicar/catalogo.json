@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T23:04:49.458Z",
+ "generado": "2026-09-19T23:07:29.642Z",
  "productos": [
   {
    "id": "MG124",
@@ -706,6 +706,22 @@
    "referencia": "LIP GLOSS CON ESPEJO BLOOMSHELL",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM029",
+   "nombre": "Lip Gloss Voluminizador",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 6100,
+   "stock": 6,
+   "descripcion": "💋✨ LIP GLOSS VOLUMINIZADOR ✨💋\n\nDale a tus labios un acabado brillante, jugoso y visualmente más voluminoso. 💕 Perfecto para resaltar tus labios y completar cualquier look de maquillaje.",
+   "imagenes": [
+    "LIP-GLOSS-VOLUMINIZADOR-FM029.png"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS VOLUMINIZADOR",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -969,6 +985,11 @@
    900
   ],
   "LIP-GLOSS-CON-ESPEJO-BLOOMSHELL-MG104.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-VOLUMINIZADOR-FM029.png": [
    160,
    600,
    900
