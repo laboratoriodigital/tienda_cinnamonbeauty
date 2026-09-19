@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T21:59:55.357Z",
+ "generado": "2026-09-19T22:02:24.803Z",
  "productos": [
   {
    "id": "MG124",
@@ -546,6 +546,22 @@
    "referencia": "LIP GLOSS",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FR606",
+   "nombre": "Sombra de cejas x3",
+   "formato": "unidad",
+   "categoria": "Maquillaje",
+   "precio": 8000,
+   "stock": 5,
+   "descripcion": "✨ SOMBRAS DE CEJAS X3 TONOS 🤎✨\n\nDefine, rellena y da forma a tus cejas con 3 tonos para crear un acabado más natural y personalizado. Perfectas para lograr cejas bonitas y bien definidas. 💕",
+   "imagenes": [
+    "SOMBRAS-DE-CEJAS-X3-FR606.png"
+   ],
+   "destacado": false,
+   "referencia": "SOMBRAS DE CEJAS X3 TONOS",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -759,6 +775,11 @@
    900
   ],
   "LIP-GLOSS-MG188.jpg": [
+   160,
+   600,
+   900
+  ],
+  "SOMBRAS-DE-CEJAS-X3-FR606.png": [
    160,
    600,
    900
