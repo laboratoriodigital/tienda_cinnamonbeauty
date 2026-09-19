@@ -1,7 +1,7 @@
 {
  "esquema": 1,
  "version": "2026-09-12-1",
- "generado": "2026-09-19T23:25:41.912Z",
+ "generado": "2026-09-19T23:31:23.542Z",
  "productos": [
   {
    "id": "MG124",
@@ -770,6 +770,22 @@
    "referencia": "POLVO DE HADAS PURPURE",
    "precioAntes": 0,
    "umbralBajo": 0
+  },
+  {
+   "id": "FM015",
+   "nombre": "Rubor 5 tonos Bonshick",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 12500,
+   "stock": 12,
+   "descripcion": "✨🌸 RUBOR E ILUMINADOR 5 TONOS BONSHIK 🌸✨\n\nDale color y luminosidad a tu rostro con 5 tonos para combinar y crear diferentes looks. 💕 Ideal para darle un toque fresco al rostro y resaltar tus facciones con un acabado hermoso.",
+   "imagenes": [
+    "RUBOR-5TONOS-FM015.png"
+   ],
+   "destacado": false,
+   "referencia": "RUBOR 5 TONOS BON SHIK",
+   "precioAntes": 0,
+   "umbralBajo": 0
   }
  ],
  "envios": [
@@ -1053,6 +1069,11 @@
    900
   ],
   "POLVO-DE-HADAS-PURPURE-FM016.png": [
+   160,
+   600,
+   900
+  ],
+  "RUBOR-5TONOS-FM015.png": [
    160,
    600,
    900
