@@ -81,10 +81,13 @@ const { catalogoListo, selloListo, pintado } = require('./esperar.js');
 
   // --- 1. Mensaje de WhatsApp ---
   await p.click('#panel .cerrar'); await pintado(p);
+  await p.evaluate(() => { MODO_PAGO = 'whatsapp'; sello = null; firmaFallida = null; });
   await p.locator('.rejilla .tarjeta').first().locator('.btn-solido').click();
   await p.click('.btn-carrito'); await pintado(p);
   await p.fill('#fNombre', 'Ana Ramírez');
   await p.fill('#fTel', '3001234567');
+  await p.fill('#fCorreo', 'ana@ejemplo.co');
+  await p.fill('#fDocumento', '12345678');
   await p.fill('#fCiudad', 'Bogotá');
   await p.fill('#fDir', 'Calle 100 #10-20');
   await p.check('#consiento');
@@ -94,7 +97,7 @@ const { catalogoListo, selloListo, pintado } = require('./esperar.js');
      aserción de la advertencia caía por el motivo equivocado. */
   await selloListo(p);
   ok('Botón Enviar se habilita', await p.locator('#btnFinalizar').isEnabled());
-  const url = await p.evaluate(() => { return document.querySelector('#btnFinalizar').href; });
+  const url = await p.evaluate(() => enlaceWhatsapp());
   const msg = decodeURIComponent(url.split('text=')[1]);
   /* El tomate va al FINAL de la primera línea, no al principio: al remitente
      se le rompía la caja de escritura de WhatsApp cuando el mensaje empezaba

@@ -63,9 +63,10 @@ const T = []; const ok = (n,c,d) => T.push((c?'  OK  ':' FALLA')+' | '+n+(d?'  -
 
   const msg = await p.evaluate(() => {
     document.getElementById('fNombre').value='Ana'; document.getElementById('fTel').value='3001234567';
+    document.getElementById('fCorreo').value='ana@ejemplo.co'; document.getElementById('fDocumento').value='12345678';
     document.getElementById('fCiudad').value='Bogotá'; document.getElementById('fDir').value='Calle 100';
     document.getElementById('consiento').checked = true; revisarFormulario();
-    let u = document.querySelector('#btnFinalizar').href; 
+    let u = enlaceWhatsapp();
     return decodeURIComponent(u.split('text=')[1]);
   });
   ok('El mensaje sale marcado sin validar', !/Validación:/.test(msg) && /calculado por la página/.test(msg));

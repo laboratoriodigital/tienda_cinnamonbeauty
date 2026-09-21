@@ -133,9 +133,10 @@ const cfg = async (clave, valor) => {
   await p.evaluate(() => { agregar('chonto', 2); abrirPanel(); });
   await selloListo(p);
   await p.fill('#fNombre', 'Ana Ruiz'); await p.fill('#fTel', '3001234567');
+  await p.fill('#fCorreo', 'ana@ejemplo.co'); await p.fill('#fDocumento', '12345678');
   await p.fill('#fCiudad', 'Envigado'); await p.fill('#fDir', 'Calle 1');
   await p.check('#consiento'); await selloListo(p);
-  const enlace = await p.evaluate(() => document.querySelector('#btnFinalizar').href);
+  const enlace = await p.evaluate(() => enlaceWhatsapp());
   ok('EL PEDIDO va al WhatsApp nuevo', enlace.includes('wa.me/573001112233'), enlace.slice(0, 45));
   ok('  ...y el mensaje lleva el nombre nuevo',
      decodeURIComponent(enlace.split('text=')[1]).includes('Panadería La Espiga'));

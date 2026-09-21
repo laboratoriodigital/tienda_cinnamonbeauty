@@ -3,6 +3,12 @@
 **Este documento es el mapa.** Dice todo lo que pasa desde que no existe nada
 hasta que el comercio está vendiendo, en orden, y con quién hace cada cosa.
 
+> **Pagos desde la 3.2.1.** El cierre vigente usa Bold y ya fue validado en
+> sandbox en Orgánico. Este mapa conserva algunos pasos del cierre legado por
+> transferencia para tiendas que todavía no migraron; al elegir
+> `pago_modo=pasarela` y `pago_proveedor=bold`, manda el despliegue gradual y la matriz de
+> [`PLAN-PAGOS-BOLD.md`](PLAN-PAGOS-BOLD.md).
+
 > **Por qué existe, y por qué es el único.** Hasta la 3.0.0 había cuatro
 > documentos más describiendo tramos de este mismo procedimiento —`RUNBOOK.md`,
 > `DESPLIEGUE-CLIENTE.md`, `MONTAJE.md`, `INSTALAR.md`— y los cuatro se habían
@@ -34,13 +40,34 @@ hasta que el comercio está vendiendo, en orden, y con quién hace cada cosa.
    ├─ 11. flujo `montaje` ─────► la página de la semilla + lo de esta hoja
    ├─ 12. A1_generarStub() ───────────────────────────────► pegar en la hoja
    ├─ 13. fotos al Drive ─────────────────────────────────► «Publicar ahora»
-   ├─ 14. WhatsApp Business: respuesta automática
-   ├─ 15. las cuatro comprobaciones
+   ├─ 14. Listas de pago en la hoja + llaves Bold propias
+   ├─ 15. matriz sandbox + WhatsApp posterior al pago
    └─ 16. entrega
 ```
 
 El orden **no es negociable** en tres sitios, y los tres cuestan una hora si se
 invierten. Están marcados con ⚠ más abajo.
+
+### La activación de Bold, por tienda
+
+Después de publicar el maestro y antes de aceptar dinero real:
+
+1. En la pestaña `Configuración`, elegir de las listas `pago_modo`,
+   `pago_proveedor`, `pago_ambiente` y `pago_integracion`.
+2. En Apps Script → Configuración del proyecto → Propiedades del script,
+   crear solo las cuatro identidades/secretas descritas en `PAGOS-BOLD.md`.
+3. Ejecutar `A0_instalar()` para asegurar `Pagos`, `Datos de entrega` y el
+   conciliador de quince minutos.
+4. En Orgánico, cortar el `release`. En cada repositorio cliente, incorporar
+   esa versión y ejecutar `montaje` con **maestro** marcado y `PUBLICAR`. El
+   flujo `release` se niega a correr fuera de la semilla.
+5. Verificar que Cloudflare envía una CSP que permite
+   `https://checkout.bold.co`; mirar la cabecera HTTP, no solo el `<meta>`.
+6. Completar la matriz de sandbox. Solo entonces elegir
+   `pago_ambiente=produccion` con las llaves reales de **esa** cuenta.
+
+No se copian propiedades entre tiendas. GitHub y Cloudflare no reciben las
+llaves Bold.
 
 ---
 
@@ -253,7 +280,8 @@ pegar el archivo. Es el único de los cinco que se muere solo.
 |---|---|---|
 | `ALTA_TOKEN` | **Solo** en `laboratoriodigital/tiendas` | es el único token capaz de crear repositorios. En una tienda no pinta nada, y ponerlo ahí convierte cada tienda en una llave maestra |
 | `GITHUB_TOKEN` de «Publicar ahora» | Script Properties del maestro de **esa** tienda | lo lee `publicarAhora()`. **Las Script Properties no están cifradas**: de grano fino, **uno por tienda**, limitado a ese repositorio, con `Actions: Read and write` y nada más, y **con vencimiento**. Se crea en *GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens* |
-| La llave de pago (`pago_llave`) | La pestaña `Configuración` de la hoja, y de ahí **a ninguna parte** | el filtro `pago_*` la borra antes de que salga por cualquier puerta. No va en la página ni en el repositorio: llega al comprador por la respuesta automática de WhatsApp (paso 14) |
+| Credenciales Bold | Propiedades del maestro de **esa** tienda | identidad y secreta de sandbox/producción; no pasan por GitHub, Cloudflare ni Sheets |
+| La llave de transferencia legada (`pago_llave`) | La pestaña `Configuración` | solo para tiendas que aún no migraron a Bold; el filtro `pago_*` impide publicarla |
 
 ### Y una fila en el panel de administración  · ~2 min
 
@@ -289,7 +317,7 @@ es mejor verlo ahora que en el correo del lunes.
 > panel lo dice cuando pasa: la columna de estado avisa de que el token de la
 > pestaña `Tiendas` se quedó con el viejo.
 
-## 11 · El primer montaje  · Actions · ~5 min de reloj
+## 11 · El primer montaje  · Actions · objetivo 2–3 min
 
 Actions → `montaje` → Run workflow, con cuatro campos. En un despliegue nuevo,
 todos como vienen salvo dos:
@@ -309,9 +337,15 @@ le escribe el <head>, las cinco constantes y la paleta de ESTA hoja
 trae las fotos del Drive
 hornea publicar/catalogo.json desde ESTA hoja
 le escribe el catálogo de respaldo y CONFIG_SEMILLA desde ese catálogo
-corre todas las baterías SOBRE LOS ARCHIVOS YA MODIFICADOS
+corre la guardia de publicación SOBRE LOS ARCHIVOS YA MODIFICADOS
 abre el pull request
 ```
+
+La suite completa ya corrió al entrar ese código a `main`. La guardia corta no
+confía a ciegas en los archivos generados: carga el index y revisa catálogo,
+fotos, respaldo, pagos, variantes y contratos del montaje. Corre cuatro
+procesos dentro de un solo runner. La línea base y las metas medibles están en
+`PLAN-RENDIMIENTO-ACTIONS.md`.
 
 > **De dónde salió el `publicar/index.html` sobre el que escribe, y por qué
 > nadie lo copia.** Del repositorio, que nació **a partir de la plantilla**: una
@@ -394,7 +428,13 @@ Después, menú de la hoja → **Publicar ahora**.
 > sin tenerlas**. Casi siempre es la carpeta equivocada o el nombre que no
 > coincide.
 
-## 14 · WhatsApp Business — la respuesta automática
+## 14 · Pago — Bold vigente; transferencia como legado
+
+Con `PAGO_PROVEEDOR=bold`, completa las propiedades y la matriz de
+`PLAN-PAGOS-BOLD.md`. WhatsApp no entrega credenciales ni confirma dinero: el
+cliente recibe un enlace prellenado **después** de `PAID` y decide enviarlo.
+
+Lo que sigue aplica únicamente a una tienda que todavía usa el cierre legado:
 
 **Es el único paso donde el diseño de seguridad se convierte en un agujero
 funcional si se olvida.** La llave de pago no está en la página a propósito: el
@@ -427,10 +467,9 @@ sale de `pago_texto`, o se arma con `pago_llave`, `pago_titular` y
    llenas»*. Punto 1: la versión del maestro coincide con la etiqueta.
 2. **Panel**: la fila de este comercio, con **Sin terminar** en blanco y **Stub
    en la hoja** diciendo *al día*.
-3. **Un pedido de punta a punta, con un teléfono que no sea el del comercio**:
-   pedido → WhatsApp → respuesta automática → transferencia → **Pagado** en la
-   hoja → el stock baja. Todo lo demás está probado en automático; esto prueba
-   la costura.
+3. **Un pago de punta a punta, con un dispositivo que no sea el del comercio**:
+   carrito → Bold sandbox → `PAID` → Pedidos → correos → WhatsApp manual → el
+   stock baja. Comprobar referencia y transacción.
 4. **Apagar el maestro un minuto y hacer un pedido.** Lo que no puede pasar es
    que el botón no haga nada. Que el pedido no quede en la hoja es recuperable
    —la tienda lo reenvía cuando el comprador vuelve—; que el botón no responda
@@ -444,13 +483,14 @@ sale de `pago_texto`, o se arma con `pago_llave`, `pago_titular` y
 - Enseñarle las tres cosas del día a día: cambiar un precio → **Publicar
   ahora**; pedido nuevo → **Pagado**; algo raro → **Diagnóstico**.
 
-El menú de su hoja tiene seis opciones, y conviene nombrárselas todas una vez:
+El menú de su hoja tiene siete opciones, y conviene nombrárselas todas una vez:
 
 | | |
 |---|---|
 | **Publicar ahora** | manda a la tienda lo que cambió. La que más se usa |
 | **Ver mi tienda** | la abre como la ve un comprador |
 | **Actualizar tablero e inventario** | recalcula ya, sin esperar la hora |
+| **Sincronizar variantes** | crea o actualiza las combinaciones definidas en `Catálogo.Variantes` |
 | **Enviarme el resumen ahora** | manda el correo del día en el momento |
 | **Diagnóstico** | revisa todo y dice qué está mal y dónde |
 | **Ayuda** | las preguntas de siempre, contestadas |
@@ -476,6 +516,10 @@ El menú de su hoja tiene seis opciones, y conviene nombrárselas todas una vez:
 | a diario, el comercio | precios y stock → **Publicar ahora**; pedidos → **Pagado** |
 | cuando cambie el maestro | `ACTUALIZAR-UNA-TIENDA.md` |
 
+`release` se ejecuta solo después de que el push esté verde. Consulta el mismo
+SHA y no repite la suite completa; si no encuentra ese verde, falla antes de
+crear la etiqueta.
+
 **Por qué `fotos` fusiona sola y `montaje` no.** `montaje` puede reescribir el
 `<head>`, la política de seguridad y `SCRIPT_URL`: si la configuración de la
 hoja quedó mal, la tienda se cae, y por eso hay una persona en el medio. Una
@@ -496,6 +540,12 @@ menos viva guardada en un servidor, mejor.
 
 ## Fallos comunes
 
+El montaje 3.6 añade un paso después del respaldo: **SEO, fichas y archivos de
+descubrimiento**. No consulta Google otra vez; lee el `catalogo.json` recién
+horneado. En una instalación correcta deben existir `/robots.txt`,
+`/sitemap.xml` y una carpeta `/productos/<id>/` por producto activo. Esos
+archivos son generados: no se editan a mano.
+
 | Qué ves | Qué es | Cómo se arregla |
 |---|---|---|
 | La tienda carga pero sin productos, o el menú dice *contestó una página web* | La implementación quedó en «Solo yo» | Implementar → Gestionar → lápiz → Acceso: **Cualquier persona**. Comprobar con `<URL>?a=version` en incógnito |
@@ -505,6 +555,7 @@ menos viva guardada en un servidor, mejor.
 | `montaje` falla en «Las fotos nuevas» con *Falta fotos_drive* | La clave está vacía en la hoja | Pega el enlace de la carpeta en `Configuración > fotos_drive` |
 | `montaje` falla con *no está en la carpeta* | La foto está en el Drive pero fuera de la carpeta configurada | Muévela dentro |
 | `montaje` falla con *La foto pesa 20 MB* | El tope son 8 MB | Pídele al comercio una versión más liviana |
+| Las dos últimas columnas de `Catálogo` no tienen nombre | La hoja conservó columnas físicas vacías y una instalación anterior solo contó su longitud | Publica el maestro 3.5.0 y ejecuta `A0_instalar()`: M1 queda `Umbral bajo` y N1 `Variantes` |
 | Un producto sale con su dibujo en vez de su foto | La hoja nombra una foto que no está en el Drive | `npm run fotos:drive` (o el resumen del flujo) avisa por nombre; súbela o corrige la columna Imágenes |
 | `fotos` corrió pero no fusionó | Cambió algo fuera de `publicar/fotos/` | Está bien: revisa el pull request que dejó abierto |
 | El panel dice *403, se acabaron las 60 peticiones por hora* | Sin token, GitHub limita por IP y Apps Script comparte las suyas | Pon un token de grano fino con `Actions: read-only`. Sube a 5.000/hora |

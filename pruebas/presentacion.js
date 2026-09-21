@@ -101,6 +101,10 @@ const valorDe = (g, clave) => g.filas('Configuración')[filaDe(g, clave) - 1][1]
   ok('correo_siempre también es Sí/No',
      ((fmt(g, 'Configuración', filaDe(g, 'correo_siempre'), 2) || {}).validacion || {})
        ._lista.join() === 'Sí,No');
+  const listaConfig = clave => (((fmt(g, 'Configuración', filaDe(g, clave), 2) || {}).validacion || {})._lista || []).join('|');
+  ok('Modo, proveedor, ambiente e integración se eligen de listas',
+     listaConfig('pago_modo') === 'pasarela|whatsapp' && listaConfig('pago_proveedor') === 'bold' &&
+     listaConfig('pago_ambiente') === 'sandbox|produccion' && listaConfig('pago_integracion') === 'boton|api_qr');
 }
 
 // ═══ 4. Los colores se pintan, no se escriben ═══

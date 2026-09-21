@@ -1,22 +1,51 @@
 # Antes de salir al aire
 
+> **Cinnamon Beauty · actualización 3.6.1.** El código, el catálogo y el SEO
+> pueden quedar listos en Git sin que el cobro lo esté. Publicar `maestro.gs`
+> en el Apps Script de Cinnamon, ejecutar `A0_instalar()`, renovar el stub,
+> colocar las llaves Bold del titular en Propiedades del script y probar una
+> compra sandbox son puertas independientes antes de producción. Revisar con
+> el titular los datos y términos legales de su tienda de cosméticos.
+
 Lo que hay que resolver o al menos mirar de frente antes de que un comprador
 real ponga su dirección en la página. Está ordenado por lo que más duele si
 sale mal, no por lo que más trabajo cuesta.
+
+> **Actualización 20 de septiembre de 2026 · pagos 3.2.1.** Orgánico completó
+> en sandbox el flujo carrito → Bold → espera → `PAID` → Pedidos → correos →
+> WhatsApp. Para una tienda con `PAGO_PROVEEDOR=bold`, la matriz vigente es la
+> de [`PLAN-PAGOS-BOLD.md`](PLAN-PAGOS-BOLD.md): sustituye la respuesta
+> automática y la transferencia manual descritas en los apartados históricos
+> de este documento. Panadería es la siguiente validación; Cinnamon no se toca
+> hasta aprobarla.
+
+> **Actualización 3.4.0.** Comprueba las cuatro listas `pago_*` en
+> `Configuración`. Con pasarela, `Validaciones`, `Pagos` y `Pedidos` deben usar
+> el mismo `ORD-...` completo. Con WhatsApp, el chat y el registro deben
+> funcionar sin credenciales de una pasarela.
+
+> **Actualización 3.4.0 · variantes.** Las fases 1 y 2 se validan en Orgánico.
+> La gramática, reservas, prueba por SKU e imágenes por combinación están en
+> [`PLAN-VARIANTES.md`](PLAN-VARIANTES.md).
+
+Si la tienda usa variantes, añade una compra con dos combinaciones del mismo
+producto y comprueba que solo baja el SKU pagado, que la reserva termina
+`CONSUMIDA` y que correo/WhatsApp muestran color, talla y SKU.
 
 ---
 
 ## Bloquean el lanzamiento
 
-> **Estado al 15 de septiembre de 2026.** De los cinco, quedan **dos y medio**:
+> **Estado al 20 de septiembre de 2026.** Para Bold quedan dos puertas por
+> tienda y una revisión común:
 >
 > | | |
 > |---|---|
 > | 0 · La semilla corriendo lo que se copia | **resuelto** (2.15.1) |
-> | 1 · La respuesta automática de WhatsApp | **comprobada** donde se hizo el punto 4. Por tienda |
+> | 1 · Llaves Bold del titular y checkout sandbox | **resuelto en Orgánico; Panadería comparte titular pero debe probar su propio flujo** |
 > | 2 · Qué pasa si Apps Script no contesta al enviar | **abierto** — hay que provocarlo |
 > | 3 · Los datos legales, y que un abogado mire el machote | **abierto** |
-> | 4 · Un pedido de punta a punta con un teléfono real | **resuelto** (3.0.0) |
+> | 4 · Un pago Bold de punta a punta | **resuelto en Orgánico** (3.2.1) |
 >
 > Los dos que quedan no son código. El 2 es una prueba de media hora; el 3 es
 > una conversación con un abogado antes de cobrarle a un tercero.
@@ -40,13 +69,11 @@ se publicó desde la hoja en LA MIGUERIA — los tres caminos, los tres verdes.
 > nadie la toque a mano.** Lo que queda por delante ya no es construir el
 > producto: es comprobarlo con una persona que compra.
 
-**1. La respuesta automática de WhatsApp, configurada.**   [POR TIENDA]
-La llave de pago sale de la página a propósito: se entrega solo por el chat. Si
-la respuesta automática no está puesta, el comprador termina el pedido y **no
-tiene cómo pagar**. Es el único paso donde el diseño de seguridad se convierte
-en un agujero funcional si se olvida. WhatsApp Business > Herramientas para la
-empresa > Mensaje de ausencia. La plantilla del texto está en `DESPLIEGUE.md`,
-paso 14.
+**1. Las llaves Bold y el checkout sandbox, comprobados.**   [POR TIENDA]
+Las llaves viven en Propiedades del script y son distintas para cada comercio.
+No basta con que existan: un pedido sandbox debe abrir Bold, aprobarse, aparecer
+una sola vez en Pedidos y conservar la transacción. El enlace de WhatsApp solo
+se muestra después y su envío sigue siendo manual.
 
 **2. Qué pasa si Apps Script no responde justo al enviar el pedido.**
 Hay que provocarlo, no suponerlo: apagar la implementación un minuto y hacer un
@@ -64,21 +91,19 @@ conviene que un abogado revise una vez el machote, y que quede claro por
 contrato quién es el responsable del tratamiento —el comercio, no nosotros.
 
 **4. Una prueba completa con un teléfono de verdad.**
-   [RESUELTO · 3.0.0 · 15 de septiembre de 2026]
+   [RESUELTO · 3.2.1 · 20 de septiembre de 2026]
 
-Pedido → WhatsApp → respuesta automática → transferencia → confirmar en la hoja
-→ el stock baja. De punta a punta, con un celular que no sea el del comercio.
+Carrito → checkout Bold → pago sandbox → espera de propagación → `PAID` →
+Pedidos → correos → WhatsApp manual → el stock baja. De punta a punta, con un
+dispositivo que no sea el del comercio.
 
 Hecha, y salió bien. Todo lo que estaba probado en automático eran las piezas;
 esto probó la costura, que es lo único que ninguna batería puede probar.
 
-> **Y arrastra el punto 1, pero solo para esa tienda.** La respuesta automática
-> de WhatsApp estaba en medio de esa cadena: si hubiera faltado, el comprador se
-> habría quedado sin llave de pago y la prueba habría parado ahí. Así que en la
-> tienda donde se hizo, el punto 1 está comprobado — **no en las otras**. Es
-> configuración de la cuenta de WhatsApp Business de cada comercio, no del
-> producto: hay que mirarlo una vez por tienda, y mirarlo de verdad, no darlo
-> por puesto.
+> **Y arrastra el punto 1, pero solo para esa tienda.** La compra demostró que
+> las propiedades, la cuenta Bold, la CSP y el retorno de Orgánico funcionan
+> juntos. No demuestra nada sobre las llaves de Panadería o Cinnamon: la matriz
+> se repite completa con cada cuenta.
 
 ---
 
@@ -119,6 +144,13 @@ el correo de la mañana avisa si alguna se quedó atrás.
 
 ## Automatización: lo que falta para que montar una tienda sea rápido
 
+Antes de entregar el dominio, abre estas tres rutas después del último
+despliegue: `/robots.txt`, `/sitemap.xml` y `/productos/<un-id>/`. El sitemap
+debe usar el dominio definitivo, la ficha debe mostrar precio/stock correctos y
+ningún contacto entre corchetes debe aparecer en su código fuente. Si se usará
+Search Console, verificar el dominio y enviar `/sitemap.xml` es una tarea del
+propietario; no puede automatizarse desde el repositorio sin darle esa cuenta.
+
 La premisa del negocio es que desplegar sea rápido y barato. Hoy el montaje
 tiene estos pasos manuales, en orden de cuánto tiempo cuestan:
 
@@ -132,6 +164,10 @@ tiene estos pasos manuales, en orden de cuánto tiempo cuestan:
 | Conectar el Worker en Cloudflare | A mano | No: ese diálogo es del navegador |
 | Llenar la configuración de la hoja | Flujo **montaje**, seis campos | **Hecho** |
 | Pasar las fotos de Drive a `publicar/fotos` | `npm run fotos:drive` | **Hecho** |
+
+La publicación automática ya separa la suite completa de código de la guardia
+de artefactos generados. Línea base, objetivos y validación posterior al push:
+`PLAN-RENDIMIENTO-ACTIONS.md`.
 
 **El cronómetro ya se corrió, con la tienda tres: 30 minutos.**   [MEDIDO]
 
@@ -149,10 +185,10 @@ de arriba. Está en el roadmap como **4.24**, aplazada a propósito hasta la
 quinta tienda: con tres, el ahorro no paga la superficie de fallo.
 
 **Lo que ese número NO incluye, y hay que decirlo para que no se use mal**:
-crear la cuenta de Google, las fotos del comercio, la respuesta automática de
-WhatsApp, y la prueba de punta a punta con un teléfono real. Antes de ponerle
-precio al servicio hay que medir un despliegue **con** esas cuatro cosas —
-serán las que separen «montado» de «vendiendo».
+crear las cuentas de Google y Bold, las fotos del comercio, configurar las
+Propiedades del script y completar una compra sandbox de punta a punta. Antes
+de ponerle precio al servicio hay que medir un despliegue **con** esas tareas —
+son las que separan «montado» de «vendiendo».
 
 ---
 
@@ -179,11 +215,13 @@ propio del comercio" es una buena línea para separar planes.
 
 ## Lo que ya está resuelto y no hay que volver a mirar
 
-- La llave de pago no está en la página ni en el repositorio.
-- La hoja guarda **qué** se pidió, no **quién** lo pidió.
-- El total lo confirma el comercio; el que calcula la página es referencia.
+- La llave secreta de pago no está en la página, Sheets ni el repositorio.
+- Los datos de entrega están separados del libro público del catálogo.
+- El total se recalcula y firma en Apps Script; el navegador no puede decidirlo.
 - Las fotos nunca quedan en blanco, pase lo que pase con el proveedor.
-- Ningún cambio llega a producción sin **todas** las baterías en verde.
+- Ningún cambio de código llega a producción sin **todas** las baterías en
+  verde; una publicación desde la hoja pasa además la guardia de los artefactos
+  generados antes de hacer commit.
 
 ---
 
@@ -197,7 +235,8 @@ Dieciséis claves, en dos niveles:
 
 - **Rompen la venta** —`negocio`, `whatsapp`, `sitio_url`, `pago_llave`—: el
   flujo `montaje` **se niega** a escribir el `index.html`. Sin llave de pago, el
-  comprador termina el pedido y no tiene cómo pagar.
+  cierre legado no funciona. Esta comprobación todavía no inspecciona las
+  Propiedades Bold: por eso no reemplaza la matriz sandbox.
 - **Dejan la tienda a medias** —los `empresa_*`, `pago_titular`, `pago_entidad`,
   `repositorio`, `correo_resumen`, `respaldo_carpeta`, `sitio_titulo`,
   `sitio_descripcion`—: salen en el registro del montaje y en el panel, y **no**
@@ -205,10 +244,10 @@ Dieciséis claves, en dos niveles:
 
 **Lo que esto NO puede comprobar, y sigue siendo tuyo:**
 
-1. Que la **respuesta automática de WhatsApp** esté puesta con el texto de pago.
-   El sistema sabe que `pago_llave` está llena; no sabe si el mensaje sale.
-2. Que un **abogado** haya mirado el machote de tratamiento de datos.
-3. La **prueba de punta a punta con un teléfono de verdad**: pedido → WhatsApp →
-   respuesta automática → transferencia → **Pagado** en la hoja → el stock baja.
+1. Que un **abogado** haya mirado el machote de tratamiento de datos.
+2. Que las Propiedades Bold pertenezcan a esa tienda y al producto correcto.
+3. La **prueba sandbox de punta a punta** de `PLAN-PAGOS-BOLD.md`.
 
-Los tres siguen en la lista de arriba, y siguen bloqueando el lanzamiento.
+Los tres siguen bloqueando el lanzamiento. El diagnóstico de la hoja todavía
+informa las claves `pago_*` del cierre legado, pero esas claves no demuestran
+que Bold esté listo.

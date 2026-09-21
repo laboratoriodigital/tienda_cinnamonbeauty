@@ -8,14 +8,22 @@ const { chromium } = require('playwright');
    cada una con su propio servidor y su propio emulador. Sin esto, dos
    baterías en paralelo se pisan el $/__reset la una a la otra. */
 const U = 'http://localhost:' + (process.env.PUERTO || 8099);
-const { catalogoListo, selloListo, hasta, filasEn, hojaCuando } = require('./esperar.js');
+const { catalogoListo: esperarCatalogo, selloListo, hasta, filasEn, hojaCuando } = require('./esperar.js');
+/* Esta batería recorre el cierre histórico por WhatsApp. Las pruebas de la
+   pasarela viven en pagos.js y pagos-ui.js; mezclar ambos modos vuelve ambiguo
+   qué fila y qué botón se esperan. */
+const catalogoListo = async p => { await esperarCatalogo(p); await p.evaluate(() => { MODO_PAGO = 'whatsapp'; refrescar(); }); };
 /* SE ESPERA LA CONDICIÓN, NO EL RELOJ. Esta batería dormía 50 de sus 81
    segundos. Ver esperar.js: ninguna aserción se aflojó, se dejó de dormir. */
 const quieto = p => p.waitForLoadState('networkidle');
 const T = []; const ok = (n, c, d) => T.push((c ? '  OK  ' : ' FALLA') + ' | ' + n + (d ? '  -> ' + d : ''));
 
 const hojas = async () => (await fetch(U + '/__hojas')).json();
-const reiniciar = () => fetch(U + '/__reiniciar');
+const filaModoPago = require('./esquema.json').configuracion.indexOf('pago_modo') + 2;
+const reiniciar = async () => {
+  await fetch(U + '/__reiniciar');
+  await fetch(U + '/__celda?hoja=Configuraci%C3%B3n&f=' + filaModoPago + '&c=2&v=whatsapp&disparar=1');
+};
 const filas = (h, n) => (h[n] || []).slice(1).filter(f => f && f.length && String(f[1] || f[0]).trim() !== '');
 const celda = (h, n, f, c) => ((h[n] || [])[f] || [])[c];
 
@@ -32,6 +40,8 @@ async function comprar(p, { cupon, envio, notas } = {}) {
   }
   await p.fill('#fNombre', 'María Rodríguez');
   await p.fill('#fTel', '3115558899');
+  await p.fill('#fCorreo', 'maria@ejemplo.co');
+  await p.fill('#fDocumento', '12345678');
   await p.fill('#fCiudad', 'Bogotá');
   await p.fill('#fDir', 'Calle 100 #15-20');
   if (notas) await p.fill('#fNotas', notas);
@@ -39,8 +49,8 @@ async function comprar(p, { cupon, envio, notas } = {}) {
   await selloListo(p);
   return p.evaluate(() => ({
     codigo: codigoActual,
-    enlace: document.querySelector('#btnFinalizar').href,
-    mensaje: decodeURIComponent((document.querySelector('#btnFinalizar').href.split('text=')[1] || '')),
+    enlace: enlaceWhatsapp(),
+    mensaje: decodeURIComponent((enlaceWhatsapp().split('text=')[1] || '')),
     habilitado: document.querySelector('#btnFinalizar').getAttribute('aria-disabled') === 'false'
   }));
 }
@@ -65,7 +75,7 @@ async function comprar(p, { cupon, envio, notas } = {}) {
   ok('El emoji NO abre el mensaje: en la caja de escritura no siempre resuelve',
      /^\*PEDIDO #\w+\* 🍅/.test(r.mensaje.trim()), r.mensaje.split('\n')[0]);
 
-  await p.click('#btnFinalizar');
+  await p.evaluate(() => alEnviar({ preventDefault(){} }));
   let H = await filasEn(U, 'Pedidos', 2);
 
   ok('LA HOJA PEDIDOS RECIBE EL PEDIDO', filas(H, 'Pedidos').length === 2,
@@ -138,7 +148,7 @@ async function comprar(p, { cupon, envio, notas } = {}) {
   // ══════════ 4. Confirmar el pedido mueve el inventario ══════════
   await reiniciar();
   r = await comprar(p);
-  await p.click('#btnFinalizar');
+  await p.evaluate(() => alEnviar({ preventDefault(){} }));
   H = await filasEn(U, 'Pedidos', 2);
   const stockAntes = H['Catálogo'].slice(1).find(f => f[0] === 'chonto')[5];
   ok('Stock de chonto antes de confirmar', stockAntes === 24, String(stockAntes));
@@ -173,6 +183,7 @@ async function comprar(p, { cupon, envio, notas } = {}) {
   await reiniciar();
   await p.goto(U); await catalogoListo(p);
   await p.evaluate(() => {
+    MODO_PAGO = 'whatsapp';
     agregar('chonto', 3); abrirPanel();
     window.subtotal = () => 100;          // el atacante miente sobre el subtotal
   });
@@ -247,6 +258,8 @@ async function comprar(p, { cupon, envio, notas } = {}) {
     await selloListo(p);
     await p.fill('#fNombre', 'María Rodríguez');
     await p.fill('#fTel', '3115558899');
+    await p.fill('#fCorreo', 'maria@ejemplo.co');
+    await p.fill('#fDocumento', '12345678');
     await p.fill('#fCiudad', 'Bogotá');
     await p.fill('#fDir', 'Calle 100 #15-20');
     await p.check('#consiento');
@@ -280,6 +293,8 @@ async function comprar(p, { cupon, envio, notas } = {}) {
     await selloListo(p);
     await p.fill('#fNombre', 'María Rodríguez');
     await p.fill('#fTel', '3115558899');
+    await p.fill('#fCorreo', 'maria@ejemplo.co');
+    await p.fill('#fDocumento', '12345678');
     await p.fill('#fCiudad', 'Bogotá');
     await p.fill('#fDir', 'Calle 100 #15-20');
     await p.check('#consiento');

@@ -13,7 +13,8 @@
       "Activo",
       "Referencia",
       "Precio antes",
-      "Umbral bajo"
+      "Umbral bajo",
+      "Variantes"
     ],
     "Configuración": [
       "Clave",
@@ -65,7 +66,65 @@
       "Inventario",
       "Fecha de pago",
       "Fecha de despacho",
-      "Guía"
+      "Guía",
+      "Proveedor de pago",
+      "Referencia de pago",
+      "Transacción de pago",
+      "Variante ID",
+      "SKU",
+      "Opciones"
+    ],
+    "Variantes": [
+      "Variante ID",
+      "Producto ID",
+      "SKU",
+      "Opciones",
+      "Precio",
+      "Stock",
+      "Activo",
+      "Imágenes"
+    ],
+    "Reservas": [
+      "Fecha",
+      "Pedido",
+      "Clave de inventario",
+      "Cantidad",
+      "Estado",
+      "Vence",
+      "Actualizado"
+    ],
+    "Pagos": [
+      "Fecha",
+      "Pedido",
+      "Proveedor",
+      "Referencia",
+      "Transacción",
+      "Estado",
+      "Total",
+      "Moneda",
+      "Items",
+      "Cupón",
+      "Envío",
+      "Subtotal",
+      "Descuento",
+      "Valor envío",
+      "QR",
+      "Vence",
+      "Token de consulta",
+      "Última consulta",
+      "Cliente notificado",
+      "Comercio notificado",
+      "Error"
+    ],
+    "Datos de entrega": [
+      "Fecha",
+      "Pedido",
+      "Nombre",
+      "Celular",
+      "Correo",
+      "Ciudad",
+      "Dirección",
+      "Notas"
     ],
     "Más vendidos": [
       "Producto",
@@ -124,7 +183,11 @@
     "pago_tope",
     "envio_gratis_desde",
     "horario",
-    "repositorio"
+    "repositorio",
+    "pago_modo",
+    "pago_proveedor",
+    "pago_ambiente",
+    "pago_integracion"
   ],
   "puertas": {
     "version": [
@@ -212,7 +275,9 @@
       "activo",
       "referencia",
       "precioAntes",
-      "umbralBajo"
+      "umbralBajo",
+      "ejes",
+      "variantes"
     ],
     "envio": [
       "id",

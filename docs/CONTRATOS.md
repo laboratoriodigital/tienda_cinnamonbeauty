@@ -52,10 +52,15 @@ hojas. Un campo nuevo obligatorio es una tienda rota que todavía no lo sabe.
    Hoja del comercio          Maestro (standalone)        Vitrina (index.html)
    ─────────────────          ────────────────────        ────────────────────
    Catálogo        ──┐
+   Variantes       ──┤
    Configuración   ──┤
    Envíos          ──┼──►  ?a=catalogo   ──────────────►  productos, envios, config
    Cupones         ──┘     ?a=validar    ◄──────────────  el carrito, a sellar
-   Pedidos         ◄──     ?a=registrar  ◄──────────────  el pedido confirmado
+   Pedidos         ◄──     confirmación APPROVED         venta confirmada
+   Reservas        ◄──     checkout / confirmación       evita sobreventa
+   Pagos           ◄──     ?a=pago_crear  ◄───────────── carrito y entrega
+   Pagos           ◄──     ?a=pago_estado ◄───────────── token opaco
+   Datos de entrega ◄──
    Validaciones    ◄──
    Más vendidos    ◄──     ?a=identidad  ──────────────►  el montaje
    Tablero         ◄──     ?a=bloques    ──────────────►  el montaje
@@ -69,7 +74,7 @@ los nombres viejos desde un servidor nuevo.
 
 ---
 
-## 4. Las nueve pestañas
+## 4. Las trece pestañas
 
 ### `Catálogo`
 
@@ -91,6 +96,46 @@ Lo que el comercio vende. Es la única pestaña que el comerciante edita todos l
 | 11 | `Referencia` |
 | 12 | `Precio antes` |
 | 13 | `Umbral bajo` |
+| 14 | `Variantes` |
+
+`Variantes` usa el formato `Color: Azul|Verde; Talla: S|M|L`. El punto y coma
+separa ejes y la barra separa valores.
+
+`A0_instalar()` agrega columnas nuevas solo al final y repone un encabezado
+vacío en su posición; nunca sobrescribe un título no vacío. Esto cubre hojas
+que conservan columnas físicas/formato aunque M1 o N1 estén vacías.
+
+### `Variantes`
+
+Una fila por combinación vendible. `Precio` vacío hereda el precio del producto.
+
+| # | Columna |
+|---|---|
+| 1 | `Variante ID` |
+| 2 | `Producto ID` |
+| 3 | `SKU` |
+| 4 | `Opciones` |
+| 5 | `Precio` |
+| 6 | `Stock` |
+| 7 | `Activo` |
+| 8 | `Imágenes` |
+
+`Imágenes` admite hasta seis nombres o URL separados por `|`. Vacío hereda
+la galería del producto; no cambia la identidad ni el inventario del SKU.
+
+### `Reservas`
+
+Libro privado de unidades apartadas mientras el proveedor confirma el pago.
+
+| # | Columna |
+|---|---|
+| 1 | `Fecha` |
+| 2 | `Pedido` |
+| 3 | `Clave de inventario` |
+| 4 | `Cantidad` |
+| 5 | `Estado` |
+| 6 | `Vence` |
+| 7 | `Actualizado` |
 
 
 ### `Configuración`
@@ -178,6 +223,61 @@ Una fila por línea de pedido, no por pedido. La columna Inventario la escribe e
 | 14 | `Fecha de pago` |
 | 15 | `Fecha de despacho` |
 | 16 | `Guía` |
+| 17 | `Proveedor de pago` |
+| 18 | `Referencia de pago` |
+| 19 | `Transacción de pago` |
+| 20 | `Variante ID` |
+| 21 | `SKU` |
+| 22 | `Opciones` |
+
+
+### `Pagos`
+
+Libro mayor de los intentos de checkout. Lo escribe el script; contiene la
+referencia, el tipo de medio (`BOLD_BUTTON` o QR cuando se active) y el estado
+necesario para conciliar sin publicar esos datos.
+
+| # | Columna |
+|---|---|
+| 1 | `Fecha` |
+| 2 | `Pedido` |
+| 3 | `Proveedor` |
+| 4 | `Referencia` |
+| 5 | `Transacción` |
+| 6 | `Estado` |
+| 7 | `Total` |
+| 8 | `Moneda` |
+| 9 | `Items` |
+| 10 | `Cupón` |
+| 11 | `Envío` |
+| 12 | `Subtotal` |
+| 13 | `Descuento` |
+| 14 | `Valor envío` |
+| 15 | `QR` |
+| 16 | `Vence` |
+| 17 | `Token de consulta` |
+| 18 | `Última consulta` |
+| 19 | `Cliente notificado` |
+| 20 | `Comercio notificado` |
+| 21 | `Error` |
+
+
+### `Datos de entrega`
+
+Datos personales necesarios para preparar y entregar un pedido ya iniciado en
+el checkout. Solo lo escribe el script y no sale por la puerta pública del
+catálogo.
+
+| # | Columna |
+|---|---|
+| 1 | `Fecha` |
+| 2 | `Pedido` |
+| 3 | `Nombre` |
+| 4 | `Celular` |
+| 5 | `Correo` |
+| 6 | `Ciudad` |
+| 7 | `Dirección` |
+| 8 | `Notas` |
 
 
 ### `Más vendidos`
@@ -227,7 +327,7 @@ Lo que llegó y no se pudo entender, y lo que se leyó mal. Existe para que un f
 
 ## 5. Las claves de `Configuración`
 
-Son 39. Ninguna es opcional para el maestro —`instalar()` las crea todas—, pero
+Son 43. Ninguna es opcional para el maestro —`instalar()` las crea todas—, pero
 **todas pueden estar vacías**: una tienda a medio configurar tiene que seguir
 sirviendo lo que sí sabe.
 
@@ -250,6 +350,7 @@ no pisar lo que el comerciante puso.
 | **El pago — **no sale por ninguna puerta pública**** | `pago_llave` · `pago_titular` · `pago_entidad` · `pago_texto` · `pago_tope` |
 | **La venta** | `envio_gratis_desde` |
 | **Dónde vive el sitio** | `repositorio` — dueño/repositorio en GitHub. Lo usa «Publicar ahora». No es un secreto; el permiso sí, y ese vive en las propiedades del script |
+| **Selección de cobro** | `pago_modo` · `pago_proveedor` · `pago_ambiente` · `pago_integracion` — listas al final del contrato; nunca contienen credenciales |
 ---
 
 ## 6. Lo que sale por cada puerta
@@ -267,6 +368,15 @@ servidor, una tienda que nadie tocó.**
 **`?a=bloques`** — `ok`, `version`, `head`, `valores`, `scriptId`, `negocio`, `hoja`, `hojaId`, `alta`
 
 **`?a=panel`** — `ok`, `version`, `negocio`, `sitio`, `whatsapp`, `correo`, `hoja`, `productos`, `publicados`, `agotados`, `pocos`, `ventasMes`, `ventasMesAnterior`, `pedidosMes`, `ticket`, `tasaCierre`, `lecturasHoy`, `picoHora`, `cuotaCorreo`, `respaldo`, `ventasAyer`, `pedidosAyer`, `porConfirmar`, `atrasados`, `errores`, `meses`, `consultado`, `stub`, `tokenViejo`, `rescates`, `alta`
+
+**`POST ?a=pago_crear`** recibe `items`, `cupon`, `envio`, `entrega` y `huella`.
+La respuesta de Botón contiene `ok`, `pedido`, `token`, `total`, `moneda`,
+`estado` y `checkout`. `checkout` lleva identidad pública y firma, nunca la
+secreta.
+
+**`?a=pago_estado&token=…`** devuelve `ok`, `pedido`, `estado`, `total`,
+`moneda`, `vence`, `transaccion` y `error`. El token localiza el intento; no
+permite escribir estado ni confirmar un pago.
 
 Y dentro de `?a=catalogo`:
 
@@ -307,7 +417,7 @@ compara contra la foto congelada en `pruebas/esquema.json`.
 - Agregar al final: pasa, y la batería **anuncia** qué se agregó.
 - Renombrar, mover o quitar: **falla**, con el antes y el después.
 - Una pestaña que desaparece: falla.
-- Y comprueba que **este documento** nombre las nueve pestañas, todas sus
+- Y comprueba que **este documento** nombre las once pestañas, todas sus
   columnas y todas las claves. Si el código cambia y el documento no, no pasa.
 
 Cuando un cambio de esquema es deliberado y cumple las reglas:
@@ -357,14 +467,17 @@ estoy viendo es de hace un minuto o de hace una semana.
 al entrar a la tienda. Todo lo que salga por ahí es público, así que hay que
 decidir a propósito qué sale.
 
-**Las claves `pago_*` no salen.** Una llave Bre-B en un archivo estático es una
-invitación a copiarla en una tienda falsa con el mismo aspecto. El comprador la
-recibe por la respuesta automática de WhatsApp, después de que el comercio
-confirma, que es donde hay una persona detrás. Es la misma razón por la que esa
-llave nunca estuvo en el repositorio.
+**Las claves `pago_*` no salen.** Incluyen datos de transferencia y las cuatro
+selecciones operativas de la hoja. La vitrina recibe solo dos derivados seguros:
+`checkout_modo` y `checkout_proveedor`. Ambiente, integración y credenciales no
+se publican ni se versionan.
 
 El filtro es **por prefijo, no por lista**: una clave `pago_algo` que alguien
 agregue mañana queda protegida sin que nadie tenga que acordarse de volver aquí.
+
+Las credenciales Bold ni siquiera pertenecen a esta pestaña: viven en
+Propiedades del script. La identidad puede viajar dentro del contrato
+`checkout`; la secreta solo participa en la firma del lado servidor.
 
 ---
 
@@ -374,5 +487,23 @@ agregue mañana queda protegida sin que nadie tenga que acordarse de volver aqu�
 - El diagnóstico a nueve puntos, con fila y columna exactas para cada dato
   ilegible. La mitad ya está hecha: los avisos **ya** nombran la celda
   (`Catálogo E2`, `Envíos C3`); falta juntarlos en una sola pantalla (Sprint 5).
-- Los datos de pago llegando al comprador por la respuesta automática, y el tope
-  de Bre-B comprobándose contra `pago_tope` (Sprint 6).
+- El webhook directo firmado. Mientras Apps Script no exponga la cabecera
+  necesaria, la consulta autenticada y la conciliación son la fuente de verdad.
+
+---
+
+## 11. Contrato de los artefactos SEO
+
+`montar/sembrar-seo.mjs` solo puede leer `publicar/catalogo.json` e
+`index.html`. Produce, como una unidad, el bloque JSON-LD de portada,
+`productos/<id>/index.html`, `sitemap.xml` y `robots.txt`.
+
+- el sitemap contiene la portada y exactamente los productos activos;
+- no lleva `lastmod`, fechas de ejecución ni secretos;
+- precio, COP y disponibilidad salen de producto/SKU, nunca del navegador;
+- un valor vacío o entre corchetes no puede entrar en Organization;
+- una ficha retirada desaparece físicamente en la siguiente horneada;
+- los utilitarios usan `noindex` por cabecera, no `Disallow`.
+
+La batería `seo.js` congela esta forma. Cambiarla exige cambiar generador,
+prueba y este contrato en el mismo commit.

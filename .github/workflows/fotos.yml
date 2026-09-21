@@ -95,7 +95,8 @@ jobs:
     # «tu tienda se está actualizando», y no cambiaba nada. Ningún error en
     # ninguna parte. Es el patrón 1: el fallo que funciona.
     env:
-      PUBLICA: publicar/fotos publicar/catalogo.json publicar/index.html
+      PUBLICA: publicar/fotos publicar/catalogo.json publicar/index.html publicar/productos publicar/sitemap.xml publicar/robots.txt
+      TRABAJADORES: 4
 
     steps:
       - uses: actions/checkout@v7
@@ -146,13 +147,22 @@ jobs:
           MAESTRO_URL: ${{ secrets.MAESTRO_URL }}
           MAESTRO_TOKEN: ${{ secrets.MAESTRO_TOKEN }}
         run: |
-          fotos=no; catalogo=no; config=no
-          node montar/traer-fotos.mjs      --revisar > /tmp/mirar-fotos.txt 2>&1 || fotos=si
-          node montar/catalogo-estatico.mjs --revisar > /tmp/mirar-cat.txt  2>&1 || catalogo=si
+          fotos=no; catalogo=no; config=no; seo=no
+          # Las tres consultas remotas son de solo lectura e independientes;
+          # la cuarta revisión (SEO) es local. En paralelo el paso tarda lo que
+          # tarde la más lenta, no la suma de latencias de Apps Script.
+          node montar/traer-fotos.mjs       --revisar > /tmp/mirar-fotos.txt 2>&1 & pid_fotos=$!
+          node montar/catalogo-estatico.mjs --revisar > /tmp/mirar-cat.txt   2>&1 & pid_catalogo=$!
           # Lo que el comercio escribe en la pestaña Configuración. Sin esta
           # línea, cambiar el título de la tienda y apretar «Publicar ahora»
           # contestaba «nada nuevo».
-          node montar/preparar-index.mjs   --revisar > /tmp/mirar-cfg.txt   2>&1 || config=si
+          node montar/preparar-index.mjs    --revisar > /tmp/mirar-cfg.txt   2>&1 & pid_config=$!
+          node montar/sembrar-seo.mjs       --revisar > /tmp/mirar-seo.txt   2>&1 & pid_seo=$!
+
+          if wait "$pid_fotos"; then :; else fotos=si; fi
+          if wait "$pid_catalogo"; then :; else catalogo=si; fi
+          if wait "$pid_config"; then :; else config=si; fi
+          if wait "$pid_seo"; then :; else seo=si; fi
 
           # UN "NO" TIENE QUE MOSTRAR SU TRABAJO, y este no lo mostraba.
           # El comercio subió dos fotos al Drive, publicó, y este paso contestó
@@ -162,7 +172,7 @@ jobs:
           # El flujo `montaje` ya había aprendido esto; este se quedó fuera.
           # Ahora el detalle sale SIEMPRE, se haya decidido bajar o no.
           {
-            if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ] && [ "$config" = "no" ]; then
+            if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ] && [ "$config" = "no" ] && [ "$seo" = "no" ]; then
               echo "### Nada nuevo: ni fotos en el Drive, ni cambios en la hoja"
               echo ""
               echo "Si acabas de subir fotos y esto dice que no hay nada, la respuesta"
@@ -172,7 +182,7 @@ jobs:
               echo "### Hay novedades"
               echo ""
               echo "Fotos nuevas: **$fotos** · Catálogo desactualizado: **$catalogo**"
-              echo "· Configuración de la hoja cambiada: **$config**"
+              echo "· Configuración cambiada: **$config** · SEO desactualizado: **$seo**"
             fi
             echo ""
             echo "#### Lo que vio en el Drive"
@@ -187,31 +197,30 @@ jobs:
             echo '```'
             cat /tmp/mirar-cfg.txt 2>/dev/null || echo "(no llegó a mirar)"
             echo '```'
+            echo "#### SEO horneado"
+            echo '```'
+            cat /tmp/mirar-seo.txt 2>/dev/null || echo "(no llegó a mirar)"
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-          if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ] && [ "$config" = "no" ]; then
+          if [ "$fotos" = "no" ] && [ "$catalogo" = "no" ] && [ "$config" = "no" ] && [ "$seo" = "no" ]; then
             echo "hay=no" >> "$GITHUB_OUTPUT"
           else
             echo "hay=si" >> "$GITHUB_OUTPUT"
           fi
 
-      # LA CACHÉ DE NPM, A MANO Y NO CON `cache: npm`.
-      # `cache: npm` exige un package-lock.json, y en este repositorio los dos
-      # están en .gitignore: en un checkout limpio no existen, y setup-node se
-      # cae con «Some specified paths were not resolved». Cachear ~/.npm no
-      # necesita lockfile y se lleva lo que de verdad pesa, que es el binario
-      # nativo de sharp.
+      # El lock es el contrato real de dependencias y de la caché.
       - name: Caché de npm
         if: steps.mirar.outputs.hay == 'si'
         uses: actions/cache@v5
         with:
           path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package.json', 'pruebas/package.json') }}
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json', 'pruebas/package-lock.json') }}
           restore-keys: npm-${{ runner.os }}-
 
       - name: Dependencias
         if: steps.mirar.outputs.hay == 'si'
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Bajarlas y convertirlas
         if: steps.mirar.outputs.hay == 'si'
@@ -244,6 +253,7 @@ jobs:
           # un cambio de precio publicado desde la hoja dejaba el respaldo del
           # archivo con los precios de la semana pasada.
           node montar/sembrar-respaldo.mjs  2>&1 | tee /tmp/respaldo.txt || estado=$?
+          node montar/sembrar-seo.mjs       2>&1 | tee /tmp/seo.txt      || estado=$?
 
           if [ "$fallo_fotos" != "0" ]; then
             {
@@ -281,6 +291,10 @@ jobs:
             echo '```'
             cat /tmp/respaldo.txt 2>/dev/null || echo "(no llegó a correr)"
             echo '```'
+            echo "### SEO, sitemap y fichas"
+            echo '```'
+            cat /tmp/seo.txt 2>/dev/null || echo "(no llegó a correr)"
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit $estado
 
@@ -317,18 +331,24 @@ jobs:
       # verdad corre cada cuatro horas— se había quedado fuera.
       - name: Caché del navegador
         if: steps.mirar.outputs.hay == 'si'
+        id: cache-navegador
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package.json') }}
+          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package-lock.json') }}
+          restore-keys: playwright-${{ runner.os }}-
+
+      - name: Dependencias de las pruebas
+        if: steps.mirar.outputs.hay == 'si'
+        run: cd pruebas && npm ci --no-audit --no-fund
 
       - name: Navegador para las pruebas
-        if: steps.mirar.outputs.hay == 'si'
-        run: cd pruebas && npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+        if: steps.mirar.outputs.hay == 'si' && steps.cache-navegador.outputs.cache-hit != 'true'
+        run: cd pruebas && npx playwright install --with-deps chromium
 
-      - name: Todas las baterías sobre las fotos ya publicadas
+      - name: Guardia de publicación sobre los archivos generados
         if: steps.mirar.outputs.hay == 'si'
-        run: cd pruebas && ./todas.sh
+        run: cd pruebas && bash ./publicacion.sh
 
       - name: Publicar
         if: steps.mirar.outputs.hay == 'si'
@@ -427,10 +447,13 @@ jobs:
           nfotos=$(git diff --cached --name-only -- publicar/fotos \
                    | grep -v '/origen\.json$' | wc -l | tr -d ' ')
           ncat=$(git diff --cached --name-only -- publicar/catalogo.json | wc -l | tr -d ' ')
+          nseo=$(git diff --cached --name-only -- publicar/productos publicar/sitemap.xml publicar/robots.txt | wc -l | tr -d ' ')
           if [ "$nfotos" -gt 0 ] && [ "$ncat" -gt 0 ]; then
             resumen="fotos del comercio y catálogo al día"
           elif [ "$nfotos" -gt 0 ]; then
             resumen="fotos nuevas del comercio"
+          elif [ "$nseo" -gt 0 ] && [ "$ncat" -eq 0 ]; then
+            resumen="SEO, sitemap y fichas al día"
           else
             resumen="catálogo al día: precios, altas y bajas"
           fi
@@ -461,7 +484,7 @@ jobs:
           # se había fusionado bien. Una marca roja que no significa nada es
           # peor que ninguna: enseña a no mirarlas.
           #
-          # Las baterías ya corrieron, enteras, sobre estos mismos bytes. El
+          # La guardia de publicación ya corrió sobre estos mismos bytes. El
           # pull request no añadía una sola comprobación. Se va directo a main.
           if [ "$AUTO" = "true" ]; then
             if git push --quiet origin "$rama":main; then
@@ -488,7 +511,7 @@ jobs:
           cuerpo+="$(cat /tmp/fotos.txt 2>/dev/null || echo '(sin cambios)')"
           cuerpo+=$'\n```\n\n### El catálogo\n```\n'
           cuerpo+="$(cat /tmp/catalogo.txt 2>/dev/null || echo '(sin cambios)')"
-          cuerpo+=$'\n```\n\nTodas las baterías ya corrieron sobre estos archivos.'
+          cuerpo+=$'\n```\n\nLa guardia de publicación ya corrió sobre estos archivos.'
           gh pr create --base main --head "$rama" \
             --title "feature/frontend: $resumen" --body "$cuerpo"
           echo "Pull request abierto, esperando revisión." >> "$GITHUB_STEP_SUMMARY"

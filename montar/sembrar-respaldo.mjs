@@ -124,7 +124,9 @@ export function bloque(catalogo, cuando) {
            '    precio:' + (Number(p.precio) || 0) +
            ', stock:' + Math.max(0, Math.floor(Number(p.stock) || 0)) + ',\n' +
            '    imagenes:[' + (fotos.length ? fotos.map(literal).join(', ') : '""') + '],\n' +
-           '    descripcion:' + literal(p.descripcion) + ' }';
+           '    descripcion:' + literal(p.descripcion) + ',\n' +
+           '    ejes:' + JSON.stringify(Array.isArray(p.ejes) ? p.ejes : []).replace(/<\/script/gi, '<\\/script') + ',\n' +
+           '    variantes:' + JSON.stringify(Array.isArray(p.variantes) ? p.variantes : []).replace(/<\/script/gi, '<\\/script') + ' }';
   }).join(',\n\n'));
   L.push('];');
   L.push(FIN);

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cinnamonbeauty.laboratoriodigital-la.workers.dev/sitemap.xml

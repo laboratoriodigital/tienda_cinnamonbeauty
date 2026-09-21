@@ -16,7 +16,7 @@
 # las tres.
 
 /*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://ik.imagekit.io https://imagedelivery.net; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'none'; base-uri 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' https://checkout.bold.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://ik.imagekit.io https://imagedelivery.net; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'none'; base-uri 'none'; frame-ancestors 'none'
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -31,3 +31,39 @@
 /catalogo.json
   Cache-Control: public, max-age=60, must-revalidate
   Content-Type: application/json; charset=utf-8
+
+# Archivos de descubrimiento. Declarar el tipo evita que un proxy o un
+# navegador los trate como descargas de texto genérico.
+/sitemap.xml
+  Cache-Control: public, max-age=300, must-revalidate
+  Content-Type: application/xml; charset=utf-8
+
+/robots.txt
+  Cache-Control: public, max-age=300, must-revalidate
+  Content-Type: text/plain; charset=utf-8
+
+# Las fichas SEO cambian únicamente con un despliegue. Cloudflare invalida su
+# borde al desplegar; cinco minutos en el navegador acelera la navegación sin
+# esconder por horas un precio que acaba de cambiar.
+/productos/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/fotos/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# No se bloquean estas rutas en robots.txt: un robot bloqueado no puede leer
+# noindex. La cabecera sirve incluso si una futura página olvida la etiqueta.
+/404.html
+  X-Robots-Tag: noindex, nofollow
+/admin
+  X-Robots-Tag: noindex, nofollow
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+/tablero
+  X-Robots-Tag: noindex, nofollow
+/tablero/*
+  X-Robots-Tag: noindex, nofollow
+/pedido
+  X-Robots-Tag: noindex, nofollow
+/pedido/*
+  X-Robots-Tag: noindex, nofollow

@@ -161,12 +161,13 @@ const titulo  = p => p.evaluate(() => { const h = document.querySelector('#ficha
   // ═══ 13. El enlace no rompe nada de lo que ya andaba ═══
   await p.goto(U + '/?p=chonto'); await catalogoListo(p);
   await p.evaluate(() => cerrarTodo());
-  await p.evaluate(() => { agregar('chonto', 2); abrirPanel(); });
+  await p.evaluate(() => { MODO_PAGO = 'whatsapp'; agregar('chonto', 2); abrirPanel(); });
   await selloListo(p);
   await p.fill('#fNombre', 'Ana Ruiz'); await p.fill('#fTel', '3001234567');
+  await p.fill('#fCorreo', 'ana@ejemplo.co'); await p.fill('#fDocumento', '12345678');
   await p.fill('#fCiudad', 'Medellín'); await p.fill('#fDir', 'Calle 1');
   await p.check('#consiento'); await selloListo(p);
-  const href = await p.evaluate(() => document.querySelector('#btnFinalizar').href);
+  const href = await p.evaluate(() => enlaceWhatsapp());
   ok('El pedido sigue saliendo bien después de entrar por un enlace',
      /wa\.me\//.test(href) && /chonto|Tomate/i.test(decodeURIComponent(href)),
      href.slice(0, 40));

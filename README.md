@@ -1,15 +1,32 @@
 # Tienda en línea para negocios pequeños
 
-Una página estática, una hoja de cálculo que hace de base de datos y de panel, y
-WhatsApp para cerrar la venta. Costo de operación **$0/mes**.
+Una página estática, una hoja de cálculo que hace de base de datos y de panel,
+y un cierre configurable: pasarela Bold verificable o pedido por WhatsApp para
+el comercio que todavía no tiene cuenta de pagos. La infraestructura base conserva
+un costo de operación de **$0/mes**; las tarifas del proveedor de pagos se
+liquidan aparte.
 
-Este repositorio es la **plantilla**: cada comercio se monta en un repositorio
-propio creado a partir de esta, con su propia cuenta de Google, para que tenga
-sus propios límites gratuitos. Ningún nombre de comercio va escrito en el
-código; todos salen de la pestaña Configuración de su hoja.
+El catálogo admite variantes opcionales declaradas como
+`Color: Azul|Verde; Talla: S|M|L`. Apps Script mantiene precio, stock, fotos,
+reservas y pedidos por combinación; el diseño está en
+[`docs/PLAN-VARIANTES.md`](docs/PLAN-VARIANTES.md).
 
-Primera tienda en línea con esto:
-**https://organico.laboratoriodigital-la.workers.dev**
+El catálogo también se hornea para buscadores: portada con Organization y
+WebSite, fichas estáticas Product/ProductGroup, sitemap y robots sin consultas
+adicionales a Apps Script. Diseño y operación en
+[`docs/PLAN-SEO-RENDIMIENTO.md`](docs/PLAN-SEO-RENDIMIENTO.md).
+
+Este repositorio publica **Cinnamon Beauty**. La semilla del código está en
+`laboratoriodigital/organico`; esta tienda conserva su propio catálogo,
+fotografías, hoja, Apps Script y dominio. Los secretos de pago se configuran
+en las Propiedades del script de Cinnamon, nunca aquí.
+
+Tienda: **https://cinnamonbeauty.laboratoriodigital-la.workers.dev**
+
+La actualización 3.6.1 y los pasos de activación están en
+[`docs/ACTUALIZAR-UNA-TIENDA.md`](docs/ACTUALIZAR-UNA-TIENDA.md). En este
+repositorio se ejecutan `pruebas`, `montaje` y `fotos`; `release` es exclusivo
+de la semilla.
 
 ## Qué hay aquí
 
@@ -18,12 +35,12 @@ Primera tienda en línea con esto:
 | `publicar/` | **Lo que se despliega.** Es la raíz del sitio en Cloudflare. |
 | `maestro.gs` | El backend completo. Va en un proyecto Apps Script **independiente**, uno por comercio. |
 | `panel.gs` | El archivo de gestión: todas las tiendas en un tablero. Va dentro de su propia hoja, que no se comparte con ningún cliente. |
-| `montar/` | Las herramientas del montaje: sembrar la configuración, escribir el `<head>`, bajar las fotos de Drive y publicar el maestro. |
+| `montar/` | Las herramientas del montaje: configuración, fotos, catálogo, respaldo, SEO estático y publicación del maestro. |
 | `preparar-fotos.mjs` | Convierte originales sueltos en las versiones que se publican (WebP por tamaños). |
 | `.github/workflows/` | Los mismos pasos, corriendo desde GitHub Actions. |
 | `servicio/` | El alta de una tienda. **No corre aquí**: va copiado en `laboratoriodigital/tiendas`, que es el único repositorio con permiso para crear repositorios. |
 | `pruebas/` | Baterías sobre el código real, no sobre una copia. `./pruebas/todas.sh` |
-| `docs/` | `DESPLIEGUE.md`: el mapa, de punta a punta. `ARQUITECTURA.md`: el porqué del diseño de hoy. **`CONTRATOS.md`: el contrato de datos, normativo.** `DECISIONES.md`: lo que va a cambiar y cuándo. `ROADMAP.md`: qué se construye y en qué orden. `BITACORA.md`: incidentes reales y la lección que dejaron. `ANTES-DE-SALIR.md`, `ACTUALIZAR-UNA-TIENDA.md`, `TRASPASO.MD`, `GUIA-COMERCIANTE.md` y `manuales/`. |
+| `docs/` | `DESPLIEGUE.md`: el mapa completo. Planes de pagos, variantes, Actions y SEO/rendimiento. `ARQUITECTURA.md`, **`CONTRATOS.md`**, `DECISIONES.md`, `ROADMAP.md`, `BITACORA.md` y guías de entrega/actualización. |
 | `originales/` | Fotos pesadas. **No se versiona**: viven en el Drive del comercio. |
 
 ## Poner a andar una tienda
@@ -46,6 +63,10 @@ El esqueleto:
 5. Ejecutar `instalar()` y pegar en la hoja el stub que imprime.
 6. Llenar la hoja y montar, con el flujo `montaje` o con `npm run montar`.
 7. Pull request, vista previa, merge. Cloudflare despliega.
+8. En `Configuración`, elegir en las listas el modo, proveedor, ambiente e
+   integración. Si se elige Bold, instalar en ese Apps Script las llaves del
+   titular —pueden repetirse entre vitrinas del mismo dueño— y completar la
+   matriz sandbox por tienda antes de activar producción.
 
 Para poner al día una tienda que **ya** está montada cuando sale una versión
 nueva: `docs/ACTUALIZAR-UNA-TIENDA.md`. Ninguna se mueve sola.
@@ -61,6 +82,7 @@ rama, mensaje de commit, cómo cortar una versión— en `CONTRIBUIR.md`.
 
 ## Lo que no se versiona
 
-La llave de pago, los ID de hoja y los tokens **no van en el repositorio**.
-La llave se entrega por la respuesta automática de WhatsApp Business; el token
-lo inventa el maestro y lo guarda en las propiedades de su proyecto.
+Las llaves de identidad y secreta de Bold, los ID de hoja y los tokens **no van
+en el repositorio**. Las credenciales de pago viven en Propiedades del script
+del Apps Script de cada tienda. Los tokens públicos de consulta los inventa el
+maestro y no permiten confirmar un pago.

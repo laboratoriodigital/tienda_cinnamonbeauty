@@ -61,7 +61,7 @@ const LOCAL = pathToFileURL(path.join(__dirname, 'local.html')).href;
     ['fNombre','fTel','fCiudad','fDir'].forEach((id,i) =>
       document.getElementById(id).value = ['Ana Ruiz','3001234567','Bogotá','Calle 100'][i]);
     document.getElementById('consiento').checked = true; revisarFormulario();
-    return decodeURIComponent(document.querySelector('#btnFinalizar').href.split('text=')[1]);
+    return decodeURIComponent(enlaceWhatsapp().split('text=')[1]);
   });
   ok('La llave ya NO viaja en el mensaje', !/Llave|Nequi|Bancolombia|transfier|consigna|Sebastián Urrego/i.test(msg));
   ok('Abre con el número de pedido', /^\*PEDIDO #[A-Z0-9]+\* 🍅/.test(msg),
@@ -81,7 +81,7 @@ const LOCAL = pathToFileURL(path.join(__dirname, 'local.html')).href;
     ['fNombre','fTel','fCiudad','fDir'].forEach((id,i) =>
       document.getElementById(id).value = ['Ana Ruiz','3001234567','Bogotá','Calle 100'][i]);
     document.getElementById('consiento').checked = true; revisarFormulario();
-    return { url: document.querySelector('#btnFinalizar').href.length,
+    return { url: enlaceWhatsapp().length,
              maxNotas: document.getElementById('fNotas').getAttribute('maxlength') };
   });
   ok('URL acotada (antes: 30.904)', largo.url < 5000, largo.url + ' caracteres');
@@ -116,7 +116,7 @@ const LOCAL = pathToFileURL(path.join(__dirname, 'local.html')).href;
     p.evaluate(() => window.open('destino.html','_blank','noopener'))]);
   ok('La pestaña de WhatsApp no recibe opener', !(await w.evaluate(() => !!window.opener)));
   ok('El enlace de envío lleva rel="noopener"',
-     /id="btnFinalizar"[^>]*rel="noopener"/s.test(require('fs').readFileSync('local.html','utf8')));
+     /target="_blank" rel="noopener" onclick="return avisarComercio\(\)"/.test(require('fs').readFileSync('local.html','utf8')));
 
   console.log(T.join('\n'));
   console.log('\nViolaciones de CSP / errores en consola: ' + (csp.length ? csp.join(' | ') : 'ninguna'));

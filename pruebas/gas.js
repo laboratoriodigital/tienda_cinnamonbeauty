@@ -6,6 +6,7 @@
    que de verdad se pega en el editor de Google.
    ============================================================================ */
 const fs = require('fs');
+const crypto = require('crypto');
 
 /* El maestro trae dos constantes que se llenan a mano al instalarlo. El
    emulador las rellena igual que lo haría el instalador, para que las pruebas
@@ -263,6 +264,7 @@ function crear(rutaScript, opciones) {
         const diario = { everyDays: () => ({ create: alta }) };
         const semanal = { atHour: () => ({ create: alta }), create: alta };
         return { timeBased: () => ({ everyHours: () => ({ create: alta }),
+                                     everyMinutes: () => ({ create: alta }),
                                      atHour: () => diario,
                                      onWeekDay: () => semanal,
                                      everyDays: () => ({ create: alta }) }),
@@ -276,9 +278,19 @@ function crear(rutaScript, opciones) {
     },
     Utilities: {
       base64Encode: b => Buffer.from(String(b)).toString('base64'),
-      computeDigest: (alg, txt) => Array.from(Buffer.from(String(txt))),
-      DigestAlgorithm: { MD5: 'MD5' },
+      computeDigest: (alg, txt) => Array.from(crypto.createHash(String(alg).toLowerCase()).update(String(txt), 'utf8').digest()),
+      DigestAlgorithm: { MD5: 'MD5', SHA_256: 'SHA256' },
+      Charset: { UTF_8: 'UTF-8' },
       getUuid: () => 'aaaaaaaa-bbbb-cccc-dddd-' + Math.random().toString(16).slice(2, 14),
+      formatDate: (fecha, zona, formato) => {
+        const d = new Date(fecha);
+        const partes = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+          timeZone: zona || 'UTC', year: 'numeric', month: '2-digit', day: '2-digit'
+        }).formatToParts(d).filter(p => p.type !== 'literal').map(p => [p.type, p.value]));
+        if (formato === 'yyyyMMdd') return partes.year + partes.month + partes.day;
+        if (formato === 'yyyy-MM-dd') return partes.year + '-' + partes.month + '-' + partes.day;
+        return d.toISOString();
+      },
       newBlob: (contenido, tipo, nombre) => ({
         _contenido: String(contenido), _tipo: tipo, _nombre: nombre,
         getName: () => nombre, getDataAsString: () => String(contenido)
@@ -291,6 +303,7 @@ function crear(rutaScript, opciones) {
         deleteProperty: k => { delete props[k]; }
       })
     },
+    Session: { getScriptTimeZone: () => 'America/Bogota' },
     DriveApp: {
       getFolderById(id) {
         if (carpetasNegadas.has(id)) { const e = new Error('sin permiso'); e._negada = true; throw e; }

@@ -9,7 +9,7 @@
 #   1. maestro.gs   →  opcional, y hay que escribir PUBLICAR
 #   2. index.html   →  el <head> y las 5 constantes, desde la hoja
 #   3. fotos        →  las nuevas del Drive del comercio, ya convertidas
-#   4. todas las baterías, SOBRE LOS ARCHIVOS YA MODIFICADOS
+#   4. guardia de publicación, SOBRE LOS ARCHIVOS YA MODIFICADOS
 #   5. el pull request
 #
 # EL PASO 4 ES EL QUE JUSTIFICA EL ORDEN. Los pasos 2 y 3 escriben dentro de
@@ -91,6 +91,8 @@ jobs:
   montar:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      TRABAJADORES: 4
     steps:
       - uses: actions/checkout@v7
 
@@ -98,17 +100,12 @@ jobs:
         with:
           node-version: 22
 
-      # LA CACHÉ DE NPM, A MANO Y NO CON `cache: npm`.
-      # `cache: npm` exige un package-lock.json, y en este repositorio los dos
-      # están en .gitignore: en un checkout limpio no existen, y setup-node se
-      # cae con «Some specified paths were not resolved». Cachear ~/.npm no
-      # necesita lockfile y se lleva lo que de verdad pesa, que es el binario
-      # nativo de sharp.
+      # El lock es el contrato real de dependencias y de la caché.
       - name: Caché de npm
         uses: actions/cache@v5
         with:
           path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package.json', 'pruebas/package.json') }}
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json', 'pruebas/package-lock.json') }}
           restore-keys: npm-${{ runner.os }}-
 
       - name: ¿Está configurada esta tienda?
@@ -132,7 +129,7 @@ jobs:
 
       - name: Dependencias
         if: steps.hay.outputs.sigue == 'si'
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       # ── 0. ¿Es esta la tienda de este repositorio? ──
       # Aquí importa más que en `fotos`: este flujo reescribe el <head>, la
@@ -304,10 +301,8 @@ jobs:
       # tomates un instante — y se quedaba con ellos para siempre el día que
       # Google no contestara.
       #
-      # El flujo `fotos` NO hace esto a propósito: ese fusiona sin una persona
-      # en medio, y lo que puede publicar está acotado a `publicar/fotos` y
-      # `publicar/catalogo.json`. El index.html solo lo escribe un flujo que
-      # termina en un pull request que alguien aprueba.
+      # El flujo `fotos` hace lo mismo: ambos caminos publican catálogo y
+      # respaldo como una sola fotografía de la hoja.
       - name: El respaldo del index, desde el catálogo recién horneado
         if: steps.hay.outputs.sigue == 'si' && inputs.que != 'solo-las-fotos'
         run: |
@@ -319,6 +314,10 @@ jobs:
             cat /tmp/respaldo.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: SEO, fichas y archivos de descubrimiento
+        if: steps.hay.outputs.sigue == 'si' && inputs.que != 'solo-las-fotos'
+        run: node montar/sembrar-seo.mjs
 
       - name: ¿Cambió algo?
         if: steps.hay.outputs.sigue == 'si'
@@ -380,27 +379,33 @@ jobs:
       # ── 4. Probar lo que quedó escrito, NO lo que estaba antes ──
       - name: Caché del navegador
         if: steps.cambios.outputs.hay == 'si'
+        id: cache-navegador
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package.json') }}
+          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package-lock.json') }}
+          restore-keys: playwright-${{ runner.os }}-
+
+      - name: Dependencias de las pruebas
+        if: steps.cambios.outputs.hay == 'si'
+        run: cd pruebas && npm ci --no-audit --no-fund
 
       - name: Navegador para las pruebas
-        if: steps.cambios.outputs.hay == 'si'
-        run: cd pruebas && npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+        if: steps.cambios.outputs.hay == 'si' && steps.cache-navegador.outputs.cache-hit != 'true'
+        run: cd pruebas && npx playwright install --with-deps chromium
 
       # SI ESTO FALLA, EL RESUMEN TIENE QUE DECIR QUÉ. Una corrida roja que
       # obliga a abrir el log, buscar el paso y desplegarlo es una corrida que
       # cuesta una conversación entera. Las líneas FALLA y el marcador van al
       # resumen, que es lo primero que se ve.
-      - name: Todas las baterías sobre el archivo ya modificado
+      - name: Guardia de publicación sobre el archivo ya modificado
         if: steps.cambios.outputs.hay == 'si'
         run: |
           set -o pipefail
           cd pruebas
-          ./todas.sh 2>&1 | tee /tmp/pruebas.txt || estado=$?
+          bash ./publicacion.sh 2>&1 | tee /tmp/pruebas.txt || estado=$?
           {
-            echo "### Las baterías"
+            echo "### Guardia de publicación"
             echo '```'
             grep -E "^ FALLA|^  TOTAL|Baterías con problemas|^    ·" /tmp/pruebas.txt || tail -30 /tmp/pruebas.txt
             echo '```'
@@ -426,7 +431,7 @@ jobs:
             ${{ steps.cambios.outputs.detalle }}
             ```
 
-            Todas las baterías ya corrieron **sobre estos archivos**, no sobre
+            La guardia de publicación corrió **sobre estos archivos**, no sobre
             los anteriores.
           delete-branch: true
           add-paths: |

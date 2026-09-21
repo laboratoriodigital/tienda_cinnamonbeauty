@@ -1,5 +1,116 @@
 # Actualizar una tienda que ya está montada
 
+## Cinnamon Beauty · paso de 3.0.0 a 3.6.1
+
+Esta réplica conserva `publicar/catalogo.json`, las fotos, la imagen social,
+el dominio, los colores, WhatsApp y la URL del Apps Script de Cinnamon. Durante
+el trabajo entraron 85 commits automáticos; se integraron antes del push. El
+catálogo remoto tenía 49 filas activas y tres zonas de envío; las fichas SEO
+se regeneraron sobre esos datos, nunca sobre productos de otra tienda.
+
+**Antes de vender:** en la pestaña `Catálogo` hay cinco filas con el mismo
+`ID=MG188` (varios lip gloss y labiales). La vitrina y el pedido identifican
+por ID, así que solo uno puede resolver correctamente. El titular debe decidir
+cuál conserva `MG188` y asignar cuatro IDs únicos a las demás filas; después
+**Publicar ahora** y comprobar las fichas y compras de cada una. Mientras
+persistan IDs duplicados, el SEO publica una sola URL para `MG188` y no se
+deben hacer compras reales de esos productos.
+
+1. Subir este commit a `main` y esperar `pruebas` verde. No ejecutar `release`:
+   ese flujo es solo para Orgánico y falla a propósito en una tienda cliente.
+2. Ejecutar `montaje` en GitHub Actions de Cinnamon: `que=todo`, marcar
+   `maestro`, escribir `PUBLICAR`, `aprobacion=automatica`. Comprobar que el
+   despliegue conserva la URL existente de Apps Script y que el catálogo
+   generado coincide con la hoja de Cinnamon.
+3. En **el proyecto Apps Script de Cinnamon**, ejecutar `A0_instalar()` una
+   vez; crea hojas/columnas nuevas, listas de pago y conciliador sin borrar el
+   catálogo. Luego ejecutar `A1_generarStub()` y sustituir el stub en el Apps
+   Script **vinculado a la hoja**, para que aparezca «Sincronizar variantes».
+4. En **Configuración del proyecto → Propiedades del script** de Cinnamon,
+   cargar las cuatro `BOLD_IDENTIDAD_*` y `BOLD_SECRETA_*` de Botón de pagos.
+   Se pueden repetir valores de otra tienda **solo mientras el mismo titular
+   Bold sea quien recibe el dinero**. Si luego cambia el titular, reemplazar
+   aquí esas cuatro propiedades; las llaves secretas **no se escriben en la
+   hoja** ni en Git.
+5. En la pestaña **Configuración de la hoja de Cinnamon**, elegir de las listas
+   `pago_modo=pasarela`, `pago_proveedor=bold`, `pago_ambiente=sandbox` y
+   `pago_integracion=boton`. Si no se han puesto las llaves, seleccionar
+   `pago_modo=whatsapp` hasta terminar la instalación. Pulsar **Publicar ahora**
+   después de configurar y comprobar una compra sandbox de punta a punta.
+6. Corregir los cuatro IDs duplicados `MG188` en `Catálogo` y volver a
+   publicar. Revisar que las 49 fichas sean distintas y que cada producto
+   agregue al carrito el artículo correcto.
+7. Revisar con el titular los datos de contacto, condiciones de envío y
+   textos legales propios de cosméticos antes de pasar a producción. Se
+   eliminaron las referencias a tomates y finca heredadas de la semilla,
+   pero esto no sustituye una revisión legal del comercio.
+
+Los párrafos históricos más abajo describen cómo evolucionó la semilla; para
+esta actualización concreta manda el orden anterior.
+
+## La 3.6.0: SEO estático y locks versionados
+
+No agrega columnas ni pide reinstalar la hoja. Después de llevar el código a la
+tienda, el primer `montaje` genera `productos/`, `sitemap.xml` y `robots.txt` y
+actualiza el JSON-LD del `index.html`. Publica esos archivos juntos; copiar solo
+el index deja URLs anunciadas sin ficha. El maestro sí cambió su manejo de
+fecha, por lo que se debe actualizar la implementación existente (nunca crear
+otra URL). Los workflows usan `npm ci`: ambos `package-lock.json` tienen que
+viajar en el commit.
+
+## La 3.5.0: publicaciones más rápidas y encabezados reparables
+
+Los flujos fijan cuatro procesos dentro de un solo runner, `release` reutiliza
+el verde del mismo commit y `fotos`/`montaje` usan una guardia específica para
+los archivos generados. No hay secretos nuevos.
+
+Después de publicar `maestro.gs`, ejecuta **`A0_instalar()`** una vez. Además de
+conservar datos, ahora repone encabezados vacíos aunque las columnas físicas ya
+existieran. En `Catálogo`, la columna 13 es **`Umbral bajo`** y la última,
+columna 14, es **`Variantes`**.
+
+## La 3.4.0: imágenes por variante y cobro configurable
+
+Actualiza `maestro.gs`, ejecuta `A0_instalar()` y publica una versión nueva de
+la aplicación web. En `Configuración`, elige de las listas `pago_modo`,
+`pago_proveedor`, `pago_ambiente` y `pago_integracion`. `Variantes` gana al
+final `Imágenes`; escribe hasta seis nombres o URL separados por `|`, o déjala
+vacía para heredar las fotos del producto. Después corre montaje y prueba el
+cierre elegido. No borres las Propiedades Bold existentes.
+
+## La 3.3.0: variantes por combinación
+
+Primero se despliega y prueba en Orgánico. Ejecuta `A0_instalar()` para agregar
+`Catálogo.Variantes`, las columnas finales de `Pedidos` y las pestañas
+`Variantes` y `Reservas`. Después ejecuta `A1_generarStub()` y reemplaza el
+stub, porque el menú suma **Sincronizar variantes**. Publica la vitrina y prueba
+dos combinaciones del mismo producto en sandbox. Panadería va después de esa
+aprobación y Cinnamon después de Panadería. Una tienda que deje
+`Catálogo.Variantes` vacío conserva el comportamiento anterior.
+
+## La 3.2.1: activar Bold requiere backend, propiedades y prueba
+
+No es una actualización solo de archivos. En cada tienda:
+
+1. Cortar `release` **una sola vez en Orgánico**. En el repositorio de la
+   tienda, incorporar esa versión y ejecutar `montaje` con **maestro** +
+   `PUBLICAR`; una tienda cliente no ejecuta `release`.
+2. Ejecutar `A0_instalar()` para asegurar `Pagos`, `Datos de entrega`,
+   `Variantes`, `Reservas`, las columnas finales nuevas y el conciliador.
+3. Crear en Propiedades del script las siete claves descritas en
+   `PAGOS-BOLD.md`, usando las credenciales propias de esa cuenta.
+4. Mantener `BOLD_AMBIENTE=sandbox` hasta completar toda la matriz de
+   `PLAN-PAGOS-BOLD.md`.
+5. Revisar que la cabecera HTTP de Cloudflare permita
+   `https://checkout.bold.co`. Un `<meta>` correcto no compensa una cabecera
+   vieja: se aplican las dos y gana la más restrictiva.
+
+En 3.2.1 Orgánico ya estaba aprobado y Panadería iba primero. La autorización
+para actualizar Cinnamon llegó después; el paso de 3.0.0 a 3.6.1 sí requiere
+renovar el stub porque el menú de variantes cambió en 3.3.0.
+
+---
+
 Cada tienda tiene su propio repositorio y su propio ritmo. Una versión nueva de
 la plantilla **no le llega sola a nadie**: se pide.
 

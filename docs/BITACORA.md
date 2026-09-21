@@ -15,6 +15,207 @@ después vea que las decisiones raras del código tienen una cicatriz detrás.
 
 ---
 
+## Action rojo por zona horaria y SEO horneado · 20 de septiembre de 2026
+
+**Panadería guardaba `sitio_url` sin esquema y el horneador exigía HTTPS
+explícito.** El `<head>` histórico ya normalizaba ese valor, así que la tienda
+era válida y solo fallaba el nuevo montaje. → SEO comparte el contrato:
+antepone `https://`, valida el resultado y conserva el fallo cerrado para una
+URL realmente ilegible. Una regresión cubre el dominio sin esquema. *(grave,
+detectado durante adopción 3.6.0)*
+
+**La descripción de Panadería seguía siendo el texto de ayuda entre
+corchetes.** No entraba al JSON-LD, pero sí quedaba en `description` y
+`og:description`. → El horneador retira ambas etiquetas mientras el valor no
+esté diligenciado; al llenar la hoja reaparecen en la siguiente publicación.
+*(medio, SEO visible)*
+
+**La suite falló únicamente en GitHub al cruzar la medianoche UTC.** La prueba
+ya esperaba la fecha de Bogotá, pero `diaDeHoy()` seguía usando el reloj local
+del proceso: en Apps Script y en el runner podían ser días distintos. → La
+función productiva usa ahora `Utilities.formatDate(...,
+Session.getScriptTimeZone(), 'yyyy-MM-dd')` y el emulador respeta la zona. No se
+ocultó el rojo cambiando otra vez la expectativa. *(medio, reloj implícito)*
+
+**La tienda tenía metadatos de portada, pero ningún producto rastreable.** Las
+tarjetas eran botones y el detalle solo existía después de ejecutar
+JavaScript. → El catálogo público hornea fichas Product/ProductGroup, Offers,
+sitemap, robots y enlaces `href`. Agotado se declara `OutOfStock`; no se borra.
+*(funcionalidad, descubrimiento)*
+
+**Bloquear una página noindex en robots habría anulado el noindex.** El plan de
+referencia proponía ambas cosas. → Las rutas operativas quedan accesibles al
+rastreador pero responden `X-Robots-Tag: noindex, nofollow`; robots solo anuncia
+el sitemap. *(grave potencial, interpretación de protocolo)*
+
+**La caché se nombraba con `package.json`.** Un rango `^` podía resolver otro
+navegador sin cambiar la clave y `--with-deps` instalaba apt en cada corrida. →
+Se versionaron locks, se usa `npm ci`, `restore-keys` y la instalación del
+sistema corre únicamente cuando no existe caché exacta. *(rendimiento)*
+
+---
+
+## Rendimiento de Actions y encabezados de Catálogo · 20 de septiembre de 2026
+
+**`release` tardaba 2:19 para hacer nueve segundos de trabajo propio.** El push
+del mismo SHA ya había terminado su suite en 2:13, pero `release` invocaba el
+workflow reusable y repetía exactamente los mismos bytes. → Ahora consulta
+Actions y exige un `push` verde del mismo SHA; si no existe, falla cerrado. No
+se cambió una prueba por confianza: se reutilizó evidencia verificable.
+*(medio, costo recurrente)*
+
+**`fotos` y `montaje` repetían backend, correo, calendario y panel después de
+generar solo index, catálogo y fotos.** La suite costaba 91–98 s y preparar el
+navegador otros 16–30 s. → Se creó `publicacion.sh`, una selección que usa el
+mismo corredor y cubre las fronteras generadas. Medida local: 25,3 s, 669/669.
+Los cambios de código conservan la suite completa, verificada 1427/1427.
+*(medio, costo recurrente)*
+
+**“Cuatro a la vez” podía depender de cuántos núcleos reportara el runner.** En
+repositorios privados, convertirlos en cuatro jobs habría multiplicado minutos
+facturados. → Los tres workflows fijan cuatro procesos dentro de un solo
+runner; el aislamiento sigue siendo un puerto y emulador por batería.
+*(decisión operativa)*
+
+**El `montaje` verde dejaba detrás una corrida roja de `pruebas` de cuatro
+segundos.** El PR automático tocaba el `index.html` generado sin subir la
+versión del producto, y la regla correcta para PR de código lo rechazaba. → Los
+PR automáticos de `fotos` y `montaje` se excluyen de la suite: ambos ya corren
+la guardia antes de abrir o fusionar. Un PR de datos no simula un cambio de
+código. *(medio, rojo falso)*
+
+**La fila de Catálogo tenía 14 columnas físicas y dos encabezados vacíos.** El
+instalador comparaba solo `getLastColumn()` y concluía que no faltaba ninguna:
+M1 y N1 quedaban sin nombre aunque el esquema sí las esperaba. →
+`asegurarColumnas()` repone cada título vacío sin sobrescribir títulos no
+vacíos. M1 es `Umbral bajo`; N1, la última, es `Variantes`. Una regresión borra
+ambas y reinstala. *(grave, migración silenciosa)*
+
+**Dos pruebas semanales fallaban solo entre las 7 p. m. y medianoche de
+Colombia.** El maestro nombraba respaldos con la zona de la hoja; la prueba
+comparaba UTC, que ya estaba en el día siguiente. → La expectativa usa la
+fecha de Bogotá. Era el reloj como entrada no declarada, ahora aplicado a la
+zona y no a una espera. *(medio, rojo falso)*
+
+---
+
+## Variantes de producto · 20 de septiembre de 2026
+
+**La fase 2 necesitaba fotos por SKU sin inventar otra sintaxis.** Guardarlas en
+`Catálogo.Variantes` habría mezclado presentación con la declaración de ejes. →
+Se agregó al final `Variantes.Imágenes`; vacía hereda la galería general y el
+montaje incluye esas fotos en Drive, WebP, catálogo estático y enlaces directos.
+*(diseño, fase 2)*
+
+**La sintaxis inicial separaba grupos con coma.** Una coma también puede formar
+parte natural de una etiqueta y vuelve ambiguo distinguir grupos de valores. →
+Se fijó `;` entre ejes, `|` entre valores y `:` entre eje y lista. *(decisión)*
+
+**La primera sincronización creó variantes para productos sin definición.** El
+producto cartesiano de cero ejes estaba devolviendo una combinación vacía; al
+probar una camiseta aparecieron once filas en vez de cuatro. → Cero ejes ahora
+produce cero combinaciones y una batería exige exactamente el producto
+cartesiano declarado. *(grave, detectado antes de despliegue)*
+
+**Una columna no alcanza para stock por color y talla.** Guardar cantidades
+dentro del texto haría ambiguas las combinaciones, precios y renombres. → La
+celda solo declara opciones; la hoja `Variantes` guarda identidad, SKU, precio
+y stock por combinación. `Variante ID` viaja hasta Pagos y Pedidos. *(diseño)*
+
+**Descontar solo al aprobar deja una ventana de sobreventa.** Dos checkouts
+podían pagar la última unidad porque ambos veían el stock físico anterior. → La
+hoja `Reservas` aparta por producto o variante al crear el checkout, publica
+stock disponible y consume/libera con el resultado autenticado. *(crítico,
+preventivo)*
+
+---
+
+## Integración Bold · 19–20 de septiembre de 2026
+
+Esta cadena se deja junta porque cada síntoma parecía pertenecer a una capa
+distinta y, en efecto, pertenecía: producto Bold, Apps Script, Actions,
+Cloudflare y navegador. Separarlos evitó “arreglar” una llave tocando el
+frontend o un bloqueo del navegador regenerando el backend.
+
+**Se diseñó primero para API Pagos en Línea/QR con llaves que en realidad eran
+del Botón de pagos.** La cuenta era nueva y la API avanzada todavía no estaba
+habilitada. Las llaves válidas pertenecían a otro producto de Bold; enviarlas a
+la API QR habría sido mezclar contratos aunque ambas pantallas dijeran “llaves
+de integración”. → Se cambió la estrategia a Botón de pagos, se separaron los
+nombres `BOLD_BOTON_*` y `BOLD_API_*`, y `BOLD_INTEGRACION` selecciona el modo.
+Nunca se infiere el producto por la forma de la llave. *(cambio de rumbo)*
+
+**Las primeras baterías de montaje y commit fallaron porque seguían describiendo
+el cierre antiguo por WhatsApp.** El código nuevo tenía pruebas propias, pero
+las baterías transversales esperaban textos, orden y resultados anteriores. →
+La integración no se consideró lista hasta actualizar las aserciones del
+producto completo y volver a ejecutar todas las baterías. Una batería nueva y
+verde no compensa una vieja roja. *(grave)*
+
+**`release` encontró una etiqueta existente que apuntaba a otro commit.** El
+flujo se detuvo antes de empaquetar, como debía; reutilizar la etiqueta habría
+hecho que “la última versión” no describiera los bytes del commit. → Cada
+corrección desplegable sube `package.json`; una etiqueta publicada es inmutable
+y no se mueve para ahorrar un número. *(grave)*
+
+**Parecía que `instalar()` no había creado los campos, pero las hojas sí
+existían.** Fue una observación incompleta, no un defecto. → Antes de cambiar
+instalador o esquema se revisan las pestañas reales y el resultado de
+`A0_instalar()`. Un falso negativo operativo también merece quedar escrito
+porque empuja a hacer cambios innecesarios. *(medio)*
+
+**El primer checkout no escribió nada en `Pagos` y sí dejó un error preciso:**
+`Falta la llave secreta Bold para sandbox.` La identidad estaba bien y la
+propiedad `BOLD_SECRETA_SANDBOX` faltaba o tenía otro nombre. → Los errores de
+configuración quedan en `Errores` sin registrar el cuerpo ni las credenciales;
+los nombres de las siete propiedades están documentados y son sensibles a
+mayúsculas. No se redepliega código para corregir una Propiedad del script.
+*(crítico, fallo cerrado)*
+
+**Después de corregir la secreta se escribían `Pagos` y `Datos de entrega`, pero
+Bold no abría.** DevTools mostró `boldPaymentButton.js (blocked:csp)`. El
+`<meta>` del HTML sí permitía `checkout.bold.co`; `publicar/_headers` enviaba una
+CSP anterior. El navegador aplica las dos y gana la más restrictiva. → Se
+añadió el origen a la cabecera HTTP y una prueba compara `script-src` en las
+tres copias: HTML, maestro y `_headers`. Revisar solo el DOM no prueba la CSP de
+producción. *(crítico)*
+
+**Cada clic en “Intentar nuevamente” creó otra referencia `PENDING` y duplicó
+Datos de entrega.** Apps Script había terminado bien; lo que fallaba era abrir
+la librería en el navegador. El reintento volvía a ejecutar `pago_crear` en vez
+de reutilizar la respuesta ya válida. → `pagoActivo` conserva el contrato de
+checkout y el segundo clic llama `open()` sobre el mismo intento. La prueba
+simula un primer `open()` fallido y exige un solo POST. *(crítico)*
+
+**La validación final sí cerró toda la costura.** Con tarjeta sandbox, Bold
+abrió, aprobó, tardó en propagar, Apps Script confirmó, Pedidos guardó la
+transacción, inventario se descontó una vez y apareció el WhatsApp manual. → La
+prueba humana se convirtió en matriz repetible. Orgánico es la puerta cero;
+Panadería va después y Cinnamon espera confirmación. *(resuelto)*
+
+**`Validaciones.Pedido` conservaba el código temporal y después recortaba el
+`ORD` a 12 caracteres.** La vitrina sellaba antes de que existiera la referencia
+Bold y una función heredada limitaba todos los códigos. → En modo pasarela la
+prevalidación ya no escribe; el checkout sella una sola fila con el `ORD-...`
+completo. WhatsApp conserva su código local. *(crítico, corregido)*
+
+**Cambiar sandbox, proveedor o integración exigía editar Propiedades del
+script.** Era seguro, pero poco operable y dejaba a una tienda sin pasarela sin
+cierre. → Cuatro listas en `Configuración` gobiernan la selección; los secretos
+siguen en Apps Script y `pago_modo=whatsapp` mantiene el flujo anterior.
+*(operación)*
+
+Aprendizajes que quedan como reglas:
+
+1. Identificar primero el **producto** de Bold, no solo la existencia de llaves.
+2. Diagnosticar por capas: fila en `Pagos`, fila en `Errores`, Network y Console.
+3. Un retorno o un texto del navegador nunca confirma dinero.
+4. La CSP efectiva incluye cabeceras HTTP; el `<meta>` no puede relajarla.
+5. Todo reintento posterior a crear una referencia debe ser idempotente.
+6. Desplegar tienda por tienda y detenerse después de cada prueba real.
+
+---
+
 ## 🔴 Críticos
 
 **El maestro publicado se quedaba sin su hoja.** `maestro.gs` lleva
@@ -741,9 +942,10 @@ porque la condición existía, sin haber comprobado nunca que hiciera algo — e
 patrón 5 aplicado a una condición en vez de a una aserción.
 
 Lo que sí lo resuelve es no abrir el pull request: cuando el flujo va a publicar
-solo, empuja directo a `main`. Las baterías ya corrieron enteras sobre esos
-mismos bytes, así que el pull request no añadía una sola comprobación; solo
-añadía una corrida retenida y una marca roja que no significaba nada.
+solo, empuja directo a `main`. En esa versión las baterías ya habían corrido
+enteras sobre esos mismos bytes; desde la 3.5.0 corre la guardia específica de
+los artefactos generados. En ambos casos el pull request no añadía cobertura:
+solo una corrida retenida y una marca roja que no significaba nada.
 
 La regla: **una guarda que nunca ha visto el caso que dice cubrir no está
 comprobada, está redactada.** Vale para un `if:` de un flujo igual que para una
@@ -848,3 +1050,34 @@ una decisión de diseño deliberada— y se le da una sola casa nueva. El objeti
 declarado no es "mantener las guías al día": es que **cada procedimiento tenga
 un solo documento que lo cuente**, porque un documento que no puede fallar en
 rojo solo se corrige si deja de tener con quién competir.
+
+---
+
+**24 · Réplica de Cinnamon 3.0.0 → 3.6.1 (21 de septiembre).** Se copió el código
+común de Orgánico, pero no `catalogo.json`, fotos, imagen social ni el documento
+de traspaso. La portada se reconstruyó con el dominio, colores, WhatsApp,
+Apps Script y catálogo ya publicados en Cinnamon. Durante el trabajo llegaron
+85 commits automáticos: de un producto se pasó a 49 y tres zonas de envío.
+Se rebasó el cambio de código encima y se regeneraron el respaldo y el SEO
+desde **ese** catálogo remoto, sin sustituirlo por el archivo anterior.
+
+La revisión encontró dos fronteras que una suite con hoja emulada no veía:
+la portada estática podía mostrar por un instante el nombre y teléfono de
+Orgánico, y el texto legal heredado hablaba de tomates y recogida en finca.
+Se adaptaron el HTML visible y las referencias ajenas; una batería nueva mira
+los **artefactos reales de esta tienda**, no solo el arnés. Los textos legales
+siguen requiriendo aprobación del titular antes del cobro real. También quedó
+explícito que «los mismos datos Bold» nunca significa copiar una llave a Git
+ni a Sheets: las credenciales van por proyecto en Propiedades del script y
+pueden repetirse solo si el titular receptor es el mismo.
+
+**25 · Un ID repetido no crea cinco productos distintos.** La hoja de Cinnamon
+entregó cinco filas con `MG188`, para lip gloss y labiales diferentes. Antes
+del rebase solo había un producto y la guardia de identidad comprobaba «una
+ficha por fila»; con el catálogo real reveló que había 49 filas pero 45 IDs
+distintos. La página busca productos por el primer ID que coincide, mientras
+el SEO anterior generaba una sola ficha con la última fila y anunciaba la
+misma URL cinco veces. El SEO ahora mantiene la **primera** ficha por ID y
+anuncia una URL única, igual que la página. No transforma la identidad: para
+vender cada producto correcto, el comerciante debe asignar cuatro IDs nuevos
+en `Catálogo` y publicar otra vez. No se inventaron ni cambiaron IDs en Git.

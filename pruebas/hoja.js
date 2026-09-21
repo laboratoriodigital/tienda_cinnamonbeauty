@@ -109,7 +109,7 @@ const T = []; const ok = (n,c,d) => T.push((c?'  OK  ':' FALLA')+' | '+n+(d?'  -
     g('fNotas','x'.repeat(300));
     document.getElementById('consiento').checked = true; revisarFormulario();
     document.getElementById('consiento').checked = true; revisarFormulario();
-    let u = document.querySelector('#btnFinalizar').href; 
+    let u = enlaceWhatsapp();
     const msg = decodeURIComponent(u.split('text=')[1]);
     return { url:u.length, msg, lineasProducto:(msg.match(/^\d+\. /gm)||[]).length, productos:carrito.length };
   });
@@ -121,7 +121,7 @@ const T = []; const ok = (n,c,d) => T.push((c?'  OK  ':' FALLA')+' | '+n+(d?'  -
   const grande = await p.evaluate(() => {
     carrito = []; VISIBLES.filter(x => x.stock > 0).forEach(x => agregar(x.id, Math.min(3, x.stock)));
     refrescar(); revisarFormulario();
-    const u = document.querySelector('#btnFinalizar').href;
+    const u = enlaceWhatsapp();
     return { url:u.length, msg:decodeURIComponent(u.split('text=')[1]), n:carrito.length };
   });
   ok('Pedido grande (' + grande.n + ' productos) + nota larga: recorta',
@@ -138,7 +138,7 @@ const T = []; const ok = (n,c,d) => T.push((c?'  OK  ':' FALLA')+' | '+n+(d?'  -
     g('fNombre','á'.repeat(60)); g('fCiudad','á'.repeat(40));
     g('fDir','á'.repeat(120)); g('fNotas','á'.repeat(300));
     revisarFormulario();          // es quien rearma el enlace del botón
-    let u = document.querySelector('#btnFinalizar').href; 
+    let u = enlaceWhatsapp();
     return { url:u.length, msg:decodeURIComponent(u.split('text=')[1]) };
   });
   ok('Caso patológico: URL bajo 2.000', patologico.url <= 2000, patologico.url + ' caracteres');
@@ -149,7 +149,7 @@ const T = []; const ok = (n,c,d) => T.push((c?'  OK  ':' FALLA')+' | '+n+(d?'  -
 
   // caso extremo: muchos productos
   const extremo = await p.evaluate(() => {
-    let u = document.querySelector('#btnFinalizar').href;
+    let u = enlaceWhatsapp();
     const orig = carrito.slice();
     carrito = []; for(let k=0;k<14;k++) carrito.push({id:'chonto',cantidad:1});
     // forzamos 14 líneas saltando sanear con nombres largos

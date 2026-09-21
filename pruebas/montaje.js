@@ -38,6 +38,22 @@ const configurar = (g, clave, valor) => {
   h.getRange(i + 1, 2).setValue(valor);
 };
 
+/* Una hoja puede tener columnas físicas al final aunque sus encabezados estén
+   vacíos. Ese fue el estado real de Catálogo: getLastColumn() devolvía 14 y el
+   migrador concluía que no faltaba nada, aunque M1 y N1 no tenían título. */
+{
+  const g = nuevo();
+  const h = g.hojas.get('Catálogo');
+  h.getRange(1, 13, 1, 2).clearContent();
+  g.api.instalar();
+  const ultimas = h.getRange(1, 13, 1, 2).getValues()[0];
+  ok('INSTALAR repone encabezados vacíos aunque las columnas ya existan',
+     ultimas[0] === 'Umbral bajo' && ultimas[1] === 'Variantes',
+     ultimas.join(' | ') || '(ambos vacíos)');
+  ok('  ...y la última columna de Catálogo es Variantes',
+     h.getRange(1, 14).getValues()[0][0] === 'Variantes');
+}
+
 // ═══ 1. La puerta que reemplaza el copiar y pegar ═══
 {
   const g = yaConfigurada(nuevo());
@@ -190,7 +206,7 @@ const configurar = (g, clave, valor) => {
     try {
       // Desde un directorio sin tienda.json y con la ruta absoluta del script.
       execFileSync(process.execPath, [require('path').resolve('../montar/' + script)],
-                   { cwd: require('fs').mkdtempSync('/tmp/organico-'),
+                   { cwd: require('fs').mkdtempSync(require('path').join(require('os').tmpdir(), 'organico-')),
                      encoding: 'utf8', stdio: 'pipe',
                      env: Object.assign({}, process.env,
                                         { MAESTRO_URL: '', MAESTRO_TOKEN: '' }) });
@@ -596,10 +612,13 @@ const configurar = (g, clave, valor) => {
 
   const g = conCarpeta();
   const r = g.api.respaldarHoja();
+  /* Apps Script usa la zona de la hoja (Colombia). La prueba comparaba UTC y
+     fallaba durante las cinco horas entre medianoche UTC y medianoche local. */
+  const hoyBogota = new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString().slice(0, 10);
   ok('LA HOJA SE COPIA a la carpeta del administrador',
      /^Copia_de_Orgánico — pedidos_\d{4}-\d{2}-\d{2}$/.test(r.nombre), r.nombre);
   ok('  ...con la fecha en el nombre, para saber de cuándo es',
-     r.nombre.endsWith(new Date().toISOString().slice(0, 10)));
+     r.nombre.endsWith(hoyBogota));
   ok('  ...y queda dentro de esa carpeta, no en el Drive de la tienda',
      g.api.respaldarHoja() && true);
 
@@ -631,7 +650,7 @@ const configurar = (g, clave, valor) => {
   ok('LA CARPETA NO CRECE PARA SIEMPRE: quedan ocho copias, no doce',
      mias.length === 8, mias.length + ' copias de esta tienda tras 12 semanas');
   ok('  ...y la que queda arriba es la más nueva, no una vieja',
-     mias.some(f => f.nombre.endsWith(new Date().toISOString().slice(0, 10))));
+     mias.some(f => f.nombre.endsWith(hoyBogota)));
   ok('  ...NUNCA borra las copias de OTRA tienda de la misma carpeta',
      ajenas.length === 2, ajenas.map(f => f.nombre).join(', ') || 'las borró');
   ok('  ...y la poda ignora cualquier archivo que no sea un respaldo suyo',
@@ -855,7 +874,7 @@ const configurar = (g, clave, valor) => {
   ok('UN SOLO FLUJO monta la tienda entera, en orden',
      !fs.existsSync('../.github/workflows/maestro.yml') &&
      /publicar-maestro\.mjs/.test(maestro) && /preparar-index\.mjs/.test(maestro) &&
-     /traer-fotos\.mjs/.test(maestro) && /todas\.sh/.test(maestro),
+     /traer-fotos\.mjs/.test(maestro) && /publicacion\.sh/.test(maestro),
      'dos flujos se disparan en el orden equivocado sin que se note');
   ok('  ...y el maestro va ANTES que el index, que es lo que importa',
      maestro.indexOf('publicar-maestro.mjs') < maestro.indexOf('preparar-index.mjs'),
@@ -1480,7 +1499,7 @@ const configurar = (g, clave, valor) => {
     .filter(n => /\.js$/.test(n) && /Resultado: /.test(fs.readFileSync(n, 'utf8')));
   const todas = fs.readFileSync('./todas.sh', 'utf8');
   const auxiliares = ['servidor.js', 'gas.js', 'as.js', 'pn.js'];
-  const enLista = [...new Set(todas.match(/\b[a-z0-9]+\.js\b/g) || [])]
+  const enLista = [...new Set(todas.match(/\b[a-z0-9-]+\.js\b/g) || [])]
     .filter(n => auxiliares.indexOf(n) === -1);
   const sinCorrer = enDisco.filter(n => enLista.indexOf(n) === -1);
   ok('TODAS LAS BATER\u00cdAS est\u00e1n en todas.sh', sinCorrer.length === 0,
@@ -1576,13 +1595,19 @@ const configurar = (g, clave, valor) => {
    sellar y registrar. */
 {
   const g = yaConfigurada(nuevo());
+  g.hojas.get('Catálogo')._datos[1][13] = 'Color: Azul|Verde';
+  g.api.sincronizarVariantes();
+  g.hojas.get('Variantes')._datos[1][5] = 2;
+  g.hojas.get('Variantes')._datos[1][7] = 'chonto-azul.jpg';
   const j = hornear(puerta(g, 'catalogo'));
 
   ok('EL CATÁLOGO SE HORNEA con lo que la hoja publica',
      j.productos.length === 8 && j.envios.length === 5, 
      j.productos.length + ' productos, ' + j.envios.length + ' zonas');
+  ok('  ...incluidas las imágenes propias de cada variante',
+     j.productos[0].variantes[0].imagenes[0] === 'chonto-azul.jpg');
   ok('  ...y lleva su esquema y cuándo se generó',
-     j.esquema === 1 && !isNaN(Date.parse(j.generado)), JSON.stringify(j.generado));
+     j.esquema === 3 && !isNaN(Date.parse(j.generado)), JSON.stringify(j.generado));
 
   /* EL SEGUNDO FILTRO DE LAS CLAVES DE PAGO. El maestro ya las quita de
      ?a=catalogo; esto las quita otra vez al escribir el archivo. No es
@@ -1626,7 +1651,7 @@ const configurar = (g, clave, valor) => {
   const campos = Object.keys(j.productos[0]).sort().join(',');
   ok('  ...y el producto publicado tiene exactamente los campos previstos',
      campos === ['id','nombre','formato','categoria','precio','stock','descripcion',
-                 'imagenes','destacado','referencia','precioAntes','umbralBajo']
+                 'imagenes','destacado','referencia','precioAntes','umbralBajo','ejes','variantes']
                 .sort().join(','), campos);
 
   const flujo = fs.readFileSync('../.github/workflows/montaje.yml', 'utf8');
@@ -1681,6 +1706,16 @@ const configurar = (g, clave, valor) => {
      tres.every(x => /'self'/.test(x)),
      "sin 'self' en _headers el fetch se bloquea en produccion y aqui no se nota");
 
+  /* script-src tiene la misma trampa que connect-src: el meta puede permitir
+     Bold, pero la cabecera HTTP más restrictiva lo bloquea antes de salir. */
+  const ejecutan = t => (t.match(/script-src ([^;"]+)/) || [])[1] || '';
+  const scripts = [ejecutan(pag), ejecutan(maestro), ejecutan(cabeceras)]
+    .map(x => x.trim().split(/\s+/).sort().join(' '));
+  ok('LA CSP permite el checkout Bold en los TRES sitios donde vive',
+     scripts[0] && scripts[0] === scripts[1] && scripts[1] === scripts[2] &&
+     scripts.every(x => /https:\/\/checkout\.bold\.co/.test(x)),
+     'index: ' + scripts[0] + ' | maestro: ' + scripts[1] + ' | _headers: ' + scripts[2]);
+
   ok('EL CATÁLOGO se sirve con caché corta, no eterna',
      /\/catalogo\.json/.test(cabeceras) && /max-age=60/.test(cabeceras),
      'un minuto aguanta un pico y no alcanza para servir precios de ayer');
@@ -1726,7 +1761,7 @@ const configurar = (g, clave, valor) => {
   const pruebasYml = fs.readFileSync('../.github/workflows/pruebas.yml', 'utf8');
   for (const [nombre, y] of [['montaje', flujo], ['pruebas', pruebasYml]]) {
     ok('EL FLUJO `' + nombre + '` pone las líneas FALLA en el resumen',
-       /### Las baterías/.test(y) && /grep -E "\^ FALLA/.test(y),
+       /### (Las baterías|Guardia de publicación)/.test(y) && /grep -E "\^ FALLA/.test(y),
        'desde Actions el resumen es lo primero que se ve');
     ok('  ...y sigue fallando cuando fallan',
        /exit \$\{estado:-0\}/.test(y),
@@ -1813,12 +1848,12 @@ const configurar = (g, clave, valor) => {
      /cat \/tmp\/catalogo\.txt/.test(pasoPublicar),
      'el del catálogo es el que dice qué producto se dio de baja');
 
-  /* Y LAS BATERÍAS SIGUEN CORRIENDO ANTES DE PUBLICAR. Desde que este flujo
+  /* Y LA GUARDIA SIGUE CORRIENDO ANTES DE PUBLICAR. Desde que este flujo
      empuja directo a `main` en vez de abrir un pull request y fusionarlo, esta
-     es la ÚNICA vez que corren: lo que empuja el GITHUB_TOKEN no dispara
-     `pruebas`. Si dejaran de correr aquí, no correrían en ninguna parte. */
-  ok('  ...con las baterías corriendo antes de publicar',
-     f.indexOf('todas.sh') < f.indexOf('"$rama":main'),
+     es la ÚNICA revisión de los archivos generados: lo que empuja el
+     GITHUB_TOKEN no dispara `pruebas`. */
+  ok('  ...con la guardia de publicación antes de publicar',
+     f.indexOf('publicacion.sh') < f.indexOf('"$rama":main'),
      'lo que empuja GITHUB_TOKEN no dispara pruebas');
 
   /* Y SI SE CAE, QUE DIGA QUÉ. Este paso se cayó una vez y averiguar por qué
@@ -1989,12 +2024,11 @@ const configurar = (g, clave, valor) => {
   /* LA COMPARACIÓN QUE CONTESTA «¿YA LLEGÓ?». Se pidió publicar después de lo
      que se está sirviendo y pasó tiempo de sobra: eso es lo que hay que gritar,
      y es justo lo que un log de GitHub no le iba a decir nunca. */
-  /* Y la fecha se arma a mano. Utilities.formatDate pide una zona horaria y
-     este proyecto no declara ninguna; los métodos de Date corren en la zona del
-     script, que es la del comerciante — la única hora que le sirve. */
-  ok('  ...y la fecha se arma sin pedir una zona horaria que no existe',
-     !/Utilities\.formatDate\(/.test(m) && /MESES_CORTOS/.test(m),
-     'los métodos de Date dan la hora del reloj del comerciante');
+  /* La referencia de pago sí necesita fecha, pero nunca una zona horaria
+     inventada: usa explícitamente la configurada para el Apps Script. */
+  ok('  ...y la referencia usa la zona horaria configurada del script',
+     /Utilities\.formatDate\(new Date\(\), Session\.getScriptTimeZone\(\), 'yyyyMMdd'\)/.test(m) && /MESES_CORTOS/.test(m),
+     'la fecha del pedido sigue el reloj del comercio');
 
   /* EL AVISO DE «PEDISTE Y NO LLEGÓ». Es la única línea de todo esto que el
      comerciante necesita cuando algo va mal, y la que un log de GitHub no le
@@ -2415,8 +2449,9 @@ const configurar = (g, clave, valor) => {
   ok('  ...incluida la trampa que solo aparece al rotar el token',
      /TRES.*sitios|TRES\*\* sitios/.test(mapa) && /pestaña `Tiendas` del panel/.test(mapa),
      'olvidar el del panel marca la tienda como caída, y está perfecta');
-  ok('  ...y el paso de WhatsApp, que es donde la seguridad se vuelve agujero',
-     /respuesta automática/.test(mapa) && /no tiene cómo pagar/.test(mapa));
+  ok('  ...y la activación Bold, con secretos por tienda y prueba real',
+     /llaves Bold propias/.test(mapa) &&
+     /matriz sandbox/.test(mapa) && /No se copian propiedades entre tiendas/.test(mapa));
   /* Y el que solo existe a partir de la segunda tienda. El mapa se escribió
      montando la primera, cuando cruzar dos hojas era imposible por falta de
      material. Con dos, es el fallo que más cuesta seguir. */
@@ -2519,16 +2554,15 @@ const configurar = (g, clave, valor) => {
 
 
 // ═══ 31. Publicar una foto no puede costar ocho minutos ═══
-/* SE MIDIÓ ANTES DE TOCAR NADA. Las 22 baterías son 292 s; las 12 que abren
-   navegador, 290 (99 %); las diez que uno quitaría primero por «no tan
-   fundamentales», 3,5 s ENTRE TODAS. Quitar baterías no recupera tiempo y deja
-   sin guardia justo lo que permite que `fotos` fusione sin una persona.
+/* La suite completa sigue siendo obligatoria cuando cambia CÓDIGO. Para una
+   publicación desde la hoja, sin embargo, el código ya quedó verde en el push:
+   los únicos bytes nuevos son index.html, catalogo.json y las fotos. Repetir
+   correo, calendario, panel y backend no observa ninguno de esos bytes.
 
-   Lo que sí se recupera es el reloj de pared. Los doce navegadores se esperaban
-   por una razón de implementación —todos hablaban con el mismo servidor del
-   8099 y se pisaban el /__reset— y no por una de fondo. Ahora cada batería
-   levanta el suyo en su puerto. Cero aserciones tocadas; el marcador tiene que
-   salir idéntico. */
+   Hay dos niveles explícitos: todas.sh para el commit y publicacion.sh para los
+   artefactos generados. Los dos reutilizan el mismo corredor aislado y cuatro
+   procesos dentro de UN runner: baja el tiempo sin multiplicar los minutos de
+   Actions de repositorios privados. */
 {
   const sh = fs.readFileSync('todas.sh', 'utf8');
 
@@ -2562,6 +2596,30 @@ const configurar = (g, clave, valor) => {
   ok('  ...con interruptor para volver a serial y depurar',
      /TRABAJADORES=\$\{TRABAJADORES:-/.test(sh),
      'si una batería solo falla en paralelo, el fallo es suyo');
+
+  const corta = fs.readFileSync('publicacion.sh', 'utf8');
+  const flujoPruebas = fs.readFileSync('../.github/workflows/pruebas.yml', 'utf8');
+  const flujoFotos = fs.readFileSync('../.github/workflows/fotos.yml', 'utf8');
+  const flujoMontaje = fs.readFileSync('../.github/workflows/montaje.yml', 'utf8');
+  ok('EL CORREDOR acepta una lista corta sin duplicar su implementación',
+     /BATERIAS=\$\{BATERIAS:-/.test(sh) && /export BATERIAS=/.test(corta) &&
+     /todas\.sh/.test(corta),
+     'un segundo corredor acabaría resolviendo puertos de otra manera');
+  ok('  ...y la guardia cubre index, fotos, catálogo, respaldo, pago y variantes',
+     ['config.js', 'fotos.js', 'enlace.js', 'respaldo.js', 'pagos-ui.js',
+      'variantes-ui.js', 'montaje.js'].every(f => corta.indexOf(f) !== -1));
+  ok('LOS TRES FLUJOS fijan cuatro procesos dentro de un solo runner',
+     [flujoPruebas, flujoFotos, flujoMontaje].every(
+       y => /TRABAJADORES:\s*4/.test(y)),
+     'cuatro jobs cobrarían cuatro runners; cuatro procesos no');
+  ok('`pruebas` conserva la suite completa y publicaciones usan la corta',
+     /\.\/todas\.sh/.test(flujoPruebas) &&
+     [flujoFotos, flujoMontaje].every(y => /publicacion\.sh/.test(y)),
+     'la optimización solo aplica a datos generados, no a cambios de código');
+  ok('LAS TRES REVISIONES remotas de `fotos` corren en paralelo',
+     /pid_fotos=\$!/.test(flujoFotos) && /pid_catalogo=\$!/.test(flujoFotos) &&
+     /pid_config=\$!/.test(flujoFotos) && /wait "\$pid_config"/.test(flujoFotos),
+     'son lecturas independientes; en serie pagan tres latencias de Apps Script');
 
   /* Y LO QUE YA PROTEGÍA ESTE ARCHIVO SIGUE PROTEGIENDO. Es el riesgo de
      reescribir el corredor: que el marcador salga verde porque dejó de mirar. */
@@ -2740,16 +2798,10 @@ const configurar = (g, clave, valor) => {
        /path: ~\/\.npm/.test(y),
        'lo único que pesa de npm en este repositorio');
 
-    /* LO QUE UNA CACHÉ MIRA TIENE QUE EXISTIR, Y ESTO NO LO COMPROBABA NADIE.
-       La primera versión usaba `cache: npm` con los dos package-lock.json —que
-       están en .gitignore—. En un checkout limpio no existen y setup-node se
-       cae con «Some specified paths were not resolved», antes de correr nada.
-
-       Y la aserción que yo había escrito daba VERDE: comprobaba que el texto
-       "pruebas/package-lock.json" apareciera en el yml. Aparecía. El archivo
-       no existía. Es el patrón 5 —una comprobación mal elegida es peor que
-       ninguna— y lo cometí escribiendo el guardia de mi propio cambio.
-       Esta mira los archivos. */
+    /* LO QUE UNA CACHÉ MIRA TIENE QUE EXISTIR Y ESTAR VERSIONADO. Los locks
+       ahora son deliberadamente parte del repositorio: fijan las versiones
+       instaladas y hacen que una clave represente dependencias reales, no los
+       rangos abiertos de package.json. */
     const mirados = [...y.matchAll(/hashFiles\(([^)]*)\)/g)]
       .flatMap(m => [...m[1].matchAll(/'([^']+)'/g)].map(x => x[1]))
       .concat([...y.matchAll(/cache-dependency-path:\s*\|([\s\S]*?)\n\s*\n/g)]
@@ -2763,6 +2815,16 @@ const configurar = (g, clave, valor) => {
        fantasmas.length === 0,
        fantasmas.join(', ') + ' — en el runner no existen y el flujo se cae ' +
        'antes de correr nada');
+    ok('  ...y la caché depende del lock, no de un rango de package.json',
+       /hashFiles\([^)]*package-lock\.json/.test(y) &&
+       /hashFiles\([^)]*pruebas\/package-lock\.json/.test(y),
+       'un rango puede resolver otra versión sin cambiar la clave');
+    ok('  ...y una caché parcial tiene restore-keys',
+       /restore-keys:\s*playwright-/.test(y),
+       'sin restore-keys se vuelve a bajar todo al menor cambio');
+    ok('  ...y --with-deps corre solo cuando la caché no acertó',
+       /cache-hit != 'true'[\s\S]{0,180}playwright install --with-deps/.test(y),
+       'apt no aporta nada cuando ya está el navegador exacto');
   });
 
   /* Y LA CORRIDA DUPLICADA QUE ADEMÁS PEDÍA UNA PERSONA. El pull request que
@@ -2786,14 +2848,15 @@ const configurar = (g, clave, valor) => {
        /github-actions\[bot\]/.test(p) && /startsWith\(github\.head_ref, 'fotos\/nuevas-'\)/.test(p),
        'evita la corrida repetida; la X roja la quita no abrir el PR');
     /* Y LA EXCUSA TIENE QUE SEGUIR SIENDO CIERTA. El salto se justifica SOLO
-       porque `fotos` ya las corrió antes de publicar. El día que eso deje de
-       pasar, esto publicaría sin haber probado nada. */
-    ok('  ...porque `fotos` YA las corrió antes de publicar, y eso sigue siendo cierto',
-       f.indexOf('todas.sh') > 0 && f.indexOf('todas.sh') < f.indexOf('"$rama":main'),
+       porque `fotos` ya revisó los bytes generados antes de publicar. */
+    ok('  ...porque `fotos` YA corrió su guardia antes de publicar',
+       f.indexOf('publicacion.sh') > 0 && f.indexOf('publicacion.sh') < f.indexOf('"$rama":main'),
        'sin esto, saltarse pruebas sería publicar a ciegas');
-    ok('  ...y el de `montaje`, que espera a una persona, se sigue comprobando',
-       !/montaje\/desde-la-hoja/.test(p),
-       'ese es el que puede reescribir el <head> y la política de seguridad');
+    const m = fs.readFileSync('../.github/workflows/montaje.yml', 'utf8');
+    ok('  ...y tampoco repite el PR generado por `montaje`',
+       /montaje\/desde-la-hoja/.test(p) && /publicacion\.sh/.test(m) &&
+       m.indexOf('publicacion.sh') < m.indexOf('gh pr merge'),
+       'la regla de versión rechaza un PR de datos aunque sus bytes estén bien');
   }
 }
 
@@ -3098,6 +3161,13 @@ const configurar = (g, clave, valor) => {
   ok('  ...y repone el respaldo, que es copia del catálogo recién horneado',
      fotos.indexOf('catalogo-estatico.mjs') < fotos.lastIndexOf('sembrar-respaldo.mjs'),
      'un cambio de precio dejaba el respaldo con los precios de la semana pasada');
+  ok('  ...y hornea SEO después del catálogo y el respaldo',
+     fotos.lastIndexOf('sembrar-respaldo.mjs') < fotos.lastIndexOf('sembrar-seo.mjs') &&
+     mont.lastIndexOf('sembrar-respaldo.mjs') < mont.lastIndexOf('sembrar-seo.mjs'),
+     'JSON-LD y sitemap tienen que describir los mismos bytes publicados');
+  ok('  ...y publica fichas, sitemap y robots con la misma lista',
+     /PUBLICA:.*publicar\/productos.*publicar\/sitemap\.xml.*publicar\/robots\.txt/.test(fotos),
+     'si no viajan juntos, el sitemap puede anunciar páginas que no existen');
 
   /* LO QUE SE GUARDA ANTES DEL `reset --hard` ES LA MISMA LISTA.
      Aquí se rehace la rama sobre el `main` de ese instante, y para eso se
@@ -3149,9 +3219,9 @@ const configurar = (g, clave, valor) => {
      'el comerciante no espera a que alguien mire');
   ok('  ...y se puede volver al pull request cuando se quiera',
      /options: \[automatica, con-pull-request\]/.test(mont));
-  ok('  ...pero NO sin haber corrido todas las baterías sobre lo ya escrito',
-     mont.indexOf('todas.sh') < mont.indexOf('gh pr merge'),
-     'fusionar sin probar es lo que ninguna de las dos guardas puede recuperar');
+  ok('  ...pero NO sin haber corrido la guardia sobre lo ya escrito',
+     mont.indexOf('publicacion.sh') < mont.indexOf('gh pr merge'),
+     'fusionar sin probar los bytes generados es lo que ninguna guarda recupera');
   ok('  ...ni sin comprobar que la hoja es la de esta tienda',
      mont.indexOf('misma-tienda.mjs') < mont.indexOf('gh pr merge'),
      'dos tiendas montadas a la vez y los cambios de una salen en la otra');
@@ -3189,13 +3259,11 @@ const configurar = (g, clave, valor) => {
   ok('  ...y para ANTES de tocar el repositorio',
      rel.indexOf('¿Este repositorio es la semilla?') < rel.indexOf('gh release create'),
      'pararse después de etiquetar no sirve de nada');
-  ok('  ...sin gastar una corrida de baterías para nada', (() => {
-       /* Las baterías son el `needs` de este trabajo, así que corren igual.
-          Es el precio de que la guarda viva donde se ve el fallo, y se acepta:
-          son dos minutos frente a una etiqueta paralela en el repositorio de
-          un cliente. Se anota para que no parezca un descuido. */
-       return /needs: pruebas/.test(rel);
-     })(), 'corren igual: la guarda va después, donde se ve el fallo');
+  ok('  ...reutiliza el verde del MISMO commit, sin repetir dos minutos',
+     !/needs: pruebas/.test(rel) && /actions: read/.test(rel) &&
+     /actions\/workflows\/pruebas\.yml\/runs\?head_sha=\$GITHUB_SHA/.test(rel) &&
+     /conclusion == \"success\"/.test(rel),
+     'si no hay verde para ese SHA, no publica');
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

@@ -23,11 +23,14 @@ dos, y el que explica decisiones que en seis meses van a parecer arbitrarias.
 | Fotos publicadas | `publicar/fotos/` en Git | Nuestra | Capa 2. Generadas con `preparar-fotos.mjs` |
 | Sitio | Cloudflare Workers | **Una sola cuenta nuestra** | 100 Workers gratis por cuenta, y los archivos estáticos no gastan cuota |
 | Repositorio | GitHub | Nuestra | Uno por tienda, más el de la plantilla |
+| Cuenta de pagos | Bold | Una cuenta por **titular/comercio** | Separa fondos y responsabilidad entre dueños; dos vitrinas del mismo dueño pueden compartirla, manteniendo propiedades y referencias por tienda |
 | Panel (`panel.gs`) | Sheets + Apps Script | Nuestra cuenta personal | Administra el negocio, no una tienda |
 
-Google se **reparte** (una cuenta por tienda). Cloudflare y GitHub se
-**centralizan** (una sola cuenta para todas). No es una inconsistencia: son
-límites de naturaleza distinta, y la sección 3 explica por qué.
+Google se **reparte** por tienda. Bold se reparte por titular: Panadería y
+Orgánico comparten dueño y pueden compartir cuenta; Cinnamon no. Cloudflare y
+GitHub se **centralizan**. No es una
+inconsistencia: son límites de naturaleza distinta, y la sección 3 explica por
+qué.
 
 ---
 
@@ -131,13 +134,15 @@ pago de cada comercio a una hoja donde no pinta nada.
 
 ## 5. La tienda no depende de nadie en tiempo de ejecución
 
-`index.html` es un archivo que se basta solo. Su política de seguridad no
-autoriza **ningún** origen de código externo.
+`index.html` es un archivo estático que se basta solo para catálogo y carrito.
+Su política de seguridad autoriza un único origen externo de código:
+`https://checkout.bold.co`, necesario para abrir la pasarela oficial.
 
-Eso descarta, a propósito, servir la tienda desde una librería publicada en un
-registro de paquetes y cargada con `<script src>`: la caída de ese registro
-apagaría todas las tiendas a la vez, y quien controle ese paquete podría
-inyectar código en el carrito de todos los clientes.
+Se siguen descartando librerías generales publicadas en registros de paquetes.
+Bold es una dependencia deliberada y acotada al momento de pagar: si falla, el
+catálogo sigue disponible y no se confirma ninguna venta. La CSP repite el
+origen en el HTML, en el maestro y en `_headers`; una prueba exige que las tres
+copias coincidan.
 
 Lo que sí se comparte es **en tiempo de construcción**. La plantilla publica
 versiones con nombre y cada tienda las consume al desplegar, no al cargar:
@@ -263,6 +268,24 @@ commit, el pull request y la fusión ocurren solo cuando el flujo corre en
 GitHub. Correr `npm run montar` y esperar un despliegue es esperar un paso que
 nadie dio.
 
+### Dos niveles de pruebas, una sola implementación
+
+Los cambios de código pasan por `pruebas/todas.sh` en cada push. Una
+publicación desde la hoja no cambia ese código: genera `index.html`, catálogo y
+fotos. `pruebas/publicacion.sh` selecciona las baterías que leen esos artefactos
+y delega todo al mismo corredor. Así no hay dos formas de resolver puertos,
+contar resultados o decidir un fallo.
+
+Los tres flujos fijan cuatro procesos dentro de **un** runner. Son cuatro
+Chromium aislados, no cuatro jobs: baja el reloj sin multiplicar los minutos
+facturados de un repositorio privado. `fotos` y `montaje` siguen sin correr a
+la vez porque escriben las mismas rutas.
+
+`release` tampoco vuelve a ejecutar una suite que acaba de quedar verde: exige
+por API una corrida exitosa de `pruebas.yml`, evento `push`, con el mismo SHA.
+Reutiliza evidencia; no omite la guarda. Mediciones y metas viven en
+`PLAN-RENDIMIENTO-ACTIONS.md`.
+
 ## 6d. Credenciales: cuáles hay, dónde viven y qué pueden hacer
 
 | Credencial | Dónde vive | Qué permite | Si se filtra |
@@ -270,6 +293,7 @@ nadie dio.
 | Token del stub (`tk-…`) | Propiedades del maestro de esa tienda, y a la vista en su stub | Leer la configuración, listar la carpeta de fotos, bajar archivos **de esa carpeta**, leer cifras agregadas | Una tienda, y solo de lectura. Se rota borrando la propiedad `TOKEN` y regenerando el stub |
 | `CLASPRC` | Secreto del repositorio, **solo si se publica el maestro desde el flujo `montaje`** | Publicar el Apps Script y tocar el Drive de esa cuenta | Grave para esa tienda. Por eso publicar pide confirmación escrita y nunca corre por horario |
 | `GITHUB_TOKEN` del panel | Propiedades del panel | Leer ejecuciones de Actions | Alguien ve cuánto tardó una compilación. Es el secreto más inofensivo del proyecto, y aun así conviene que sea de grano fino y con vencimiento |
+| Identidad y secreta Bold | Propiedades del maestro de **esa tienda** | Abrir y firmar su checkout; consultar sus transacciones | Crítico para esa tienda. Se rota en Bold y en Apps Script; nunca se copia a otra tienda ni a GitHub |
 
 **Las propiedades de un proyecto de Apps Script no están cifradas.** Cualquiera
 que pueda editar ese script las lee en texto plano. Eso está asumido en el
@@ -328,8 +352,9 @@ request toca algo desplegable.
 | Google (cuenta, hoja, Apps Script, Drive) | $0 |
 | Cloudflare (sitio, ancho de banda) | $0 |
 | GitHub (repositorio, Actions, releases) | $0 |
+| Bold | Sin mensualidad de infraestructura; comisión por transacción según el contrato de cada comercio |
 | Dominio propio | Opcional. Un dominio nuestro alcanza para todas como subdominios |
-| **Total en efectivo** | **$0/mes** |
+| **Total fijo de infraestructura** | **$0/mes**, sin contar comisiones de pago |
 
 Lo único que cuesta es tiempo de montaje, y ese es el número que hay que medir
 —con cronómetro, montando una tienda de verdad— antes de ponerle precio al
@@ -349,10 +374,27 @@ teórica:
 | `LockService` + upsert por número | `Validaciones` se escribe leyendo-y-escribiendo bajo candado. Sin él, dos validaciones simultáneas creaban dos filas con códigos distintos |
 | Columna `Inventario` | Marca cada línea como *Descontado* o *Devuelto*. Hace que confirmar, anular y volver a confirmar no descuadre el stock, y que la rutina se pueda correr mil veces sin efecto |
 | Congelado tras el envío | Una fila de `Validaciones` cuyo pedido ya se registró no se puede reescribir |
+| Token opaco de pago | La URL de retorno no concede aprobación; solo permite consultar una fila concreta |
+| Confirmación idempotente | Reconsultar un `APPROVED` no duplica Pedidos, inventario ni correos |
+| Reintento de apertura | Si la librería no abre, reutiliza el checkout ya creado y no agrega otra fila `PENDING` |
+| Reserva por clave de inventario | Aparta el producto o Variante ID durante un checkout y la consume o libera según el resultado |
 
-El inventario **no** se descuenta al enviar el pedido, a propósito: un pedido
-abierto en WhatsApp no es una venta, y si descontara ahí, cualquiera podría
-dejar el inventario en cero abriendo pedidos que nunca paga.
+El inventario físico **no** se descuenta al crear el checkout: un intento
+`PENDING` no es una venta. Sí se crea una reserva temporal, de modo que la
+disponibilidad pública sea stock físico menos reservas activas. Solo la
+respuesta `APPROVED` consultada directamente a Bold crea Pedidos, descuenta
+existencias y convierte la reserva en `CONSUMIDA`; rechazo o vencimiento la
+dejan `LIBERADA`.
+
+### Variantes y claves de inventario
+
+`Catálogo.Variantes` solo declara ejes visibles. Cada combinación real vive en
+la hoja `Variantes`, con una identidad estable. Productos tradicionales usan
+la clave `p:<ID>` y combinaciones la clave `v:<Variante ID>`; reservas e
+inventario trabajan con esa clave común. El navegador envía el identificador,
+pero Apps Script comprueba que esté activo, pertenezca al producto y tenga
+stock antes de usar su precio. En productos variables, `Catálogo.Stock` es un
+resumen; nunca un stock alternativo al que caer si falta la variante.
 
 ## 9. Seguridad
 
@@ -364,7 +406,7 @@ abierta.
 |---|---|
 | Alterar el total desde la consola | El servidor recalcula todo con los precios de la hoja. La tienda nunca es la autoridad sobre el precio. Además `Object.freeze` sobre catálogo, cupones y envíos |
 | Inventar o reutilizar un cupón | Los cupones viven solo en la hoja, con vigencia, mínimo y tope de usos |
-| Clonar el sitio y cambiar la llave de pago | Los datos de pago no están en la página. Se entregan por respuesta automática de WhatsApp, que además advierte al cliente que no transfiera si ve otra llave. Eso hace inútil una copia |
+| Clonar el sitio o alterar la identidad pública | La secreta nunca sale de Apps Script y la firma ata referencia, monto y moneda. Una identidad distinta no puede producir una firma válida para ese checkout |
 | Inyección de fórmulas en Sheets | `celdaSegura()` antepone un apóstrofo a todo valor que empiece por `=`, `+`, `-`, `@` o un carácter de control, y recorta a 60 caracteres |
 | XSS y carga de recursos ajenos | CSP en la etiqueta `meta` y en `_headers`: `default-src 'none'`, con lista explícita para estilos, tipografías, imágenes y `connect-src`. `frame-ancestors` solo funciona en cabecera, por eso existe `_headers` |
 | Payloads absurdos al backend | Tope de 30 ítems, cantidad máxima 200, total máximo 5.000.000, IDs que no estén en el catálogo se descartan, duplicados se colapsan y el `Estado` nunca lo decide quien envía |
@@ -373,9 +415,8 @@ abierta.
 > **Lo que este diseño NO puede impedir.** `wa.me` solo rellena la caja de
 > texto: **el cliente puede editar el mensaje antes de enviarlo.** Por eso el
 > mensaje es lo que el cliente decidió escribir, no un documento con validez.
-> El código de verificación permite cruzar contra la fila de `Validaciones`,
-> pero el punto de control final es el dueño revisando el total antes de
-> despachar — es el paso "Antes de despachar, siempre" de `GUIA-COMERCIANTE.md`.
+> El punto de control es la fila `PAID` y su transacción Bold. El comercio nunca
+> despacha basándose solo en el texto de WhatsApp o en una captura.
 
 ## 10. Límites nativos de Google
 
@@ -387,8 +428,8 @@ cada rediseño del frontend.
 |---|---|---|
 | Google Sheets | 10 millones de celdas | Muy por encima del tope que impone el propio script |
 | Filas de `Pedidos` | 20.000 (`MAX_FILAS`) | Una fila por línea de pedido: **6.000 a 10.000 pedidos**. Al llegar, el script se niega a escribir con un mensaje claro en vez de corromper la hoja: hay que archivar y vaciar |
-| Correo | 100 al día | El resumen gasta 1 |
-| Disparadores | 90 minutos al día | El recálculo horario tarda segundos. Sobra |
+| Correo | 100 destinatarios al día en una cuenta gratuita | Cada pago consume cliente más destinatarios del comercio, además del resumen; el panel debe vigilar la cuota |
+| Disparadores | 90 minutos al día | La conciliación cada quince minutos y los recálculos deben mantenerse breves; se ajustará con uso real antes de bajar la frecuencia |
 | Ejecución | 6 minutos cada una | La más lenta —recalcular tablero con miles de filas— va muy por debajo |
 | Concurrencia | 30 ejecuciones simultáneas por cuenta de Google | Ya no la consume cada visita: el catálogo se sirve estático desde Cloudflare. La consumen enviar un pedido, aplicar un cupón, abrir el menú o el panel — sucesos, no visitas |
 
@@ -435,13 +476,16 @@ es la forma que tiene el producto hoy y por qué.
 
 Límites conocidos, aceptados y no accidentales:
 
-- **La vista previa de un enlace de producto** es la de la tienda, no la del
-  producto: los rastreadores no ejecutan JavaScript. Arreglarlo pediría una
-  página por producto y un paso de build.
-- **El total del mensaje de WhatsApp es editable** por el cliente antes de
-  enviarlo. Mitigado con el código de verificación y el paso de revisión del
-  dueño (§9).
+- **Cada producto tiene una ficha estática para robots y vistas previas.** La
+  experiencia de compra sigue en el SPA; los enlaces de las tarjetas tienen
+  `href` real a `/productos/<id>/` y el clic normal abre la ficha interactiva.
+  `montar/sembrar-seo.mjs` construye ambas representaciones desde el mismo
+  `catalogo.json`, por lo que no existe un segundo inventario SEO.
+- **El mensaje de WhatsApp es editable** por el cliente. Por eso solo es un
+  aviso posterior: el comercio confía en `PAID` y en la transacción guardada,
+  no en el texto del chat.
 - **El contador de usos de un cupón** se actualiza cada hora: uno de un solo
   uso conviene apagarlo a mano apenas se use.
-- **Sin pasarela de pagos.** El cobro se acuerda por chat. Es parte de la
-  premisa de costo cero, no una omisión.
+- **Bold primero, adaptador después.** El carrito no conoce secretos ni
+  endpoints del proveedor. `Configuración.pago_proveedor` selecciona el adaptador y la
+  confirmación común permanece en Apps Script + Sheets.

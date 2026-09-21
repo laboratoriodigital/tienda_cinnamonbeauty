@@ -3,6 +3,11 @@
 GitHub Flow, sin ramas de larga vida. `main` está siempre desplegable porque
 cada push a `main` sale a producción.
 
+Los cambios de variantes deben conservar productos tradicionales, columnas
+append-only e identidad estable. Además de la suite completa, ejecuta
+`pruebas/variantes.js` y `pruebas/variantes-ui.js`; el contrato está en
+`docs/PLAN-VARIANTES.md`.
+
 ## El ciclo
 
 ```bash
@@ -41,6 +46,7 @@ hacer *Squash and merge*. Al fusionar, `main` se despliega solo.
 | `frontend` | `publicar/` — la tienda. |
 | `backend` | `maestro.gs` — el Apps Script. |
 | `bd` | La estructura de la hoja: pestañas, columnas, claves de Configuración. |
+| `pagos` | Adaptadores, checkout, conciliación y avisos posteriores al pago. |
 
 **Qué escribir.** El *qué* y el *por qué*, no el *cómo*. El diff ya dice cómo.
 
@@ -64,11 +70,14 @@ después hay que mantener sincronizada.
    nuevo · mayor `2.0.0` si una tienda vieja necesita tocar la hoja o el
    maestro para seguir funcionando.
 2. Fusiona a `main`.
-3. Actions > **release** > Run workflow.
+3. Espera que el flujo **pruebas** del push quede verde.
+4. Actions > **release** > Run workflow.
 
-Eso corre las pruebas, crea la etiqueta `v1.1.0` y publica la versión con
-`index.html`, `maestro.gs` y `publicar.tar.gz` colgados. Falla a propósito si
-la versión ya existe: se sube en `package.json` o no se corta.
+`release` comprueba por API que **ese mismo commit** ya tenga la suite completa
+verde; no la repite. Después crea la etiqueta `v1.1.0` y publica la versión con
+`index.html`, `maestro.gs` y `publicar.tar.gz` colgados. Si la etiqueta ya apunta
+al mismo commit termina en verde sin repetir trabajo; si apunta a otro, falla y
+hay que subir `version`.
 
 Cada repositorio de cliente pide la última así, sin credenciales:
 
@@ -116,3 +125,13 @@ revisión, no saltarse el proceso: `main` va directo a los clientes.
   implementación que ya existe y por eso no cambia la URL.
 - **Nada de secretos.** Llaves de pago, ID de hojas y tokens no entran al
   repositorio, ni siquiera en un comentario.
+- **Un pago no se prueba solo con una pantalla.** Todo cambio de checkout debe
+  cubrir creación, monto recalculado, aprobación, rechazo, reconsulta e
+  idempotencia. Antes de replicarlo se completa la matriz de
+  `docs/PLAN-PAGOS-BOLD.md` en Orgánico.
+- **El despliegue es gradual.** Orgánico primero, Panadería después y Cinnamon
+  solo tras aprobación expresa. Nunca se copian Propiedades del script entre
+  tiendas: cada cuenta Bold tiene sus propias llaves.
+- **La CSP vive en tres sitios.** Si cambia un origen ejecutable o de conexión,
+  deben coincidir el `<meta>` de `publicar/index.html`, la generación de
+  `maestro.gs` y `publicar/_headers`; `montaje.js` lo comprueba.

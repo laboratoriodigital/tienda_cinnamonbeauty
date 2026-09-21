@@ -39,9 +39,14 @@ Desde ahí: Actions → **tienda nueva** → Run workflow.
 | ✔ | Le carga `MAESTRO_URL` y `MAESTRO_TOKEN`, si se los pasas |
 | ✘ | Cloudflare: ese diálogo es del navegador |
 | ✘ | Google: cuenta, hoja, maestro e `instalar()` son el bloque D del runbook |
+| ✘ | Bold: la cuenta y las Propiedades del script se configuran por tienda después del alta; el servicio nunca recibe ni copia esas llaves |
 
 ## Lo que puede crecer aquí
 
 El panel de tiendas, los cobros y los informes son de este lado, no del de la
 plantilla: son del negocio de vender tiendas, no de la tienda. Hoy no están —
 el panel vive en su propia hoja de cálculo, con `panel.gs`.
+
+El alta solo deja preparada la arquitectura. La activación de pagos sigue el
+despliegue gradual y la matriz de aceptación de
+[`docs/PLAN-PAGOS-BOLD.md`](../docs/PLAN-PAGOS-BOLD.md).

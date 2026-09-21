@@ -19,7 +19,8 @@ pruebas/real.html
 
 # ── Dependencias y basura de sistema ──
 node_modules/
-package-lock.json
+# Los package-lock.json SÍ se versionan: Actions instala exactamente las
+# versiones probadas y sus cachés cambian solo cuando cambia ese contrato.
 .DS_Store
 Thumbs.db
 desktop.ini

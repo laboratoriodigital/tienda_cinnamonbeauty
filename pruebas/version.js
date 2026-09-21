@@ -29,10 +29,11 @@ const T = []; const ok = (n, c, d) => T.push((c ? '  OK  ' : ' FALLA') + ' | ' +
      (await p.locator('#totales').innerText()).split('\n').pop());
 
   await p.fill('#fNombre', 'Ana Ruiz'); await p.fill('#fTel', '3001234567');
+  await p.fill('#fCorreo', 'ana@ejemplo.co'); await p.fill('#fDocumento', '12345678');
   await p.fill('#fCiudad', 'Bogotá'); await p.fill('#fDir', 'Calle 1');
   await p.check('#consiento'); await selloListo(p);
   const msg = await p.evaluate(() =>
-    decodeURIComponent(document.querySelector('#btnFinalizar').href.split('text=')[1]));
+    decodeURIComponent(enlaceWhatsapp().split('text=')[1]));
   ok('El pedido sale marcado sin verificar, para que se note',
      !/Verificación:/.test(msg) && /calculado por la página/.test(msg));
 

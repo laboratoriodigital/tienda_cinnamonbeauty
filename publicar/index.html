@@ -16,7 +16,7 @@
      código: lo peor que puede hacer un tercero de esa lista es no responder. -->
 
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://ik.imagekit.io https://imagedelivery.net; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://checkout.bold.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://ik.imagekit.io https://imagedelivery.net; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'none'; base-uri 'none'">
 <!-- ═══ CONFIGURACIÓN DE ESTA TIENDA ═══
      Generado por generarConfiguracion() en el Apps Script.
      No lo edites a mano: cambia la pestaña Configuración y vuelve a generarlo. -->
@@ -154,7 +154,7 @@ main.envoltura{padding-bottom:60px}
 @media(min-width:600px){.rejilla{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1000px){.rejilla{grid-template-columns:repeat(3,1fr)}}
 .tarjeta{background:var(--blanco);padding:16px;display:flex;flex-direction:column;text-align:left}
-.tarjeta-img{width:100%;aspect-ratio:1;background:#FAFAFA;position:relative;overflow:hidden}
+.tarjeta-img{display:block;width:100%;aspect-ratio:1;background:#FAFAFA;position:relative;overflow:hidden;text-decoration:none}
 .tarjeta-img img{width:100%;height:100%;object-fit:cover}
 .destacado{
   position:absolute;left:9px;top:9px;background:var(--acento);color:var(--blanco);
@@ -178,6 +178,7 @@ main.envoltura{padding-bottom:60px}
 .acciones .btn-solido{min-width:100px}
 .acciones .btn-linea{flex:none}
 .btn{
+  display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
   padding:11px 16px;border-radius:var(--radio);font-weight:600;font-size:.88rem;
   transition:background .15s,color .15s,border-color .15s;
 }
@@ -338,6 +339,9 @@ textarea.campo{resize:vertical;min-height:64px}
 .enviado .btn-whatsapp{margin-top:4px}
 .enviado-otro{margin-top:14px;background:none;border:0;color:var(--tenue);
   font:600 14px inherit;text-decoration:underline;cursor:pointer;padding:8px}
+.pago-qr{display:block;width:min(260px,100%);height:auto;margin:22px auto 16px;border:12px solid #fff;border-radius:12px;box-shadow:0 1px 8px #0002}
+.pago-tiempo{font:700 14px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--negro)}
+.pago-estado{font-size:14px;line-height:1.5;margin:12px 0 0}
 
 /* ---------- Ficha de producto ---------- */
 .ficha{
@@ -374,6 +378,11 @@ textarea.campo{resize:vertical;min-height:64px}
 .ficha-texto .formato{margin-top:5px}
 .ficha-precio{font-size:1.7rem;font-weight:800;letter-spacing:-.03em;margin:18px 0 10px}
 .ficha-desc{font-size:.94rem;color:#3A3A3A;margin:16px 0 22px;max-width:60ch}
+.variantes{display:grid;gap:14px;margin:18px 0}.variante-grupo{border:0;padding:0}
+.variante-grupo legend{font-size:.82rem;font-weight:700;margin-bottom:7px}.variante-opciones{display:flex;flex-wrap:wrap;gap:7px}
+.variante-opcion{border:1px solid #B8B8B8;border-radius:999px;background:var(--blanco);padding:8px 13px;font-size:.84rem}
+.variante-opcion[aria-pressed="true"]{border-color:var(--negro);background:var(--negro);color:var(--blanco)}
+.variante-opcion:disabled{opacity:.38;text-decoration:line-through}.variante-ayuda{font-size:.8rem;color:var(--tenue);margin-top:-8px}
 .ficha-cerrar{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.94);border-radius:50%;width:34px;height:34px;display:grid;place-items:center;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.16)}
 
 /* ---------- Ventana legal ---------- */
@@ -403,6 +412,39 @@ textarea.campo{resize:vertical;min-height:64px}
 
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 </style>
+<!-- ═══ SEO HORNEADO: NO EDITAR A MANO ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev/#organizacion",
+      "name": "Cinnamon Beauty",
+      "url": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev/",
+      "email": "cinnamonbeauty.tienda@gmail.com",
+      "telephone": "3218550807",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "TIENDA VIRTUAL",
+        "addressLocality": "Medellín",
+        "addressCountry": "CO"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev/#sitio",
+      "url": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev/",
+      "name": "Cinnamon Beauty - Professional Makeup",
+      "publisher": {
+        "@id": "https://cinnamonbeauty.laboratoriodigital-la.workers.dev/#organizacion"
+      },
+      "description": "Maquillaje profesional a los mejores precios"
+    }
+  ]
+}
+</script>
+<!-- ═══ FIN DEL SEO HORNEADO ═══ -->
 </head>
 <body>
 
@@ -415,7 +457,7 @@ textarea.campo{resize:vertical;min-height:64px}
         <path d="M12 7V3.5M12 7c-1.6-1.6-3.4-2-5-1.6.6 1.7 2 2.9 3.6 3.2M12 7c1.6-1.6 3.4-2 5-1.6-.6 1.7-2 2.9-3.6 3.2"
               stroke="var(--verde)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
       </svg>
-      <span id="marcaNombre">Orgánico</span>
+      <span id="marcaNombre">Cinnamon Beauty</span>
     </div>
     <button class="btn-carrito" onclick="abrirPanel()">
       Carrito <span class="contador" id="contador">0</span>
@@ -426,11 +468,11 @@ textarea.campo{resize:vertical;min-height:64px}
 <!-- ============================ PORTADA ============================ -->
 <section class="portada">
   <div class="envoltura">
-    <h1 id="portadaTitulo">Tomate que sabe a tomate.</h1>
-    <p id="portadaTexto">Cultivamos y procesamos en finca propia, sin químicos de síntesis. Del corte a tu cocina en menos de 48 horas.</p>
+    <h1 id="portadaTitulo">Cinnamon Beauty</h1>
+    <p id="portadaTexto">Makeup Beauty - Professional Products</p>
     <div class="portada-datos" id="portadaDatos">
-      <span><i class="punto"></i> Cosecha de la semana</span>
-      <span><i class="punto"></i> Entregas a todo el país</span>
+      <span><i class="punto"></i> Oferta ultima unidad</span>
+      <span><i class="punto"></i> Tienda virtual en medellin</span>
       <span><i class="punto"></i> Pides y confirmas por WhatsApp</span>
     </div>
   </div>
@@ -462,16 +504,16 @@ textarea.campo{resize:vertical;min-height:64px}
 <footer class="pie">
   <div class="envoltura pie-grid">
     <div>
-      <h4 id="pieNombre">Orgánico</h4>
-      <p id="pieDescripcion">Tomate fresco y derivados de finca. Rionegro, Antioquia.</p>
-      <p style="margin-top:8px">Pedidos: <a id="pieTelefono" href="https://wa.me/573008610480">300 861 0480</a></p>
+      <h4 id="pieNombre">Cinnamon Beauty</h4>
+      <p id="pieDescripcion">Tienda Virtual - Pago contraentrega en Medellin</p>
+      <p style="margin-top:8px">Pedidos: <a id="pieTelefono" href="https://wa.me/573218550807">3218550807</a></p>
     </div>
     <div>
       <h4>Cómo compras</h4>
       <ul id="comoCompras">
         <li>Armas tu carrito aquí</li>
         <li>Confirmas por WhatsApp</li>
-        <li>Pagas por Nequi, llave o Bre-B</li>
+        <li>Realizas tu pago</li>
         <li>Recibes en 24 a 72 horas</li>
       </ul>
     </div>
@@ -518,13 +560,13 @@ textarea.campo{resize:vertical;min-height:64px}
         <a href="#" style="text-decoration:underline"
            onclick="event.preventDefault();event.stopPropagation();abrirLegal('datos')">política de tratamiento de datos personales</a>.</span>
     </label>
-    <a class="btn-whatsapp" id="btnFinalizar" href="#" target="_blank" rel="noopener"
-       aria-disabled="true" onclick="return alEnviar(event)">
+    <a class="btn-whatsapp" id="btnFinalizar" href="#"
+       aria-disabled="true" onclick="return iniciarPago(event)">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
         <path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3z"/>
         <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2z"/>
       </svg>
-      Enviar pedido por WhatsApp
+      Pagar con Bold
     </a>
   </div>
 </aside>
@@ -543,7 +585,7 @@ textarea.campo{resize:vertical;min-height:64px}
 <div class="brindis" id="brindis" role="status" aria-live="polite"></div>
 
 <!-- ============================ FLOTANTE ============================ -->
-<a class="flotante" id="flotante" href="https://wa.me/573008610480?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20sus%20productos." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+<a class="flotante" id="flotante" href="https://wa.me/573218550807?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20sus%20productos." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.5 12.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3z"/>
   </svg>
@@ -560,7 +602,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNcOgnYTNnkKAO5qCDc
 
 // Debe coincidir con la constante VERSION de apps-script.gs. Si no coincide, la
 // tienda deja de sellar los pedidos y avisa por consola.
-const SCRIPT_VERSION = "2026-09-12-1";
+const SCRIPT_VERSION = "2026-09-20-5";
 
 // Los hosts de imagen que permite la política de seguridad de arriba. Si la
 // hoja pide otro, las fotos se sirven directo del origen y se avisa por
@@ -572,13 +614,13 @@ let WHATSAPP = "573218550807";
 let NEGOCIO  = "Cinnamon Beauty";
 
 let EMPRESA = {
-  razon:     "[RAZÓN SOCIAL]",
+  razon:     "Cinnamon Beauty",
   nit:       "[NIT O CÉDULA]",
-  correo:    "[CORREO DE CONTACTO]",
-  direccion: "[DIRECCIÓN]",
-  ciudad:    "Rionegro, Antioquia",
-  tel:       "300 861 0480",
-  actualizado: "4 de septiembre de 2026"
+  correo:    "cinnamonbeauty.tienda@gmail.com",
+  direccion: "TIENDA VIRTUAL",
+  ciudad:    "Medellín",
+  tel:       "3218550807",
+  actualizado: "11 de septiembre de 2026"
 };
 
 /* ═══ CATÁLOGO DE RESPALDO — escrito el 2026-09-21 ═══
@@ -636,247 +678,345 @@ const PRODUCTOS = [
   { id:"MG124", nombre:"Kit Arruru X2", formato:"Unidad", categoria:"Cremas-Mantequillas y Splash",
     precio:41000, stock:12,
     imagenes:["KIT-ARRURU-ROSADO-MG124.PNG"],
-    descripcion:"✨ KIT ARRURRÚ: Mantequilla + Splash ✨\n\nUna combinación deliciosa para consentir tu piel y dejarla con un aroma irresistible. 💖\nIncluye mantequilla corporal + splash, perfectos para complementar tu rutina de cuidado y disfrutar una sensación de suavidad y frescura durante el día. 🧴✨" },
+    descripcion:"✨ KIT ARRURRÚ: Mantequilla + Splash ✨\n\nUna combinación deliciosa para consentir tu piel y dejarla con un aroma irresistible. 💖\nIncluye mantequilla corporal + splash, perfectos para complementar tu rutina de cuidado y disfrutar una sensación de suavidad y frescura durante el día. 🧴✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"OC403", nombre:"Perfume Capilar Clik Hair Mini", formato:"Unidad", categoria:"cuidado capilar",
     precio:17000, stock:6,
     imagenes:["PERFUME-CAPILAR-CLICK-MINI-BRILLOS-OC403.jpg"],
-    descripcion:"✨ Perfume Capilar Click Hair\n\nPerfuma tu cabello con un aroma delicioso y duradero, mientras aporta brillo, suavidad y control del frizz. Su fórmula con argán, queratina y termoprotector complementa tu rutina capilar sin dejar sensación grasosa." },
+    descripcion:"✨ Perfume Capilar Click Hair\n\nPerfuma tu cabello con un aroma delicioso y duradero, mientras aporta brillo, suavidad y control del frizz. Su fórmula con argán, queratina y termoprotector complementa tu rutina capilar sin dejar sensación grasosa.",
+    ejes:[],
+    variantes:[] },
 
   { id:"oc400", nombre:"Perfume Capilar Clik Hair de Miel", formato:"Unidad", categoria:"cuidado capilar",
     precio:58000, stock:8,
     imagenes:["PERFUME-CAPILAR-MIEL-CLICK-HAIR-OC400.PNG"],
-    descripcion:"🍯 Perfume Capilar de Miel Click Hair\n\nAroma dulce y envolvente con notas de miel, caramelo, ámbar y vainilla. Perfuma tu cabello mientras aporta brillo, suavidad y una sensación de frescura irresistible. ✨" },
+    descripcion:"🍯 Perfume Capilar de Miel Click Hair\n\nAroma dulce y envolvente con notas de miel, caramelo, ámbar y vainilla. Perfuma tu cabello mientras aporta brillo, suavidad y una sensación de frescura irresistible. ✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG115", nombre:"Splash Fantiluna", formato:"unidad", categoria:"Cremas-Mantequillas y Splash",
     precio:22500, stock:10,
     imagenes:["SPLASH-FANTILUNA-MG115.PNG"],
-    descripcion:"✨ SPLASH FANTILUNA ✨\n\nUna colección de fragancias deliciosas para acompañarte todos los días. 💕 Elige tu favorito: Blue Kiss, Seducción, Bon Bon o Sandía. Aromas frescos, dulces y encantadores para darle un toque especial a tu rutina. 🍉💙" },
+    descripcion:"✨ SPLASH FANTILUNA ✨\n\nUna colección de fragancias deliciosas para acompañarte todos los días. 💕 Elige tu favorito: Blue Kiss, Seducción, Bon Bon o Sandía. Aromas frescos, dulces y encantadores para darle un toque especial a tu rutina. 🍉💙",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG116", nombre:"Splash Fantiluna Mini", formato:"unidad", categoria:"Cremas-Mantequillas y Splash",
     precio:14500, stock:10,
     imagenes:["SPLASH-FANTILUNA-MINI-MG116.PNG"],
-    descripcion:"✨ SPLASH FANTILUNA  MINI✨\n\nUna colección de fragancias deliciosas para acompañarte todos los días. 💕 Elige tu favorito: Blue Kiss, Seducción, Bon Bon o Sandía. Aromas frescos, dulces y encantadores para darle un toque especial a tu rutina. 🍉💙" },
+    descripcion:"✨ SPLASH FANTILUNA  MINI✨\n\nUna colección de fragancias deliciosas para acompañarte todos los días. 💕 Elige tu favorito: Blue Kiss, Seducción, Bon Bon o Sandía. Aromas frescos, dulces y encantadores para darle un toque especial a tu rutina. 🍉💙",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG118", nombre:"Crema Corporal Fantiluna Mini", formato:"unidad", categoria:"Cremas-Mantequillas y Splash",
     precio:14500, stock:8,
     imagenes:["CREMA-CORPORAL-MINI-MG118.PNG"],
-    descripcion:"✨ CREMA CORPORAL FANTILUNA  MINI✨\n\nHidrata y cuida tu piel, dejándola suave, delicadamente perfumada y con una sensación agradable. 💕 Disponible en rosado y morado, para que elijas tu favorito." },
+    descripcion:"✨ CREMA CORPORAL FANTILUNA  MINI✨\n\nHidrata y cuida tu piel, dejándola suave, delicadamente perfumada y con una sensación agradable. 💕 Disponible en rosado y morado, para que elijas tu favorito.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG117", nombre:"Crema Corporal Fantiluna", formato:"unidad", categoria:"Cremas-Mantequillas y Splash",
     precio:22500, stock:6,
     imagenes:["CREMA-CORPORAL-FANTILUNA-MG117.png"],
-    descripcion:"✨ CREMA CORPORAL FANTILUNA ✨\n\nHidrata y cuida tu piel, dejándola suave, delicadamente perfumada y con una sensación agradable. 💕 Disponible en rosado y morado, para que elijas tu favorito." },
+    descripcion:"✨ CREMA CORPORAL FANTILUNA ✨\n\nHidrata y cuida tu piel, dejándola suave, delicadamente perfumada y con una sensación agradable. 💕 Disponible en rosado y morado, para que elijas tu favorito.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG113", nombre:"Mantequilla fantiluna mini", formato:"unidad", categoria:"Cremas-Mantequillas y Splash",
     precio:11500, stock:6,
     imagenes:["MANTEQUILLAS-FANTILUNA-MINI-MG113.png"],
-    descripcion:"✨ Mantequillas Corporales FantiLuna ✨\n\nDale a tu piel el cuidado que merece 💕 Con las mantequillas corporales FantiLuna, disfruta una textura suave y cremosa que ayuda a mantener tu piel hidratada, nutrida y deliciosamente perfumada.\n\nPerfectas para incorporar a tu rutina diaria de cuidado corporal y consentir tu piel después del baño. ✨" },
+    descripcion:"✨ Mantequillas Corporales FantiLuna ✨\n\nDale a tu piel el cuidado que merece 💕 Con las mantequillas corporales FantiLuna, disfruta una textura suave y cremosa que ayuda a mantener tu piel hidratada, nutrida y deliciosamente perfumada.\n\nPerfectas para incorporar a tu rutina diaria de cuidado corporal y consentir tu piel después del baño. ✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG112", nombre:"Mantequilla fantiluna grande", formato:"unidad", categoria:"Cremas-Mantequillas y Splash",
     precio:22500, stock:8,
     imagenes:["MANTEQUILLAS-FANTILUNA-MG112.png"],
-    descripcion:"\"✨ Mantequillas Corporales FantiLuna ✨\n\nDale a tu piel el cuidado que merece 💕 Con las mantequillas corporales FantiLuna, disfruta una textura suave y cremosa que ayuda a mantener tu piel hidratada, nutrida y deliciosamente perfumada.\n\nPerfectas para incorporar a tu rutina diaria de cuidado corporal y consentir tu piel después del baño. ✨\"" },
+    descripcion:"\"✨ Mantequillas Corporales FantiLuna ✨\n\nDale a tu piel el cuidado que merece 💕 Con las mantequillas corporales FantiLuna, disfruta una textura suave y cremosa que ayuda a mantener tu piel hidratada, nutrida y deliciosamente perfumada.\n\nPerfectas para incorporar a tu rutina diaria de cuidado corporal y consentir tu piel después del baño. ✨\"",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM017", nombre:"Ampolla de rescate Milagros", formato:"unidad", categoria:"cuidado capilar",
     precio:18000, stock:8,
     imagenes:["RESCATE-INSTANTANEO-MILAGROS-FM017.png"],
-    descripcion:"✨ AMPOLLA DE RESCATE MILAGROS ✨\n\n¿Tu cabello necesita un extra de cuidado? 💆‍♀️💖 Dale una dosis de amor con la Ampolla de Rescate Milagros, ideal para complementar tu rutina capilar y devolverle a tu cabello una apariencia más suave, brillante y saludable." },
+    descripcion:"✨ AMPOLLA DE RESCATE MILAGROS ✨\n\n¿Tu cabello necesita un extra de cuidado? 💆‍♀️💖 Dale una dosis de amor con la Ampolla de Rescate Milagros, ideal para complementar tu rutina capilar y devolverle a tu cabello una apariencia más suave, brillante y saludable.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG119", nombre:"Perfume capilar milagros", formato:"unidad", categoria:"cuidado capilar",
     precio:12000, stock:12,
     imagenes:["PERFUME-CAPILAR-MILAGROS-MG119.png"],
-    descripcion:"✨ PERFUME CAPILAR MILAGROS ✨\n\n¡Cabello que huele delicioso, en todo momento! 💕🌸\n\nEl Perfume Capilar Milagros es el toque final perfecto para tu rutina de belleza. Aporta una deliciosa fragancia al cabello, dejando una sensación fresca, femenina y encantadora." },
+    descripcion:"✨ PERFUME CAPILAR MILAGROS ✨\n\n¡Cabello que huele delicioso, en todo momento! 💕🌸\n\nEl Perfume Capilar Milagros es el toque final perfecto para tu rutina de belleza. Aporta una deliciosa fragancia al cabello, dejando una sensación fresca, femenina y encantadora.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG106", nombre:"Perfume termoprotector origen botanico", formato:"unidad", categoria:"cuidado capilar",
     precio:26000, stock:12,
     imagenes:["PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png"],
-    descripcion:"✨ PERFUME TERMOPROTECTOR ORIGEN BOTÁNICO ✨\n\nCuida tu cabello y dale ese toque delicioso que tanto te gusta. 🌿💖\n\nEl Perfume Termoprotector Origen Botánico combina el cuidado capilar con una agradable fragancia, convirtiéndose en el aliado perfecto para complementar tu rutina de belleza. ✨" },
+    descripcion:"✨ PERFUME TERMOPROTECTOR ORIGEN BOTÁNICO ✨\n\nCuida tu cabello y dale ese toque delicioso que tanto te gusta. 🌿💖\n\nEl Perfume Termoprotector Origen Botánico combina el cuidado capilar con una agradable fragancia, convirtiéndose en el aliado perfecto para complementar tu rutina de belleza. ✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"OC401", nombre:"Mascarilla de miel Click Hair", formato:"unidad", categoria:"cuidado capilar",
     precio:46000, stock:8,
     imagenes:["MASCARILLA-DE-MIEL-CLICK-HAIR-OC401.png"],
-    descripcion:"🍯✨ MASCARILLA DE MIEL CLICK HAIR ✨🍯\n\nDale a tu cabello una dosis de nutrición y cuidado con la Mascarilla de Miel Click Hair. 💛\n\nSu fórmula con miel es ideal para complementar tu rutina capilar, ayudando a que el cabello luzca más suave, manejable, brillante y con una apariencia saludable. ✨" },
+    descripcion:"🍯✨ MASCARILLA DE MIEL CLICK HAIR ✨🍯\n\nDale a tu cabello una dosis de nutrición y cuidado con la Mascarilla de Miel Click Hair. 💛\n\nSu fórmula con miel es ideal para complementar tu rutina capilar, ayudando a que el cabello luzca más suave, manejable, brillante y con una apariencia saludable. ✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"OC402", nombre:"Shampoo de miel Click Hair", formato:"unidad", categoria:"cuidado capilar",
     precio:45000, stock:6,
     imagenes:["SHAMPOO-DE-MIEL-CLICK HAIR-OC402.png"],
-    descripcion:"🍯✨ SHAMPOO DE MIEL CLICK HAIR ✨🍯\n\nDale a tu cabello el cuidado que necesita con el Shampoo de Miel Click Hair. 💛🌿\n\nSu fórmula con miel ayuda a complementar tu rutina de cuidado capilar, dejando el cabello con una apariencia más suave, brillante y saludable. ✨" },
+    descripcion:"🍯✨ SHAMPOO DE MIEL CLICK HAIR ✨🍯\n\nDale a tu cabello el cuidado que necesita con el Shampoo de Miel Click Hair. 💛🌿\n\nSu fórmula con miel ayuda a complementar tu rutina de cuidado capilar, dejando el cabello con una apariencia más suave, brillante y saludable. ✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"OC411", nombre:"Miel para el cabello 20ml Click Hair", formato:"unidad", categoria:"cuidado capilar",
     precio:30000, stock:8,
     imagenes:["MIEL-CAPILAR-CLICK-HAIR-PEQUEÑA-OC411.png"],
-    descripcion:"\"💛 La Miel para el Cabello Click Hair es ese pequeño paso que puede transformar el acabado de tu cabello.\n\n🍯 Ayuda a retener la humedad del cabello.\n✨ Aporta brillo intenso y efecto brillo espejo.\n💧 Ayuda a hidratar y nutrir la fibra capilar.\n💆‍♀️ Favorece una sensación de suavidad y cabello más manejable.\n🌸 Ayuda a disminuir el frizz.\n✂️ Ayuda a mejorar la apariencia de las puntas secas y abiertas y a sellarlas visualmente.\n💛 Ideal para cabello seco, opaco, maltratado, con frizz, liso, ondulado o rizado.\n\n🌿 Sus ingredientes destacados: miel natural + aceite de argán + aceite de macadamia.\"" },
+    descripcion:"\"💛 La Miel para el Cabello Click Hair es ese pequeño paso que puede transformar el acabado de tu cabello.\n\n🍯 Ayuda a retener la humedad del cabello.\n✨ Aporta brillo intenso y efecto brillo espejo.\n💧 Ayuda a hidratar y nutrir la fibra capilar.\n💆‍♀️ Favorece una sensación de suavidad y cabello más manejable.\n🌸 Ayuda a disminuir el frizz.\n✂️ Ayuda a mejorar la apariencia de las puntas secas y abiertas y a sellarlas visualmente.\n💛 Ideal para cabello seco, opaco, maltratado, con frizz, liso, ondulado o rizado.\n\n🌿 Sus ingredientes destacados: miel natural + aceite de argán + aceite de macadamia.\"",
+    ejes:[],
+    variantes:[] },
 
   { id:"OC412", nombre:"Miel para el cabello 50ML Click Hair", formato:"unidad", categoria:"cuidado capilar",
     precio:60000, stock:8,
     imagenes:["MIEL-CAPILAR-CLICK-HAIR-GRANDE-OC412.png"],
-    descripcion:"💛 La Miel para el Cabello Click Hair es ese pequeño paso que puede transformar el acabado de tu cabello.\n\n🍯 Ayuda a retener la humedad del cabello.\n✨ Aporta brillo intenso y efecto brillo espejo.\n💧 Ayuda a hidratar y nutrir la fibra capilar.\n💆‍♀️ Favorece una sensación de suavidad y cabello más manejable.\n🌸 Ayuda a disminuir el frizz.\n✂️ Ayuda a mejorar la apariencia de las puntas secas y abiertas y a sellarlas visualmente.\n💛 Ideal para cabello seco, opaco, maltratado, con frizz, liso, ondulado o rizado.\n\n🌿 Sus ingredientes destacados: miel natural + aceite de argán + aceite de macadamia." },
+    descripcion:"💛 La Miel para el Cabello Click Hair es ese pequeño paso que puede transformar el acabado de tu cabello.\n\n🍯 Ayuda a retener la humedad del cabello.\n✨ Aporta brillo intenso y efecto brillo espejo.\n💧 Ayuda a hidratar y nutrir la fibra capilar.\n💆‍♀️ Favorece una sensación de suavidad y cabello más manejable.\n🌸 Ayuda a disminuir el frizz.\n✂️ Ayuda a mejorar la apariencia de las puntas secas y abiertas y a sellarlas visualmente.\n💛 Ideal para cabello seco, opaco, maltratado, con frizz, liso, ondulado o rizado.\n\n🌿 Sus ingredientes destacados: miel natural + aceite de argán + aceite de macadamia.",
+    ejes:[],
+    variantes:[] },
 
   { id:"OC413", nombre:"Termoprotector de leche y miel Click Hair", formato:"unidad", categoria:"cuidado capilar",
     precio:49000, stock:8,
     imagenes:["TERMOPROTECTOR-LECHE-Y-MIEL-CLICK-HAIR-OC413.png"],
-    descripcion:"🌿✨ TERMOPROTECTOR LECHE + MIEL ✨🍯\n\nProtege y cuida tu cabello mientras disfrutas de un acabado suave y luminoso. 💕 El Termoprotector Leche + Miel es ideal para complementar tu rutina de peinado y ayudar a proteger el cabello frente al calor de herramientas como secador, plancha o rizador." },
+    descripcion:"🌿✨ TERMOPROTECTOR LECHE + MIEL ✨🍯\n\nProtege y cuida tu cabello mientras disfrutas de un acabado suave y luminoso. 💕 El Termoprotector Leche + Miel es ideal para complementar tu rutina de peinado y ayudar a proteger el cabello frente al calor de herramientas como secador, plancha o rizador.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM018", nombre:"Skala Babosa", formato:"unidad", categoria:"cuidado capilar",
     precio:27000, stock:6,
     imagenes:["SKALA-BABOSA-FM018.png"],
-    descripcion:"🌿✨ TRATAMIENTO DE BABOSA SKALA ✨🌿\n\nSu fórmula con babosa (aloe vera) es ideal para complementar tu rutina capilar, especialmente cuando buscas un cabello con una apariencia más hidratada, suave, brillante y fácil de desenredar.\n\n💚 Con aloe vera\n💧 Ayuda a mantener la hidratación del cabello\n✨ Aporta suavidad y brillo\n🪮 Facilita el desenredado y el peinado" },
+    descripcion:"🌿✨ TRATAMIENTO DE BABOSA SKALA ✨🌿\n\nSu fórmula con babosa (aloe vera) es ideal para complementar tu rutina capilar, especialmente cuando buscas un cabello con una apariencia más hidratada, suave, brillante y fácil de desenredar.\n\n💚 Con aloe vera\n💧 Ayuda a mantener la hidratación del cabello\n✨ Aporta suavidad y brillo\n🪮 Facilita el desenredado y el peinado",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG129", nombre:"Cera Nativos Roja", formato:"unidad", categoria:"cuidado capilar",
     precio:28000, stock:12,
     imagenes:["CERA-NATIVOS-MG129.png"],
-    descripcion:"✨🌿 CERA NATIVOS WATER WAVE 🌿✨\n\n¡Define tu estilo y mantén tu cabello bajo control! 💇‍♀️✨\n\nLa Cera Nativos Water Wave es ideal para crear y fijar peinados, ayudando a controlar el cabello y mantener el look durante el día, con un acabado definido y cuidado." },
+    descripcion:"✨🌿 CERA NATIVOS WATER WAVE 🌿✨\n\n¡Define tu estilo y mantén tu cabello bajo control! 💇‍♀️✨\n\nLa Cera Nativos Water Wave es ideal para crear y fijar peinados, ayudando a controlar el cabello y mantener el look durante el día, con un acabado definido y cuidado.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG196", nombre:"Mascarilla Bomba Origen Botanico", formato:"unidad", categoria:"cuidado capilar",
     precio:38000, stock:5,
     imagenes:["MASCARILLA-BOMBA-ORIGEN-BOTANICO-MG196.png"],
-    descripcion:"🌿✨ Mascarilla Botánica S.O.S. – Origen Botánico ✨\n\nTratamiento ideal para cabellos dañados, frágiles y propensos al frizz. Su fórmula ayuda a fortalecer, reparar y mejorar la apariencia del cabello, dejándolo más suave, manejable y brillante. 💚\n\n💆‍♀️ 400 ml | Cuidado intensivo" },
+    descripcion:"🌿✨ Mascarilla Botánica S.O.S. – Origen Botánico ✨\n\nTratamiento ideal para cabellos dañados, frágiles y propensos al frizz. Su fórmula ayuda a fortalecer, reparar y mejorar la apariencia del cabello, dejándolo más suave, manejable y brillante. 💚\n\n💆‍♀️ 400 ml | Cuidado intensivo",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM003", nombre:"Kit Bioaqua Camellias", formato:"unidad", categoria:"Cuidado de la Piel",
     precio:48000, stock:7,
     imagenes:["KIT-SKIN-CARE-CAMELLIAS-FM003.png"],
-    descripcion:"🌸✨ KIT BIOAQUA CAMELLIAS ✨🌸\n\nRutina facial que ayuda a hidratar, nutrir, suavizar y aportar luminosidad a la piel. 🌿💗\n\n💧 Ideal para pieles normales, secas, deshidratadas u opacas." },
+    descripcion:"🌸✨ KIT BIOAQUA CAMELLIAS ✨🌸\n\nRutina facial que ayuda a hidratar, nutrir, suavizar y aportar luminosidad a la piel. 🌿💗\n\n💧 Ideal para pieles normales, secas, deshidratadas u opacas.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG100", nombre:"Kit Bioaqua de Arroz", formato:"unidad", categoria:"Cuidado de la Piel",
     precio:48000, stock:4,
     imagenes:["KIT-SKIN-CARE-ARROZ-MG100.png"],
-    descripcion:"🌾✨ KIT DE ARROZ BIOAQUA ✨🌾\n\nRutina facial que ayuda a hidratar, suavizar e iluminar la piel, mejorando la apariencia de una piel opaca y dejando un aspecto más uniforme y luminoso. 💗\n\n🌸 Ideal para piel normal, seca, mixta u opaca." },
+    descripcion:"🌾✨ KIT DE ARROZ BIOAQUA ✨🌾\n\nRutina facial que ayuda a hidratar, suavizar e iluminar la piel, mejorando la apariencia de una piel opaca y dejando un aspecto más uniforme y luminoso. 💗\n\n🌸 Ideal para piel normal, seca, mixta u opaca.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM002", nombre:"Kit Bioaqua Rosa+Acido Hialuronico", formato:"unidad", categoria:"Cuidado de la Piel",
     precio:48000, stock:6,
     imagenes:["KIT-SKIN-CARE-ACIDO-HIALURONICO-Y-ROSA-FM002.png"],
-    descripcion:"🌹💧 KIT BIOAQUA ROSAS + ÁCIDO HIALURÓNICO ✨\n\nRutina facial que ayuda a hidratar, suavizar y refrescar la piel, aportando una apariencia más luminosa y saludable. 💗\n\n💧 Ideal para pieles secas, deshidratadas y opacas." },
+    descripcion:"🌹💧 KIT BIOAQUA ROSAS + ÁCIDO HIALURÓNICO ✨\n\nRutina facial que ayuda a hidratar, suavizar y refrescar la piel, aportando una apariencia más luminosa y saludable. 💗\n\n💧 Ideal para pieles secas, deshidratadas y opacas.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM027", nombre:"Contorno de ojos en rollon Bioaqua", formato:"unidad", categoria:"Cuidado de la Piel",
     precio:10000, stock:12,
     imagenes:["CONTORNO-DE-OJOS-BIOAQUA-FM027.png"],
-    descripcion:"👁️✨ CONTORNO DE OJOS BIOAQUA EN ROLL-ON ✨\n\nAyuda a hidratar, refrescar y suavizar la delicada zona del contorno de ojos. Su aplicador roll-on proporciona una sensación fresca y agradable. 💧🌸" },
+    descripcion:"👁️✨ CONTORNO DE OJOS BIOAQUA EN ROLL-ON ✨\n\nAyuda a hidratar, refrescar y suavizar la delicada zona del contorno de ojos. Su aplicador roll-on proporciona una sensación fresca y agradable. 💧🌸",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM038", nombre:"Colageno Bioaqua", formato:"unidad", categoria:"Cuidado de la Piel",
     precio:13000, stock:12,
     imagenes:["COLAGENO-BIOAQUA-FM.png"],
-    descripcion:"✨ BIOAQUA COLÁGENO – CUIDADO FACIAL ✨\n\nUn aliado para una piel de apariencia más firme, tersa y revitalizada. Su fórmula ayuda a mantener la hidratación y a mejorar la apariencia de líneas de expresión y textura. 💧\n\n🌸 Ideal para piel madura, seca o con signos de deshidratación." },
+    descripcion:"✨ BIOAQUA COLÁGENO – CUIDADO FACIAL ✨\n\nUn aliado para una piel de apariencia más firme, tersa y revitalizada. Su fórmula ayuda a mantener la hidratación y a mejorar la apariencia de líneas de expresión y textura. 💧\n\n🌸 Ideal para piel madura, seca o con signos de deshidratación.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM026", nombre:"Tratamiento para pestañas Bioaqua", formato:"unidad", categoria:"Maquillaje",
     precio:7000, stock:10,
     imagenes:["SERUM-DE-PESTAÑAS-FM026.png"],
-    descripcion:"👁️✨ TRATAMIENTO PARA PESTAÑAS BIOAQUA ✨\n\nCuida tus pestañas desde la raíz, ayudando a mantenerlas más hidratadas, acondicionadas y de apariencia saludable. 🌿\n\n💗 Ideal para complementar tu rutina de belleza y cuidar tus pestañas diariamente." },
+    descripcion:"👁️✨ TRATAMIENTO PARA PESTAÑAS BIOAQUA ✨\n\nCuida tus pestañas desde la raíz, ayudando a mantenerlas más hidratadas, acondicionadas y de apariencia saludable. 🌿\n\n💗 Ideal para complementar tu rutina de belleza y cuidar tus pestañas diariamente.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG122", nombre:"Pestañina Prosa", formato:"unidad", categoria:"Maquillaje",
     precio:18000, stock:15,
     imagenes:["PESTAÑIÑA-PROSA-MG122.png"],
-    descripcion:"✨ PESTAÑINA PROSA ✨\n\nRealza tu mirada con color intenso, definición y un acabado uniforme. Su fórmula ayuda a destacar las pestañas para lograr una mirada más expresiva. 👁️💗" },
+    descripcion:"✨ PESTAÑINA PROSA ✨\n\nRealza tu mirada con color intenso, definición y un acabado uniforme. Su fórmula ayuda a destacar las pestañas para lograr una mirada más expresiva. 👁️💗",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG182", nombre:"Gel de cejas Melu", formato:"unidad", categoria:"Maquillaje",
     precio:18000, stock:12,
     imagenes:["GEL-DE-CEJAS-MELU-MG182.png"],
-    descripcion:"✨ GEL DE CEJAS MELU ✨\n\nDefine, peina y fija tus cejas para lograr un acabado ordenado, natural y duradero. Ideal para mantener cada pelito en su lugar y resaltar tu mirada. 🤎" },
+    descripcion:"✨ GEL DE CEJAS MELU ✨\n\nDefine, peina y fija tus cejas para lograr un acabado ordenado, natural y duradero. Ideal para mantener cada pelito en su lugar y resaltar tu mirada. 🤎",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG176", nombre:"Gel de cejas Got 2b", formato:"unidad", categoria:"Maquillaje",
     precio:26000, stock:13,
     imagenes:["GEL-DE-CEJAS-GOT2B-MG176.png"],
-    descripcion:"✨ GEL DE CEJAS GOT2B ✨\n\nPara peinar, definir y fijar tus cejas con una sujeción potente. Ideal para lograr el efecto “cejas laminadas” y mantener cada pelito en su lugar. 🤎✨" },
+    descripcion:"✨ GEL DE CEJAS GOT2B ✨\n\nPara peinar, definir y fijar tus cejas con una sujeción potente. Ideal para lograr el efecto “cejas laminadas” y mantener cada pelito en su lugar. 🤎✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG184", nombre:"Gel de cejas anik", formato:"unidad", categoria:"Maquillaje",
     precio:21500, stock:8,
     imagenes:["GEL-DE-CEJAS-ANIK-MG184.png"],
-    descripcion:"✨ GEL DE CEJAS ANIK ✨\n\nPeina, define y fija tus cejas para un acabado pulido, natural y bien estructurado. Ideal para mantener los pelitos en su lugar durante el día. 🤎" },
+    descripcion:"✨ GEL DE CEJAS ANIK ✨\n\nPeina, define y fija tus cejas para un acabado pulido, natural y bien estructurado. Ideal para mantener los pelitos en su lugar durante el día. 🤎",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM022", nombre:"Gloss  en caja con llavero huxa", formato:"unidad", categoria:"Maquillaje",
     precio:10000, stock:12,
     imagenes:["GLOSS-EN-CAJA-CON-LLAVERO-FM022.png"],
-    descripcion:"💋✨ GLOSS HUXA + LLAVERO ✨\n\nUn detalle lindo y práctico para llevar contigo. 💗 Gloss para dar brillo y un toque especial a tus labios, acompañado de un divertido llavero.\n\n🎁 ¡Ideal para regalar o consentirte!" },
+    descripcion:"💋✨ GLOSS HUXA + LLAVERO ✨\n\nUn detalle lindo y práctico para llevar contigo. 💗 Gloss para dar brillo y un toque especial a tus labios, acompañado de un divertido llavero.\n\n🎁 ¡Ideal para regalar o consentirte!",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM019", nombre:"Balsamo labial acido hialuronico", formato:"unidad", categoria:"Maquillaje",
     precio:5000, stock:12,
     imagenes:["BALSAMO-LABIAL-HIALURONICO-BIOAQUA-FM019.png"],
-    descripcion:"💧💋 BÁLSAMO LABIAL BIOAQUA CON ÁCIDO HIALURÓNICO ✨\n\nAyuda a hidratar, suavizar y mantener los labios confortables, aportando una apariencia más tersa y saludable. Ideal para el cuidado diario. 💗" },
+    descripcion:"💧💋 BÁLSAMO LABIAL BIOAQUA CON ÁCIDO HIALURÓNICO ✨\n\nAyuda a hidratar, suavizar y mantener los labios confortables, aportando una apariencia más tersa y saludable. Ideal para el cuidado diario. 💗",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM023", nombre:"Lip gloss con espejito", formato:"unidad", categoria:"Maquillaje",
     precio:8500, stock:12,
     imagenes:["LIP-GLOSS-CON-ESPEJITO-FM023.png"],
-    descripcion:"💋✨ LIP GLOSS CON ESPEJITO ✨\n\nBrillo irresistible para unos labios con apariencia jugosa, suave y luminosa. 💗 Su práctico espejito lo hace perfecto para llevarlo contigo y retocar tu look donde quieras." },
+    descripcion:"💋✨ LIP GLOSS CON ESPEJITO ✨\n\nBrillo irresistible para unos labios con apariencia jugosa, suave y luminosa. 💗 Su práctico espejito lo hace perfecto para llevarlo contigo y retocar tu look donde quieras.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG188", nombre:"Lip gloss", formato:"unidad", categoria:"Maquillaje",
     precio:8500, stock:12,
     imagenes:["LIP-GLOSS-MG188.jpg"],
-    descripcion:"💋✨ LIP GLOSS  ✨\n\nBrillo irresistible para unos labios con apariencia jugosa, suave y luminosa. 💗 Su práctico espejito lo hace perfecto para llevarlo contigo y retocar tu look donde quieras." },
+    descripcion:"💋✨ LIP GLOSS  ✨\n\nBrillo irresistible para unos labios con apariencia jugosa, suave y luminosa. 💗 Su práctico espejito lo hace perfecto para llevarlo contigo y retocar tu look donde quieras.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FR606", nombre:"Sombra de cejas x3", formato:"unidad", categoria:"Maquillaje",
     precio:8000, stock:5,
     imagenes:["SOMBRAS-DE-CEJAS-X3-FR606.png"],
-    descripcion:"✨ SOMBRAS DE CEJAS X3 TONOS 🤎✨\n\nDefine, rellena y da forma a tus cejas con 3 tonos para crear un acabado más natural y personalizado. Perfectas para lograr cejas bonitas y bien definidas. 💕" },
+    descripcion:"✨ SOMBRAS DE CEJAS X3 TONOS 🤎✨\n\nDefine, rellena y da forma a tus cejas con 3 tonos para crear un acabado más natural y personalizado. Perfectas para lograr cejas bonitas y bien definidas. 💕",
+    ejes:[],
+    variantes:[] },
 
   { id:"FR607", nombre:"Sombra de cejas x4", formato:"Unidad", categoria:"Maquillaje",
     precio:11000, stock:6,
     imagenes:["SOMBRAS-DE-CEJAS-X4-FR607.png"],
-    descripcion:"\"✨ SOMBRAS DE CEJAS X4 TONOS 🤎✨\n\nDefine, rellena y da forma a tus cejas con 3 tonos para crear un acabado más natural y personalizado. Perfectas para lograr cejas bonitas y bien definidas. 💕\"" },
+    descripcion:"\"✨ SOMBRAS DE CEJAS X4 TONOS 🤎✨\n\nDefine, rellena y da forma a tus cejas con 3 tonos para crear un acabado más natural y personalizado. Perfectas para lograr cejas bonitas y bien definidas. 💕\"",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM032", nombre:"Tinta Gelatina Jelly Blish", formato:"Unidad", categoria:"Maquillaje",
     precio:8000, stock:0,
     imagenes:["TINTA-GELATINA-JELLY-BLISH-FM032.png"],
-    descripcion:"🍓✨ TINTA GELATINA JELLY BLISH ✨🍓\n\nAporta un toque de color fresco y natural a tus labios y mejillas, con una textura tipo gelatina fácil de difuminar. 💕 Perfecta para lograr un look jugoso, delicado y lleno de vida." },
+    descripcion:"🍓✨ TINTA GELATINA JELLY BLISH ✨🍓\n\nAporta un toque de color fresco y natural a tus labios y mejillas, con una textura tipo gelatina fácil de difuminar. 💕 Perfecta para lograr un look jugoso, delicado y lleno de vida.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG188", nombre:"Lip Gloss Oil", formato:"Unidad", categoria:"Maquillaje",
     precio:8500, stock:6,
     imagenes:["LIP-GLOSS-OIL-MG188.jpg"],
-    descripcion:"✨💋 LIP GLOSS OIL 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial." },
+    descripcion:"✨💋 LIP GLOSS OIL 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG188", nombre:"Labiales en barra surtidos", formato:"Unidad", categoria:"Maquillaje",
     precio:8500, stock:8,
     imagenes:["LABIALES-EN-BARRA-SURTIDOS-MG188.jpg"],
-    descripcion:"💋✨ LABIALES HIDRATANTES ✨💋\n\nColor y cuidado en un solo producto. 💕 Aportan un toque de color hermoso mientras ayudan a mantener tus labios suaves, hidratados y con una sensación confortable.\n\n💰 Precio detal:" },
+    descripcion:"💋✨ LABIALES HIDRATANTES ✨💋\n\nColor y cuidado en un solo producto. 💕 Aportan un toque de color hermoso mientras ayudan a mantener tus labios suaves, hidratados y con una sensación confortable.\n\n💰 Precio detal:",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM031", nombre:"Tinta Scarlet Tint Purpure", formato:"Unidad", categoria:"Maquillaje",
     precio:10000, stock:6,
     imagenes:["TINTAS-LABIALES-FM031.png"],
-    descripcion:"💋❤️ TINTA DE LABIOS PURPURE  ❤️💋\n\nColor intenso y duradero con un acabado ligero y natural. Su diseño de corazón la hace tan linda como práctica, perfecta para darle a tus labios un toque de color fresco y encantador. ✨" },
+    descripcion:"💋❤️ TINTA DE LABIOS PURPURE  ❤️💋\n\nColor intenso y duradero con un acabado ligero y natural. Su diseño de corazón la hace tan linda como práctica, perfecta para darle a tus labios un toque de color fresco y encantador. ✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG188", nombre:"Lip Gloss", formato:"Unidad", categoria:"Maquillaje",
     precio:8500, stock:8,
     imagenes:["LIP-GLOSS-MG188.png"],
-    descripcion:"✨💋 LIP GLOSS 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial." },
+    descripcion:"✨💋 LIP GLOSS 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial.",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG188", nombre:"Lip Gloss Fresitas", formato:"Unidad", categoria:"Maquillaje",
     precio:8500, stock:6,
     imagenes:["LIP-GLOSS-FRESITAS-MG188.png"],
-    descripcion:"✨💋 LIP GLOSS 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial." },
+    descripcion:"✨💋 LIP GLOSS 💋✨\n\nDale a tus labios un toque de brillo intenso, jugoso y delicado, mientras disfrutas de una sensación suave y confortable. 💕 Perfecto para un look natural y luminoso, solo o sobre tu labial.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM001", nombre:"Tinta Tapa Corazon", formato:"Unidad", categoria:"Maquillaje",
     precio:5000, stock:6,
     imagenes:["TINTA-TAPA-CORAZON-FM001.png"],
-    descripcion:"❤️💋 TINTA DE LABIOS TAPA CORAZÓN 💋❤️\n\nDale a tus labios un color intenso, fresco y duradero con una textura ligera y cómoda. Su adorable tapa en forma de corazón le da un toque especial y femenino. ✨" },
+    descripcion:"❤️💋 TINTA DE LABIOS TAPA CORAZÓN 💋❤️\n\nDale a tus labios un color intenso, fresco y duradero con una textura ligera y cómoda. Su adorable tapa en forma de corazón le da un toque especial y femenino. ✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"MG104", nombre:"Lip Gloss con Espejo Bloomshell", formato:"Unidad", categoria:"Maquillaje",
     precio:25000, stock:5,
     imagenes:["LIP-GLOSS-CON-ESPEJO-BLOOMSHELL-MG104.png"],
-    descripcion:"✨💋 LIP GLOSS CON ESPEJO BLOOM SHELL 💋✨\n\nBrillo intenso y acabado jugoso para unos labios irresistibles. 💕 Su práctico espejito integrado lo hace perfecto para llevar en el bolso y retocar tu look en cualquier momento." },
+    descripcion:"✨💋 LIP GLOSS CON ESPEJO BLOOM SHELL 💋✨\n\nBrillo intenso y acabado jugoso para unos labios irresistibles. 💕 Su práctico espejito integrado lo hace perfecto para llevar en el bolso y retocar tu look en cualquier momento.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM029", nombre:"Lip Gloss Voluminizador", formato:"Unidad", categoria:"Maquillaje",
     precio:6100, stock:6,
     imagenes:["LIP-GLOSS-VOLUMINIZADOR-FM029.png"],
-    descripcion:"💋✨ LIP GLOSS VOLUMINIZADOR ✨💋\n\nDale a tus labios un acabado brillante, jugoso y visualmente más voluminoso. 💕 Perfecto para resaltar tus labios y completar cualquier look de maquillaje." },
+    descripcion:"💋✨ LIP GLOSS VOLUMINIZADOR ✨💋\n\nDale a tus labios un acabado brillante, jugoso y visualmente más voluminoso. 💕 Perfecto para resaltar tus labios y completar cualquier look de maquillaje.",
+    ejes:[],
+    variantes:[] },
 
   { id:"fr610", nombre:"Polvo+Corrector SAS", formato:"Unidad", categoria:"Maquillaje",
     precio:20000, stock:12,
     imagenes:["POLVO+CORRECTOR-SAS-FR610.png"],
-    descripcion:"✨🤎 POLVO + CORRECTOR SAS 🤎✨\n\nDos productos en uno para unificar el tono, disimular imperfecciones y lograr un acabado más uniforme y bonito. 💕 Perfecto para complementar tu maquillaje diario." },
+    descripcion:"✨🤎 POLVO + CORRECTOR SAS 🤎✨\n\nDos productos en uno para unificar el tono, disimular imperfecciones y lograr un acabado más uniforme y bonito. 💕 Perfecto para complementar tu maquillaje diario.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FR602", nombre:"Polvo de Hadas", formato:"Unidad", categoria:"Maquillaje",
     precio:7500, stock:12,
     imagenes:["POLVO-DE-HADAS-FR602.png"],
-    descripcion:"✨🧚‍♀️ POLVO DE HADAS 🧚‍♀️✨\n\nDale a tu maquillaje un toque de brillo mágico y luminoso. 💕 Ideal para resaltar tu look y conseguir un acabado radiante y delicado." },
+    descripcion:"✨🧚‍♀️ POLVO DE HADAS 🧚‍♀️✨\n\nDale a tu maquillaje un toque de brillo mágico y luminoso. 💕 Ideal para resaltar tu look y conseguir un acabado radiante y delicado.",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM016", nombre:"Polvo de Hadas", formato:"Unidad", categoria:"Maquillaje",
     precio:14400, stock:8,
     imagenes:["POLVO-DE-HADAS-PURPURE-FM016.png"],
-    descripcion:"✨🧚‍♀️ POLVO DE HADAS PURPURE 🧚‍♀️✨\n\nDale a tu piel un toque de luz y brillo mágico. 💖 Su textura ligera ayuda a resaltar el rostro, escote y cuerpo con un acabado radiante y hermoso. ✨" },
+    descripcion:"✨🧚‍♀️ POLVO DE HADAS PURPURE 🧚‍♀️✨\n\nDale a tu piel un toque de luz y brillo mágico. 💖 Su textura ligera ayuda a resaltar el rostro, escote y cuerpo con un acabado radiante y hermoso. ✨",
+    ejes:[],
+    variantes:[] },
 
   { id:"FM015", nombre:"Rubor 5 tonos Bonshick", formato:"Unidad", categoria:"Maquillaje",
     precio:12500, stock:12,
     imagenes:["RUBOR-5TONOS-FM015.png"],
-    descripcion:"✨🌸 RUBOR E ILUMINADOR 5 TONOS BONSHIK 🌸✨\n\nDale color y luminosidad a tu rostro con 5 tonos para combinar y crear diferentes looks. 💕 Ideal para darle un toque fresco al rostro y resaltar tus facciones con un acabado hermoso." }
+    descripcion:"✨🌸 RUBOR E ILUMINADOR 5 TONOS BONSHIK 🌸✨\n\nDale color y luminosidad a tu rostro con 5 tonos para combinar y crear diferentes looks. 💕 Ideal para darle un toque fresco al rostro y resaltar tus facciones con un acabado hermoso.",
+    ejes:[],
+    variantes:[] }
 ];
 /* ═══ FIN DEL CATÁLOGO DE RESPALDO ═══ */
 
@@ -888,6 +1028,9 @@ const PRODUCTOS = [
    un tomate. El marcador de una tienda de cosméticos era un tomate. */
 function formaDe(formato, categoria){
   const t = (String(formato || "") + " " + String(categoria || "")).toLowerCase();
+  if(t.includes("splash") || t.includes("colonia") || t.includes("perfume") ||
+     t.includes("crema") || t.includes("loción")) return "frasco";
+  if(t.includes("maquill") || t.includes("cosmét") || t.includes("kit")) return "caja";
   if(t.includes("frasco") || t.includes("salsa") || t.includes("conserva")) return "frasco";
   if(t.includes("botella") || t.includes("bebida")) return "botella";
   if(t.includes("bolsa") || t.includes("caja")) return "bolsa";
@@ -916,6 +1059,8 @@ function lista(id, valor, envolver){
 
 /* Cuánto se puede pagar de una sola vez. Lo pone la hoja; 0 = sin tope. */
 let TOPE_PAGO = 0;
+let MODO_PAGO = "pasarela";
+let PROVEEDOR_PAGO = "bold";
 
 function aplicarConfiguracion(c){
   if(!c || typeof c !== "object") return;
@@ -974,6 +1119,8 @@ function aplicarConfiguracion(c){
      de extremo a extremo habla con el maestro. */
   const topeLeido = Number(c.tope_pago);
   if(isFinite(topeLeido) && topeLeido > 0) TOPE_PAGO = topeLeido;
+  MODO_PAGO = v("checkout_modo") === "whatsapp" ? "whatsapp" : "pasarela";
+  PROVEEDOR_PAGO = v("checkout_proveedor") || "bold";
 
   if(v("fotos_origen")) FOTOS.origen = v("fotos_origen");
   if(c && typeof c.fotos_cdn === "string") FOTOS.cdn = c.fotos_cdn;
@@ -1000,6 +1147,7 @@ function aplicarConfiguracion(c){
     actualizado: v("legal_actualizado") || EMPRESA.actualizado
   };
 }
+
 
 function aplicarCatalogo(datos){
   if(!datos || !datos.ok) return false;
@@ -1029,6 +1177,16 @@ function aplicarCatalogo(datos){
         precioAntes: (Number(c.precioAntes) || 0) > (Number(c.precio) || 0)
                        ? Number(c.precioAntes) : 0,
         umbralBajo:  Math.max(0, Math.floor(Number(c.umbralBajo) || 0)),
+        ejes: Array.isArray(c.ejes) ? c.ejes.map(e => Object.freeze({
+          nombre:String(e.nombre || ""), valores:Array.isArray(e.valores) ? e.valores.map(String) : []
+        })).filter(e => e.nombre && e.valores.length) : [],
+        variantes: Array.isArray(c.variantes) ? c.variantes.map(v => Object.freeze({
+          id:String(v.id || ""), sku:String(v.sku || ""),
+          opciones:(v.opciones && typeof v.opciones === "object") ? Object.freeze({...v.opciones}) : Object.freeze({}),
+          precio:Math.max(0, Number(v.precio) || Number(c.precio) || 0),
+          stock:Math.max(0, Math.floor(Number(v.stock) || 0)),
+          imagenes:Array.isArray(v.imagenes) ? v.imagenes.map(String).filter(Boolean).slice(0, 6) : []
+        })).filter(v => v.id) : [],
         forma:       formaDe(c.formato, c.categoria)
       }));
 
@@ -1073,7 +1231,7 @@ function traer(url, ms){
 /* El esquema que esta página sabe leer. La hoja publica el suyo en cada
    respuesta. Si el de la hoja es MAYOR, quien está viejo es este archivo: la
    hoja habla un idioma con palabras que aquí no existen. */
-const ESQUEMA = 1;
+const ESQUEMA = 3;
 let esquemaHoja = null;
 
 /* Un esquema que no entendemos NO se aplica. Se conserva lo último bueno —el
@@ -1334,8 +1492,13 @@ function cdnPermitido(plantilla){
   return false;
 }
 
-function fotosDe(p, uso){
-  const lista = (p.imagenes && p.imagenes.length ? p.imagenes : [""]);
+function nombresDeFotos(p, variante){
+  return variante && Array.isArray(variante.imagenes) && variante.imagenes.length
+    ? variante.imagenes : (p.imagenes && p.imagenes.length ? p.imagenes : [""]);
+}
+
+function fotosDe(p, uso, variante){
+  const lista = nombresDeFotos(p, variante);
   return lista.map((nombre, i) => {
     const url = urlFoto(nombre, uso || "tarjeta");
     return url || marcador(p.forma, i);
@@ -1343,8 +1506,8 @@ function fotosDe(p, uso){
 }
 
 /* La URL sin optimizar, para volver a ella si la optimizada no existe. */
-function fotoPlana(p, i){
-  const nombre = ((p.imagenes || [])[i] || "").trim();
+function fotoPlana(p, i, variante){
+  const nombre = (nombresDeFotos(p, variante)[i] || "").trim();
   if(!nombre) return "";
   if(/^https?:\/\//i.test(nombre)) return nombre;
   return String(FOTOS.origen || "").replace(/\/+$/, "") + "/" + nombre.replace(/^\/+/, "");
@@ -1363,7 +1526,7 @@ addEventListener("error", e => {
 }, true);
 
 // ── Estado ──
-let carrito = [];              // [{id, cantidad}]
+let carrito = [];              // [{id, variante, cantidad}]
 let categoriaActiva = "Todos";
 const OPCIONES_PAGINA = [25, 50, 100];
 let porPagina = OPCIONES_PAGINA[0];
@@ -1378,6 +1541,7 @@ let firmaFallida = null;                    // para no reintentar en bucle
 let firmaEnVuelo = null;                    // qué pedido se está validando ahora
 let versionHoja  = null;                    // la que respondió el Apps Script
 let cantidades  = {};                       // {id: n} elegido en la tarjeta
+let selecciones = {};                       // {productoId:{nombreDeEje:valor}}
 let envioActivo = TARIFAS[1];
 let fichaActual = null;
 let fotoActual = 0;
@@ -1386,6 +1550,46 @@ const $ = s => document.querySelector(s);
 const pesos = n => "$" + Math.round(n).toLocaleString("es-CO");
 const producto = id => VISIBLES.find(p => p.id === id);
 const escapar = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tieneVariantes = p => !!(p && Array.isArray(p.ejes) && p.ejes.length);
+const variantePorId = (p, id) => (p && p.variantes || []).find(v => v.id === id);
+const claveItem = (id, variante) => id + "|" + (variante || "");
+const varianteDelItem = i => variantePorId(producto(i.id), i.variante);
+const precioItem = i => { const v = varianteDelItem(i); return v ? v.precio : producto(i.id).precio; };
+const stockItem = i => { const v = varianteDelItem(i); return v ? v.stock : producto(i.id).stock; };
+function textoVariante(v){
+  return v ? Object.entries(v.opciones || {}).map(([k, valor]) => `${k}: ${valor}`).join(" · ") : "";
+}
+
+function varianteElegida(p){
+  if(!tieneVariantes(p)) return null;
+  const s = selecciones[p.id] || {};
+  if(p.ejes.some(e => !s[e.nombre])) return null;
+  return p.variantes.find(v => p.ejes.every(e => String(v.opciones[e.nombre] || "") === String(s[e.nombre]))) || null;
+}
+
+function opcionDisponible(p, eje, valor){
+  const s = selecciones[p.id] || {};
+  const cambiandoEseEje = !!s[eje];
+  return p.variantes.some(v => v.stock > 0 && p.ejes.every(e =>
+    e.nombre === eje ? String(v.opciones[e.nombre]) === String(valor) :
+    (cambiandoEseEje || !s[e.nombre] || String(v.opciones[e.nombre]) === String(s[e.nombre]))));
+}
+
+function elegirOpcion(productoId, eje, valor){
+  const p = producto(productoId); if(!p) return;
+  selecciones[productoId] = {...(selecciones[productoId] || {}), [eje]:valor};
+  /* Si la nueva opción vuelve incompatible otra selección, se conserva la
+     elección recién hecha y se limpian solo las que ya no tienen combinación. */
+  p.ejes.forEach(e => {
+    if(e.nombre === eje || !selecciones[productoId][e.nombre]) return;
+    const actual = selecciones[productoId][e.nombre];
+    if(!opcionDisponible(p, e.nombre, actual)) delete selecciones[productoId][e.nombre];
+  });
+  fotoActual = 0;
+  const elegida = varianteElegida(p);
+  try { history.replaceState({ ficha:p.id, variante:elegida ? elegida.id : "" }, "", enlaceDe(p.id, elegida ? elegida.id : "")); } catch(e){}
+  pintarFicha();
+}
 
 // ── Catálogo ──
 function pintarFiltros(){
@@ -1401,44 +1605,48 @@ function filtrar(cat){ categoriaActiva = cat; pagina = 1; pintarFiltros(); pinta
    resultado que ahora tiene 6 productos deja la pantalla vacía sin explicación. */
 function buscar(){ pagina = 1; pintarRejilla(); }
 
-function estadoStock(p){
-  const enCarrito = (carrito.find(i => i.id === p.id) || {}).cantidad || 0;
-  const libre = p.stock - enCarrito;
-  if(p.stock === 0)  return { clase:"cero", texto:"Agotado", libre:0 };
+function estadoStock(p, variante){
+  const stock = variante ? variante.stock : p.stock;
+  const enCarrito = carrito.filter(i => i.id === p.id && (!variante || i.variante === variante.id))
+    .reduce((n, i) => n + i.cantidad, 0);
+  const libre = stock - enCarrito;
+  if(stock === 0)  return { clase:"cero", texto:"Agotado", libre:0 };
   if(libre <= 0)     return { clase:"poco", texto:"Todo en tu carrito", libre:0 };
   /* Cuántas son «pocas» lo decide el comercio, producto por producto, en la
      columna Umbral bajo de su hoja: cinco frascos de salsa son muchos y cinco
      canastas de tomate son casi nada. Sin ese dato, cinco, que es lo que hacía
      antes para todos. */
   const pocas = p.umbralBajo > 0 ? p.umbralBajo : 5;
-  if(p.stock <= pocas) return { clase:"poco", texto:`Últimas ${p.stock} unidades`, libre };
+  if(stock <= pocas) return { clase:"poco", texto:`Últimas ${stock} unidades`, libre };
   return { clase:"ok", texto:"Disponible", libre };
 }
 
 /* Cantidad elegida en la tarjeta o en la ficha, siempre dentro del stock libre. */
-function cantidadElegida(id){
-  const libre = estadoStock(producto(id)).libre;
+function cantidadElegida(id, varianteId){
+  const p = producto(id), v = variantePorId(p, varianteId);
+  const libre = estadoStock(p, v).libre, clave = claveItem(id, varianteId);
   if(libre <= 0) return 0;
-  return Math.max(1, Math.min(libre, cantidades[id] || 1));
+  return Math.max(1, Math.min(libre, cantidades[clave] || 1));
 }
 
-function ajustarCantidad(id, d){
-  const libre = estadoStock(producto(id)).libre;
+function ajustarCantidad(id, d, varianteId){
+  const p = producto(id), v = variantePorId(p, varianteId);
+  const libre = estadoStock(p, v).libre, clave = claveItem(id, varianteId);
   if(libre <= 0) return;
-  cantidades[id] = Math.max(1, Math.min(libre, cantidadElegida(id) + d));
+  cantidades[clave] = Math.max(1, Math.min(libre, cantidadElegida(id, varianteId) + d));
   pintarRejilla();
   if(fichaActual && fichaActual.id === id) pintarFicha();
 }
 
 /* Bloque −/n/+ que comparten la tarjeta y la ficha. Mismo estilo del carrito. */
-function selectorCantidad(p, st){
-  const n = cantidadElegida(p.id) || 1;
+function selectorCantidad(p, st, variante){
+  const varianteId = variante ? variante.id : "", n = cantidadElegida(p.id, varianteId) || 1;
   const off = st.libre <= 0;
   return `
     <div class="cantidad cantidad-elegir">
-      <button onclick="ajustarCantidad('${p.id}',-1)" ${off || n <= 1 ? "disabled" : ""} aria-label="Quitar una unidad">−</button>
+      <button onclick="ajustarCantidad('${p.id}',-1,'${varianteId}')" ${off || n <= 1 ? "disabled" : ""} aria-label="Quitar una unidad">−</button>
       <span aria-live="polite" aria-label="Cantidad">${n}</span>
-      <button onclick="ajustarCantidad('${p.id}',1)" ${off || n >= st.libre ? "disabled" : ""} aria-label="Agregar una unidad">+</button>
+      <button onclick="ajustarCantidad('${p.id}',1,'${varianteId}')" ${off || n >= st.libre ? "disabled" : ""} aria-label="Agregar una unidad">+</button>
     </div>`;
 }
 
@@ -1477,11 +1685,11 @@ function pintarRejilla(){
     const st = estadoStock(p);
     return `
       <article class="tarjeta">
-        <button class="tarjeta-img" onclick="abrirFicha('${p.id}')" aria-label="Ver ${escapar(p.nombre)}">
+        <a class="tarjeta-img" href="${rutaSeoProducto(p.id)}" onclick="event.preventDefault();abrirFicha('${p.id}')" aria-label="Ver ${escapar(p.nombre)}">
           <img src="${fotos[0]}" data-plano="${fotoPlana(p, 0)}" alt="${escapar(p.nombre)}" loading="lazy">
           ${p.destacado ? `<span class="destacado">Destacado</span>` : ""}
           ${fotos.length > 1 ? `<span class="mas-fotos">${fotos.length} fotos</span>` : ""}
-        </button>
+        </a>
         <h3>${escapar(p.nombre)}</h3>
         <p class="formato">${escapar(p.formato)}</p>
         <div class="fila-precio">
@@ -1489,11 +1697,11 @@ function pintarRejilla(){
           <span class="disponible ${st.clase}"><i class="marcador"></i>${st.texto}</span>
         </div>
         <div class="acciones">
-          ${selectorCantidad(p, st)}
-          <button class="btn btn-solido" onclick="agregar('${p.id}', cantidadElegida('${p.id}'))" ${st.libre <= 0 ? "disabled" : ""}>
-            ${p.stock === 0 ? "Agotado" : "Agregar"}
+          ${tieneVariantes(p) ? "" : selectorCantidad(p, st)}
+          <button class="btn btn-solido" onclick="${tieneVariantes(p) ? `abrirFicha('${p.id}')` : `agregar('${p.id}', cantidadElegida('${p.id}'))`}" ${st.libre <= 0 ? "disabled" : ""}>
+            ${p.stock === 0 ? "Agotado" : (tieneVariantes(p) ? "Elegir opciones" : "Agregar")}
           </button>
-          <button class="btn btn-linea" onclick="abrirFicha('${p.id}')">Ver</button>
+          <a class="btn btn-linea" href="${rutaSeoProducto(p.id)}" onclick="event.preventDefault();abrirFicha('${p.id}')">Ver</a>
         </div>
       </article>`;
   }).join("");
@@ -1544,10 +1752,12 @@ function cambiarPorPagina(n){
 }
 
 // ── Ficha con galería ──
-function abrirFicha(id, desdeEnlace){
+function abrirFicha(id, desdeEnlace, varianteId){
   fichaActual = producto(id); fotoActual = 0;
   if(!fichaActual) return;
-  if(!desdeEnlace) apuntarEnHistoria(id);
+  const directa = variantePorId(fichaActual, varianteId);
+  if(directa) selecciones[id] = {...directa.opciones};
+  if(!desdeEnlace) apuntarEnHistoria(id, directa ? directa.id : "");
   pintarFicha();
   $("#ficha").classList.add("abierta");
   $("#capa").classList.add("activa");
@@ -1555,9 +1765,30 @@ function abrirFicha(id, desdeEnlace){
   document.body.style.overflow = "hidden";
 }
 
+function controlesVariantes(p){
+  if(!tieneVariantes(p)) return "";
+  const s = selecciones[p.id] || {};
+  return `<div class="variantes">${p.ejes.map(e => `
+    <fieldset class="variante-grupo">
+      <legend>${escapar(e.nombre)}</legend>
+      <div class="variante-opciones">
+        ${e.valores.map(valor => `<button type="button" class="variante-opcion"
+          aria-pressed="${s[e.nombre] === valor}"
+          onclick="elegirOpcion('${p.id}','${escapar(e.nombre)}','${escapar(valor)}')"
+          ${opcionDisponible(p, e.nombre, valor) ? "" : "disabled"}>${escapar(valor)}</button>`).join("")}
+      </div>
+    </fieldset>`).join("")}
+    <p class="variante-ayuda">${varianteElegida(p) ? escapar(textoVariante(varianteElegida(p))) : "Elige todas las opciones para ver disponibilidad."}</p>
+  </div>`;
+}
+
 function pintarFicha(){
-  const p = fichaActual, fotos = fotosDe(p, "galeria"), st = estadoStock(p);
-  const miniaturas = fotosDe(p, "miniatura");
+  const p = fichaActual, variante = varianteElegida(p), fotos = fotosDe(p, "galeria", variante);
+  if(fotoActual >= fotos.length) fotoActual = 0;
+  const st = tieneVariantes(p) && !variante ? {clase:"", texto:"Elige las opciones", libre:0} : estadoStock(p, variante);
+  const precio = variante ? variante.precio : p.precio;
+  const miniaturas = fotosDe(p, "miniatura", variante);
+  const altVariante = variante ? ", " + textoVariante(variante) : "";
   $("#fichaCaja").innerHTML = `
     <div class="ficha-grid">
       <div class="galeria">
@@ -1565,7 +1796,7 @@ function pintarFicha(){
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
         </button>
         <div class="galeria-principal" id="galeriaPrincipal">
-          <img src="${fotos[fotoActual]}" data-plano="${fotoPlana(p, fotoActual)}" alt="${escapar(p.nombre)}, foto ${fotoActual + 1} de ${fotos.length}">
+          <img src="${fotos[fotoActual]}" data-plano="${fotoPlana(p, fotoActual, variante)}" alt="${escapar(p.nombre + altVariante)}, foto ${fotoActual + 1} de ${fotos.length}">
         </div>
         ${fotos.length > 1 ? `
           <button class="flecha izq" onclick="moverFoto(-1)" aria-label="Foto anterior">
@@ -1577,19 +1808,20 @@ function pintarFicha(){
           <div class="miniaturas">
             ${miniaturas.map((f, i) => `
               <button onclick="verFoto(${i})" aria-current="${i === fotoActual}" aria-label="Ver foto ${i + 1}">
-                <img src="${f}" data-plano="${fotoPlana(p, i)}" alt="" loading="lazy">
+                <img src="${f}" data-plano="${fotoPlana(p, i, variante)}" alt="" loading="lazy">
               </button>`).join("")}
           </div>` : ""}
       </div>
       <div class="ficha-texto">
         <h2>${escapar(p.nombre)}</h2>
         <p class="formato">${escapar(p.formato)} · ${escapar(p.categoria)}</p>
-        <p class="ficha-precio">${pesos(p.precio)}</p>
+        <p class="ficha-precio">${tieneVariantes(p) && !variante ? "Desde " : ""}${pesos(precio)}</p>
         <p class="disponible ${st.clase}"><i class="marcador"></i>${st.texto}</p>
         <p class="ficha-desc">${escapar(p.descripcion)}</p>
+        ${controlesVariantes(p)}
         <div class="ficha-agregar">
-          ${selectorCantidad(p, st)}
-          <button class="btn btn-solido" onclick="agregar('${p.id}', cantidadElegida('${p.id}')); cerrarTodo()" ${st.libre <= 0 ? "disabled" : ""}>
+          ${selectorCantidad(p, st, variante)}
+          <button class="btn btn-solido" onclick="agregar('${p.id}', cantidadElegida('${p.id}','${variante ? variante.id : ""}'),'${variante ? variante.id : ""}'); cerrarTodo()" ${st.libre <= 0 ? "disabled" : ""}>
             ${p.stock === 0 ? "Sin existencias" : "Agregar al carrito"}
           </button>
         </div>
@@ -1604,7 +1836,7 @@ function pintarFicha(){
 
 function verFoto(i){ fotoActual = i; pintarFicha(); }
 function moverFoto(d){
-  const total = fotosDe(fichaActual, "galeria").length;
+  const total = fotosDe(fichaActual, "galeria", varianteElegida(fichaActual)).length;
   fotoActual = (fotoActual + d + total) % total;
   pintarFicha();
 }
@@ -1623,36 +1855,45 @@ function activarDeslizamiento(){
 }
 
 // ── Carrito ──
-function agregar(id, n){
+function agregar(id, n, varianteId){
   const p = producto(id);
-  const item = carrito.find(i => i.id === id);
+  varianteId = varianteId || "";
+  const variante = variantePorId(p, varianteId);
+  if(tieneVariantes(p) && !variante){ abrirFicha(id); return; }
+  const item = carrito.find(i => i.id === id && (i.variante || "") === varianteId);
   const actual = item ? item.cantidad : 0;
-  if(n < 1 || actual + n > p.stock) return;
-  if(item) item.cantidad += n; else carrito.push({ id, cantidad:n });
-  cantidades[id] = 1;              // la tarjeta vuelve a 1 tras agregar
+  const stock = variante ? variante.stock : p.stock;
+  if(n < 1 || actual + n > stock) return;
+  if(item) item.cantidad += n; else carrito.push({ id, variante:varianteId, cantidad:n });
+  cantidades[claveItem(id, varianteId)] = 1; // la tarjeta vuelve a 1 tras agregar
   refrescar();
 }
 
-function cambiarCantidad(id, n){
-  const item = carrito.find(i => i.id === id);
+function cambiarCantidad(id, n, varianteId){
+  varianteId = varianteId || "";
+  const item = carrito.find(i => i.id === id && (i.variante || "") === varianteId);
   if(!item) return;
-  const p = producto(id);
-  item.cantidad = Math.max(0, Math.min(p.stock, item.cantidad + n));
-  if(item.cantidad === 0) carrito = carrito.filter(i => i.id !== id);
+  item.cantidad = Math.max(0, Math.min(stockItem(item), item.cantidad + n));
+  if(item.cantidad === 0) carrito = carrito.filter(i => claveItem(i.id, i.variante) !== claveItem(id, varianteId));
   refrescar();
 }
 
-function quitar(id){ carrito = carrito.filter(i => i.id !== id); refrescar(); }
+function quitar(id, varianteId){
+  carrito = carrito.filter(i => claveItem(i.id, i.variante) !== claveItem(id, varianteId || "")); refrescar();
+}
 
 function sanear(){
   const limpio = [];
   (Array.isArray(carrito) ? carrito : []).forEach(i => {
     const p = producto(i && i.id);
-    if(!p || limpio.some(x => x.id === p.id)) return;
+    const variante = variantePorId(p, i && i.variante);
+    if(!p || (tieneVariantes(p) && !variante)) return;
+    const clave = claveItem(p.id, variante ? variante.id : "");
+    if(limpio.some(x => claveItem(x.id, x.variante) === clave)) return;
     const cant = Math.floor(Number(i.cantidad));
     if(!isFinite(cant) || cant < 1) return;
-    const tope = Math.min(cant, p.stock);
-    if(tope > 0) limpio.push({ id:p.id, cantidad:tope });
+    const tope = Math.min(cant, variante ? variante.stock : p.stock);
+    if(tope > 0) limpio.push({ id:p.id, variante:variante ? variante.id : "", cantidad:tope });
   });
   carrito = limpio;
 
@@ -1671,8 +1912,12 @@ function sanear(){
 /* Identifica un pedido de forma estable: mismos productos, mismo cupón, mismo
    envío. Es lo que le pedimos sellar a la hoja y lo que comparamos después. */
 function firmaPedido(){
-  return carrito.map(i => i.id + ":" + i.cantidad).join(",") +
+  return itemsParaServidor() +
          "|" + cuponTexto + "|" + (envioActivo ? envioActivo.id : "");
+}
+
+function itemsParaServidor(){
+  return JSON.stringify(carrito.map(i => ({id:i.id, variante:i.variante || "", cantidad:i.cantidad})));
 }
 
 /* EL NOMBRE DEL ENVÍO LO DICE LA HOJA. Cuando hay sello vigente, el valor sale
@@ -1692,7 +1937,7 @@ function selloVigente(){
 }
 
 function subtotal(){
-  return carrito.reduce((s, i) => s + producto(i.id).precio * i.cantidad, 0);
+  return carrito.reduce((s, i) => s + precioItem(i) * i.cantidad, 0);
 }
 
 function calcular(){
@@ -1756,9 +2001,11 @@ function validarEnLaHoja(intento){
   if(intento === 1 && validando && firmaEnVuelo === firma) return;
 
   const params = new URLSearchParams({
-    a: "validar", sellar: "1",
-    pedido: codigoDelPedido(),         // la hoja actualiza SU fila, no crea otra
-    items: carrito.map(i => i.id + ":" + i.cantidad).join(","),
+    a: "validar", sellar: MODO_PAGO === "whatsapp" ? "1" : "0",
+    /* En pasarela el ORD definitivo lo crea Apps Script unos segundos después.
+       Sellar aquí el código temporal mezclaba dos identidades en la hoja. */
+    pedido: MODO_PAGO === "whatsapp" ? codigoDelPedido() : "",
+    items: itemsParaServidor(),
     cupon: cuponTexto,
     envio: envioActivo.id,
     sub:   String(subtotal())          // para que la hoja detecte discrepancias
@@ -1848,7 +2095,7 @@ function refrescar(){
 
 /* Topes de longitud. El maxlength del HTML se puede saltar; esto no, y evita
    que una nota kilométrica arme una URL que Android trunca o rechaza. */
-const LARGOS = { fNombre:60, fTel:15, fCiudad:40, fDir:120, fNotas:300, cupon:20 };
+const LARGOS = { fNombre:60, fTel:15, fCorreo:120, fDocumento:20, fCiudad:40, fDir:120, fNotas:300, cupon:20 };
 
 function leerFormulario(){
   const g = id => {
@@ -1856,12 +2103,67 @@ function leerFormulario(){
     return el ? String(el.value).slice(0, LARGOS[id] || 100) : "";
   };
   const ch = document.getElementById("consiento");
-  return { nombre:g("fNombre"), tel:g("fTel"), ciudad:g("fCiudad"), dir:g("fDir"), notas:g("fNotas"),
-           cupon:g("cupon"), consiento: ch ? ch.checked : false };
+  const visibles = { nombre:g("fNombre"), tel:g("fTel"), correo:g("fCorreo"), documento:g("fDocumento"),
+    ciudad:g("fCiudad"), dir:g("fDir"), notas:g("fNotas"), cupon:g("cupon"),
+    consiento: ch ? ch.checked : false };
+  /* Cuando el pago está en curso los campos ya no existen en el DOM. Se
+     conserva su último valor para poder mostrar un reintento sin pedirlos de
+     nuevo y sin guardarlos en localStorage. */
+  return (typeof datosPago !== "undefined" && datosPago) ? Object.assign({}, visibles, datosPago) : visibles;
 }
 
 function pintarPanel(datos){
   const cuerpo = $("#panelCuerpo"), pie = $("#panelPie");
+
+  if(pagoActivo){
+    pie.style.display = "none";
+    const estado = String(pagoActivo.estado || "RUNNING").toUpperCase();
+    const vencimiento = milisBold(pagoActivo.vence);
+    if(estado === "PAID"){
+      cuerpo.innerHTML = `<div class="enviado">
+        <div class="enviado-marca" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg>
+        </div>
+        <h3>Pago confirmado</h3>
+        <p class="enviado-codigo">PEDIDO #${escapar(pagoActivo.pedido || "")}</p>
+        <p>Enviamos la confirmación a tu correo. Avísanos por WhatsApp para coordinar la entrega.</p>
+        <a class="btn-whatsapp" href="${enlacePagoWhatsApp()}" target="_blank" rel="noopener" onclick="return avisarComercio()">Avisar al comercio por WhatsApp</a>
+        <button class="enviado-otro" onclick="volverDelPago()">Volver al catálogo</button>
+      </div>`;
+      return;
+    }
+    if(estado === "REJECTED" || estado === "EXPIRED" || estado === "ERROR"){
+      const titulo = estado === "REJECTED" ? "El pago no fue aprobado" : estado === "EXPIRED" ? "El intento de pago venció" : "No pudimos abrir el pago";
+      cuerpo.innerHTML = `<div class="enviado">
+        <h3>${titulo}</h3>
+        <p>${escapar(pagoActivo.error || "Tu carrito sigue intacto. Puedes intentarlo nuevamente.")}</p>
+        <button class="btn-whatsapp" onclick="reintentarPago()">Intentar el pago nuevamente</button>
+        <button class="enviado-otro" onclick="volverDelPago()">Volver al catálogo</button>
+      </div>`;
+      return;
+    }
+    if(pagoActivo.modo === "BOLD_BUTTON"){
+      cuerpo.innerHTML = `<div class="enviado">
+        <h3>Estamos confirmando tu pago</h3>
+        <p class="enviado-codigo">PEDIDO #${escapar(pagoActivo.pedido || "")}</p>
+        <p>Bold puede tardar unos minutos en reflejar el resultado. Conserva esta página abierta mientras lo verificamos.</p>
+        <p class="pago-estado">El pedido solo se confirma cuando Bold informa que el pago fue aprobado.</p>
+        <button class="enviado-otro" onclick="consultarPago(true)">Verificar ahora</button>
+      </div>`;
+      return;
+    }
+    const venceTexto = vencimiento ? new Date(vencimiento).toLocaleTimeString("es-CO", {hour:"2-digit",minute:"2-digit"}) : "pronto";
+    cuerpo.innerHTML = `<div class="enviado">
+      <h3>Escanea y paga con Bre-B</h3>
+      <p class="enviado-codigo">PEDIDO #${escapar(pagoActivo.pedido || "")}</p>
+      <p>Abre tu banco o billetera, escanea este QR y aprueba el pago de <strong>${pesos(pagoActivo.total)}</strong>.</p>
+      <img class="pago-qr" src="data:image/png;base64,${escapar(pagoActivo.qr || "")}" alt="Código QR para pagar el pedido">
+      <p class="pago-tiempo">Vence a las ${escapar(venceTexto)}</p>
+      <p class="pago-estado">Estamos verificando el pago automáticamente. No cierres esta página.</p>
+      <button class="enviado-otro" onclick="consultarPago(true)">Ya pagué, verificar ahora</button>
+    </div>`;
+    return;
+  }
 
   if(pedidoEnviado){
     pie.style.display = "none";
@@ -1899,23 +2201,25 @@ function pintarPanel(datos){
   pie.style.display = "block";
 
   const items = carrito.map(i => {
-    const p = producto(i.id), foto = fotosDe(p, "miniatura")[0];
+    const p = producto(i.id), v = varianteDelItem(i), foto = fotosDe(p, "miniatura", v)[0];
+    const stock = stockItem(i), precio = precioItem(i);
     return `
       <div class="linea-item">
         <img src="${foto}" alt="">
         <div class="linea-info">
           <h4>${escapar(p.nombre)}</h4>
-          <p class="formato">${escapar(p.formato)} · ${pesos(p.precio)} c/u</p>
+          <p class="formato">${escapar(p.formato)} · ${pesos(precio)} c/u</p>
+          ${v ? `<p class="formato">${escapar(textoVariante(v))}${v.sku ? ` · SKU ${escapar(v.sku)}` : ""}</p>` : ""}
           <div class="cantidad">
-            <button onclick="cambiarCantidad('${p.id}',-1)" aria-label="Quitar una unidad">−</button>
+            <button onclick="cambiarCantidad('${p.id}',-1,'${i.variante || ""}')" aria-label="Quitar una unidad">−</button>
             <span>${i.cantidad}</span>
-            <button onclick="cambiarCantidad('${p.id}',1)" ${i.cantidad >= p.stock ? "disabled" : ""} aria-label="Agregar una unidad">+</button>
+            <button onclick="cambiarCantidad('${p.id}',1,'${i.variante || ""}')" ${i.cantidad >= stock ? "disabled" : ""} aria-label="Agregar una unidad">+</button>
           </div>
-          ${i.cantidad >= p.stock ? `<p style="font-size:.76rem;color:var(--rojo);margin-top:5px">Máximo disponible</p>` : ""}
+          ${i.cantidad >= stock ? `<p style="font-size:.76rem;color:var(--rojo);margin-top:5px">Máximo disponible</p>` : ""}
         </div>
         <div class="linea-der">
-          <strong>${pesos(p.precio * i.cantidad)}</strong>
-          <button class="quitar" onclick="quitar('${p.id}')">Quitar</button>
+          <strong>${pesos(precio * i.cantidad)}</strong>
+          <button class="quitar" onclick="quitar('${p.id}','${i.variante || ""}')">Quitar</button>
         </div>
       </div>`;
   }).join("");
@@ -1944,6 +2248,10 @@ function pintarPanel(datos){
         <input class="campo" id="fNombre" maxlength="60" placeholder="Nombre y apellido" oninput="revisarFormulario()" value="${datos ? escapar(datos.nombre) : ""}">
         <input class="campo" id="fTel" maxlength="15" placeholder="Celular" inputmode="tel" oninput="revisarFormulario()" value="${datos ? escapar(datos.tel) : ""}">
       </div>
+      <div class="dos-col" style="margin-bottom:10px">
+        <input class="campo" id="fCorreo" maxlength="120" placeholder="Correo para tu confirmación" inputmode="email" oninput="revisarFormulario()" value="${datos ? escapar(datos.correo) : ""}">
+        <input class="campo" id="fDocumento" maxlength="20" placeholder="Número de cédula" inputmode="numeric" oninput="revisarFormulario()" value="${datos ? escapar(datos.documento) : ""}">
+      </div>
       <input class="campo" id="fCiudad" maxlength="40" placeholder="Ciudad" style="margin-bottom:10px" oninput="revisarFormulario()" value="${datos ? escapar(datos.ciudad) : ""}">
       <input class="campo" id="fDir" maxlength="120" placeholder="Dirección de entrega" style="margin-bottom:10px" oninput="revisarFormulario()" value="${datos ? escapar(datos.dir) : ""}">
       <textarea class="campo" id="fNotas" maxlength="300" placeholder="Notas: punto de referencia, horario, indicaciones para la portería">${datos ? escapar(datos.notas) : ""}</textarea>
@@ -1960,7 +2268,7 @@ function pintarPanel(datos){
     ? `<div class="sello aviso-stock">${sello.avisos.map(escapar).join(" ")}</div>` : "";
   const estadoSello = !SCRIPT_URL ? ""
     : validando ? `<div class="sello esperando">Validando tu pedido…</div>`
-    : (selloVigente() && sello.ref) ? `<div class="sello confirmado">Total verificado con la tienda</div>`
+    : (selloVigente() && (MODO_PAGO === "pasarela" || sello.ref)) ? `<div class="sello confirmado">Total verificado con la tienda</div>`
     : (sello) ? `<div class="sello aviso-stock">Estamos confirmando los precios de hoy. Envía tu pedido y te confirmamos el total por WhatsApp.</div>`
     : "";
 
@@ -1977,13 +2285,14 @@ function pintarPanel(datos){
 
 function revisarFormulario(){
   const d = leerFormulario();
-  const listo = formularioListo(d);
+  /* Un pago sin servidor no se puede confirmar: no simulamos una venta por
+     WhatsApp ni dejamos un botón que parezca cobrar si falta Apps Script. */
+  const listo = formularioListo(d) && !!SCRIPT_URL;
   const btn = $("#btnFinalizar");
   if(!btn) return;
   btn.setAttribute("aria-disabled", listo ? "false" : "true");
-  // El enlace se rearma aquí, así que siempre lleva el estado más reciente:
-  // el cupón que acaba de validarse, la cantidad que acaba de cambiar.
-  btn.href = listo ? enlaceWhatsapp() : "#";
+  btn.href = MODO_PAGO === "whatsapp" && listo ? enlaceWhatsapp() : "#";
+  btn.textContent = MODO_PAGO === "whatsapp" ? "Enviar pedido por WhatsApp" : "Pagar con " + (PROVEEDOR_PAGO === "bold" ? "Bold" : PROVEEDOR_PAGO);
 
   const aviso = document.getElementById("faltan");
   if(!aviso) return;
@@ -2013,7 +2322,220 @@ function revisarFormulario(){
   }
 }
 
-// ── Envío del pedido ──
+// ── Checkout Bold: Botón ahora, API QR cuando la cuenta quede habilitada ──
+let pagoActivo = null;
+let datosPago = null;
+let consultaPago = null;
+let numeroConsultaPago = 0;
+let promesaBold = null;
+const PAGO_RETORNO = "pago-bold-activo";
+
+function milisBold(v){
+  const n = Number(v);
+  if(Number.isFinite(n) && n > 0) return n > 1e15 ? Math.floor(n / 1e6) : n;
+  const fecha = Date.parse(String(v || ""));
+  return Number.isNaN(fecha) ? 0 : fecha;
+}
+
+function mensajePagoWhatsApp(){
+  if(!pagoActivo) return "";
+  const t = pesos(pagoActivo.total);
+  const detalle = carrito.map(i => {
+    const p = producto(i.id), v = varianteDelItem(i);
+    return `${i.cantidad} x ${p ? p.nombre : i.id}${v ? ` (${textoVariante(v)}${v.sku ? ` · SKU ${v.sku}` : ""})` : ""}`;
+  }).join("; ");
+  return `Hola, acabo de pagar el pedido *${pagoActivo.pedido}* por ${t} con Bold. Transacción: ${pagoActivo.transaccion || "confirmada"}.${detalle ? ` Productos: ${detalle}.` : ""}`;
+}
+
+function enlacePagoWhatsApp(){
+  if(!WHATSAPP || !pagoActivo) return "#";
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensajePagoWhatsApp())}`;
+}
+
+function limpiarPago(){
+  if(consultaPago) clearTimeout(consultaPago);
+  consultaPago = null;
+  numeroConsultaPago = 0;
+  pagoActivo = null;
+  datosPago = null;
+  try{ sessionStorage.removeItem(PAGO_RETORNO); }catch(e){}
+}
+
+function volverDelPago(){
+  limpiarPago();
+  otroPedido();
+  cerrarTodo();
+}
+
+function avisarComercio(){
+  /* WhatsApp no da una señal de que el cliente realmente pulsó Enviar. El pago
+     ya fue confirmado por Bold; este aviso manual solo ayuda al comercio. */
+  setTimeout(volverDelPago, 250);
+  return true;
+}
+
+function consultarPago(ahora){
+  if(!pagoActivo || !SCRIPT_URL || !pagoActivo.token) return;
+  if(consultaPago) clearTimeout(consultaPago);
+  const ejecutar = () => {
+    if(!pagoActivo) return;
+    traer(SCRIPT_URL + "?a=pago_estado&token=" + encodeURIComponent(pagoActivo.token), TOPE_ESPERA)
+      .then(r => r.json())
+      .then(r => {
+        if(!pagoActivo) return;
+        if(!r || !r.ok){ consultaPago = setTimeout(ejecutar, 60000); return; }
+        pagoActivo.pedido = r.pedido || pagoActivo.pedido;
+        pagoActivo.total = Number(r.total) || pagoActivo.total;
+        pagoActivo.estado = String(r.estado || pagoActivo.estado).toUpperCase();
+        pagoActivo.error = String(r.error || "");
+        pagoActivo.vence = r.vence || pagoActivo.vence;
+        pagoActivo.transaccion = r.transaccion || pagoActivo.transaccion;
+        if(pagoActivo.estado === "PAID" || pagoActivo.estado === "APPROVED") {
+          pagoActivo.estado = "PAID";
+          pagoActivo.transaccion = pagoActivo.transaccion || "confirmada";
+          try{ sessionStorage.removeItem(PAGO_RETORNO); }catch(e){}
+          refrescar();
+          return;
+        }
+        refrescar();
+        if(pagoActivo.estado !== "REJECTED" && pagoActivo.estado !== "EXPIRED"){
+          numeroConsultaPago++;
+          const esperas = [5000,15000,30000,60000];
+          consultaPago = setTimeout(ejecutar, esperas[Math.min(numeroConsultaPago, esperas.length - 1)]);
+        }
+      })
+      .catch(() => { if(pagoActivo) consultaPago = setTimeout(ejecutar, 60000); });
+  };
+  if(ahora) ejecutar(); else consultaPago = setTimeout(ejecutar, 5000);
+}
+
+function reintentarPago(){
+  /* Si Bold no abrió después de que Apps Script creó la referencia, reutiliza
+     exactamente ese checkout. Volver a llamar pago_crear dejaría dos intentos
+     PENDING para la misma compra y duplicaría también los datos de entrega. */
+  if(pagoActivo && pagoActivo.checkout){
+    const intento = pagoActivo;
+    intento.estado = "PENDING";
+    intento.error = "";
+    refrescar();
+    abrirCheckoutBold(intento.checkout).catch(() => {
+      intento.estado = "ERROR";
+      intento.error = "No pudimos abrir la pasarela de Bold. Intenta de nuevo.";
+      refrescar();
+    });
+    return false;
+  }
+  if(consultaPago) clearTimeout(consultaPago);
+  consultaPago = null;
+  numeroConsultaPago = 0;
+  pagoActivo = null;
+  const boton = document.getElementById("btnFinalizar");
+  if(boton) boton.textContent = "Pagar con Bold";
+  refrescar();
+}
+
+function cargarBoldCheckout(){
+  if(window.BoldCheckout) return Promise.resolve(window.BoldCheckout);
+  if(promesaBold) return promesaBold;
+  promesaBold = new Promise((resolve, reject) => {
+    const anterior = document.querySelector('script[src="https://checkout.bold.co/library/boldPaymentButton.js"]');
+    const listo = () => window.BoldCheckout ? resolve(window.BoldCheckout) : reject(new Error("Bold no quedó disponible"));
+    if(anterior){ anterior.addEventListener("load", listo, {once:true}); anterior.addEventListener("error", reject, {once:true}); return; }
+    const s = document.createElement("script");
+    s.src = "https://checkout.bold.co/library/boldPaymentButton.js";
+    s.async = true; s.onload = listo; s.onerror = () => reject(new Error("No cargó Bold Checkout"));
+    document.head.appendChild(s);
+  });
+  return promesaBold;
+}
+
+function guardarRetornoPago(){
+  if(!pagoActivo) return;
+  try{ sessionStorage.setItem(PAGO_RETORNO, JSON.stringify({ token:pagoActivo.token,
+    pedido:pagoActivo.pedido, total:pagoActivo.total, moneda:pagoActivo.moneda, modo:pagoActivo.modo })); }catch(e){}
+}
+
+function restaurarRetornoPago(){
+  let params;
+  try{ params = new URLSearchParams(location.search); }catch(e){ return false; }
+  const token = (params.get("pago-token") || "").trim();
+  if(!token) return false;
+  let guardado = {};
+  try{ guardado = JSON.parse(sessionStorage.getItem(PAGO_RETORNO) || "{}"); }catch(e){}
+  pagoActivo = { token:token, pedido:guardado.pedido || params.get("bold-order-id") || "",
+    total:Number(guardado.total) || 0, moneda:guardado.moneda || "COP", modo:"BOLD_BUTTON",
+    estado:"PROCESSING", transaccion:"", error:"" };
+  params.delete("pago-token"); params.delete("pago-abandonado");
+  params.delete("bold-order-id"); params.delete("bold-tx-status");
+  try{
+    const limpia = location.pathname + (params.toString() ? "?" + params.toString() : "") + location.hash;
+    history.replaceState({}, "", limpia);
+  }catch(e){}
+  consultarPago(true);
+  return true;
+}
+
+function abrirCheckoutBold(config){
+  return cargarBoldCheckout().then(BoldCheckout => {
+    const checkout = new BoldCheckout({ orderId:config.orderId, currency:config.currency,
+      amount:config.amount, apiKey:config.apiKey, integritySignature:config.integritySignature,
+      description:config.description, redirectionUrl:config.redirectionUrl, originUrl:config.originUrl,
+      customerData:JSON.stringify(config.customerData || {}),
+      billingAddress:JSON.stringify(config.billingAddress || {}) });
+    checkout.open();
+  });
+}
+
+function iniciarPago(e){
+  if(MODO_PAGO === "whatsapp") return alEnviar(e);
+  if(e) e.preventDefault();
+  const d = leerFormulario();
+  if(!formularioListo(d) || !SCRIPT_URL){ irADatos(); return false; }
+  if(pagoActivo) return false;
+  datosPago = d;
+  const boton = document.getElementById("btnFinalizar");
+  if(boton){ boton.setAttribute("aria-disabled", "true"); boton.textContent = "Preparando pago…"; }
+  const cuerpo = {
+    a: "pago_crear",
+    items: itemsParaServidor(),
+    cupon: cuponTexto,
+    envio: envioActivo.id,
+    entrega: { nombre:d.nombre, tel:d.tel, correo:d.correo, documento:d.documento,
+      ciudad:d.ciudad, direccion:d.dir, notas:d.notas },
+    huella: { tipo: /Mobi/i.test(navigator.userAgent) ? "MOBILE" : "DESKTOP",
+      os:navigator.platform || "", navegador:navigator.userAgent || "", idioma:navigator.language || "es-CO",
+      color:screen.colorDepth || 24, alto:screen.height || 0, ancho:screen.width || 0,
+      zona:new Date().getTimezoneOffset() * -1 }
+  };
+  fetch(SCRIPT_URL, { method:"POST", body:JSON.stringify(cuerpo), redirect:"follow" })
+    .then(r => r.json())
+    .then(r => {
+      if(!r || !r.ok) throw new Error((r && r.error) || "No se pudo crear el pago");
+      if(r.checkout && r.checkout.kind === "BOLD_BUTTON"){
+        pagoActivo = { pedido:r.pedido, token:r.token, total:r.total, moneda:r.moneda,
+          modo:"BOLD_BUTTON", estado:String(r.estado || "PENDING").toUpperCase(), transaccion:"",
+          checkout:r.checkout };
+        guardarRetornoPago();
+        return abrirCheckoutBold(r.checkout);
+      }
+      if(!r.qr || !r.qr.payload) throw new Error("Bold no entregó un medio de pago");
+      pagoActivo = { pedido:r.pedido, token:r.token, total:r.total, moneda:r.moneda, modo:"BOLD_API_QR",
+        qr:r.qr.payload, vence:r.qr.expiresAt, estado:String(r.estado || "RUNNING").toUpperCase(), transaccion:"" };
+      refrescar(); consultarPago(true);
+    })
+    .catch(err => {
+      if(pagoActivo && pagoActivo.checkout){
+        pagoActivo.estado = "ERROR";
+        pagoActivo.error = "No pudimos abrir la pasarela de Bold. Intenta de nuevo.";
+      }else{
+        pagoActivo = { estado:"ERROR", error:"No pudimos abrir la pasarela de Bold. Intenta de nuevo.", total:calcular().total };
+      }
+      refrescar();
+    });
+  return false;
+}
+
+// ── Envío del pedido (legado: se conserva para pedidos históricos) ──
 const pedidosRegistrados = new Set();   // evita contar dos veces el mismo pedido
 let codigoActual = null;                // el número de ESTE pedido, mientras dure
 let pedidoEnviado = null;               // el código, una vez que el mensaje salió
@@ -2045,9 +2567,10 @@ function armarMensaje(){
   lineas.push("");
   lineas.push("*PRODUCTOS*");
   carrito.slice(0, topeProductos).forEach((i, n) => {
-    const p = producto(i.id);
+    const p = producto(i.id), v = varianteDelItem(i), precio = precioItem(i);
     lineas.push(`${n + 1}. ${p.nombre} — ${p.formato}`);
-    lineas.push(`   ${i.cantidad} x ${pesos(p.precio)} = ${pesos(p.precio * i.cantidad)}`);
+    if(v) lineas.push(`   ${textoVariante(v)}${v.sku ? ` · SKU ${v.sku}` : ""}`);
+    lineas.push(`   ${i.cantidad} x ${pesos(precio)} = ${pesos(precio * i.cantidad)}`);
   });
   const ocultos = carrito.length - Math.min(topeProductos, carrito.length);
   if(ocultos > 0) lineas.push(topeProductos === 0
@@ -2059,7 +2582,7 @@ function armarMensaje(){
   if(t.descuento) lineas.push(`Cupón ${cuponActivo}: -${pesos(t.descuento)}`);
   lineas.push(`Envío (${nombreEnvio()}): ${t.envio ? pesos(t.envio) : "sin costo"}`);
   lineas.push(`*TOTAL: ${pesos(t.total)}*`);
-  if(!(SCRIPT_URL && selloVigente() && sello.ref)){
+  if(!(SCRIPT_URL && selloVigente() && (MODO_PAGO === "pasarela" || sello.ref))){
     lineas.push(`_Total calculado por la página. ${NEGOCIO} lo confirma antes del despacho._`);
   }
   lineas.push("");
@@ -2126,13 +2649,15 @@ function enlaceWhatsapp(){
    Se mide contra el TOTAL, que es lo que el comprador va a transferir, y no
    contra el subtotal: el envío también viaja en la transferencia. */
 function pasaDelTope(){
-  return TOPE_PAGO > 0 && calcular().total > TOPE_PAGO;
+  return MODO_PAGO === "whatsapp" && TOPE_PAGO > 0 && calcular().total > TOPE_PAGO;
 }
 
 function queFalta(d){
   const f = [];
   if(d.nombre.trim().length <= 2) f.push("tu nombre");
   if(d.tel.trim().length < 7)     f.push("tu celular");
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.correo.trim())) f.push("tu correo");
+  if(d.documento.replace(/\D/g, "").length < 5) f.push("tu cédula");
   if(d.ciudad.trim().length <= 1) f.push("tu ciudad");
   if(envioActivo.id !== "finca" && d.dir.trim().length <= 4) f.push("la dirección");
   if(!d.consiento) f.push("autorizar el uso de tus datos");
@@ -2153,7 +2678,7 @@ function formularioListo(d){
 function irADatos(){
   const bloque = document.getElementById("bloqueDatos");
   if(bloque) bloque.scrollIntoView({ behavior: "smooth", block: "start" });
-  const vacio = ["fNombre", "fTel", "fCiudad", "fDir"]
+  const vacio = ["fNombre", "fTel", "fCorreo", "fDocumento", "fCiudad", "fDir"]
     .map(id => document.getElementById(id))
     .find(el => el && !el.value.trim());
   const destino = vacio || document.getElementById("consiento");
@@ -2254,7 +2779,7 @@ function registrarPedido(d, intento){
     ciudad: d.ciudad,
     cupon: cuponActivo || "",
     envio: envioActivo.id,
-    items: carrito.map(i => i.id + ":" + i.cantidad).join(","),
+    items: itemsParaServidor(),
     /* El acta la escribe este registro, no el sello: el sello sale con 400 ms
        de espera y podía llegar tarde. Por eso el subtotal de la página viaja
        aquí también, que es lo que la hoja compara para detectar discrepancias. */
@@ -2301,6 +2826,7 @@ function alEnviar(e){
 }
 
 function otroPedido(){
+  limpiarPago();
   carrito = [];
   pedidoEnviado = null;
   codigoActual = null;               // el siguiente pedido estrena número
@@ -2339,17 +2865,18 @@ datos: { titulo:"Política de tratamiento de datos personales", cuerpo: () => `
   <ul>
     <li>Nombre y apellido.</li>
     <li>Número de celular.</li>
+    <li>Correo electrónico y número de documento de identidad.</li>
     <li>Ciudad y dirección de entrega.</li>
     <li>Las notas que escribas sobre tu pedido.</li>
   </ul>
-  <p>No pedimos documentos de identidad, ni datos bancarios, ni datos sensibles.
+  <p>No recibimos ni almacenamos datos de tu tarjeta, cuenta bancaria ni claves:
+     el pago se realiza directamente con el proveedor de pagos.
      Tampoco tratamos datos de niñas, niños ni adolescentes.</p>
 
   <h3>Cómo llegan a nosotros</h3>
-  <p>Esta tienda es una página estática: <strong>no tiene servidor ni base de datos</strong>
-     y no guarda nada en tu navegador. Lo que escribes se usa únicamente para armar el
-     mensaje que se abre en WhatsApp. Los datos quedan en esa conversación cuando tú
-     decides enviarla, y solo entonces llegan a nosotros.</p>
+  <p>La vitrina es una página estática. Al iniciar el pago, los datos del pedido se
+     envían de forma cifrada al servicio de pedidos de la tienda y se conservan en
+     su registro operativo para confirmar el pago, preparar y entregar la compra.</p>
 
   <h3>Para qué los usamos</h3>
   <ul>
@@ -2363,13 +2890,15 @@ datos: { titulo:"Política de tratamiento de datos personales", cuerpo: () => `
 
   <h3>Quién más los ve</h3>
   <ul>
-    <li><strong>Meta Platforms</strong>, porque el pedido viaja por WhatsApp.</li>
+    <li><strong>Bold</strong>, como proveedor que procesa y confirma el pago en su pasarela.</li>
+    <li><strong>Google</strong>, mediante Apps Script y Google Sheets usados para el
+        registro operativo del pedido.</li>
+    <li><strong>Meta Platforms</strong>, solo si eliges avisarnos o escribirnos por WhatsApp.</li>
     <li>La <strong>empresa transportadora</strong> que lleve tu pedido, solo con lo
         necesario para entregarlo.</li>
   </ul>
-  <p>Para saber cuántas unidades se venden de cada producto guardamos un registro
-     con la ciudad, el cupón y los productos del pedido, <strong>sin tu nombre,
-     celular ni dirección</strong>.</p>
+  <p>Compartimos únicamente los datos necesarios para cada finalidad y no vendemos
+     ni cedemos tus datos para fines publicitarios.</p>
 
   <h3>Quién opera ${escapar(NEGOCIO)}</h3>
   <p>${NEGOCIO} lo opera una persona natural en ${EMPRESA.ciudad}.
@@ -2398,8 +2927,8 @@ datos: { titulo:"Política de tratamiento de datos personales", cuerpo: () => `
      <strong>15 días hábiles</strong>, prorrogables según la ley.</p>
 
   <h3>Seguridad</h3>
-  <p>Tomamos medidas razonables para proteger la información. Ten en cuenta que la
-     conversación de WhatsApp también está en tu teléfono y bajo tu control.</p>
+  <p>Tomamos medidas razonables para proteger la información. Conserva bajo tu
+     control el acceso a tu correo, teléfono y aplicaciones de pago.</p>
 
   <p class="legal-fecha">Última actualización: ${EMPRESA.actualizado}.</p>
 ` },
@@ -2410,16 +2939,8 @@ retracto: { titulo:"Derecho de retracto y cambios", cuerpo: () => `
 
   <h3>Cuándo aplica</h3>
   <p>Tienes <strong>5 días hábiles</strong> contados desde la entrega para retractarte
-     de tu compra, sin tener que explicarnos por qué. Aplica a nuestros
-     <strong>procesados de tomate</strong>: salsas, sofritos, pastas, conservas y jugo,
-     siempre que el empaque esté sin abrir y el producto en el mismo estado en que lo
-     recibiste.</p>
-
-  <h3>Cuándo no aplica</h3>
-  <p>El artículo 47 de la Ley 1480 excluye del retracto los bienes perecederos. Por eso
-     el <strong>tomate fresco</strong> (chonto, cherry y riñón) no admite retracto.
-     Eso no te deja sin protección: si llega en mal estado, aplica la garantía que
-     explicamos abajo.</p>
+     de tu compra a distancia, sin tener que explicarnos por qué, en los casos
+     previstos por la ley. Escríbenos para coordinar la devolución del producto.</p>
 
   <h3>Cómo te retractas</h3>
   <ul>
@@ -2428,17 +2949,15 @@ retracto: { titulo:"Derecho de retracto y cambios", cuerpo: () => `
     <li>Devuelve el producto por el medio que acordemos. El
         <strong>transporte de la devolución corre por tu cuenta</strong>, como lo
         permite la ley.</li>
-    <li>Cuando recibamos el producto en buen estado, te devolvemos el dinero dentro de
-        los <strong>30 días calendario</strong> siguientes, por el mismo medio en que
-        pagaste.</li>
+    <li>Te devolveremos el dinero sin superar los <strong>30 días calendario</strong>
+        desde que ejerzas el derecho, conforme a la ley.</li>
   </ul>
 
   <h3>Si tu pedido llegó mal</h3>
-  <p>Esto no es retracto, es garantía, y aplica a todo, incluido el tomate fresco.
-     Avísanos por WhatsApp dentro de las <strong>24 horas</strong> siguientes a la
-     entrega y mándanos fotos. Si el producto llegó dañado, incompleto o no
-     corresponde a lo que pediste, elegimos contigo entre reponerlo en el siguiente
-     despacho o devolverte el dinero.</p>
+  <p>Esto no es retracto: la garantía también protege los productos que llegan
+     dañados, incompletos o distintos de los pedidos. Escríbenos tan pronto lo
+     notes y comparte fotos si las tienes; atenderemos el caso según la garantía
+     legal aplicable.</p>
 
   <h3>Reversión del pago</h3>
   <p>Cuando pagues por medios electrónicos y proceda el retracto, una entrega
@@ -2453,30 +2972,27 @@ terminos: { titulo:"Términos y condiciones", cuerpo: () => `
      Quien vende es ${responsable()}.</p>
 
   <h3>Cómo funciona el pedido</h3>
-  <p>Esta página <strong>no cobra ni procesa pagos</strong>. Armas tu carrito y el botón
-     abre WhatsApp con el pedido ya escrito. La venta queda en firme cuando te
-     confirmamos por chat la disponibilidad, el valor total y el medio de pago. Antes
-     de eso, tu pedido es una solicitud.</p>
+  <p>Armas tu carrito, completas los datos de entrega y la tienda abre la pasarela
+     de pagos de Bold. La venta queda confirmada cuando Bold reporta el
+     pago aprobado; entonces recibes una confirmación por correo.</p>
 
   <h3>Precios y disponibilidad</h3>
   <ul>
     <li>Los precios están en pesos colombianos e incluyen los impuestos que apliquen a
         cada producto.</li>
-    <li>Trabajamos con cosecha propia, así que el inventario cambia. Si algo se agota
-        entre tu pedido y nuestra confirmación, te avisamos y ajustamos el total o lo
-        cambiamos por lo que prefieras.</li>
-    <li>Podemos actualizar precios en cualquier momento. Vale el precio que te
-        confirmemos por WhatsApp.</li>
+    <li>La disponibilidad se confirma antes de cobrar. Si alguna opción se agota,
+        te informaremos antes de completar la compra.</li>
+    <li>Podemos actualizar precios en cualquier momento. Para tu compra vale el
+        total validado y mostrado antes de abrir la pasarela.</li>
   </ul>
 
   <h3>Pago</h3>
-  <p>Los datos de pago te los confirmamos <strong>por el chat de WhatsApp</strong>, una
-     vez validado tu pedido. Aceptamos transferencia y contraentrega donde la cobertura
-     lo permita. Despachamos cuando el pago está confirmado, salvo que acordemos
-     contraentrega.</p>
-  <p><strong>Nunca publicamos datos de pago en esta página ni te los mandamos por otro
-     medio.</strong> Si alguien te da una llave o una cuenta por fuera de nuestro chat,
-     no transfieras y escríbenos al ${EMPRESA.tel}.</p>
+  <p>El pago se realiza en la pasarela segura de Bold con uno de los métodos que allí
+     estén disponibles. Bold confirma el resultado a la tienda y el pedido se prepara únicamente cuando ese resultado
+     es aprobado. Después puedes avisarnos por WhatsApp para coordinar la entrega.</p>
+  <p><strong>Nunca te pediremos claves, códigos de seguridad ni transferencias a una
+     cuenta distinta desde mensajes no verificados.</strong> Si tienes dudas, escríbenos
+     al ${EMPRESA.tel}.</p>
 
   <h3>Envíos y entregas</h3>
   <ul>
@@ -2484,8 +3000,6 @@ terminos: { titulo:"Términos y condiciones", cuerpo: () => `
         carrito antes de enviar el pedido.</li>
     <li>Los tiempos van de <strong>24 a 72 horas hábiles</strong> según la ciudad.
         Son estimados y dependen de la transportadora.</li>
-    <li>Puedes recoger sin costo en la finca, en ${EMPRESA.ciudad}, coordinando el
-        horario por WhatsApp.</li>
     <li>Verifica que la dirección esté completa. Si el envío se pierde o se devuelve
         por una dirección mal escrita, el nuevo despacho tiene costo.</li>
   </ul>
@@ -2559,7 +3073,10 @@ function clicCapa(){
 
 // ── Enlace por producto  —  .../?p=chonto ──
 const PARAM_PRODUCTO = "p";
+const PARAM_VARIANTE = "v";
+const rutaSeoProducto = id => "/productos/" + encodeURIComponent(String(id)) + "/";
 let enlacePendiente = null;      // id que pidió la dirección y todavía no se abre
+let variantePendiente = null;
 let catalogoResuelto = !SCRIPT_URL;   // sin hoja, lo que hay en el archivo es todo
 /* Verdadero cuando lo que se está mostrando salió del archivo y no de la hoja.
    Con SCRIPT_URL vacío es el estado normal y no hay nada que avisar; con hoja
@@ -2571,11 +3088,17 @@ function idEnLaDireccion(){
   catch(e){ return ""; }
 }
 
-function enlaceDe(id){
+function varianteEnLaDireccion(){
+  try { return (new URLSearchParams(location.search).get(PARAM_VARIANTE) || "").trim(); }
+  catch(e){ return ""; }
+}
+
+function enlaceDe(id, varianteId){
   try {
     const u = new URL(location.href);
     u.search = ""; u.hash = "";
     u.searchParams.set(PARAM_PRODUCTO, id);
+    if(varianteId) u.searchParams.set(PARAM_VARIANTE, varianteId);
     return u.href;
   } catch(e){ return location.href; }
 }
@@ -2586,8 +3109,8 @@ function direccionBase(){
 
 /* Cambia la barra de direcciones sin recargar. Si el navegador no deja
    (file://, por ejemplo), la tienda sigue funcionando igual. */
-function apuntarEnHistoria(id){
-  try { history.pushState({ ficha:id }, "", enlaceDe(id)); } catch(e){}
+function apuntarEnHistoria(id, varianteId){
+  try { history.pushState({ ficha:id, variante:varianteId || "" }, "", enlaceDe(id, varianteId)); } catch(e){}
 }
 
 function salirDelEnlace(){
@@ -2599,7 +3122,7 @@ function salirDelEnlace(){
 
 window.addEventListener("popstate", e => {
   const id = (e.state && e.state.ficha) || "";
-  if(id && producto(id)) abrirFicha(id, true);
+  if(id && producto(id)) abrirFicha(id, true, (e.state && e.state.variante) || "");
   else if($("#ficha").classList.contains("abierta")) cerrarTodo();
 });
 
@@ -2607,7 +3130,7 @@ window.addEventListener("popstate", e => {
 function atenderEnlace(){
   if(!enlacePendiente) return;
   const p = producto(enlacePendiente);
-  if(p){ enlacePendiente = null; abrirFicha(p.id, true); return; }
+  if(p){ enlacePendiente = null; const v = variantePendiente; variantePendiente = null; abrirFicha(p.id, true, v); return; }
   if(!catalogoResuelto) return;           // todavía puede llegar en el catálogo real
   enlacePendiente = null;
   try { history.replaceState({}, "", direccionBase()); } catch(e){}
@@ -2624,8 +3147,10 @@ function refrescarFichaAbierta(){
 
 function compartirProducto(){
   if(!fichaActual) return;
-  const url = enlaceDe(fichaActual.id);
-  const texto = fichaActual.nombre + " — " + pesos(fichaActual.precio) + " · " + NEGOCIO;
+  const variante = varianteElegida(fichaActual);
+  const url = enlaceDe(fichaActual.id, variante ? variante.id : "");
+  const texto = fichaActual.nombre + (variante ? " · " + textoVariante(variante) : "") +
+    " — " + pesos(variante ? variante.precio : fichaActual.precio) + " · " + NEGOCIO;
   if(navigator.share){
     navigator.share({ title: fichaActual.nombre, text: texto, url: url }).catch(() => {});
     return;
@@ -2705,8 +3230,11 @@ window.SEMILLA_APLICADA = true;
 // ── Arranque ──
 pintarFiltros();
 pintarRejilla();
+const VOLVIO_DE_BOLD = restaurarRetornoPago();
 pintarPanel(null);
+if(VOLVIO_DE_BOLD) abrirPanel();
 enlacePendiente = idEnLaDireccion();
+variantePendiente = varianteEnLaDireccion();
 atenderEnlace();    // si el enlace trae ?p=, abre esa ficha ya con lo que hay
 cargarCatalogo();   // catalogo.json primero; la hoja solo si no está
 </script>

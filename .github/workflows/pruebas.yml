@@ -13,16 +13,16 @@ on:
   push:
     branches: [main]
   pull_request:
-  # Para que el flujo de release pueda exigir el verde antes de publicar.
-  workflow_call:
 
 jobs:
   pruebas:
-    # NO SOBRE EL PULL REQUEST QUE ABRE `fotos`, Y NO POR AHORRAR MINUTOS.
+    # NO SOBRE LOS PULL REQUESTS GENERADOS POR `fotos` O `montaje`.
     #
-    # Ese flujo corre todas las baterías sobre los archivos ya escritos y solo
-    # después abre el pull request y lo fusiona. Volver a correrlas aquí prueba
-    # exactamente lo mismo sobre exactamente los mismos bytes.
+    # Esos flujos corren la guardia de los archivos generados antes de abrir o
+    # fusionar. Volver a iniciar `pruebas` crea una marca redundante; peor, la
+    # regla de versión de un PR de datos rechaza index.html porque package.json
+    # no tiene por qué cambiar. La suite completa ya quedó verde en el push del
+    # código y la guardia acaba de revisar los bytes nuevos.
     #
     # Y no sale gratis: una corrida disparada por el pull request de un bot
     # queda **esperando la aprobación de un mantenedor**, y si nadie la aprueba
@@ -30,16 +30,17 @@ jobs:
     # marca roja que no significa nada es peor que ninguna marca: enseña a no
     # mirarlas.
     #
-    # El de `montaje` SÍ se sigue comprobando aquí, a propósito: ese pull
-    # request espera a una persona, corre una vez por semana, no está en el
-    # camino de publicar una foto, y es el que puede reescribir el <head>, la
-    # política de seguridad y SCRIPT_URL.
     if: >-
       !(github.event_name == 'pull_request' &&
         github.event.pull_request.user.login == 'github-actions[bot]' &&
-        startsWith(github.head_ref, 'fotos/nuevas-'))
+        (startsWith(github.head_ref, 'fotos/nuevas-') ||
+         startsWith(github.head_ref, 'montaje/desde-la-hoja')))
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Cuatro procesos dentro de UN runner: baja el reloj de pared sin cobrar
+    # cuatro runners en los repositorios privados de las tiendas.
+    env:
+      TRABAJADORES: 4
     defaults:
       run:
         working-directory: pruebas
@@ -80,31 +81,30 @@ jobs:
         with:
           node-version: 22
 
-      # LA CACHÉ DE NPM, A MANO Y NO CON `cache: npm`.
-      # `cache: npm` exige un package-lock.json, y en este repositorio los dos
-      # están en .gitignore: en un checkout limpio no existen, y setup-node se
-      # cae con «Some specified paths were not resolved». Cachear ~/.npm no
-      # necesita lockfile y se lleva lo que de verdad pesa, que es el binario
-      # nativo de sharp.
+      # El lock es el contrato real de dependencias. Un rango en package.json
+      # puede resolver distinto sin cambiar el archivo y dejar una caché vieja.
       - name: Caché de npm
         uses: actions/cache@v5
         with:
           path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package.json', 'pruebas/package.json') }}
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json', 'pruebas/package-lock.json') }}
           restore-keys: npm-${{ runner.os }}-
 
       # Chromium pesa y no cambia entre corridas: se guarda en caché para que
       # una corrida normal tarde en pruebas, no en descargar el navegador.
       - name: Caché del navegador
+        id: cache-navegador
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package.json') }}
+          key: playwright-${{ runner.os }}-${{ hashFiles('pruebas/package-lock.json') }}
+          restore-keys: playwright-${{ runner.os }}-
 
       - name: Dependencias
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Navegador
+        if: steps.cache-navegador.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
 
       # todas.sh copia maestro.gs e index.html reales antes de correr, y sale

@@ -4,6 +4,11 @@ _10 de septiembre de 2026. Sobre una propuesta externa de tres archivos:
 `arquitecturadespliegue.md`, `ActionActualizacionmenu.yml`,
 `funcionactualizarmenu.js`._
 
+> **Alcance:** esta evaluación sigue vigente para el stub. La integración Bold
+> de la 3.2.1 no añade otro mecanismo de despliegue: usa el mismo `montaje` para
+> publicar `maestro.gs`; las credenciales se configuran directamente en
+> Propiedades del script y nunca pasan por el stub.
+
 **Veredicto: la idea es real y va al roadmap. La implementación propuesta no se
 puede usar, y su argumento central es falso.**
 
@@ -113,9 +118,11 @@ grupo de concurrencia. El documento lo presenta como la virtud: *«Despliegue
 Total Sin Intervención»*.
 
 Nuestro `montaje.yml` exige marcar una casilla **y** escribir `PUBLICAR`, y
-antes corre todas las baterías **sobre los archivos ya modificados**. Para un
-backend que atiende pedidos y toca inventario, no tener puerta no es una
-virtud: es el fallo que funciona.
+el código ya tuvo que pasar la suite completa al entrar a `main`; antes de
+publicar corre además la guardia de index, catálogo, fotos, respaldo, pagos y
+variantes **sobre los archivos ya modificados**. Para un backend que atiende
+pedidos y toca inventario, no tener puerta no es una virtud: es el fallo que
+funciona.
 
 ### 4.5 Un tercer token, escrito en el código
 

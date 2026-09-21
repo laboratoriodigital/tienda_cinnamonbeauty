@@ -137,7 +137,7 @@ function tokenMenu() {
   return t;
 }
 
-var VERSION = '2026-09-12-1';
+var VERSION = '2026-09-20-5';
 
 /* Antes esto era getActiveSpreadsheet(): el script vivía dentro de la hoja.
    Ahora abre la del cliente por su ID, y esa es toda la diferencia. */
@@ -155,10 +155,16 @@ var H_CONFIG       = 'Configuración';
 var H_CATALOGO     = 'Catálogo';
 var H_ENVIOS       = 'Envíos';
 var H_CUPONES      = 'Cupones';
+var H_VARIANTES    = 'Variantes';
+var H_RESERVAS     = 'Reservas';
 var H_VALIDACIONES = 'Validaciones';
 var H_PEDIDOS      = 'Pedidos';
 var H_RESUMEN      = 'Más vendidos';
 var H_ERRORES      = 'Errores';
+/* Estas dos pestañas son el libro mayor del checkout. No se publican por
+   ninguna puerta: contienen datos de pago y de entrega. */
+var H_PAGOS        = 'Pagos';
+var H_ENTREGAS     = 'Datos de entrega';
 
 /* Las columnas del catálogo. Para AGREGAR UN PRODUCTO NUEVO basta con llenar
    una fila aquí: no hay que tocar index.html. Las fotos van todas en la misma
@@ -177,7 +183,15 @@ var H_ERRORES      = 'Errores';
    hojas el mismo día. */
 var ENCABEZADO_CATALOGO = ['ID', 'Nombre', 'Formato', 'Categoría', 'Precio', 'Stock',
                            'Descripción', 'Imágenes', 'Destacado', 'Activo',
-                           'Referencia', 'Precio antes', 'Umbral bajo'];
+                           'Referencia', 'Precio antes', 'Umbral bajo', 'Variantes'];
+
+/* Una fila por combinación vendible. Precio vacío hereda el precio del
+   producto. Variante ID no se vuelve a generar: es la identidad que viaja por
+   carrito, pago, pedido e inventario aunque el comerciante cambie el SKU. */
+var ENCABEZADO_VARIANTES = ['Variante ID', 'Producto ID', 'SKU', 'Opciones',
+                            'Precio', 'Stock', 'Activo', 'Imágenes'];
+var ENCABEZADO_RESERVAS = ['Fecha', 'Pedido', 'Clave de inventario', 'Cantidad',
+                           'Estado', 'Vence', 'Actualizado'];
 
 /* La última columna, Inventario, la escribe el script solo. Dice si el stock de
    esa línea ya se descontó del catálogo. Existe para que confirmar un pedido dos
@@ -188,7 +202,18 @@ var ENCABEZADO_CATALOGO = ['ID', 'Nombre', 'Formato', 'Categoría', 'Precio', 'S
 var ENCABEZADO_PEDIDOS = ['Fecha', 'Pedido', 'Validación', 'Estado', 'Ciudad', 'Cupón',
                           'Producto', 'ID', 'Cantidad', 'Precio unitario',
                           'Subtotal línea', 'Total del pedido', 'Inventario',
-                          'Fecha de pago', 'Fecha de despacho', 'Guía'];
+                          'Fecha de pago', 'Fecha de despacho', 'Guía',
+                          'Proveedor de pago', 'Referencia de pago', 'Transacción de pago',
+                          'Variante ID', 'SKU', 'Opciones'];
+
+var ENCABEZADO_PAGOS = ['Fecha', 'Pedido', 'Proveedor', 'Referencia', 'Transacción',
+                        'Estado', 'Total', 'Moneda', 'Items', 'Cupón', 'Envío',
+                        'Subtotal', 'Descuento', 'Valor envío', 'QR', 'Vence',
+                        'Token de consulta', 'Última consulta', 'Cliente notificado',
+                        'Comercio notificado', 'Error'];
+
+var ENCABEZADO_ENTREGAS = ['Fecha', 'Pedido', 'Nombre', 'Celular', 'Correo',
+                           'Ciudad', 'Dirección', 'Notas'];
 
 /* La columna Pedido de Validaciones es el MISMO número que el de Pedidos. Un
    solo identificador para todo: el que llega en el mensaje de WhatsApp. */
@@ -203,6 +228,8 @@ var ENCABEZADO_VALIDACIONES = ['Fecha', 'Pedido', 'Cupón', 'Subtotal según la 
 var COL_ESTADO     = 4;    // columna D de Pedidos
 var COL_INVENTARIO = 13;   // columna M de Pedidos
 var COL_STOCK      = 6;    // columna F de Catálogo
+var COL_VARIANTE_ID_PEDIDO = 20;
+var COL_STOCK_VARIANTE = 6;
 
 var MAX_CUERPO   = 4000;
 var MAX_ITEMS    = 30;
@@ -309,6 +336,14 @@ function instalar() {
     .setValues([ENCABEZADO_VALIDACIONES]).setFontWeight('bold');
   hoja(H_PEDIDOS, ENCABEZADO_PEDIDOS);
   asegurarColumnas(H_PEDIDOS, ENCABEZADO_PEDIDOS);   // hojas viejas: agrega lo que falte
+  hoja(H_VARIANTES, ENCABEZADO_VARIANTES);
+  asegurarColumnas(H_VARIANTES, ENCABEZADO_VARIANTES);
+  hoja(H_RESERVAS, ENCABEZADO_RESERVAS);
+  asegurarColumnas(H_RESERVAS, ENCABEZADO_RESERVAS);
+  hoja(H_PAGOS, ENCABEZADO_PAGOS);
+  asegurarColumnas(H_PAGOS, ENCABEZADO_PAGOS);
+  hoja(H_ENTREGAS, ENCABEZADO_ENTREGAS);
+  asegurarColumnas(H_ENTREGAS, ENCABEZADO_ENTREGAS);
   hoja(H_RESUMEN, ['Producto', 'ID', 'Unidades vendidas', 'Ingresos', 'Pedidos en que aparece']);
   hoja(H_TABLERO, ['Indicador', 'Valor', 'Comparación']);
   hoja(H_ERRORES, ['Fecha', 'Error', 'Primeros 200 caracteres recibidos']);
@@ -321,9 +356,13 @@ function instalar() {
 
   ScriptApp.getProjectTriggers().forEach(function (t) {
     var f = t.getHandlerFunction();
-    if (f === 'recalcularResumen' || f === 'alEditar') ScriptApp.deleteTrigger(t);
+    if (f === 'recalcularResumen' || f === 'alEditar' || f === 'conciliarPagosBold') ScriptApp.deleteTrigger(t);
   });
   ScriptApp.newTrigger('recalcularResumen').timeBased().everyHours(1).create();
+  /* Quince minutos es deliberado: el cliente que sigue en la confirmación
+     consulta antes; este disparador solo rescata pagos cuando ya cerró la
+     pestaña, sin gastar una llamada a Bold cada minuto. */
+  ScriptApp.newTrigger('conciliarPagosBold').timeBased().everyMinutes(15).create();
   // forSpreadsheet(ID) y no forSpreadsheet(objeto): este proyecto no está unido
   // a la hoja, la alcanza por su identificador.
   ScriptApp.newTrigger('alEditar').forSpreadsheet(HOJA_ID).onEdit().create();
@@ -393,7 +432,7 @@ function generarConfiguracion() {
   var icono = iconoDeLaTienda(c);
 
   var hosts = hostsDeFotos(c, url);
-  var csp = "default-src 'none'; script-src 'unsafe-inline'; " +
+  var csp = "default-src 'none'; script-src 'unsafe-inline' https://checkout.bold.co; " +
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
             "font-src https://fonts.gstatic.com; " +
             "img-src 'self' data:" + (hosts.length ? ' https://' + hosts.join(' https://') : '') + '; ' +
@@ -698,7 +737,8 @@ function diagnostico(mostrarSecretos) {
   // ── 3 ────────────────────────────────────────────────────────────────────
   punto('Pestañas de la hoja');
   var faltan = 0;
-  [H_CONFIG, H_CATALOGO, H_ENVIOS, H_CUPONES, H_VALIDACIONES, H_PEDIDOS, H_RESUMEN, H_TABLERO, H_ERRORES]
+  [H_CONFIG, H_CATALOGO, H_ENVIOS, H_CUPONES, H_VARIANTES, H_RESERVAS,
+   H_VALIDACIONES, H_PEDIDOS, H_PAGOS, H_ENTREGAS, H_RESUMEN, H_TABLERO, H_ERRORES]
     .forEach(function (nombre) {
       var h = libro.getSheetByName(nombre);
       if (!h) { faltan++; decir('FALTA la pestaña: ' + nombre); }
@@ -1085,13 +1125,19 @@ function hoja(nombre, encabezados) {
 }
 
 /* Agrega al final las columnas del encabezado que le falten a una hoja que ya
-   existía. Sin esto, quien ya tenía la hoja creada nunca vería la columna nueva. */
+   existía y repone cualquier título vacío en su posición. Google Sheets puede
+   conservar celdas/formato al final de una fila: en ese caso getLastColumn()
+   cuenta la columna aunque el encabezado esté vacío. Mirar solo la longitud
+   dejó «Umbral bajo» y «Variantes» sin nombre en una hoja real. No se pisan
+   títulos no vacíos: una migración aditiva nunca renombra columnas antiguas. */
 function asegurarColumnas(nombre, encabezados) {
   var h = elLibro().getSheetByName(nombre);
   if (!h) return;
   var actuales = h.getRange(1, 1, 1, Math.max(1, h.getLastColumn())).getValues()[0];
-  for (var i = actuales.length; i < encabezados.length; i++) {
-    h.getRange(1, i + 1).setValue(encabezados[i]).setFontWeight('bold');
+  for (var i = 0; i < encabezados.length; i++) {
+    if (String(actuales[i] || '').trim() === '') {
+      h.getRange(1, i + 1).setValue(encabezados[i]).setFontWeight('bold');
+    }
   }
 }
 
@@ -1114,7 +1160,7 @@ function esSi(v) {
    no entiende lo que le están dando y se queda con lo último bueno —diciéndolo
    por consola—, en vez de pintar una tienda a medias. Sube solo cuando cambia
    lo que las puertas publican, y siguiendo R1: agregando al final. */
-var ESQUEMA = 1;
+var ESQUEMA = 3;
 
 /* LA PUERTA ?a=catalogo NO PIDE TOKEN, y no puede pedirlo: la abre cualquier
    comprador al entrar a la tienda. Así que todo lo que salga por ahí es
@@ -1155,6 +1201,10 @@ function configPublica(cfg) {
      hoja se puede escribir «$12.110.000». */
   var tope = cifraDeTexto(cfg.pago_tope, 'Configuración > pago_tope');
   limpia.tope_pago = tope === null ? 0 : tope;
+  /* Solo se publica la decisión operativa necesaria para pintar el botón.
+     Ambiente, integración y llaves se quedan en la hoja o en propiedades. */
+  limpia.checkout_modo = normalizarOpcionPago(cfg.pago_modo, ['pasarela', 'whatsapp'], 'pasarela');
+  limpia.checkout_proveedor = normalizarOpcionPago(cfg.pago_proveedor, ['bold'], 'bold');
   return limpia;
 }
 
@@ -1184,6 +1234,7 @@ function doGet(e) {
     if (p.a === 'catalogo')  { contarLectura(); return json(conVersion(catalogoPublico())); }
     if (p.a === 'validar')   return json(conVersion(validarPedido(p)));
     if (p.a === 'registrar') return json(conVersion(registrarPedido(p)));
+    if (p.a === 'pago_estado') return json(conVersion(estadoPublicoPago(p.token)));
     if (p.a === 'menu')      return json(atenderMenu(p));
     if (p.a === 'panel')     return json(atenderPanel(p));
     if (p.a === 'identidad') return json(atenderIdentidad(p));
@@ -1198,6 +1249,518 @@ function doGet(e) {
     registrarError(err, null);
     return json({ ok: false, error: 'No pudimos validar en este momento.' });
   }
+}
+
+/* ===========================================================================
+   CHECKOUT DE PAGOS — POST JSON, APPS SCRIPT + SHEETS
+   ---------------------------------------------------------------------------
+   La página publica productos y datos de entrega, pero JAMÁS un total que el
+   servidor acepte sin recalcular. Las llaves de Bold viven en Script Properties
+   y la secreta solo se usa para firmar en Apps Script. El webhook no entra
+   aquí: Apps Script no expone sus cabeceras HTTP, así que la fuente de verdad
+   es la consulta autenticada del adaptador activo de Bold.
+   ========================================================================== */
+function doPost(e) {
+  try {
+    recordarMiUrl();
+    var crudo = e && e.postData && e.postData.contents;
+    if (!crudo || crudo.length > MAX_CUERPO) return json({ ok: false, error: 'Solicitud inválida.' });
+    var p = JSON.parse(crudo);
+    if (!p || typeof p !== 'object') return json({ ok: false, error: 'Solicitud inválida.' });
+    if (p.a === 'pago_crear') return json(conVersion(crearPagoCheckout(p)));
+    return json({ ok: false, error: 'Acción desconocida.' });
+  } catch (err) {
+    /* No pasamos `e` a registrarError: el POST contiene datos personales. */
+    registrarError('checkout: ' + (err && err.message ? err.message : 'falló'), null);
+    return json({ ok: false, error: 'No pudimos iniciar el pago. Intenta de nuevo.' });
+  }
+}
+
+function pagoTexto(v, tope) {
+  return celdaSegura(String(v === undefined || v === null ? '' : v), tope || MAX_TEXTO);
+}
+
+function correoValido(v) {
+  v = pagoTexto(v, 120).trim();
+  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v) ? v : '';
+}
+
+function telefonoPago(v) {
+  return pagoTexto(v, 20).replace(/\D/g, '').slice(-10);
+}
+
+function datosEntregaPago(p) {
+  var d = p.entrega || {};
+  var salida = {
+    nombre: pagoTexto(d.nombre, 60).trim(),
+    tel: telefonoPago(d.tel),
+    correo: correoValido(d.correo),
+    ciudad: pagoTexto(d.ciudad, 40).trim(),
+    direccion: pagoTexto(d.direccion, 120).trim(),
+    notas: pagoTexto(d.notas, 300).trim(),
+    documento: pagoTexto(d.documento, 20).replace(/\D/g, '')
+  };
+  if (salida.nombre.length < 3 || salida.tel.length < 7 || !salida.correo ||
+      salida.ciudad.length < 2 || salida.direccion.length < 5 || salida.documento.length < 5) {
+    throw new Error('Faltan datos de entrega o identificación.');
+  }
+  return salida;
+}
+
+function tokenPago() {
+  return 'pg-' + Utilities.getUuid().replace(/-/g, '');
+}
+
+function referenciaPago() {
+  return 'ORD-' + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyyMMdd') + '-' +
+    Utilities.getUuid().replace(/-/g, '').slice(0, 10).toUpperCase();
+}
+
+function claveInventarioItem(i) {
+  return i && i.varianteId ? 'v:' + i.varianteId : 'p:' + String(i && i.id || '');
+}
+
+function reservasActivas() {
+  var mapa = {}, ahora = Date.now();
+  filas(H_RESERVAS).forEach(function (f) {
+    if (String(f[4]).toUpperCase() !== 'ACTIVA' || milisBold(f[5]) <= ahora) return;
+    var clave = String(f[2]).trim();
+    if (clave) mapa[clave] = (mapa[clave] || 0) + (Number(f[3]) || 0);
+  });
+  return mapa;
+}
+
+function guardarReservas(pedido, items, vence) {
+  var h = hoja(H_RESERVAS, ENCABEZADO_RESERVAS), ahora = new Date();
+  items.forEach(function (i) {
+    var libre = Number(i.stockDisponible);
+    if (!isFinite(libre) || i.cantidad > libre) {
+      throw new Error('El inventario cambió mientras se preparaba el pago. Intenta de nuevo.');
+    }
+  });
+  var filasNuevas = items.map(function (i) {
+    return [ahora, pedido, claveInventarioItem(i), i.cantidad, 'ACTIVA', String(vence), ahora];
+  });
+  if (filasNuevas.length) h.getRange(h.getLastRow() + 1, 1, filasNuevas.length, ENCABEZADO_RESERVAS.length).setValues(filasNuevas);
+  CacheService.getScriptCache().remove('catalogo');
+}
+
+function cerrarReservas(pedido, estado) {
+  var h = elLibro().getSheetByName(H_RESERVAS);
+  if (!h || h.getLastRow() < 2) return 0;
+  var datos = h.getRange(2, 1, h.getLastRow() - 1, ENCABEZADO_RESERVAS.length).getValues(), n = 0;
+  datos.forEach(function (f) {
+    if (String(f[1]) === String(pedido) && String(f[4]).toUpperCase() === 'ACTIVA') {
+      f[4] = estado; f[6] = new Date(); n++;
+    }
+  });
+  if (n) {
+    h.getRange(2, 1, datos.length, ENCABEZADO_RESERVAS.length).setValues(datos);
+    CacheService.getScriptCache().remove('catalogo');
+  }
+  return n;
+}
+
+function normalizarOpcionPago(valor, opciones, respaldo) {
+  valor = String(valor || '').trim().toLowerCase();
+  return opciones.indexOf(valor) >= 0 ? valor : respaldo;
+}
+
+function configuracionPago() {
+  var cfg = leerConfiguracion(), props = PropertiesService.getScriptProperties();
+  return {
+    modo: normalizarOpcionPago(cfg.pago_modo, ['pasarela', 'whatsapp'], 'pasarela'),
+    proveedor: normalizarOpcionPago(cfg.pago_proveedor || props.getProperty('PAGO_PROVEEDOR'), ['bold'], 'bold'),
+    ambiente: normalizarOpcionPago(cfg.pago_ambiente || props.getProperty('BOLD_AMBIENTE'), ['sandbox', 'produccion'], 'sandbox'),
+    integracion: normalizarOpcionPago(cfg.pago_integracion || props.getProperty('BOLD_INTEGRACION'), ['boton', 'api_qr'], 'boton')
+  };
+}
+
+function integracionBoldActiva() {
+  var modo = configuracionPago().integracion;
+  if (modo !== 'boton' && modo !== 'api_qr') throw new Error('La integración Bold ' + modo + ' no está soportada.');
+  return modo;
+}
+
+function credencialesBold(modo) {
+  var props = PropertiesService.getScriptProperties();
+  var ambiente = configuracionPago().ambiente;
+  var sufijo = ambiente === 'produccion' ? 'PRODUCCION' : 'SANDBOX';
+  modo = modo || integracionBoldActiva();
+  /* Los nombres cortos ya están instalados en las tiendas y hoy corresponden
+     al Botón de pagos. Los nombres BOLD_BOTON_* son alias explícitos para una
+     futura tienda que también tenga llaves de API Pagos en Línea. */
+  var prefijo = modo === 'api_qr' ? 'BOLD_API_' : 'BOLD_BOTON_';
+  var identidad = String(props.getProperty(prefijo + 'IDENTIDAD_' + sufijo) ||
+                         (modo === 'boton' ? props.getProperty('BOLD_IDENTIDAD_' + sufijo) : '') || '').trim();
+  var secreta = String(props.getProperty(prefijo + 'SECRETA_' + sufijo) ||
+                       (modo === 'boton' ? props.getProperty('BOLD_SECRETA_' + sufijo) : '') || '').trim();
+  if (!identidad) throw new Error('Falta la llave de identidad Bold para ' + ambiente + '.');
+  if (modo === 'boton' && !secreta) throw new Error('Falta la llave secreta Bold para ' + ambiente + '.');
+  return { ambiente: ambiente, identidad: identidad, secreta: secreta, modo: modo };
+}
+
+/* Punto único para cambiar de pasarela por tienda. Hoy solo Bold está
+   implementado; PayU, Mercado Pago o PayPal se agregan como otro adaptador sin
+   tocar el carrito, Pedidos ni la conciliación. La propiedad pertenece al
+   proyecto Apps Script de ESTA tienda, no al repositorio compartido. */
+function proveedorPagoActivo() {
+  var proveedor = configuracionPago().proveedor;
+  if (proveedor !== 'bold') throw new Error('El proveedor ' + proveedor + ' aún no está configurado para esta tienda.');
+  return proveedor;
+}
+
+function respuestaBold(res, paso) {
+  var codigo = res.getResponseCode();
+  var cuerpo = res.getContentText();
+  var dato;
+  try { dato = JSON.parse(cuerpo || '{}'); } catch (x) { dato = {}; }
+  if (codigo < 200 || codigo >= 300 || (dato.errors && dato.errors.length)) {
+    var detalle = (dato.errors && dato.errors[0] && (dato.errors[0].message || dato.errors[0].detail)) ||
+                  ('HTTP ' + codigo);
+    throw new Error('Bold ' + paso + ': ' + pagoTexto(detalle, 160));
+  }
+  return dato.payload || dato;
+}
+
+function pedirBoldApi(ruta, metodo, cuerpo) {
+  var c = credencialesBold('api_qr');
+  var opciones = {
+    method: metodo || 'get',
+    muteHttpExceptions: true,
+    headers: { Authorization: 'x-api-key ' + c.identidad, Accept: 'application/json' }
+  };
+  if (cuerpo) {
+    opciones.contentType = 'application/json';
+    opciones.payload = JSON.stringify(cuerpo);
+  }
+  var res = UrlFetchApp.fetch('https://api.online.payments.bold.co' + ruta, opciones);
+  return respuestaBold(res, ruta);
+}
+
+function pedirBoldBoton(pedido) {
+  var c = credencialesBold('boton');
+  var ruta = '/v2/payment-voucher/' + encodeURIComponent(String(pedido));
+  var res = UrlFetchApp.fetch('https://payments.api.bold.co' + ruta, {
+    method: 'get', muteHttpExceptions: true,
+    headers: { Authorization: 'x-api-key ' + c.identidad, Accept: 'application/json' }
+  });
+  return respuestaBold(res, ruta);
+}
+
+function sha256Hex(texto) {
+  var bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(texto), Utilities.Charset.UTF_8);
+  return bytes.map(function (b) { var n = b < 0 ? b + 256 : b; return ('0' + n.toString(16)).slice(-2); }).join('');
+}
+
+function urlRetornoBold(token, abandono) {
+  var base = String(leerConfiguracion().sitio_url || '').trim();
+  if (!/^https:\/\//i.test(base)) throw new Error('Configuración > sitio_url debe ser una URL https válida.');
+  base = base.replace(/[#?].*$/, '').replace(/\/+$/, '') + '/';
+  return base + '?pago-token=' + encodeURIComponent(token) + (abandono ? '&pago-abandonado=1' : '');
+}
+
+function huellaDispositivo(p) {
+  var h = p.huella || {};
+  return {
+    device_type: pagoTexto(h.tipo, 20) || 'MOBILE',
+    os: pagoTexto(h.os, 50), browser: pagoTexto(h.navegador, 80), model: '',
+    java_enabled: false, language: pagoTexto(h.idioma, 20) || 'es-CO',
+    color_depth: Number(h.color) || 24,
+    screen_height: Number(h.alto) || 0, screen_width: Number(h.ancho) || 0,
+    time_zone_offset: Number(h.zona) || -300
+  };
+}
+
+function crearPagoCheckout(p) {
+  if (configuracionPago().modo !== 'pasarela') {
+    throw new Error('Esta tienda recibe pedidos por WhatsApp, no por pasarela.');
+  }
+  var proveedor = proveedorPagoActivo();
+  if (proveedor === 'bold') return crearPagoBold(p);
+  throw new Error('No hay adaptador de pago activo.');
+}
+
+function crearPagoBold(p) {
+  return integracionBoldActiva() === 'api_qr' ? crearPagoBoldApiQr(p) : crearPagoBoldBoton(p);
+}
+
+function crearPagoBoldBoton(p) {
+  var lock = LockService.getScriptLock(); lock.waitLock(15000);
+  try {
+  var d = datosEntregaPago(p);
+  var r = validarPedido({ items: p.items, cupon: p.cupon, envio: p.envio });
+  if (!r.ok || !r.items || !r.items.length) return { ok: false, error: r.error || 'No hay productos disponibles.' };
+  if (r.total < 1000 || r.total > MAX_TOTAL) return { ok: false, error: 'Bold exige un total mínimo de $1.000.' };
+
+  var pedido = referenciaPago();
+  var token = tokenPago();
+  var c = credencialesBold('boton');
+  var monto = String(Math.round(r.total));
+  var firma = sha256Hex(pedido + monto + 'COP' + c.secreta);
+  var vence = Date.now() + 24 * 60 * 60 * 1000;
+  guardarReservas(pedido, r.items, vence);
+  var fila = [new Date(), pedido, 'bold_boton', pedido, '', 'PENDING', r.total, 'COP',
+              JSON.stringify(r.items), pagoTexto(r.cupon && r.cupon.ok ? r.cupon.codigo : '', 20),
+              pagoTexto(p.envio, 40), r.sub, r.descuento, r.envio,
+              'BOLD_BUTTON', String(vence), token, '', '', '', ''];
+  var h = hoja(H_PAGOS, ENCABEZADO_PAGOS);
+  h.getRange(h.getLastRow() + 1, 1, 1, fila.length).setValues([fila]);
+  hoja(H_ENTREGAS, ENCABEZADO_ENTREGAS).appendRow(
+    [new Date(), pedido, d.nombre, d.tel, d.correo, d.ciudad, d.direccion, d.notas]);
+  /* La referencia definitiva nace aquí. No se sella antes desde el navegador:
+     Validaciones y Pedidos deben compartir siempre el ORD emitido por el backend. */
+  sellar({ pedido: pedido, sub: r.sub }, r.items, r, true, true);
+
+  return { ok: true, pedido: pedido, token: token, total: r.total, moneda: 'COP', estado: 'PENDING',
+    checkout: { kind: 'BOLD_BUTTON', orderId: pedido, currency: 'COP', amount: monto,
+      apiKey: c.identidad, integritySignature: firma, description: 'Pedido ' + pedido,
+      redirectionUrl: urlRetornoBold(token, false), originUrl: urlRetornoBold(token, true),
+      customerData: { email: d.correo, fullName: d.nombre, phone: d.tel, dialCode: '+57',
+                      documentNumber: d.documento, documentType: 'CC' },
+      billingAddress: { address: d.direccion, city: d.ciudad, country: 'CO' } } };
+  } catch (e) {
+    if (typeof pedido !== 'undefined' && pedido) cerrarReservas(pedido, 'LIBERADA');
+    throw e;
+  } finally { lock.releaseLock(); }
+}
+
+/* Adaptador anterior. Se conserva listo para cuando Bold active las llaves de
+   API Pagos en Línea; no se ejecuta mientras BOLD_INTEGRACION=boton. */
+function crearPagoBoldApiQr(p) {
+  var d = datosEntregaPago(p);
+  var r = validarPedido({ items: p.items, cupon: p.cupon, envio: p.envio });
+  if (!r.ok || !r.items || !r.items.length) return { ok: false, error: r.error || 'No hay productos disponibles.' };
+  if (r.total < 1 || r.total > MAX_TOTAL) return { ok: false, error: 'El total no es válido.' };
+
+  var pedido = referenciaPago();
+  var intento = pedirBoldApi('/v1/payment-intent', 'post', {
+    reference_id: pedido,
+    amount: { currency: 'COP', total_amount: r.total, tip_amount: 0, taxes: [] },
+    description: 'Pedido ' + pedido,
+    metadata: { key: 'pedido', value: pedido },
+    customer: {
+      name: d.nombre, phone: d.tel, email: d.correo,
+      shipping_address: { street1: d.direccion, city: d.ciudad, country_code: 'CO', phone: d.tel }
+    }
+  });
+  /* BOLD_BASE64 evita cargar código de terceros en la vitrina. El adaptador
+     conserva el tipo para que otro proveedor pueda responder TEXT o imagen. */
+  var intentoPago = pedirBoldApi('/v1/payment', 'post', {
+    reference_id: pedido,
+    metadata: { key: 'pedido', value: pedido },
+    payer: {
+      person_type: 'NATURAL_PERSON', name: d.nombre, phone: d.tel, email: d.correo,
+      document_type: 'CEDULA', document_number: d.documento,
+      billing_address: { street1: d.direccion, city: d.ciudad, country: 'CO', phone: d.tel }
+    },
+    payment_method: { name: 'QR', qr_format: 'BOLD_BASE64' },
+    device_fingerprint: huellaDispositivo(p)
+  });
+  var qr = intentoPago.next_actions || {};
+  if (!qr.qr_payload || !qr.expires_at) throw new Error('Bold no entregó un QR válido.');
+
+  var token = tokenPago();
+  guardarReservas(pedido, r.items, milisBold(qr.expires_at) || (Date.now() + 15 * 60 * 1000));
+  var fila = [new Date(), pedido, 'bold_api_qr', pedido, pagoTexto(intentoPago.transaction_id, 80),
+              pagoTexto(intentoPago.status, 30) || 'RUNNING', r.total, 'COP',
+              JSON.stringify(r.items), pagoTexto(r.cupon && r.cupon.ok ? r.cupon.codigo : '', 20),
+              pagoTexto(p.envio, 40), r.sub, r.descuento, r.envio,
+              pagoTexto(qr.qr_payload, 300000), String(qr.expires_at), token, '', '', '', ''];
+  var h = hoja(H_PAGOS, ENCABEZADO_PAGOS);
+  h.getRange(h.getLastRow() + 1, 1, 1, fila.length).setValues([fila]);
+  var he = hoja(H_ENTREGAS, ENCABEZADO_ENTREGAS);
+  he.appendRow([new Date(), pedido, d.nombre, d.tel, d.correo, d.ciudad, d.direccion, d.notas]);
+  sellar({ pedido: pedido, sub: r.sub }, r.items, r, true);
+
+  return { ok: true, pedido: pedido, token: token, total: r.total, moneda: 'COP',
+           qr: { kind: 'IMAGE_BASE64', payload: qr.qr_payload, expiresAt: String(qr.expires_at) },
+           estado: String(intentoPago.status || 'RUNNING'), intent: pagoTexto(intento.reference_id, 80) };
+}
+
+function pagoPorToken(token) {
+  token = pagoTexto(token, 80);
+  if (!token) return null;
+  var h = elLibro().getSheetByName(H_PAGOS);
+  if (!h || h.getLastRow() < 2) return null;
+  var desde = Math.max(2, h.getLastRow() - 500);
+  var datos = h.getRange(desde, 1, h.getLastRow() - desde + 1, ENCABEZADO_PAGOS.length).getValues();
+  for (var i = datos.length - 1; i >= 0; i--) {
+    if (String(datos[i][16]).trim() === token) return { hoja: h, fila: desde + i, datos: datos[i] };
+  }
+  return null;
+}
+
+function milisBold(n) {
+  var v = Number(n);
+  if (isFinite(v) && v > 0) return v > 1000000000000000 ? Math.floor(v / 1000000) : v;
+  var fecha = Date.parse(String(n || ''));
+  return isNaN(fecha) ? 0 : fecha;
+}
+
+function estadoPublicoPago(token) {
+  var p = pagoPorToken(token);
+  if (!p) return { ok: false, error: 'Pago no encontrado.' };
+  revisarPago(p);
+  p = pagoPorToken(token);
+  var f = p.datos;
+  return { ok: true, pedido: String(f[1]), estado: String(f[5]), total: Number(f[6]),
+           moneda: String(f[7]), vence: String(f[15]), transaccion: String(f[4] || ''),
+           error: String(f[20] || '') };
+}
+
+function revisarPago(p) {
+  var f = p.datos, estado = String(f[5]).toUpperCase();
+  var proveedor = String(f[2]).toLowerCase();
+  /* PAID es definitivo para el inventario, pero los correos pueden haber
+     fallado por cuota o una caída temporal. Reintentarlos aquí no vuelve a
+     crear la venta: las dos marcas de notificación lo hacen idempotente. */
+  if (estado === 'PAID') { notificarPago(p); return estado; }
+  if (estado === 'APPROVED') { confirmarPago(p, { transaction_id: f[4] }); return 'PAID'; }
+  if (estado === 'REJECTED' || estado === 'EXPIRED') { cerrarReservas(String(f[1]), 'LIBERADA'); return estado; }
+  if (proveedor === 'bold_boton') return revisarPagoBoldBoton(p);
+  if (proveedor === 'bold' || proveedor === 'bold_api_qr') return revisarPagoBoldApiQr(p);
+  throw new Error('No hay conciliador para el proveedor ' + proveedor + '.');
+}
+
+function revisarPagoBoldBoton(p) {
+  var f = p.datos;
+  var vence = milisBold(f[15]);
+  var r = pedirBoldBoton(String(f[3]));
+  var nuevo = String(r.payment_status || 'NO_TRANSACTION_FOUND').toUpperCase();
+  var monto = Number(r.total);
+  if (monto && monto !== Number(f[6])) throw new Error('Bold informó un monto distinto.');
+  p.hoja.getRange(p.fila, 18).setValue(new Date());
+  if (nuevo === 'APPROVED') {
+    p.hoja.getRange(p.fila, 5, 1, 2).setValues([[pagoTexto(r.transaction_id, 80), 'APPROVED']]);
+    confirmarPago(p, r);
+    return 'PAID';
+  }
+  if (nuevo === 'REJECTED' || nuevo === 'FAILED' || nuevo === 'VOIDED') {
+    p.hoja.getRange(p.fila, 6).setValue('REJECTED');
+    cerrarReservas(String(f[1]), 'LIBERADA');
+    return 'REJECTED';
+  }
+  if (vence && vence < Date.now()) {
+    p.hoja.getRange(p.fila, 6).setValue('EXPIRED');
+    cerrarReservas(String(f[1]), 'LIBERADA');
+    return 'EXPIRED';
+  }
+  nuevo = nuevo === 'PENDING' ? 'PENDING' : 'PROCESSING';
+  p.hoja.getRange(p.fila, 6).setValue(nuevo);
+  return nuevo;
+}
+
+function revisarPagoBoldApiQr(p) {
+  var f = p.datos;
+  var vence = milisBold(f[15]);
+  var r = pedirBoldApi('/v1/payment/' + encodeURIComponent(String(f[3])), 'get');
+  var nuevo = String(r.status || 'PROCESSING').toUpperCase();
+  var monto = Number(r.amount && r.amount.total_amount);
+  if (monto && monto !== Number(f[6])) throw new Error('Bold informó un monto distinto.');
+  /* Consultamos una última vez incluso si el QR acabó de vencer: un pago que
+     llegó justo en el borde debe ganar antes de etiquetar el intento vencido. */
+  if (vence && vence < Date.now() && nuevo !== 'APPROVED') nuevo = 'EXPIRED';
+  /* Columna 18: última consulta. El estado es la columna 6; escribirlo en
+     19 marcaría por error al cliente como «notificado» y le ocultaría su
+     correo de confirmación. */
+  p.hoja.getRange(p.fila, 18).setValue(new Date());
+  p.hoja.getRange(p.fila, 6).setValue(nuevo);
+  if (nuevo === 'APPROVED') confirmarPago(p, r);
+  else if (nuevo === 'REJECTED' || nuevo === 'FAILED' || nuevo === 'VOIDED') {
+    p.hoja.getRange(p.fila, 6).setValue('REJECTED'); cerrarReservas(String(f[1]), 'LIBERADA');
+  } else if (nuevo === 'EXPIRED') {
+    p.hoja.getRange(p.fila, 6).setValue('EXPIRED'); cerrarReservas(String(f[1]), 'LIBERADA');
+  }
+  return nuevo === 'APPROVED' ? 'PAID' : nuevo;
+}
+
+function confirmarPago(p, respuesta) {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    p = pagoPorToken(p.datos[16]);
+    if (!p || String(p.datos[5]).toUpperCase() === 'PAID') return;
+    var f = p.datos, items;
+    try { items = JSON.parse(String(f[8] || '[]')); } catch (e) { items = []; }
+    if (!items.length) throw new Error('Pago sin líneas.');
+    var pedido = String(f[1]);
+    if (!yaRegistrado(pedido)) {
+      guardarPedido({ pedido: pedido, ref: pedido, estado: 'Pagado', ciudad: ciudadEntrega(pedido),
+        cupon: String(f[9] || ''), total: Number(f[6]), items: items,
+        pago: { proveedor: String(f[2]), referencia: String(f[3]), transaccion: pagoTexto(respuesta.transaction_id || f[4], 80) } });
+      sellar({ pedido: pedido, sub: f[11] }, items,
+        { sub: Number(f[11]), descuento: Number(f[12]), envio: Number(f[13]), total: Number(f[6]),
+          cupon: { ok: !!f[9], codigo: String(f[9] || '') }, avisos: [] }, true, true);
+      marcarRegistrado(pedido);
+      aplicarInventario();
+      cerrarReservas(pedido, 'CONSUMIDA');
+    }
+    p.hoja.getRange(p.fila, 5, 1, 2).setValues([[pagoTexto(respuesta.transaction_id || f[4], 80), 'PAID']]);
+    notificarPago(p);
+  } finally { lock.releaseLock(); }
+}
+
+function ciudadEntrega(pedido) {
+  var datos = filas(H_ENTREGAS);
+  for (var i = datos.length - 1; i >= 0; i--) if (String(datos[i][1]) === pedido) return String(datos[i][5] || '');
+  return '';
+}
+
+function notificarPago(p) {
+  var f = p.datos, pedido = String(f[1]), entrega = null, datos = filas(H_ENTREGAS);
+  for (var i = datos.length - 1; i >= 0; i--) if (String(datos[i][1]) === pedido) { entrega = datos[i]; break; }
+  if (!entrega) return;
+  var cfg = leerConfiguracion(), negocio = cfg.negocio || 'Tu tienda';
+  var asunto = negocio + ' · pago confirmado · pedido ' + pedido;
+  var itemsPago = [];
+  try { itemsPago = JSON.parse(String(f[8] || '[]')); } catch (e0) { itemsPago = []; }
+  var detalle = itemsPago.length ? '<ul>' + itemsPago.map(function (i) {
+    var variante = i.opcionesTexto || textoOpciones(i.opciones);
+    return '<li>' + escaparHtml(String(i.cantidad)) + ' × ' + escaparHtml(i.nombre) +
+      (variante ? ' · ' + escaparHtml(String(variante).replace(/\|/g, ' · ')) : '') +
+      (i.sku ? ' · SKU ' + escaparHtml(i.sku) : '') + '</li>';
+  }).join('') + '</ul>' : '';
+  var cuerpo = '<p>Confirmamos tu pago por <strong>' + escaparHtml(pesos(f[6])) + '</strong>.</p>' +
+    '<p>Pedido: <strong>' + escaparHtml(pedido) + '</strong></p>' + detalle;
+  if (!f[18] && cuotaDeCorreo() > 0) {
+    try {
+      MailApp.sendEmail({ to: String(entrega[4]), subject: asunto, htmlBody: cuerpo, name: negocio });
+      p.hoja.getRange(p.fila, 19).setValue('Sí');
+    } catch (e) {
+      p.hoja.getRange(p.fila, 21).setValue(pagoTexto('Correo cliente: ' + e.message, 200));
+    }
+  }
+  if (!f[19] && cuotaDeCorreo() > 0) {
+    var para = listaDeCorreos((cfg.correo_resumen || '') + ',' + (cfg.empresa_correo || ''));
+    if (para.length) {
+      try {
+        MailApp.sendEmail({ to: para.join(','), subject: asunto,
+          htmlBody: cuerpo + '<p>Cliente: ' + escaparHtml(entrega[2]) + ' · ' + escaparHtml(entrega[3]) + '</p>', name: negocio });
+        p.hoja.getRange(p.fila, 20).setValue('Sí');
+      } catch (e2) {
+        p.hoja.getRange(p.fila, 21).setValue(pagoTexto('Correo comercio: ' + e2.message, 200));
+      }
+    }
+  }
+}
+
+function conciliarPagosBold() {
+  var h = elLibro().getSheetByName(H_PAGOS);
+  if (!h || h.getLastRow() < 2) return 0;
+  var desde = Math.max(2, h.getLastRow() - 100);
+  var datos = h.getRange(desde, 1, h.getLastRow() - desde + 1, ENCABEZADO_PAGOS.length).getValues();
+  var n = 0;
+  for (var i = datos.length - 1; i >= 0 && n < 20; i--) {
+    var estado = String(datos[i][5]).toUpperCase();
+    if (estado === 'RUNNING' || estado === 'PROCESSING' || estado === 'PENDING') {
+      try { revisarPago({ hoja: h, fila: desde + i, datos: datos[i] }); } catch (e) {
+        h.getRange(desde + i, 21).setValue(pagoTexto(e.message, 200));
+      }
+      n++;
+    }
+  }
+  return n;
 }
 
 /* El stub que va dentro de la hoja del cliente, con dos huecos que el maestro
@@ -1362,9 +1925,14 @@ function generarStub() {
     return "  { rotulo: '" + o.rotulo.replace(/'/g, "\\'") + "'," + relleno +
            " id: '" + o.id + "' }" + (i < opciones.length - 1 ? ',' : '');
   })).concat(['];']).join('\n');
-  var lineasAcciones = opciones.map(function (o, i) {
+  var acciones = opciones.map(function (o, i) {
     return 'function accion' + i + '() { pedir(' + i + '); }';
-  }).join('\n');
+  });
+  var lineasAcciones = [];
+  for (var ai = 0; ai < acciones.length; ai += 2) {
+    lineasAcciones.push(acciones.slice(ai, ai + 2).join(' '));
+  }
+  lineasAcciones = lineasAcciones.join('\n');
 
   var codigo = PLANTILLA_STUB
     .replace('{{MAESTRO}}', url || 'TODAVÍA_NO_SE_SABE_LA_URL')
@@ -1604,9 +2172,10 @@ function consolidarLecturas() {
 }
 
 function diaDeHoy() {
-  var d = new Date();
-  return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) +
-         '-' + ('0' + d.getDate()).slice(-2);
+  /* Apps Script puede ejecutar el mismo proyecto desde servidores en otra zona
+     horaria. La fecha del comercio siempre sale de la zona configurada en el
+     proyecto, no del reloj local del proceso que recibió la ejecución. */
+  return Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
 }
 
 /* El mayor número de lecturas que entró en una sola hora, hoy. La hora en
@@ -1908,16 +2477,19 @@ function atenderFotos(p) {
 
 function fotosQueUsaElCatalogo() {
   var vistas = {}, salida = [];
-  filas(H_CATALOGO).forEach(function (f) {
-    if (!String(f[0]).trim()) return;
-    String(f[7] || '').split('|').forEach(function (n) {
+  var agregar = function (texto) {
+    String(texto || '').split('|').forEach(function (n) {
       var limpio = n.trim();
       // Una URL completa no sale de la carpeta de Drive: no aplica.
       if (!limpio || /^https?:\/\//i.test(limpio) || vistas[limpio]) return;
       vistas[limpio] = true;
       salida.push(limpio);
     });
+  };
+  filas(H_CATALOGO).forEach(function (f) {
+    if (String(f[0]).trim()) agregar(f[7]);
   });
+  filas(H_VARIANTES).forEach(function (f) { if (esSi(f[6])) agregar(f[7]); });
   return salida.sort();
 }
 
@@ -2196,7 +2768,11 @@ function semillaDeConfiguracion() {
          POSICIÓN para no pisar lo que el comerciante puso, así que meter una
          clave en medio le corre todos los valores de ahí para abajo. R1 del
          contrato no es una preferencia de estilo. */
-      ['repositorio',       '', 'Dónde vive el sitio, como dueño/repositorio. Ej.: laboratoriodigital/organico. Lo usa «Publicar ahora»']
+      ['repositorio',       '', 'Dónde vive el sitio, como dueño/repositorio. Ej.: laboratoriodigital/organico. Lo usa «Publicar ahora»'],
+      ['pago_modo',         'pasarela', 'Cómo cierra la compra: pasarela cobra en línea; whatsapp envía el pedido al chat. Elige de la lista'],
+      ['pago_proveedor',    'bold', 'Proveedor de la pasarela. Por ahora Bold; la lista crecerá al implementar otro adaptador'],
+      ['pago_ambiente',     'sandbox', 'sandbox usa llaves de prueba; produccion cobra dinero real. Elige de la lista'],
+      ['pago_integracion',  'boton', 'boton usa Botón de pagos Bold; api_qr queda disponible cuando Bold active esas llaves']
   ];
 }
 
@@ -2215,6 +2791,112 @@ function leerConfiguracion() {
   return mapa;
 }
 
+/* `Color: Azul|Verde; Talla: S|M|L`. El punto y coma separa dimensiones y
+   la barra sus valores. No intentamos escapar los separadores: prohibirlos da
+   errores comprensibles en la hoja y mantiene estable el contrato público. */
+function analizarDefinicionVariantes(texto) {
+  texto = String(texto || '').trim();
+  if (!texto) return { ok: true, ejes: [] };
+  var partes = texto.split(';'), ejes = [], nombres = {};
+  if (partes.length > 3) return { ok: false, error: 'máximo 3 tipos de variante' };
+  for (var i = 0; i < partes.length; i++) {
+    var trozo = partes[i].trim(), pos = trozo.indexOf(':');
+    if (pos < 1) return { ok: false, error: 'falta : en "' + trozo + '"' };
+    var nombre = trozo.slice(0, pos).trim(), clave = llano(nombre);
+    if (!nombre || nombres[clave]) return { ok: false, error: 'tipo repetido o vacío: ' + nombre };
+    if (/[|;=]/.test(nombre)) return { ok: false, error: 'separador no permitido en ' + nombre };
+    nombres[clave] = true;
+    var valores = trozo.slice(pos + 1).split('|').map(function (v) { return v.trim(); });
+    var vistos = {};
+    valores = valores.filter(function (v) {
+      var k = llano(v);
+      if (!v || /[:;=]/.test(v) || vistos[k]) return false;
+      vistos[k] = true; return true;
+    });
+    if (!valores.length || valores.length > 20) return { ok: false, error: 'valores inválidos en ' + nombre };
+    ejes.push({ nombre: nombre, clave: clave, valores: valores });
+  }
+  var total = ejes.reduce(function (n, e) { return n * e.valores.length; }, 1);
+  if (total > 100) return { ok: false, error: 'más de 100 combinaciones' };
+  return { ok: true, ejes: ejes, total: total };
+}
+
+function analizarOpcionesVariante(texto) {
+  var opciones = {}, etiquetas = [], partes = String(texto || '').split('|');
+  for (var i = 0; i < partes.length; i++) {
+    var pos = partes[i].indexOf('=');
+    if (pos < 1) return null;
+    var nombre = partes[i].slice(0, pos).trim(), valor = partes[i].slice(pos + 1).trim();
+    var clave = llano(nombre);
+    if (!nombre || !valor || opciones[clave]) return null;
+    opciones[clave] = valor;
+    etiquetas.push(nombre + '=' + valor);
+  }
+  return { mapa: opciones, texto: etiquetas.join('|') };
+}
+
+function textoOpciones(opciones) {
+  return Object.keys(opciones || {}).map(function (k) { return k + '=' + opciones[k]; }).join('|');
+}
+
+function opcionValidaPara(ejes, analizada) {
+  if (!analizada || ejes.length !== Object.keys(analizada.mapa).length) return false;
+  for (var i = 0; i < ejes.length; i++) {
+    var e = ejes[i], valor = analizada.mapa[e.clave];
+    if (!valor || !e.valores.some(function (v) { return llano(v) === llano(valor); })) return false;
+  }
+  return true;
+}
+
+function leerVariantes(catalogo) {
+  var porProducto = {}, porId = {}, skuVistos = {};
+  filas(H_VARIANTES).forEach(function (f, i) {
+    var id = String(f[0] || '').trim(), productoId = String(f[1] || '').trim();
+    if (!id || !productoId || !catalogo[productoId] || !esSi(f[6])) return;
+    var producto = catalogo[productoId], opciones = analizarOpcionesVariante(f[3]);
+    if (!producto.ejesVariantes.length || !opcionValidaPara(producto.ejesVariantes, opciones)) {
+      anotarError('Variante ignorada', 'Variantes fila ' + (i + 2) + ' no coincide con Catálogo.Variantes de ' + productoId);
+      return;
+    }
+    if (porId[id]) { anotarError('Variante ID repetido', id); return; }
+    var sku = String(f[2] || '').trim();
+    if (sku && skuVistos[llano(sku)]) { anotarError('SKU de variante repetido', sku); return; }
+    if (sku) skuVistos[llano(sku)] = true;
+    var stock = cifra(f[5], 'Variantes F' + (i + 2) + ' (Stock de ' + id + ')');
+    var precio = cifra(f[4], 'Variantes E' + (i + 2) + ' (Precio de ' + id + ')');
+    if (stock === null || precio === null) return;
+    var opcionesPublicas = {};
+    producto.ejesVariantes.forEach(function (e) { opcionesPublicas[e.nombre] = opciones.mapa[e.clave]; });
+    var imagenes = String(f[7] || '').split('|').map(function (n) { return n.trim(); }).filter(function (n) { return n; }).slice(0, 6);
+    var v = { id: id, productoId: productoId, sku: sku,
+              opciones: opcionesPublicas, opcionesTexto: opciones.texto,
+              precio: precio > 0 ? precio : producto.precio,
+              stock: Math.max(0, stock), imagenes: imagenes, activo: true };
+    porId[id] = v;
+    (porProducto[productoId] = porProducto[productoId] || []).push(v);
+  });
+  Object.keys(catalogo).forEach(function (id) {
+    var p = catalogo[id];
+    if (!p.ejesVariantes.length) return;
+    p.variantes = porProducto[id] || [];
+    p.stock = p.variantes.reduce(function (n, v) { return n + v.stock; }, 0);
+  });
+  return { porProducto: porProducto, porId: porId };
+}
+
+function descontarReservasDelCatalogo(catalogo) {
+  var activas = reservasActivas();
+  Object.keys(catalogo).forEach(function (id) {
+    var p = catalogo[id];
+    if (p.ejesVariantes.length) {
+      p.variantes.forEach(function (v) { v.stock = Math.max(0, v.stock - (activas['v:' + v.id] || 0)); });
+      p.stock = p.variantes.reduce(function (n, v) { return n + v.stock; }, 0);
+    } else {
+      p.stock = Math.max(0, p.stock - (activas['p:' + id] || 0));
+    }
+  });
+}
+
 function leerCatalogo() {
   var mapa = {};
   filas(H_CATALOGO).forEach(function (f, i) {
@@ -2229,6 +2911,8 @@ function leerCatalogo() {
        puede vender hasta que alguien arregle la celda. Se cae del catálogo,
        igual que si estuviera marcado como no activo. */
     if (precio === null) return;
+    var definicion = analizarDefinicionVariantes(f[13]);
+    if (!definicion.ok) anotarError('Variantes inválidas en Catálogo', id + ': ' + definicion.error);
     mapa[id] = { id: id, nombre: String(f[1]), precio: precio,
                  stock: stock === null ? 0 : Math.max(0, stock),
                  referencia: String(f[10] || '').trim(),
@@ -2236,8 +2920,11 @@ function leerCatalogo() {
                     hoy. Si no, es un error de captura y se ignora: mostrar un
                     «antes» más barato es peor que no mostrar nada. */
                  precioAntes: (antes && antes > precio) ? antes : 0,
-                 umbralBajo: (umbral && umbral > 0) ? Math.floor(umbral) : 0 };
+                 umbralBajo: (umbral && umbral > 0) ? Math.floor(umbral) : 0,
+                 ejesVariantes: definicion.ok ? definicion.ejes : [], variantes: [] };
   });
+  leerVariantes(mapa);
+  descontarReservasDelCatalogo(mapa);
   return mapa;
 }
 
@@ -2301,6 +2988,19 @@ function revisarCupon(codigo, subtotal) {
   return { ok: true, codigo: codigo, tipo: tipo, valor: valor, texto: texto };
 }
 
+function decodificarItemsPedido(valor) {
+  if (Array.isArray(valor)) return valor;
+  var texto = String(valor || '').slice(0, 3000).trim();
+  if (!texto) return [];
+  if (texto.charAt(0) === '[') {
+    try { var lista = JSON.parse(texto); return Array.isArray(lista) ? lista : []; }
+    catch (e) { return []; }
+  }
+  return texto.slice(0, 600).split(',').map(function (par) {
+    var t = par.split(':'); return { id: t[0], cantidad: t[1] };
+  });
+}
+
 function validarPedido(p) {
   CELDAS_ILEGIBLES = [];               // se llena mientras se leen las hojas
   var catalogo = leerCatalogo();
@@ -2308,25 +3008,41 @@ function validarPedido(p) {
   var avisos   = [];
 
   // --- líneas del pedido, con los precios de la hoja ---
-  var crudo = String(p.items || '').slice(0, 600).split(',');
+  var crudo = decodificarItemsPedido(p.items);
   if (crudo.length > MAX_ITEMS) return { ok: false, error: 'Demasiadas líneas.' };
 
   var vistos = {}, items = [], sub = 0;
-  crudo.forEach(function (par) {
-    var t = par.split(':');
-    var id = String(t[0] || '').trim();
+  crudo.forEach(function (linea) {
+    if (!linea || typeof linea !== 'object') return;
+    var id = String(linea.id || '').trim();
     var prod = catalogo[id];
-    if (!prod || vistos[id]) return;
-    vistos[id] = true;
-    var cant = numeroSeguro(t[1], MAX_CANTIDAD);
+    if (!prod) return;
+    var varianteId = String(linea.variante || linea.varianteId || '').trim();
+    var variante = null;
+    if (prod.ejesVariantes.length) {
+      for (var vi = 0; vi < prod.variantes.length; vi++) {
+        if (prod.variantes[vi].id === varianteId) { variante = prod.variantes[vi]; break; }
+      }
+      if (!variante) return; // un producto variable nunca cae al stock compartido
+    } else if (varianteId) return;
+    var clave = id + '|' + (variante ? variante.id : '');
+    if (vistos[clave]) return;
+    vistos[clave] = true;
+    var cant = numeroSeguro(linea.cantidad, MAX_CANTIDAD);
     if (cant < 1) return;
-    if (cant > prod.stock) {
-      avisos.push('De ' + prod.nombre + ' solo quedan ' + prod.stock + '.');
-      cant = prod.stock;
+    var stock = variante ? variante.stock : prod.stock;
+    var precio = variante ? variante.precio : prod.precio;
+    if (cant > stock) {
+      avisos.push('De ' + prod.nombre + (variante ? ' (' + variante.opcionesTexto.replace(/\|/g, ', ') + ')' : '') +
+                  ' solo quedan ' + stock + '.');
+      cant = stock;
     }
     if (cant < 1) return;
-    items.push({ id: id, nombre: prod.nombre, cantidad: cant, precio: prod.precio });
-    sub += cant * prod.precio;
+    items.push({ id: id, nombre: prod.nombre, cantidad: cant, precio: precio,
+                 varianteId: variante ? variante.id : '', sku: variante ? variante.sku : '',
+                 opciones: variante ? variante.opciones : {},
+                 opcionesTexto: variante ? variante.opcionesTexto : '', stockDisponible: stock });
+    sub += cant * precio;
   });
   if (!items.length) return { ok: false, error: 'No hay productos válidos en el pedido.' };
 
@@ -2426,8 +3142,8 @@ function validarPedido(p) {
    Ahora la referencia ES el número del pedido, que lo fija la tienda y no
    cambia, y buscamos esa fila antes de escribir. El candado serializa el
    buscar-y-escribir, que es lo que las carreras rompían. */
-function sellar(p, items, r, autorizada) {
-  var codigo = celdaSegura(p.pedido).slice(0, 12) || aleatorio(5);
+function sellar(p, items, r, autorizada, candadoTomado) {
+  var codigo = celdaSegura(p.pedido).slice(0, 40) || aleatorio(5);
 
   /* Comparamos SUBTOTALES, no totales. El subtotal es lo único que calculan los
      dos lados con los mismos insumos (precio por cantidad); el descuento y el
@@ -2435,8 +3151,8 @@ function sellar(p, items, r, autorizada) {
      desde la consola, o la hoja Catálogo se desincronizó de index.html. */
   var subPagina = numeroSeguro(p.sub, MAX_TOTAL);
 
-  var lock = LockService.getScriptLock();
-  try { lock.waitLock(15000); } catch (e) { return codigo; }
+  var lock = candadoTomado ? null : LockService.getScriptLock();
+  if (lock) try { lock.waitLock(15000); } catch (e) { return codigo; }
   try {
     var h = hoja(H_VALIDACIONES, ENCABEZADO_VALIDACIONES);
     asegurarColumnas(H_VALIDACIONES, ENCABEZADO_VALIDACIONES);
@@ -2465,7 +3181,9 @@ function sellar(p, items, r, autorizada) {
 
     var fila = [new Date(), codigo, celdaSegura(r.cupon.ok ? r.cupon.codigo : ''),
                 r.sub, subPagina, discrepancia, r.descuento, r.envio, r.total,
-                celdaSegura(items.map(function (i) { return i.id + ' x' + i.cantidad; }).join(' · '), MAX_ACTA),
+                celdaSegura(items.map(function (i) {
+                  return i.id + (i.sku ? ' [' + i.sku + ']' : '') + ' x' + i.cantidad;
+                }).join(' · '), MAX_ACTA),
                 celdaSegura((r.avisos || []).join(' · '), MAX_ACTA)];
 
     if (encontrada) {
@@ -2492,7 +3210,7 @@ function sellar(p, items, r, autorizada) {
       h.appendRow(fila);
     }
   } finally {
-    try { lock.releaseLock(); } catch (e) {}
+    if (lock) try { lock.releaseLock(); } catch (e) {}
   }
   return codigo;
 }
@@ -2509,7 +3227,7 @@ function sellar(p, items, r, autorizada) {
    que sí funcionan. Los precios los pone la hoja, no lo que mande la tienda.
    ========================================================================== */
 function registrarPedido(p) {
-  var codigo = celdaSegura(p.pedido).slice(0, 12);
+  var codigo = celdaSegura(p.pedido).slice(0, 40);
   if (!codigo) return { ok: false, error: 'Pedido sin número' };
   if (yaRegistrado(codigo)) return { ok: true, duplicado: true };
 
@@ -2524,7 +3242,9 @@ function registrarPedido(p) {
     cupon: celdaSegura(r.cupon.ok ? r.cupon.codigo : ''),
     total: r.total,
     items: r.items.map(function (i) {
-      return { id: i.id, nombre: celdaSegura(i.nombre), cantidad: i.cantidad, precio: i.precio };
+      return { id: i.id, nombre: celdaSegura(i.nombre), cantidad: i.cantidad, precio: i.precio,
+               varianteId: i.varianteId || '', sku: i.sku || '',
+               opciones: i.opciones || {}, opcionesTexto: i.opcionesTexto || '' };
     })
   });
 
@@ -2588,9 +3308,9 @@ function aleatorio(n) {
 }
 
 /* ==========================================================================
-   REGISTRO  —  POST desde navigator.sendBeacon
+   REGISTRO  —  POST desde navigator.sendBeacon (legado)
    ========================================================================== */
-function doPost(e) {
+function registrarPedidoPostLegado(e) {
   try {
     if (!e || !e.postData || !e.postData.contents) throw new Error('POST vacío');
     if (e.postData.contents.length > MAX_CUERPO) throw new Error('Cuerpo demasiado grande');
@@ -2638,6 +3358,8 @@ function catalogoPublico() {
     var stock  = cifra(f[5], 'Catálogo F' + fila + ' (Stock de ' + (id || fila) + ')');
     var antes  = cifra(f[11], 'Catálogo L' + fila + ' (Precio antes de ' + (id || fila) + ')');
     var umbral = cifra(f[12], 'Catálogo M' + fila + ' (Umbral bajo de ' + (id || fila) + ')');
+    var definicion = analizarDefinicionVariantes(f[13]);
+    if (!definicion.ok && id) anotarError('Variantes inválidas en Catálogo', id + ': ' + definicion.error);
     return {
       id:          id,
       nombre:      String(f[1] || '').trim(),
@@ -2655,9 +3377,26 @@ function catalogoPublico() {
       activo:      esSi(f[9]),
       referencia:  String(f[10] || '').trim(),
       precioAntes: (antes && precio !== null && antes > precio) ? antes : 0,
-      umbralBajo:  (umbral && umbral > 0) ? Math.floor(umbral) : 0
+      umbralBajo:  (umbral && umbral > 0) ? Math.floor(umbral) : 0,
+      ejesVariantes: definicion.ok ? definicion.ejes : [],
+      ejes: definicion.ok ? definicion.ejes.map(function (e) {
+        return { nombre: e.nombre, valores: e.valores.slice(0) };
+      }) : [],
+      variantes: []
     };
   }).filter(function (p) { return p.id && p.nombre && p.precio !== null; });
+
+  var mapaProductos = {};
+  productos.forEach(function (p) { mapaProductos[p.id] = p; });
+  leerVariantes(mapaProductos);
+  descontarReservasDelCatalogo(mapaProductos);
+  productos.forEach(function (p) {
+    p.variantes = p.variantes.map(function (v) {
+      return { id: v.id, sku: v.sku, opciones: v.opciones,
+               precio: v.precio, stock: v.stock, imagenes: v.imagenes };
+    });
+    delete p.ejesVariantes;
+  });
 
   var envios = filas(H_ENVIOS).map(function (f, i) {
     var id = String(f[0]).trim();
@@ -2703,8 +3442,8 @@ function validarRegistro(d) {
   if (!items.length) return null;
 
   return {
-    pedido: celdaSegura(d.pedido).slice(0, 12),
-    ref:    celdaSegura(d.ref).slice(0, 12),
+    pedido: celdaSegura(d.pedido).slice(0, 40),
+    ref:    celdaSegura(d.ref).slice(0, 40),
     estado: 'Nuevo',                // lo pone el script, no quien envía
     ciudad: celdaSegura(d.ciudad),
     cupon:  celdaSegura(d.cupon).slice(0, 20),
@@ -2748,8 +3487,13 @@ function guardarPedido(d) {
 
   var ahora = new Date();
   var f = d.items.map(function (i) {
-    return [ahora, d.pedido, d.ref, d.estado, d.ciudad, d.cupon, i.nombre, i.id,
-            i.cantidad, i.precio, i.cantidad * i.precio, d.total];
+    var fila = [ahora, d.pedido, d.ref, d.estado, d.ciudad, d.cupon, i.nombre, i.id,
+                i.cantidad, i.precio, i.cantidad * i.precio, d.total, '',
+                d.estado === 'Pagado' ? ahora : '', '', '',
+                d.pago ? d.pago.proveedor : '', d.pago ? d.pago.referencia : '',
+                d.pago ? d.pago.transaccion : '', i.varianteId || '', i.sku || '',
+                i.opcionesTexto || textoOpciones(i.opciones)];
+    return fila;
   });
   h.getRange(h.getLastRow() + 1, 1, f.length, f[0].length).setValues(f);
 }
@@ -3299,8 +4043,8 @@ var LISTA_DE_ALTA = [
     porQue: 'sin celular el pedido no llega a ninguna parte' },
   { clave: 'sitio_url',         bloquea: true,
     porQue: 'sin dirección no funcionan «Ver mi tienda» ni la comprobación de publicación' },
-  { clave: 'pago_llave',        bloquea: true,
-    porQue: 'el comprador termina el pedido y no tiene cómo pagar' },
+  { clave: 'pago_llave',
+    porQue: 'si cobras por WhatsApp, falta indicar la llave o cuenta de transferencia' },
 
   { clave: 'pago_titular',      porQue: 'el comprador no sabe a nombre de quién transfiere' },
   { clave: 'pago_entidad',      porQue: 'ni a qué banco o billetera' },
@@ -3486,13 +4230,17 @@ function presentarHojas() {
     cfgH.getRange(2, 3, n, 1).setFontColor('#777777').setFontSize(9);
     validarPorClave(cfgH, 'correo_siempre', lista(SI_NO, false));
     validarPorClave(cfgH, 'fotos_webp', lista(SI_NO, false));
+    validarPorClave(cfgH, 'pago_modo', lista(['pasarela', 'whatsapp'], false));
+    validarPorClave(cfgH, 'pago_proveedor', lista(['bold'], false));
+    validarPorClave(cfgH, 'pago_ambiente', lista(['sandbox', 'produccion'], false));
+    validarPorClave(cfgH, 'pago_integracion', lista(['boton', 'api_qr'], false));
     sincronizarColores();
   }
 
   // ---- Catálogo ----
   var cat = libro.getSheetByName(H_CATALOGO);
   if (cat) {
-    var c = encabezar(cat, [110, 230, 130, 120, 100, 80, 380, 320, 100, 90, 120, 110, 100]);
+    var c = encabezar(cat, [110, 230, 130, 120, 100, 80, 380, 320, 100, 90, 120, 110, 100, 330]);
     cat.getRange(2, 5, c.filas, 1).setNumberFormat('"$"#,##0');
     cat.getRange(2, 6, c.filas, 1).setNumberFormat('#,##0').setHorizontalAlignment('center');
     cat.getRange(2, 1, c.filas, 1).setFontFamily('Roboto Mono').setFontSize(9);
@@ -3501,6 +4249,26 @@ function presentarHojas() {
     cat.getRange(2, 4, c.filas, 1).setDataValidation(lista(categoriasDelCatalogo(), true,
       'Elige una categoría o escribe una nueva'));
     cat.getRange(2, 9, c.filas, 2).setDataValidation(lista(SI_NO, false));
+    cat.getRange(2, 14, c.filas, 1).setWrap(true).setFontSize(9);
+  }
+
+  // ---- Variantes: el comerciante edita SKU, Precio, Stock y Activo ----
+  var vari = libro.getSheetByName(H_VARIANTES);
+  if (vari) {
+    var vr = encabezar(vari, [150, 120, 150, 300, 110, 90, 90, 360]);
+    vari.getRange(2, 1, vr.filas, 3).setFontFamily('Roboto Mono').setFontSize(9);
+    vari.getRange(2, 4, vr.filas, 1).setWrap(true);
+    vari.getRange(2, 5, vr.filas, 1).setNumberFormat('"$"#,##0');
+    vari.getRange(2, 6, vr.filas, 1).setNumberFormat('#,##0').setHorizontalAlignment('center');
+    vari.getRange(2, 7, vr.filas, 1).setDataValidation(lista(SI_NO, false)).setHorizontalAlignment('center');
+    vari.getRange(2, 8, vr.filas, 1).setWrap(true).setFontSize(9);
+  }
+
+  var reservas = libro.getSheetByName(H_RESERVAS);
+  if (reservas) {
+    var rv = encabezar(reservas, [140, 170, 190, 90, 100, 150, 150]);
+    reservas.getRange(2, 1, rv.filas, 1).setNumberFormat('dd/mm/yyyy hh:mm');
+    reservas.getRange(2, 2, rv.filas, 2).setFontFamily('Roboto Mono').setFontSize(9);
   }
 
   // ---- Envíos ----
@@ -4020,16 +4788,24 @@ function aplicarInventario() {
   var libro = elLibro();
   var hp = libro.getSheetByName(H_PEDIDOS);
   var hc = libro.getSheetByName(H_CATALOGO);
+  var hv = libro.getSheetByName(H_VARIANTES);
   if (!hp || !hc || hp.getLastRow() < 2 || hc.getLastRow() < 2) return 0;
 
   var anchoP = Math.max(hp.getLastColumn(), COL_INVENTARIO);
   var pedidos = hp.getRange(2, 1, hp.getLastRow() - 1, anchoP).getValues();
-  var cat = hc.getRange(2, 1, hc.getLastRow() - 1, 10).getValues();
+  var cat = hc.getRange(2, 1, hc.getLastRow() - 1, Math.max(14, hc.getLastColumn())).getValues();
+  var variantes = hv && hv.getLastRow() > 1
+    ? hv.getRange(2, 1, hv.getLastRow() - 1, ENCABEZADO_VARIANTES.length).getValues() : [];
 
   var filaDe = {};
   cat.forEach(function (f, i) {
     var id = String(f[0]).trim();
     if (id) filaDe[id] = i;
+  });
+  var filaVariante = {};
+  variantes.forEach(function (f, i) {
+    var id = String(f[0]).trim();
+    if (id) filaVariante[id] = i;
   });
 
   var cambios = 0;
@@ -4038,10 +4814,15 @@ function aplicarInventario() {
     var estado = estadoDe(f[COL_ESTADO - 1]);
     var descontado = String(f[COL_INVENTARIO - 1]).toLowerCase().indexOf('descontado') !== -1;
     var id   = String(f[7]).trim();
+    var varianteId = String(f[COL_VARIANTE_ID_PEDIDO - 1] || '').trim();
     var cant = Number(f[8]) || 0;
     var i    = filaDe[id];
 
-    if (i === undefined || cant < 1) return [f[COL_INVENTARIO - 1] || ''];
+    var iv = varianteId ? filaVariante[varianteId] : undefined;
+    if (i === undefined || cant < 1 || (varianteId && iv === undefined)) {
+      if (varianteId && iv === undefined) anotarError('Variante de pedido no encontrada', varianteId + ' en pedido ' + String(f[1]));
+      return [f[COL_INVENTARIO - 1] || ''];
+    }
 
     /* UN ESTADO QUE NO SE RECONOCE NO ES «NO VENDIDO»: ES UNA ERRATA.
        Antes, cualquier cosa que no dijera «confirmado» devolvía el stock al
@@ -4064,12 +4845,14 @@ function aplicarInventario() {
     var confirmado = !!estado.vendido;
 
     if (confirmado && !descontado) {
-      cat[i][COL_STOCK - 1] = Math.max(0, (Number(cat[i][COL_STOCK - 1]) || 0) - cant);
+      if (varianteId) variantes[iv][COL_STOCK_VARIANTE - 1] = Math.max(0, (Number(variantes[iv][COL_STOCK_VARIANTE - 1]) || 0) - cant);
+      else cat[i][COL_STOCK - 1] = Math.max(0, (Number(cat[i][COL_STOCK - 1]) || 0) - cant);
       cambios++;
       return ['Descontado'];
     }
     if (!confirmado && descontado) {
-      cat[i][COL_STOCK - 1] = (Number(cat[i][COL_STOCK - 1]) || 0) + cant;
+      if (varianteId) variantes[iv][COL_STOCK_VARIANTE - 1] = (Number(variantes[iv][COL_STOCK_VARIANTE - 1]) || 0) + cant;
+      else cat[i][COL_STOCK - 1] = (Number(cat[i][COL_STOCK - 1]) || 0) + cant;
       cambios++;
       return ['Devuelto'];
     }
@@ -4078,6 +4861,18 @@ function aplicarInventario() {
 
   if (cambios) {
     hp.getRange(2, COL_INVENTARIO, marcas.length, 1).setValues(marcas);
+    if (variantes.length) hv.getRange(2, COL_STOCK_VARIANTE, variantes.length, 1).setValues(variantes.map(function (f) {
+      return [f[COL_STOCK_VARIANTE - 1]];
+    }));
+    /* En productos variables Catálogo.Stock es un resumen, nunca la fuente. */
+    var suma = {};
+    variantes.forEach(function (f) {
+      if (!esSi(f[6])) return;
+      var pid = String(f[1]).trim(); suma[pid] = (suma[pid] || 0) + (Number(f[5]) || 0);
+    });
+    Object.keys(suma).forEach(function (pid) {
+      if (filaDe[pid] !== undefined) cat[filaDe[pid]][COL_STOCK - 1] = suma[pid];
+    });
     hc.getRange(2, COL_STOCK, cat.length, 1).setValues(cat.map(function (f) {
       return [f[COL_STOCK - 1]];
     }));
@@ -4103,10 +4898,89 @@ function aplicarInventario() {
    pedir cinco cosas" de "cualquiera con la URL ejecuta cualquier función de
    este proyecto".
    ══════════════════════════════════════════════════════════════════════════ */
+function combinacionesVariantes(ejes) {
+  if (!ejes || !ejes.length) return [];
+  var salida = [];
+  function sumar(indice, partes) {
+    if (indice >= ejes.length) { salida.push(partes.join('|')); return; }
+    ejes[indice].valores.forEach(function (valor) {
+      sumar(indice + 1, partes.concat([ejes[indice].nombre + '=' + valor]));
+    });
+  }
+  sumar(0, []);
+  return salida;
+}
+
+function skuAutomatico(productoId, opciones) {
+  var base = String(productoId).toUpperCase().replace(/[^A-Z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 20) || 'PROD';
+  return base + '-' + sha256Hex(productoId + '|' + opciones).slice(0, 6).toUpperCase();
+}
+
+/* Acción explícita, no onEdit: mientras alguien está escribiendo
+   `Color: Azul|...` la celda pasa por estados incompletos y no debe crear ni
+   desactivar inventario a mitad de edición. */
+function sincronizarVariantes() {
+  var lock = LockService.getScriptLock(); lock.waitLock(15000);
+  try {
+    var hc = elLibro().getSheetByName(H_CATALOGO);
+    var hv = hoja(H_VARIANTES, ENCABEZADO_VARIANTES);
+    asegurarColumnas(H_VARIANTES, ENCABEZADO_VARIANTES);
+    if (!hc || hc.getLastRow() < 2) return { tipo: 'aviso', texto: 'No hay productos para sincronizar.' };
+    var productos = hc.getRange(2, 1, hc.getLastRow() - 1, Math.max(14, hc.getLastColumn())).getValues();
+    var existentes = filas(H_VARIANTES), indice = {};
+    existentes.forEach(function (f) { while (f.length < ENCABEZADO_VARIANTES.length) f.push(''); });
+    existentes.forEach(function (f, i) {
+      var clave = String(f[1]).trim() + '|' + llano(String(f[3]).replace(/\s*\|\s*/g, '|'));
+      if (String(f[0]).trim()) indice[clave] = i;
+    });
+    var deseadas = {}, nuevas = [], errores = [], invalidos = {};
+    productos.forEach(function (f, i) {
+      var productoId = String(f[0]).trim();
+      if (!productoId) return;
+      var d = analizarDefinicionVariantes(f[13]);
+      if (!d.ok) { errores.push(productoId + ': ' + d.error); invalidos[productoId] = true; return; }
+      combinacionesVariantes(d.ejes).forEach(function (opciones) {
+        var clave = productoId + '|' + llano(opciones);
+        deseadas[clave] = true;
+        if (indice[clave] !== undefined) {
+          existentes[indice[clave]][6] = 'Sí';
+        } else {
+          var id = 'var-' + sha256Hex(productoId + '|' + opciones).slice(0, 12);
+          nuevas.push([id, productoId, skuAutomatico(productoId, opciones), opciones, '', 0, 'Sí', '']);
+        }
+      });
+    });
+    var desactivadas = 0;
+    existentes.forEach(function (f) {
+      var clave = String(f[1]).trim() + '|' + llano(String(f[3]).replace(/\s*\|\s*/g, '|'));
+      if (!invalidos[String(f[1]).trim()] && esSi(f[6]) && !deseadas[clave]) { f[6] = 'No'; desactivadas++; }
+    });
+    if (existentes.length) hv.getRange(2, 1, existentes.length, ENCABEZADO_VARIANTES.length).setValues(existentes);
+    if (nuevas.length) hv.getRange(hv.getLastRow() + 1, 1, nuevas.length, ENCABEZADO_VARIANTES.length).setValues(nuevas);
+    var suma = {};
+    existentes.concat(nuevas).forEach(function (f) {
+      if (!esSi(f[6])) return;
+      var pid = String(f[1]).trim(); suma[pid] = (suma[pid] || 0) + (Number(f[5]) || 0);
+    });
+    productos.forEach(function (f) {
+      var pid = String(f[0]).trim(), d = analizarDefinicionVariantes(f[13]);
+      if (pid && d.ok && d.ejes.length) f[COL_STOCK - 1] = suma[pid] || 0;
+    });
+    hc.getRange(2, COL_STOCK, productos.length, 1).setValues(productos.map(function (f) {
+      return [f[COL_STOCK - 1]];
+    }));
+    CacheService.getScriptCache().remove('catalogo');
+    var texto = 'Variantes sincronizadas: ' + nuevas.length + ' nuevas, ' + desactivadas + ' desactivadas.';
+    if (errores.length) texto += ' Corrige en Catálogo: ' + errores.join(' · ');
+    return { tipo: errores.length ? 'aviso' : 'exito', texto: texto };
+  } finally { lock.releaseLock(); }
+}
+
 var ACCIONES_MENU = {
   publicar:      { rotulo: 'Publicar ahora',                        fn: publicarAhora },
   ver:           { rotulo: 'Ver mi tienda',                         fn: verMiTienda },
   actualizar:    { rotulo: 'Actualizar tablero e inventario',       fn: actualizarTodo },
+  variantes:     { rotulo: 'Sincronizar variantes',                 fn: sincronizarVariantes },
   resumen:       { rotulo: 'Enviarme el resumen ahora',             fn: enviarResumenAhora },
   diagnostico:   { rotulo: 'Diagnóstico',                           fn: diagnostico },
   ayuda:         { rotulo: 'Ayuda',                                 fn: ayuda },
@@ -4125,7 +4999,7 @@ var ACCIONES_MENU = {
    dentro del sitio, un cambio de precio espera un despliegue: el flujo de cada
    cuatro horas es el techo y este botón es el suelo. Es lo primero que un
    comerciante quiere después de tocar un precio. */
-var ORDEN_MENU = ['publicar', 'ver', 'actualizar', 'resumen', 'diagnostico', 'ayuda'];
+var ORDEN_MENU = ['publicar', 'ver', 'actualizar', 'variantes', 'resumen', 'diagnostico', 'ayuda'];
 /* generarStub NO está en el menú de la hoja: se ejecuta desde el maestro, que
    es donde estás cuando montas la tienda. Ponerlo en la hoja sería ofrecerle al
    cliente que se regenere a sí mismo. */
@@ -4272,6 +5146,17 @@ function revisarDatos() {
     if (!id)          caidos.push('Catálogo A' + n + ': sin ID');
     else if (!nombre) caidos.push('Catálogo B' + n + ': ' + id + ' no tiene Nombre');
     else if (precio === null) caidos.push('Catálogo E' + n + ': el precio de ' + id + ' no es un número');
+    var definicion = analizarDefinicionVariantes(f[13]);
+    if (!definicion.ok) caidos.push('Catálogo N' + n + ': ' + id + ' — ' + definicion.error);
+  });
+
+  filas(H_VARIANTES).forEach(function (f, i) {
+    var n = i + 2, id = String(f[0]).trim() || 'fila ' + n;
+    cifra(f[4], 'Variantes E' + n + ' (Precio de ' + id + ')');
+    cifra(f[5], 'Variantes F' + n + ' (Stock de ' + id + ')');
+    if (!String(f[0]).trim()) caidos.push('Variantes A' + n + ': sin Variante ID');
+    if (!String(f[1]).trim()) caidos.push('Variantes B' + n + ': ' + id + ' sin Producto ID');
+    if (!analizarOpcionesVariante(f[3])) caidos.push('Variantes D' + n + ': opciones inválidas de ' + id);
   });
 
   filas(H_ENVIOS).forEach(function (f, i) {

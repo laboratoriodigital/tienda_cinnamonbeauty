@@ -7,8 +7,34 @@ gratuitos y gastando solo donde no haya alternativa.
 Todo lo que sigue está ordenado por esa vara: **cuánto le sirve al dueño
 del negocio dividido por cuánto cuesta y cuánto complica.**
 
-Hoy el costo total de operación es **$0/mes**. El único gasto es el
-dominio, ~$50.000 al año. Eso no debería cambiar en ninguna fase.
+Hoy el costo fijo de infraestructura es **$0/mes**. El dominio y las comisiones
+por transacción de la pasarela se contabilizan aparte.
+
+## 3.6.0 — SEO horneado y cachés deterministas · 20 de septiembre de 2026
+
+Cada producto activo tiene ficha HTML canónica y datos Product/Offer; las
+variantes salen como ProductGroup. La portada hornea Organization/WebSite y el
+montaje genera sitemap y robots sin consultar otra vez el maestro. Los locks se
+versionan, Actions usa `npm ci` y la descarga de Chromium ocurre solo al fallar
+la caché. Plan y criterios: `PLAN-SEO-RENDIMIENTO.md`.
+
+## 3.4.0 — imágenes por variante y cobro configurable · 20 de septiembre de 2026
+
+La fase 2 de variantes añade galería por SKU, herencia de fotos, montaje desde
+Drive y enlace directo a la combinación. La hoja elige mediante listas entre
+pasarela y WhatsApp, además de proveedor, ambiente e integración. `Validaciones`
+usa la referencia Bold completa desde que nace el checkout.
+
+## 3.2.1 — pagos Bold validados en sandbox   ·  20 de septiembre de 2026
+
+Orgánico completó una compra real de sandbox: monto firmado, tarjeta de prueba,
+propagación, `PAID`, creación idempotente en Pedidos, transacción Bold, correos
+y WhatsApp manual. La integración deja de ser una propuesta del “techo” y pasa
+a operación documentada en `PLAN-PAGOS-BOLD.md`.
+
+El despliegue no es simultáneo: Panadería es la siguiente puerta y Cinnamon
+queda detenida hasta su aprobación. API Pagos en Línea/QR Bre-B permanece como
+adaptador preparado, no activo, hasta que Bold entregue las llaves correctas.
 
 
 ## 3.0.0 — la primera versión publicable   ·  15 de septiembre de 2026
@@ -361,6 +387,21 @@ Con la caché del navegador, una publicación pasa de 6-8 minutos a poco más de
 uno. Y lo que se ganó no es solo tiempo: las esperas fijas eran la fuente de
 los rojos que no significaban nada.
 
+### Segunda optimización · 20 de septiembre de 2026   [IMPLEMENTADA · 3.5.0]
+
+La medición remota volvió a mostrar una duplicación distinta: el push tardaba
+2:13 y `release` repetía 2:03 de esa misma suite para dedicar solo 9 s a
+publicar. `montaje` y `fotos` también repetían backend, correo, calendario y
+panel aunque sus únicos bytes nuevos fueran index, catálogo y fotos.
+
+Se mantienen las pruebas completas para cada cambio de código y se agrega una
+guardia de publicación para los artefactos generados. `release` exige el verde
+del mismo SHA por la API de Actions; no confía en una versión o en “la última
+corrida”. Los tres flujos fijan cuatro procesos dentro de un runner, y las tres
+lecturas remotas de `fotos` corren juntas. La guardia local midió **25,3 s y
+669/669**. Los tiempos remotos posteriores al push se registran en
+`PLAN-RENDIMIENTO-ACTIONS.md`.
+
 **4.13 Columnas del catálogo configurables (3 a 5)**   [PENSADO, no implementado]
 
 Hoy la rejilla es fija: 1 columna en móvil, 2 desde 600 px, **3 desde 1000 px**.
@@ -476,7 +517,12 @@ autorizado. Evaluación completa, con las dos formas y las dos condiciones
 nuevas, en `EVALUACION-stub-automatico.md`, sección 8.
 
 
-**4.18 Sincronizar la semilla con las tiendas, sin manos**   [APLAZADO A PROPÓSITO · a partir de la quinta tienda]
+**4.18 Sincronizar la semilla con las tiendas, sin manos**   [SE VA A OTRA LÍNEA]
+
+> **18 de septiembre de 2026.** Esto se diseñó y se construye en el repositorio
+> nuevo, `laboratoriodigital/tienda`, no aquí. En esta línea las tiendas se
+> siguen poniendo al día a mano. Lo que sigue abajo es el análisis que originó
+> el diseño, y se conserva porque explica por qué es difícil.
 
 Hoy, poner una tienda al día contra la semilla es copiar archivos a mano.
 Costó su primer accidente el 14 de septiembre de 2026, montando la tienda 2:
@@ -637,7 +683,7 @@ encabezado del mensaje de WhatsApp, y `fotos_origen` apuntando a la dirección d
 producción, que en una vista previa de rama carga las fotos del sitio de verdad.
 
 
-**4.21 `wrangler.jsonc` dice `organico` en todas las tiendas**   [PENDIENTE, menor]
+**4.21 `wrangler.jsonc` dice `organico` en todas las tiendas**   [PENDIENTE, menor · se resuelve en la línea nueva]
 
 La clave `name` del `wrangler.jsonc` de Cinnamon Beauty dice `"organico"`, y
 los comentarios del archivo también. El montaje no lo reescribe.
@@ -723,12 +769,25 @@ para que se empiecen:
 - Hoja `movimientos` como libro mayor de la tienda.
 - Despliegue por anillos, una vez haya uso real que lo justifique.
 - Simulacro trimestral de reversión (volver una tienda a la versión anterior).
-- Catálogo de personalización, para variantes de un mismo producto.
+- ~~Variantes con stock y precio por combinación~~ → **FASE 1 IMPLEMENTADA EN
+  ORGÁNICO**, pendiente de despliegue real y réplica por anillos.
+- Imágenes por variante → fase 2 definida en `PLAN-VARIANTES.md`.
 - Procedimiento de salida de un cliente (qué se borra, qué se le entrega).
 - Migrar el origen de las fotos a R2 cuando alguna tienda pase las 800 fotos.
 - QR estático imprimible, para el mostrador.
 - Correr `pruebas/todas.sh` también en Windows, no solo en Linux/macOS.
 
+
+## Fase 5 — La flota   ·  se construye en otro repositorio
+
+Lo que viene después de la 3.0.0 —una tienda para cualquier producto, un panel
+web para el comerciante, y una flota que se actualiza sola— **no se construye en
+esta línea**. Se construye en `laboratoriodigital/tienda`, que nació como copia
+de esta semilla el 18 de septiembre de 2026.
+
+Esta línea queda estable, sirviendo a sus tres tiendas, y **solo recibe
+correcciones**. El plan y la hoja de ruta de la línea nueva están en su propio
+repositorio.
 
 ## El techo: hasta dónde aguanta este diseño
 
@@ -767,11 +826,10 @@ Cuándo dejar de estirarlo:
 
 ## Lo que NO haría todavía, y por qué
 
-**Pasarela de pagos (Wompi, Bold, Mercado Pago).** No cobran mensualidad
-pero sí comisión por transacción. Mientras el cobro por Nequi o Bre-B
-funcione, es pagar por un motor de checkout que no se usa. El día que
-perder ventas por "no puedo transferir ahora" cueste más que la comisión,
-ahí sí.
+**Otro proveedor de pagos.** Bold ya está implementado. PayU, Mercado Pago o
+PayPal solo entran cuando aporten una necesidad real y puedan cumplir el mismo
+contrato de creación, consulta, monto e idempotencia sin duplicar la lógica de
+Pedidos.
 
 **Base de datos o framework.** Cambiarían el costo de $0 a algo, y el
 mantenimiento de "editar una hoja" a "desplegar código".

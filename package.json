@@ -1,7 +1,7 @@
 {
   "name": "organico",
   "private": true,
-  "version": "3.0.0",
+  "version": "3.6.1",
   "description": "Tienda en línea de una sola página. La hoja de cálculo es la base de datos; este repositorio es lo que se publica.",
   "scripts": {
     "fotos": "node preparar-fotos.mjs",
@@ -9,11 +9,13 @@
     "tienda": "node montar/configurar-tienda.mjs",
     "index": "node montar/preparar-index.mjs",
     "respaldo": "node montar/sembrar-respaldo.mjs",
+    "seo": "node montar/sembrar-seo.mjs",
+    "seo:revisar": "node montar/sembrar-seo.mjs --revisar",
     "index:revisar": "node montar/preparar-index.mjs --revisar",
     "catalogo": "node montar/catalogo-estatico.mjs",
     "catalogo:revisar": "node montar/catalogo-estatico.mjs --revisar",
     "maestro": "node montar/publicar-maestro.mjs",
-    "montar": "npm run index && npm run catalogo && npm run fotos:drive && npm run respaldo",
+    "montar": "npm run index && npm run fotos:drive && npm run catalogo && npm run respaldo && npm run seo",
     "test": "cd pruebas && npm install --no-audit --no-fund && ./todas.sh",
     "sembrar": "node montar/sembrar-configuracion.mjs"
   },

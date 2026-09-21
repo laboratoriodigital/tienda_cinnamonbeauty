@@ -66,6 +66,7 @@ const T = []; const ok = (n, c, d) => T.push((c ? '  OK  ' : ' FALLA') + ' | ' +
   // ===== 4. El botón de enviar ya NO se bloquea mientras valida =====
   await prep();
   await p.fill('#fNombre', 'Ana Ramírez'); await p.fill('#fTel', '3001234567');
+  await p.fill('#fCorreo', 'ana@ejemplo.co'); await p.fill('#fDocumento', '12345678');
   await p.fill('#fCiudad', 'Bogotá'); await p.fill('#fDir', 'Calle 100 #10-20');
   await p.check('#consiento'); await selloListo(p);
   await fetch(U + '/__fallar?n=5');
@@ -77,7 +78,7 @@ const T = []; const ok = (n, c, d) => T.push((c ? '  OK  ' : ' FALLA') + ' | ' +
   ok('  ...y aun así puede enviar el pedido',
      (await p.locator('#btnFinalizar').getAttribute('aria-disabled')) === 'false');
   const msg = await p.evaluate(() =>
-    decodeURIComponent(document.querySelector('#btnFinalizar').href.split('text=')[1]));
+    decodeURIComponent(enlaceWhatsapp().split('text=')[1]));
   ok('  ...y ese pedido sale marcado sin validar',
      !/Validación:/.test(msg) && /calculado por la página/.test(msg));
 
@@ -132,6 +133,7 @@ const T = []; const ok = (n, c, d) => T.push((c ? '  OK  ' : ' FALLA') + ' | ' +
   // llega un dedo de verdad. Poniendo .value a mano, un repintado del panel
   // —una validación que vuelve— borra lo escrito y la prueba miente.
   for (const [id, v] of [['#fNombre','Ana Ruiz'], ['#fTel','3001234567'],
+                         ['#fCorreo','ana@ejemplo.co'], ['#fDocumento','12345678'],
                          ['#fCiudad','Bogotá'], ['#fDir','Calle 100']]) {
     await p.fill(id, v);
   }

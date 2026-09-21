@@ -16,7 +16,7 @@ const esperar = ms => new Promise(r => setTimeout(r, ms));
   p.on('console', m => { if (/Content Security|Refused|error/i.test(m.text())) errs.push(m.text()); });
   p.on('pageerror', e => errs.push('PAGEERROR: ' + e.message));
 
-  const abrir = async () => { await p.goto(U); await catalogoListo(p); };
+  const abrir = async () => { await p.goto(U); await catalogoListo(p); await p.evaluate(() => { MODO_PAGO = 'whatsapp'; }); };
   const totales = () => p.locator('#totales').innerText();
   const avisoCup = () => p.locator('#avisoCupon').innerText();
 
@@ -40,9 +40,10 @@ const esperar = ms => new Promise(r => setTimeout(r, ms));
 
   // ---- 2. La referencia viaja en el mensaje ----
   await p.fill('#fNombre','Ana Ramírez'); await p.fill('#fTel','3001234567');
+  await p.fill('#fCorreo','ana@ejemplo.co'); await p.fill('#fDocumento','12345678');
   await p.fill('#fCiudad','Bogotá'); await p.fill('#fDir','Calle 100 #10-20');
   await p.check('#consiento'); await selloListo(p);
-  const msg = await p.evaluate(() => { let u = document.querySelector('#btnFinalizar').href;
+  const msg = await p.evaluate(() => { let u = enlaceWhatsapp();
      return decodeURIComponent(u.split('text=')[1]); });
   ok('El mensaje NO lleva un código aparte: el número del pedido ya lo identifica',
      !/Verificaci/i.test(msg) && /PEDIDO #[A-Z0-9]+/.test(msg),
@@ -60,11 +61,12 @@ const esperar = ms => new Promise(r => setTimeout(r, ms));
     aplicarCupon();
     await new Promise(r => setTimeout(r, 900));
     const t = calcular();
-    let u = document.querySelector('#btnFinalizar').href;
+    let u = enlaceWhatsapp();
     document.getElementById('fNombre').value='Ana'; document.getElementById('fTel').value='3001234567';
+    document.getElementById('fCorreo').value='ana@ejemplo.co'; document.getElementById('fDocumento').value='12345678';
     document.getElementById('fCiudad').value='Bogotá'; document.getElementById('fDir').value='Calle 100';
     document.getElementById('consiento').checked=true; revisarFormulario();
-    u = document.querySelector('#btnFinalizar').href;
+    u = enlaceWhatsapp();
     const vigente = selloVigente();          // se mide con el subtotal falseado
     window.subtotal = orig;
     return { total:t.total, descuento:t.descuento, vigente,
@@ -114,10 +116,11 @@ const esperar = ms => new Promise(r => setTimeout(r, ms));
 
   // el pedido sigue siendo enviable, marcado como no validado
   await p.fill('#fNombre','Ana'); await p.fill('#fTel','3001234567');
+  await p.fill('#fCorreo','ana@ejemplo.co'); await p.fill('#fDocumento','12345678');
   await p.fill('#fCiudad','Bogotá'); await p.fill('#fDir','Calle 100');
   await p.check('#consiento'); await selloListo(p);
   ok('Se puede enviar igual (no perdemos la venta)', await p.locator('#btnFinalizar').isEnabled());
-  const msg2 = await p.evaluate(() => { let u = document.querySelector('#btnFinalizar').href;
+  const msg2 = await p.evaluate(() => { let u = enlaceWhatsapp();
      return decodeURIComponent(u.split('text=')[1]); });
   ok('Mensaje marcado como no validado', /calculado por la página/.test(msg2) && !/Validación:/.test(msg2));
 
@@ -134,6 +137,7 @@ const esperar = ms => new Promise(r => setTimeout(r, ms));
      que se espera a que esté validando, no a que termine. */
   await hasta(p, () => validando === true);
   await p.fill('#fNombre','Ana'); await p.fill('#fTel','3001234567');
+  await p.fill('#fCorreo','ana@ejemplo.co'); await p.fill('#fDocumento','12345678');
   await p.fill('#fCiudad','Bogotá'); await p.fill('#fDir','Calle 100');
   await p.check('#consiento');
   await hasta(p, () => document.getElementById('btnFinalizar')

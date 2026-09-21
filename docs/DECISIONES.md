@@ -268,6 +268,142 @@ tienda que se olvida.
 
 ---
 
+## 05 · La confirmación de pago la decide el proveedor, no el navegador ni el chat
+
+### Qué hace hoy
+
+El carrito usa el Botón de pagos Bold. Apps Script recalcula y firma el monto,
+guarda el intento y consulta el resultado. `APPROVED` es la única transición
+que crea Pedidos, descuenta inventario y envía avisos.
+
+### La fuerza real
+
+El backend autorizado debe seguir siendo Apps Script + Sheets. Las credenciales
+Bold pertenecen al titular: tiendas del mismo dueño pueden repetirlas en sus
+Propiedades del script, pero nunca compartir el proyecto Apps Script, la hoja o
+las referencias. Un webhook directo no sirve si Apps Script no
+permite validar de forma fiable `x-bold-signature`; aceptar el cuerpo sin firma
+sería permitir que cualquiera confirme una venta.
+
+### La decisión
+
+La fuente de verdad es la consulta autenticada desde Apps Script. El retorno
+del navegador acelera la consulta y un disparador cada quince minutos concilia
+los clientes que no regresan. WhatsApp se abre manualmente **después** de
+confirmar y nunca cambia estados.
+
+La integración se encapsula detrás de `Configuración.pago_proveedor`. Bold es el primer
+adaptador; PayU, Mercado Pago o PayPal deberán devolver el mismo contrato y
+probar monto, aprobación, rechazo e idempotencia antes de activarse.
+
+`pago_modo=whatsapp` es una salida operativa explícita para comercios sin
+pasarela. No simula aprobación ni usa el conciliador: registra el pedido y abre
+el chat con el mismo flujo histórico.
+
+### La condición de cambio
+
+Se podrá preferir webhook cuando exista un relay autorizado que conserve el
+cuerpo crudo y valide la firma antes de llamar Apps Script, o cuando Apps Script
+exponga las cabeceras necesarias. La frecuencia de quince minutos solo baja
+después de medir volumen, tiempo de ejecución y cuota en tiendas reales.
+
+### La contrapartida
+
+Una confirmación puede tardar hasta el siguiente ciclo si el cliente cierra la
+página, y cada consulta consume cuota de Apps Script y Bold. A cambio no se
+mantiene infraestructura adicional ni se confía en señales falsificables.
+
+El plan y la puerta de despliegue están en `PLAN-PAGOS-BOLD.md`.
+
+---
+
+## 06 · Las opciones se declaran en Catálogo; el inventario vive por SKU
+
+### Qué hace hoy
+
+`Catálogo.Variantes` declara ejes con `Color: Azul|Verde; Talla: S|M|L` y la
+hoja `Variantes` conserva una fila por combinación.
+
+### La fuerza real
+
+Una sola celda puede describir opciones, pero no puede representar de forma
+segura el producto cartesiano de color, talla, precio, stock e historial. Usar
+el texto visible como identidad rompería pedidos cuando se renombre “Azul”.
+
+### La decisión
+
+Cada combinación tiene `Variante ID` estable y SKU. El precio vacío hereda; el
+precio escrito sobrescribe. El stock se reserva y descuenta por clave de
+inventario. Un producto variable sin Variante ID válida falla cerrado y nunca
+usa el stock general.
+
+### La condición de cambio
+
+La fase 2 ya agregó `Variantes.Imágenes` al final. La celda vacía hereda las
+fotos generales y la gramática de `Catálogo.Variantes` no se amplía.
+
+### La contrapartida
+
+El comercio debe ejecutar **Sincronizar variantes** después de cambiar los
+ejes y diligenciar stock por combinación. A cambio conserva inventario auditable
+y combinaciones imposibles pueden permanecer inactivas.
+
+El plan completo está en `PLAN-VARIANTES.md`.
+
+---
+
+## 07 · El código se prueba completo una vez; los datos generados tienen su guardia
+
+### Qué hace hoy
+
+Cada push ejecuta la suite completa con cuatro procesos aislados dentro de un
+runner. `fotos` y `montaje` ejecutan una guardia corta sobre los archivos que
+acaban de generar. `release` exige la corrida verde del mismo SHA.
+
+### La fuerza real
+
+En la línea base, la suite consumía 91–98 segundos por ejecución y se repetía
+sin que cambiaran sus entradas. Cuatro jobs cobrarían cuatro runners en los
+repositorios privados; cuatro procesos dentro de uno no.
+
+### La decisión
+
+Hay un solo corredor (`todas.sh`) con dos selecciones explícitas: completa para
+código y `publicacion.sh` para index, catálogo, fotos, respaldo, pagos y
+variantes. Las lecturas remotas independientes se hacen en paralelo.
+
+### La condición de cambio
+
+Después de tres corridas por tienda se comparan las metas de
+`PLAN-RENDIMIENTO-ACTIONS.md`. Una cobertura perdida obliga a ampliar la
+guardia; memoria insuficiente obliga a bajar `TRABAJADORES`, no a borrar
+aserciones.
+
+### La contrapartida
+
+La publicación ya no vuelve a ejecutar módulos que no cambiaron. A cambio, la
+clasificación “código” frente a “artefacto generado” queda como contrato y una
+nueva ruta generada debe agregarse a la guardia.
+
+---
+
+## 08 · SEO se hornea con el catálogo; no se consulta en cada visita
+
+**Estado:** EJECUTADA · **Escrita:** 20 de septiembre de 2026
+
+La fuente es `publicar/catalogo.json`. El build produce datos estructurados,
+fichas, sitemap y robots, y los flujos los publican como una sola unidad. Se
+descarta renderizar SEO en el navegador: depende de JavaScript y no entrega una
+URL canónica por producto. Se descarta pedir otra vez el catálogo al maestro:
+duplicaría lectura y permitiría que la vitrina y el índice describieran estados
+distintos.
+
+**Contrapartida:** un cambio de producto aparece en buscadores solo después de
+Publicar ahora/despliegue, y el rastreador decide cuándo volver a visitar.
+
+**Condición para cambiar:** migrar a otro backend/build que garantice la misma
+atomicidad, o necesitar páginas editoriales que no pertenecen al catálogo.
+
 ## Cómo se escribe una decisión aquí
 
 Cinco partes, y las dos últimas son las que la hacen ejecutable:

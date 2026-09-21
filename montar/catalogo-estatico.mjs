@@ -62,7 +62,17 @@ function soloLoQueSePublica(d) {
       referencia: String(p.referencia || ''),
       precioAntes: (Number(p.precioAntes) || 0) > (Number(p.precio) || 0)
         ? Number(p.precioAntes) : 0,
-      umbralBajo: Math.max(0, Math.floor(Number(p.umbralBajo) || 0))
+      umbralBajo: Math.max(0, Math.floor(Number(p.umbralBajo) || 0)),
+      ejes: Array.isArray(p.ejes) ? p.ejes.map(e => ({
+        nombre:String(e.nombre || ''), valores:Array.isArray(e.valores) ? e.valores.map(String) : []
+      })) : [],
+      variantes: Array.isArray(p.variantes) ? p.variantes.map(v => ({
+        id:String(v.id || ''), sku:String(v.sku || ''),
+        opciones:v.opciones && typeof v.opciones === 'object' ? {...v.opciones} : {},
+        precio:Math.max(0, Number(v.precio) || Number(p.precio) || 0),
+        stock:Math.max(0, Math.floor(Number(v.stock) || 0)),
+        imagenes:Array.isArray(v.imagenes) ? v.imagenes.map(String).filter(Boolean).slice(0, 6) : []
+      })).filter(v => v.id) : []
     }));
 
   const envios = (d.envios || [])
@@ -105,7 +115,7 @@ async function medidasEnDisco(productos, carpeta = CARPETA_FOTOS) {
   const hay = new Set(archivos);
 
   const nombres = new Set();
-  productos.forEach(p => (p.imagenes || []).forEach(n => {
+  productos.forEach(p => [...(p.imagenes || []), ...(p.variantes || []).flatMap(v => v.imagenes || [])].forEach(n => {
     const t = String(n || '').trim();
     /* Una URL completa en la hoja se sirve tal cual: no hay derivadas nuestras
        que listar, y meterla aquí sería prometer archivos de otro. */
