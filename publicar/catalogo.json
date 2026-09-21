@@ -1,7 +1,7 @@
 {
- "esquema": 1,
- "version": "2026-09-12-1",
- "generado": "2026-09-20T16:30:20.485Z",
+ "esquema": 3,
+ "version": "2026-09-20-5",
+ "generado": "2026-09-21T16:26:48.498Z",
  "productos": [
   {
    "id": "MG124",
@@ -17,7 +17,9 @@
    "destacado": true,
    "referencia": "COLONIA+CREMA CORPORAL",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "OC403",
@@ -33,7 +35,9 @@
    "destacado": true,
    "referencia": "PERFUME CAPILAR  MINI",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "oc400",
@@ -49,7 +53,9 @@
    "destacado": false,
    "referencia": "PERFUME DE MIEL",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG115",
@@ -65,7 +71,9 @@
    "destacado": false,
    "referencia": "SPLASH CORPORAL",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG116",
@@ -81,7 +89,9 @@
    "destacado": false,
    "referencia": "SPLASH CORPORAL MINI",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG118",
@@ -97,7 +107,9 @@
    "destacado": false,
    "referencia": "CREMA CORPORAL MINI",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG117",
@@ -113,7 +125,9 @@
    "destacado": false,
    "referencia": "CREMA CORPORAL GRANDE",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG113",
@@ -129,7 +143,9 @@
    "destacado": false,
    "referencia": "MANTEQUILLA FANTILUNA MINI",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG112",
@@ -145,7 +161,9 @@
    "destacado": false,
    "referencia": "MANTEQUILLA FANTILUNA GRANDE",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM017",
@@ -161,7 +179,9 @@
    "destacado": false,
    "referencia": "AMPOPLLA RESCATE MILAGROS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG119",
@@ -177,7 +197,9 @@
    "destacado": false,
    "referencia": "PERFUME CAPILAR MILAGROS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG106",
@@ -193,7 +215,9 @@
    "destacado": false,
    "referencia": "PERFUME TERMOPROTECTOR ORIGNEN BOTANICO",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "OC401",
@@ -209,7 +233,9 @@
    "destacado": false,
    "referencia": "MASCARILLA DE MIEL CLICK HAIR BRILLO INTENSO",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "OC402",
@@ -225,7 +251,9 @@
    "destacado": false,
    "referencia": "SHAMPOO DE MIEL CLICK HAIR",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "OC411",
@@ -241,7 +269,9 @@
    "destacado": false,
    "referencia": "MIEL PARA EL CABELLO PEQUEÑA",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "OC412",
@@ -257,7 +287,9 @@
    "destacado": false,
    "referencia": "MIEL PARA EL CABELLO GRANDE",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "OC413",
@@ -273,7 +305,9 @@
    "destacado": false,
    "referencia": "TERMOPROTECTOR DE LECHE Y MIEL CLICK HAIR",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM018",
@@ -289,7 +323,9 @@
    "destacado": false,
    "referencia": "TRATAMIENTO DE BABOSA SKALA",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG129",
@@ -305,7 +341,9 @@
    "destacado": false,
    "referencia": "CERA NATIVOS ROJA",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG196",
@@ -321,7 +359,9 @@
    "destacado": false,
    "referencia": "MASCARILLA BOMBA ORIGEN BOTANICO",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM003",
@@ -337,7 +377,9 @@
    "destacado": false,
    "referencia": "KIT BIOAQUA CAMELLIAS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG100",
@@ -353,7 +395,9 @@
    "destacado": false,
    "referencia": "KIT BIOAQUA ARROZ",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM002",
@@ -369,7 +413,9 @@
    "destacado": false,
    "referencia": "KIT BIOAQUA ROSAS+ACIDO HIALURONICO",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM027",
@@ -385,7 +431,9 @@
    "destacado": false,
    "referencia": "CONTRORNO DE OJOS ROLLON  BIOAQUA",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM038",
@@ -401,7 +449,9 @@
    "destacado": false,
    "referencia": "COLAGENO BIOAQUA MORADO",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM026",
@@ -417,7 +467,9 @@
    "destacado": false,
    "referencia": "TRATAMIENTO DE PESTAÑAS BIOAQUA",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG122",
@@ -433,7 +485,9 @@
    "destacado": false,
    "referencia": "PESTAÑINAS PROSA",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG182",
@@ -449,7 +503,9 @@
    "destacado": false,
    "referencia": "GEL DE CEJAS MELU",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG176",
@@ -465,7 +521,9 @@
    "destacado": false,
    "referencia": "GEL DE CEJAS GOT 2B",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG184",
@@ -481,7 +539,9 @@
    "destacado": false,
    "referencia": "GEL DE CEJAS ANIK",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM022",
@@ -497,7 +557,9 @@
    "destacado": false,
    "referencia": "GLOSS HUXA EN CAJA CON LLAVERO",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM019",
@@ -513,7 +575,9 @@
    "destacado": false,
    "referencia": "BALSAMO LABIAL  ACIDO HIALURONICO BIOAQUA",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM023",
@@ -529,7 +593,9 @@
    "destacado": false,
    "referencia": "LIP GLOSS CON ESPEJITO",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG188",
@@ -545,7 +611,9 @@
    "destacado": false,
    "referencia": "LIP GLOSS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FR606",
@@ -561,7 +629,9 @@
    "destacado": false,
    "referencia": "SOMBRAS DE CEJAS X3 TONOS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FR607",
@@ -577,7 +647,9 @@
    "destacado": false,
    "referencia": "SOMBRAS DE CEJAS X4 TONOS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM032",
@@ -593,7 +665,9 @@
    "destacado": false,
    "referencia": "TINTA GELATINA JELLY BLISH",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG188",
@@ -609,7 +683,9 @@
    "destacado": false,
    "referencia": "LIP GLOSS OIL",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG188",
@@ -625,7 +701,9 @@
    "destacado": false,
    "referencia": "LABIALES",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM031",
@@ -641,7 +719,9 @@
    "destacado": false,
    "referencia": "TINTA LABIAL PURPURE TAPA CORAZON",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG188",
@@ -657,7 +737,9 @@
    "destacado": false,
    "referencia": "LIP GLOSS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG188",
@@ -673,7 +755,9 @@
    "destacado": false,
    "referencia": "LIP GLOSS FRESITAS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM001",
@@ -689,7 +773,9 @@
    "destacado": false,
    "referencia": "TINTA  TAPA CORAZON",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "MG104",
@@ -705,7 +791,9 @@
    "destacado": false,
    "referencia": "LIP GLOSS CON ESPEJO BLOOMSHELL",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM029",
@@ -721,7 +809,9 @@
    "destacado": false,
    "referencia": "LIP GLOSS VOLUMINIZADOR",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "fr610",
@@ -737,7 +827,9 @@
    "destacado": false,
    "referencia": "POLVO+CORRECTOR SAS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FR602",
@@ -753,7 +845,9 @@
    "destacado": false,
    "referencia": "POLVO DE HADAS",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM016",
@@ -769,7 +863,9 @@
    "destacado": false,
    "referencia": "POLVO DE HADAS PURPURE",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   },
   {
    "id": "FM015",
@@ -785,7 +881,9 @@
    "destacado": false,
    "referencia": "RUBOR 5 TONOS BON SHIK",
    "precioAntes": 0,
-   "umbralBajo": 0
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -830,7 +928,7 @@
   "correo_resumen": "dcbs.1323@gmail.com",
   "correo_hora": "7",
   "correo_siempre": "No",
-  "correo_ultimo": "Sun Sep 20 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "correo_ultimo": "Mon Sep 21 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
   "fotos_origen": "",
   "fotos_cdn": "",
   "respaldo_carpeta": "https://drive.google.com/drive/folders/1VVXb4WTKB4tYk7EuWkluHHirQYlNhhc8?usp=sharing",
@@ -840,7 +938,9 @@
   "envio_gratis_desde": "",
   "horario": "",
   "repositorio": "laboratoriodigital/tienda_cinnamonbeauty",
-  "tope_pago": "12110000"
+  "tope_pago": "12110000",
+  "checkout_modo": "pasarela",
+  "checkout_proveedor": "bold"
  },
  "fotos": {
   "KIT-ARRURU-ROSADO-MG124.PNG": [
