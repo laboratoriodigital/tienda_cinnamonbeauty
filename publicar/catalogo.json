@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-26T00:47:26.539Z",
+ "generado": "2026-09-26T00:58:24.957Z",
  "productos": [
   {
    "id": "MG124",
@@ -11,9 +11,7 @@
    "precio": 38000,
    "stock": 1,
    "descripcion": "✨ KIT ARRURRÚ: Mantequilla + Splash ✨\n\nUna combinación deliciosa para consentir tu piel y dejarla con un aroma irresistible. 💖\nIncluye mantequilla corporal + splash, perfectos para complementar tu rutina de cuidado y disfrutar una sensación de suavidad y frescura durante el día. 🧴✨",
-   "imagenes": [
-    "labial.jpg"
-   ],
+   "imagenes": [],
    "destacado": true,
    "referencia": "COLONIA+CREMA CORPORAL ARRURRU",
    "precioAntes": 0,
@@ -83,11 +81,5 @@
   "checkout_modo": "pasarela",
   "checkout_proveedor": "bold"
  },
- "fotos": {
-  "labial.jpg": [
-   160,
-   600,
-   900
-  ]
- }
+ "fotos": {}
 }
