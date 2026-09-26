@@ -410,7 +410,7 @@ function instalar() {
   }
 }
 
-/* ==========================================================================
+/* ===========================================================================
    GENERADOR DEL BLOQUE DE CONFIGURACIÓN
    --------------------------------------------------------------------------
    Ejecuta esto y copia del Registro de ejecución el bloque que imprime, pegándolo
@@ -421,9 +421,22 @@ function instalar() {
    ser HTML estático: WhatsApp y Google leen la página sin ejecutar JavaScript,
    así que esas no se pueden sacar de la hoja en caliente.
    ========================================================================== */
+/* La hoja se usa como formulario humano y durante años aceptó el dominio sin
+   `https://`. Había tres contratos distintos: SEO lo completaba, el <head> lo
+   publicaba roto y Bold lo rechazaba. Una sola normalización para los tres
+   caminos: solo HTTPS, sin consulta, fragmento ni barra final. */
+function normalizarSitioUrl(valor) {
+  var s = String(valor || '').trim();
+  if (!s) return '';
+  if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(s)) s = 'https://' + s;
+  if (!/^https:\/\/[^\s\/?#]+(?::\d+)?(?:\/[^\s?#]*)?$/i.test(s)) return '';
+  return s.replace(/[#?].*$/, '').replace(/\/+$/, '');
+}
+
 function generarConfiguracion() {
   var c = leerConfiguracion();
-  var url = (c.sitio_url || '').replace(/\/+$/, '') + '/';
+  var baseSitio = normalizarSitioUrl(c.sitio_url);
+  var url = baseSitio ? baseSitio + '/' : '';
   /* Todo lo que sale de la hoja va escapado entero, no solo las comillas: un
      nombre con & producía HTML inválido, y un < abría la puerta a que el texto
      del dueño se leyera como etiqueta. El icono NO pasa por aquí: es un SVG
@@ -1454,9 +1467,9 @@ function sha256Hex(texto) {
 }
 
 function urlRetornoBold(token, abandono) {
-  var base = String(leerConfiguracion().sitio_url || '').trim();
-  if (!/^https:\/\//i.test(base)) throw new Error('Configuración > sitio_url debe ser una URL https válida.');
-  base = base.replace(/[#?].*$/, '').replace(/\/+$/, '') + '/';
+  var base = normalizarSitioUrl(leerConfiguracion().sitio_url);
+  if (!base) throw new Error('Configuración > sitio_url debe ser un dominio o una URL https válida.');
+  base += '/';
   return base + '?pago-token=' + encodeURIComponent(token) + (abandono ? '&pago-abandonado=1' : '');
 }
 
@@ -4069,7 +4082,13 @@ function revisarTienda(cfg) {
   var c = cfg || leerConfiguracion();
   var bloquean = [], avisan = [];
   LISTA_DE_ALTA.forEach(function (x) {
-    if (!sinLlenar(c[x.clave])) return;
+    var falta = sinLlenar(c[x.clave]);
+    /* No basta con que sitio_url tenga letras. Se acepta el dominio sin
+       esquema porque normalizarSitioUrl lo convierte a HTTPS; una URL http,
+       con espacios o ilegible sí bloquea y Diagnóstico debe decirlo antes de
+       que falle el pago o una publicación. */
+    if (x.clave === 'sitio_url' && !falta) falta = !normalizarSitioUrl(c[x.clave]);
+    if (!falta) return;
     (x.bloquea ? bloquean : avisan).push({ clave: x.clave, porQue: x.porQue });
   });
   return { lista: !bloquean.length && !avisan.length,
@@ -5064,7 +5083,7 @@ var CATALOGO_PUBLICADO = null;
 
 function catalogoPublicado() {
   if (CATALOGO_PUBLICADO) return CATALOGO_PUBLICADO;
-  var url = String(leerConfiguracion().sitio_url || '').trim().replace(/\/+$/, '');
+  var url = normalizarSitioUrl(leerConfiguracion().sitio_url);
   if (!url) return { ok: false, sinUrl: true, error: 'no sé la dirección' };
   try {
     var res = UrlFetchApp.fetch(url + '/catalogo.json',
@@ -5334,7 +5353,7 @@ function publicarAhora() {
 }
 
 function verMiTienda() {
-  var url = String(leerConfiguracion().sitio_url || '').trim();
+  var url = normalizarSitioUrl(leerConfiguracion().sitio_url);
   if (!url) {
     return { tipo: 'aviso', texto:
       'Todavía no sé la dirección de tu tienda.\n\n' +
@@ -5358,7 +5377,7 @@ function verMiTienda() {
    nadie. Lo largo vive en la guía de una página. */
 function ayuda() {
   var c = leerConfiguracion();
-  var url = String(c.sitio_url || '').trim();
+  var url = normalizarSitioUrl(c.sitio_url);
   var linea = function (t) { return '<p style="font:400 13px/1.6 Arial,sans-serif;color:#111;margin:0 0 6px">' + t + '</p>'; };
   var titulo = function (t) { return '<h3 style="font:700 13px Arial,sans-serif;color:#111;margin:16px 0 4px">' + t + '</h3>'; };
   return { tipo: 'html', titulo: 'Ayuda', html:

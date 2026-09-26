@@ -10,6 +10,13 @@ g.props.BOLD_AMBIENTE = 'sandbox';
 g.props.BOLD_IDENTIDAD_SANDBOX = 'identidad-de-prueba';
 g.props.BOLD_SECRETA_SANDBOX = 'secreta-de-prueba';
 
+/* Es exactamente la forma que puede escribir el comerciante en Configuración.
+   SEO ya la aceptaba, pero el retorno de Bold la rechazaba: publicar quedaba
+   verde y el fallo aparecía recién al cobrar. */
+const filaSitio = g.filas('Configuración').findIndex(f => String(f[0]).trim() === 'sitio_url');
+g.hojas.get('Configuración').getRange(filaSitio + 1, 2)
+  .setValue('tienda-sin-esquema.ejemplo.com');
+
 let estadoBold = 'NO_TRANSACTION_FOUND';
 let totalBold = 0;
 g.responder('payments.api.bold.co/v2/payment-voucher/', () => ({ cuerpo: {
@@ -31,6 +38,10 @@ totalBold = creado.total;
 
 ok('Crea un checkout Bold con token opaco', creado.ok && creado.token && creado.checkout && creado.checkout.kind === 'BOLD_BUTTON',
    creado.pedido);
+ok('El dominio sin esquema produce retornos HTTPS válidos',
+   creado.checkout.redirectionUrl.startsWith('https://tienda-sin-esquema.ejemplo.com/?pago-token=') &&
+   creado.checkout.originUrl.startsWith('https://tienda-sin-esquema.ejemplo.com/?pago-token='),
+   creado.checkout.redirectionUrl + ' / ' + creado.checkout.originUrl);
 ok('Firma monto y referencia sin exponer la secreta', /^[a-f0-9]{64}$/.test(creado.checkout.integritySignature) &&
    creado.checkout.apiKey === 'identidad-de-prueba' && !JSON.stringify(creado).includes('secreta-de-prueba'));
 const pagos = g.hojas.get('Pagos')._datos;

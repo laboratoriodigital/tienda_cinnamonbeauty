@@ -348,7 +348,12 @@ jobs:
 
       - name: Guardia de publicación sobre los archivos generados
         if: steps.mirar.outputs.hay == 'si'
-        run: cd pruebas && bash ./publicacion.sh
+        run: |
+          set -o pipefail
+          cd pruebas
+          bash ./publicacion.sh 2>&1 | tee /tmp/pruebas.txt || estado=$?
+          bash ./resumir-publicacion.sh /tmp/pruebas.txt "${estado:-0}"
+          exit ${estado:-0}
 
       - name: Publicar
         if: steps.mirar.outputs.hay == 'si'

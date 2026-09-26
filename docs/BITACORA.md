@@ -15,6 +15,35 @@ después vea que las decisiones raras del código tienen una cicatriz detrás.
 
 ---
 
+## Dominio definitivo bloqueado por una prueba antigua · 25 de septiembre de 2026
+
+**Cinnamon cambió `sitio_url` del subdominio temporal de Workers al dominio
+definitivo y la publicación se detuvo aunque la tienda y el repositorio eran
+correctos.** La batería privada `identidad-cinnamon.js` no validaba identidad:
+comparaba literalmente contra el dominio histórico. Además agrupaba URL,
+repositorio, canonical, Open Graph y sitemap en una sola aserción sin imprimir
+qué valor difería. → La guardia ahora normaliza el dominio configurado, exige
+HTTPS y coherencia entre las cuatro representaciones, conserva la comprobación
+del repositorio y, si falla, imprime todos los valores recibidos. Cambiar de
+dominio ya no exige editar una prueba. *(grave, bloqueo falso de publicación)*
+
+**`sitio_url` sin esquema tenía tres contratos incompatibles.** SEO le añadía
+`https://`, el `<head>` podía publicar una URL relativa y el retorno de Bold lo
+rechazaba al intentar cobrar. → `normalizarSitioUrl()` deja un único contrato
+en Apps Script: un dominio legible se convierte a HTTPS; una URL insegura o
+inválida bloquea. La regresión crea un checkout con el dominio sin esquema y
+comprueba ambos retornos HTTPS. *(crítico potencial, pago después de publicar)*
+
+**La guardia del flujo `fotos` terminaba roja sin escribir nada en Summary.**
+El log solo mostraba el nombre compuesto de la aserción; la pestaña `Errores`
+quedaba correctamente vacía porque Apps Script no había fallado. → Un único
+resumidor, usado por `fotos` y `montaje`, publica las líneas `FALLA`, los valores
+recibidos, una anotación roja visible y la garantía de que no se creó commit ni
+se modificó la tienda en producción. Los fallos de CI se informan en Actions;
+no se mezclan con errores operativos de la hoja. *(medio, diagnóstico)*
+
+---
+
 ## Action rojo por zona horaria y SEO horneado · 20 de septiembre de 2026
 
 **Panadería guardaba `sitio_url` sin esquema y el horneador exigía HTTPS

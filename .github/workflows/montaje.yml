@@ -404,12 +404,7 @@ jobs:
           set -o pipefail
           cd pruebas
           bash ./publicacion.sh 2>&1 | tee /tmp/pruebas.txt || estado=$?
-          {
-            echo "### Guardia de publicación"
-            echo '```'
-            grep -E "^ FALLA|^  TOTAL|Baterías con problemas|^    ·" /tmp/pruebas.txt || tail -30 /tmp/pruebas.txt
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          bash ./resumir-publicacion.sh /tmp/pruebas.txt "${estado:-0}"
           exit ${estado:-0}
 
       # ── 5. Recién ahora, el pull request ──

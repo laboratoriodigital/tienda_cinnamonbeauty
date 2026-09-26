@@ -1759,14 +1759,24 @@ const configurar = (g, clave, valor) => {
      que obliga a abrir el log, buscar el paso y desplegarlo cuesta una
      conversación entera — literalmente: pasó. */
   const pruebasYml = fs.readFileSync('../.github/workflows/pruebas.yml', 'utf8');
-  for (const [nombre, y] of [['montaje', flujo], ['pruebas', pruebasYml]]) {
-    ok('EL FLUJO `' + nombre + '` pone las líneas FALLA en el resumen',
-       /### (Las baterías|Guardia de publicación)/.test(y) && /grep -E "\^ FALLA/.test(y),
+  const fotosYml = fs.readFileSync('../.github/workflows/fotos.yml', 'utf8');
+  const resumen = fs.readFileSync('resumir-publicacion.sh', 'utf8');
+  ok('LA GUARDIA generada explica el fallo en Summary y en la anotación roja',
+     /### ⛔ No se publicó la tienda/.test(resumen) &&
+     /FALLA/.test(resumen) && /::error title=Publicación detenida/.test(resumen) &&
+     /No se creó commit ni se cambió el sitio/.test(resumen),
+     'un rojo tiene que decir qué falló y qué alcanzó a tocar');
+  for (const [nombre, y] of [['montaje', flujo], ['fotos', fotosYml]]) {
+    ok('EL FLUJO `' + nombre + '` usa el resumen detallado de la guardia',
+       /resumir-publicacion\.sh/.test(y) && /tee \/tmp\/pruebas\.txt/.test(y),
        'desde Actions el resumen es lo primero que se ve');
     ok('  ...y sigue fallando cuando fallan',
        /exit \$\{estado:-0\}/.test(y),
        'un resumen bonito con la corrida en verde sería peor que nada');
   }
+  ok('EL FLUJO `pruebas` también pone sus líneas FALLA en el resumen',
+     /### Las baterías/.test(pruebasYml) && /grep -E "\^ FALLA/.test(pruebasYml),
+     'un commit rojo también tiene que explicar la batería');
 }
 
 
