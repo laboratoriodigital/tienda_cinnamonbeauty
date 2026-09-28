@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-28T12:41:23.776Z",
+ "generado": "2026-09-28T23:16:47.891Z",
  "productos": [
   {
    "id": "MG124",
@@ -9,15 +9,51 @@
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
    "precio": 38000,
-   "stock": 1,
+   "stock": 9,
    "descripcion": "✨ KIT ARRURRÚ: Mantequilla + Splash ✨\n\nUna combinación deliciosa para consentir tu piel y dejarla con un aroma irresistible. 💖\nIncluye mantequilla corporal + splash, perfectos para complementar tu rutina de cuidado y disfrutar una sensación de suavidad y frescura durante el día. 🧴✨",
-   "imagenes": [],
+   "imagenes": [
+    "KIT-ARRURRU-ROSADO-MG124.png",
+    "KIT-ARRURRU-AZUL-MG124.png"
+   ],
    "destacado": true,
    "referencia": "COLONIA+CREMA CORPORAL ARRURRU",
    "precioAntes": 0,
    "umbralBajo": 3,
-   "ejes": [],
-   "variantes": []
+   "ejes": [
+    {
+     "nombre": "color",
+     "valores": [
+      "azul",
+      "rosado"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-6f2e69a92bbf",
+     "sku": "MG124-6F2E69",
+     "opciones": {
+      "color": "azul"
+     },
+     "precio": 38000,
+     "stock": 1,
+     "imagenes": [
+      "ARRURRU-AZUL-MG124.png"
+     ]
+    },
+    {
+     "id": "var-17db374ca0c4",
+     "sku": "MG124-17DB37",
+     "opciones": {
+      "color": "rosado"
+     },
+     "precio": 38000,
+     "stock": 8,
+     "imagenes": [
+      "KIT-ARRURRU-ROSADO-MG124.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -81,5 +117,16 @@
   "checkout_modo": "pasarela",
   "checkout_proveedor": "bold"
  },
- "fotos": {}
+ "fotos": {
+  "KIT-ARRURRU-ROSADO-MG124.png": [
+   160,
+   600,
+   900
+  ],
+  "KIT-ARRURRU-AZUL-MG124.png": [
+   160,
+   600,
+   900
+  ]
+ }
 }
