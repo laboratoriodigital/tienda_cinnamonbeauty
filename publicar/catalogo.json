@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-28T23:37:05.598Z",
+ "generado": "2026-09-28T23:53:49.016Z",
  "productos": [
   {
    "id": "MG124",
@@ -176,6 +176,16 @@
    900
   ],
   "KIT-ARRURRU-AZUL-MG124.png": [
+   160,
+   600,
+   900
+  ],
+  "MANTEQUILLA-FANTILUNA-SANDIA-MG112.png": [
+   160,
+   600,
+   900
+  ],
+  "MANTEQUILLA-FANTILUNA-CHIC-MG112.png": [
    160,
    600,
    900
