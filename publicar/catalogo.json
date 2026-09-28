@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-28T23:16:47.891Z",
+ "generado": "2026-09-28T23:36:02.797Z",
  "productos": [
   {
    "id": "MG124",
@@ -51,6 +51,58 @@
      "stock": 8,
      "imagenes": [
       "KIT-ARRURRU-ROSADO-MG124.png"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "MG112",
+   "nombre": "Mantequilla Fantiluna Grande",
+   "formato": "Unidad",
+   "categoria": "Cremas-Mantequillas y Splash",
+   "precio": 22500,
+   "stock": 10,
+   "descripcion": "✨ MANTEQUILLA CORPORAL FANTILUNA ✨\n\nDisfruta de una piel suave, hidratada y delicadamente perfumada con la Mantequilla Corporal Fantiluna. 💕 Su textura cremosa es ideal para cuidar la piel y dejar una agradable sensación de suavidad y confort.\n\nPerfecta para incorporar a tu rutina diaria de cuidado corporal y disfrutar de un delicioso aroma que acompaña tu día. 🌸✨\n\n#Fantiluna #MantequillaCorporal #CuidadoCorporal #CinnamonBeauty",
+   "imagenes": [
+    "MANTEQUILLA-FANTILUNA-SANDIA-MG112.png",
+    "MANTEQUILLA-FANTILUNA-CHIC-MG112.png"
+   ],
+   "destacado": false,
+   "referencia": "MANTEQUILLA FANTILUNA GRANDE",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Aroma",
+     "valores": [
+      "chic",
+      "sandia"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-93fff44d7d26",
+     "sku": "MG112-93FFF4",
+     "opciones": {
+      "Aroma": "chic"
+     },
+     "precio": 22500,
+     "stock": 4,
+     "imagenes": [
+      "MANTEQUILLA-FANTILUNA-CHIC-MG112.png"
+     ]
+    },
+    {
+     "id": "var-1615df193a61",
+     "sku": "MG112-1615DF",
+     "opciones": {
+      "Aroma": "sandia"
+     },
+     "precio": 22500,
+     "stock": 6,
+     "imagenes": [
+      "MANTEQUILLA-FANTILUNA-SANDIA-MG112.png"
      ]
     }
    ]
