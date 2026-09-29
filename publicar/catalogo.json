@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T21:52:30.939Z",
+ "generado": "2026-09-29T21:59:58.780Z",
  "productos": [
   {
    "id": "MG124",
@@ -396,6 +396,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "FR602",
+   "nombre": "Polvo de Hadas Just Beauty",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 6500,
+   "stock": 8,
+   "descripcion": "✨ POLVO DE HADAS JUST BEAUTY 🧚‍♀️✨\n\nDale a tu maquillaje un toque luminoso y mágico con el Polvo de Hadas Just Beauty. Su acabado aporta un efecto radiante y delicado, perfecto para resaltar tu look y darle ese toque especial a tu maquillaje. 💕✨\n\nIdeal para usar en ocasiones especiales o darle un extra de brillo a tu maquillaje diario.\n\n📲 Haz que tu look brille y pide el tuyo en CINNAMON BEAUTY.\n\n#PolvoDeHadas #Iluminador #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "POLVO-DE-HADAS-FR602.png"
+   ],
+   "destacado": false,
+   "referencia": "POLVO DE HADAS JUST BEAUTY",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -526,6 +544,11 @@
    900
   ],
   "POLVO+CORRECTOR-SAS-FR610.png": [
+   160,
+   600,
+   900
+  ],
+  "POLVO-DE-HADAS-FR602.png": [
    160,
    600,
    900
