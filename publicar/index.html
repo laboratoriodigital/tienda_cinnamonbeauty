@@ -640,7 +640,7 @@ const CONFIG_SEMILLA = {
   "correo_hora": "7",
   "correo_resumen": "dcbs.1323@gmail.com",
   "correo_siempre": "No",
-  "correo_ultimo": "Mon Sep 28 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "correo_ultimo": "Tue Sep 29 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
   "empresa_ciudad": "Medellín",
   "empresa_correo": "cinnamonbeauty.tienda@gmail.com",
   "empresa_direccion": "TIENDA VIRTUAL",
@@ -658,7 +658,7 @@ const CONFIG_SEMILLA = {
   "logo": "",
   "negocio": "Cinnamon Beauty",
   "pie_descripcion": "Tienda Virtual ",
-  "portada_puntos": "Oferta ultima unidad|Tienda virtual en medellin|Pides y confirmas por WhatsApp",
+  "portada_puntos": "Oferta ultima unidad|Tienda virtual en medellin|Entregas en Medellin y Valle de Aburra|Pides y confirmas por WhatsApp",
   "portada_texto": "Makeup Beauty - Professional Products",
   "portada_titulo": "Cinnamon Beauty",
   "repositorio": "laboratoriodigital/tienda_cinnamonbeauty",
@@ -711,7 +711,28 @@ const PRODUCTOS = [
     imagenes:["SPLASH-FANTILUNA-SANDIA-MG115.png", "SPLASH-FANTILUNA-BONBON-MG115.png"],
     descripcion:"✨ SPLASH CORPORAL FANTILUNA 🍬💖\n\nUna fragancia corporal deliciosa y femenina que deja sobre tu piel un aroma dulce, agradable y encantador. Su presentación Bon Bon es perfecta para quienes disfrutan de aromas irresistibles y llenos de personalidad. 🌸✨\n\nIdeal para usar a diario y llevar contigo a cualquier lugar. 💕\n\n📲 Elige tu favorito y haz tu pedido.\n\n#SplashCorporal #Fantiluna #PerfumeriaFemenina #CinnamonBeauty",
     ejes:[{"nombre":"Aroma","valores":["sandia","bonbon"]}],
-    variantes:[{"id":"var-b08f55935c18","sku":"MG115-B08F55","opciones":{"Aroma":"sandia"},"precio":22500,"stock":5,"imagenes":["SPLASH-FANTILUNA-SANDIA-MG115.png"]},{"id":"var-64492ecfe78b","sku":"MG115-64492E","opciones":{"Aroma":"bonbon"},"precio":22500,"stock":3,"imagenes":["SPLASH-FANTILUNA-BONBON-MG115.png"]}] }
+    variantes:[{"id":"var-b08f55935c18","sku":"MG115-B08F55","opciones":{"Aroma":"sandia"},"precio":22500,"stock":5,"imagenes":["SPLASH-FANTILUNA-SANDIA-MG115.png"]},{"id":"var-64492ecfe78b","sku":"MG115-64492E","opciones":{"Aroma":"bonbon"},"precio":22500,"stock":3,"imagenes":["SPLASH-FANTILUNA-BONBON-MG115.png"]}] },
+
+  { id:"MG223", nombre:"Splash Corporal Fantiluna Infantil", formato:"Unidad", categoria:"Cremas-Mantequillas y Splash",
+    precio:0, stock:5,
+    imagenes:["SPLASH-FANTILUNA-INFANTIL-UNICORNIO-MG223.png", "SPLASH-FANTILUNA-INFANTIL-PRINCESS-MG223.png"],
+    descripcion:"🦄👑 SPLASH CORPORAL INFANTIL FANTILUNA 💕✨\n\nAromas dulces, delicados y encantadores para las más pequeñas. Presentado en dos diseños llenos de fantasía: Unicornio 🦄 y Princess 👑, perfectos para acompañar su rutina diaria con un toque divertido y especial. 🌸💖\n\nUna opción ideal para regalar y disfrutar después del baño.\n\n📲 Elige Unicornio o Princess y pide tu favorito en CINNAMON BEAUTY.\n\n#Fantiluna #SplashInfantil #PerfumeriaInfantil #CinnamonBeauty",
+    ejes:[{"nombre":"Aroma","valores":["unicornio","princess"]}],
+    variantes:[{"id":"var-b9ca250ad8af","sku":"MG223-B9CA25","opciones":{"Aroma":"unicornio"},"precio":14000,"stock":2,"imagenes":["SPLASH-FANTILUNA-INFANTIL-UNICORNIO-MG223.png"]},{"id":"var-dbfb52a851b2","sku":"MG223-DBFB52","opciones":{"Aroma":"princess"},"precio":14000,"stock":3,"imagenes":["SPLASH-FANTILUNA-INFANTIL-PRINCESS-MG223.png"]}] },
+
+  { id:"MG152", nombre:"Exfoliante Fantiluna", formato:"Unidad", categoria:"Cremas-Mantequillas y Splash",
+    precio:20000, stock:3,
+    imagenes:["EXFOLIANTE-FANTILUNA-MG152.png"],
+    descripcion:"✨ EXFOLIANTE CORPORAL FANTILUNA ✨💕\n\nConsiente tu piel con una exfoliación que ayuda a retirar células muertas e impurezas, dejando una sensación de suavidad, frescura y piel renovada. 🫧🌸\n\nIdeal para complementar tu rutina de cuidado corporal y disfrutar una piel más suave y agradable al tacto. 💖\n\n📲 Dale a tu piel un momento de cuidado y pide el tuyo en CINNAMON BEAUTY.\n\n#ExfolianteCorporal #CuidadoCorporal #Fantiluna #CinnamonBeauty",
+    ejes:[{"nombre":"Aroma","valores":["sandia","bonbon"]}],
+    variantes:[{"id":"var-becd6ee2d443","sku":"MG152-BECD6E","opciones":{"Aroma":"sandia"},"precio":20000,"stock":1,"imagenes":["EXFOLIANTE-FANTILUNA-MG152.png"]},{"id":"var-5c2bdaff44b1","sku":"MG152-5C2BDA","opciones":{"Aroma":"bonbon"},"precio":20000,"stock":2,"imagenes":["EXFOLIANTE-FANTILUNA-MG152.png"]}] },
+
+  { id:"FR610", nombre:"Polvo Compacto + Corrector", formato:"Unidad", categoria:"Maquillaje",
+    precio:0, stock:0,
+    imagenes:["POLVO+CORRECTOR-SAS-FR610.png"],
+    descripcion:"✨ POLVO + CORRECTOR SAS ✨💄\n\nUn dúo práctico para lograr un maquillaje más uniforme y con un acabado bonito y natural. El corrector ayuda a disimular pequeñas imperfecciones y unificar el tono, mientras el polvo compacto aporta un acabado más pulido al maquillaje. 💕\n\nIdeal para llevar en tu cosmetiquera y crear tu look diario de manera fácil y rápida.\n\n📲 Completa tu maquillaje con SAS y pide el tuyo en CINNAMON BEAUTY.\n\n#PolvoCompacto #Corrector #Maquillaje #CinnamonBeauty",
+    ejes:[{"nombre":"Tonos","valores":["06","04"]}],
+    variantes:[{"id":"var-cc083a6b0cee","sku":"FR610-CC083A","opciones":{"Tonos":"06"},"precio":0,"stock":0,"imagenes":[]},{"id":"var-bdb6d2267601","sku":"FR610-BDB6D2","opciones":{"Tonos":"04"},"precio":0,"stock":0,"imagenes":[]}] }
 ];
 /* ═══ FIN DEL CATÁLOGO DE RESPALDO ═══ */
 
