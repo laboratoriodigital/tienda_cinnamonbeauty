@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T22:36:22.091Z",
+ "generado": "2026-09-29T22:41:47.507Z",
  "productos": [
   {
    "id": "MG124",
@@ -604,7 +604,7 @@
    "categoria": "Maquillaje",
    "precio": 23500,
    "stock": 0,
-   "descripcion": "✨ BASE LÍQUIDA LULA 💄✨\n\nBase de textura líquida que ayuda a unificar el tono de la piel y lograr un acabado uniforme y natural. Ideal para crear un maquillaje bonito y duradero para tu día a día. 💕\n\n📍 PAGO CONTRAENTREGA EN MEDELLÍN\n📲 Pídela en CINNAMON BEAUTY.\n\n#BaseLiquida #Maquillaje #BaseDeMaquillaje #CinnamonBeauty",
+   "descripcion": "✨ BASE LÍQUIDA LULA 💄✨\n\nBase de textura líquida que ayuda a unificar el tono de la piel y lograr un acabado uniforme y natural. Ideal para crear un maquillaje bonito y duradero para tu día a día. 💕\n\n\n#BaseLiquida #Maquillaje #BaseDeMaquillaje #CinnamonBeauty",
    "imagenes": [
     "BASE-LULA-MG185.png"
    ],
@@ -660,6 +660,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG226",
+   "nombre": "Corrector Bloomshell",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 19900,
+   "stock": 12,
+   "descripcion": "✨ CORRECTOR BLOOMSHELL 💄✨\n\nAyuda a disimular pequeñas imperfecciones, unificar el tono y lograr un acabado más uniforme y natural. Ideal para complementar tu rutina de maquillaje. 💕\n\n\n#Corrector #Bloomshell #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "CORRECTOR-BLOOMSHELL-MG226.png"
+   ],
+   "destacado": false,
+   "referencia": "CORRECTOR BLOOMSHELL",
+   "precioAntes": 0,
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -825,6 +843,11 @@
    900
   ],
   "BASE-LULA-MG185.png": [
+   160,
+   600,
+   900
+  ],
+  "CORRECTOR-BLOOMSHELL-MG226.png": [
    160,
    600,
    900
