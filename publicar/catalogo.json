@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T22:25:51.031Z",
+ "generado": "2026-09-29T22:30:54.492Z",
  "productos": [
   {
    "id": "MG124",
@@ -578,6 +578,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG225",
+   "nombre": "Corrector Anik",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 19500,
+   "stock": 8,
+   "descripcion": "✨ CORRECTOR ANI-K 💄✨\n\nAyuda a disimular pequeñas imperfecciones, unificar el tono y conseguir un acabado más uniforme y natural. Ideal para complementar tu maquillaje diario. 💕\n\n\n\n#Corrector #Maquillaje #AniK #CinnamonBeauty",
+   "imagenes": [
+    "CORRECTOR-ANIK-MG225.png"
+   ],
+   "destacado": false,
+   "referencia": "CORRECTOR ANI-K",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -733,6 +751,11 @@
    900
   ],
   "BASE+CORRECTOR-ANIK-2EN1-MG175.png": [
+   160,
+   600,
+   900
+  ],
+  "CORRECTOR-ANIK-MG225.png": [
    160,
    600,
    900
