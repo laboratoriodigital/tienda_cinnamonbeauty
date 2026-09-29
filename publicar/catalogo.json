@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T00:36:31.241Z",
+ "generado": "2026-09-29T00:52:41.791Z",
  "productos": [
   {
    "id": "MG124",
@@ -276,7 +276,7 @@
   "color_principal": "#EA9999",
   "color_secundario": "#BF9000",
   "color_alterno": "#CC0000",
-  "pie_descripcion": "Tienda Virtual - Pago contraentrega en Medellin",
+  "pie_descripcion": "Tienda Virtual ",
   "como_compras": "Armas tu carrito aquí|Realizas tu pago |Recibes en 24 a 72 horas",
   "empresa_razon": "Cinnamon Beauty",
   "empresa_nit": "[NIT O CÉDULA]",
