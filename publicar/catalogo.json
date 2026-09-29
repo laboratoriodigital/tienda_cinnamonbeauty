@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T22:54:19.374Z",
+ "generado": "2026-09-29T22:59:41.984Z",
  "productos": [
   {
    "id": "MG124",
@@ -603,7 +603,7 @@
    "formato": "Unidad",
    "categoria": "Maquillaje",
    "precio": 23500,
-   "stock": 0,
+   "stock": 12,
    "descripcion": "✨ BASE LÍQUIDA LULA 💄✨\n\nBase de textura líquida que ayuda a unificar el tono de la piel y lograr un acabado uniforme y natural. Ideal para crear un maquillaje bonito y duradero para tu día a día. 💕\n\n\n#BaseLiquida #Maquillaje #BaseDeMaquillaje #CinnamonBeauty",
    "imagenes": [
     "BASE-LULA-MG185.png"
@@ -630,7 +630,7 @@
       "Tonos": "01"
      },
      "precio": 23500,
-     "stock": 0,
+     "stock": 4,
      "imagenes": [
       "BASE-LULA-MG185.png"
      ]
@@ -642,7 +642,7 @@
       "Tonos": "02"
      },
      "precio": 23500,
-     "stock": 0,
+     "stock": 4,
      "imagenes": [
       "BASE-LULA-MG185.png"
      ]
@@ -654,7 +654,7 @@
       "Tonos": "03"
      },
      "precio": 23500,
-     "stock": 0,
+     "stock": 4,
      "imagenes": [
       "BASE-LULA-MG185.png"
      ]
@@ -727,11 +727,75 @@
     "RUBOR-EN-PERLAS-USHAS-FR608.png"
    ],
    "destacado": false,
-   "referencia": "RUBORE N PERLAS USHAS",
+   "referencia": "RUBOR EN PERLAS USHAS",
    "precioAntes": 0,
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG220",
+   "nombre": "Polvo Compacto Nailen Con Espejo",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 13000,
+   "stock": 12,
+   "descripcion": "✨ 💄✨\n\nSu textura compacta ayuda a conseguir un acabado uniforme, suave y natural. Ideal para complementar tu maquillaje y lucir una piel con apariencia más pulida. 💕\n\n POLVO COMPACTO NAILEN CON ESPEJO\n#PolvoCompacto #Nailen #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "POLVO-COMPACTO-NAILEN-MG220.png"
+   ],
+   "destacado": false,
+   "referencia": "POLVO COMPACTO NAILEN CON ESPEJO",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Tonos",
+     "valores": [
+      "01",
+      "02",
+      "03"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-74af88630dc8",
+     "sku": "MG220-74AF88",
+     "opciones": {
+      "Tonos": "01"
+     },
+     "precio": 13000,
+     "stock": 4,
+     "imagenes": [
+      "POLVO-COMPACTO-NAILEN-MG220.png"
+     ]
+    },
+    {
+     "id": "var-d68f63932a0e",
+     "sku": "MG220-D68F63",
+     "opciones": {
+      "Tonos": "02"
+     },
+     "precio": 13000,
+     "stock": 4,
+     "imagenes": [
+      "POLVO-COMPACTO-NAILEN-MG220.png"
+     ]
+    },
+    {
+     "id": "var-ed830e5a5141",
+     "sku": "MG220-ED830E",
+     "opciones": {
+      "Tonos": "03"
+     },
+     "precio": 13000,
+     "stock": 4,
+     "imagenes": [
+      "POLVO-COMPACTO-NAILEN-MG220.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -917,6 +981,11 @@
    900
   ],
   "RUBOR-EN-PERLAS-USHAS-FR608.png": [
+   160,
+   600,
+   900
+  ],
+  "POLVO-COMPACTO-NAILEN-MG220.png": [
    160,
    600,
    900
