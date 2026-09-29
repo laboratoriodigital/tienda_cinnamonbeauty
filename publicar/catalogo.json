@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T23:09:58.009Z",
+ "generado": "2026-09-29T23:15:06.776Z",
  "productos": [
   {
    "id": "MG124",
@@ -885,6 +885,24 @@
     }
    ],
    "variantes": []
+  },
+  {
+   "id": "MG162",
+   "nombre": "Paleta de Sombras Vintage Trendy",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 32000,
+   "stock": 1,
+   "descripcion": "✨ PALETA DE SOMBRAS VINTAGE TRENDY 💄✨\n\nUna paleta PALETA DE SOMBRAS VINTAGE TRENDY versátil con tonos ideales para crear looks naturales, intensos y llenos de personalidad. Perfecta para experimentar con diferentes estilos y darle color a tu maquillaje. 💕\n\n#PaletaDeSombras #SombrasTrendy #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "PALETA-DE-SOMBRAS-VINTAGE-TRENDY-MG162.png"
+   ],
+   "destacado": false,
+   "referencia": "PALETA DE SOMBRAS VINTAGE TRENDY",
+   "precioAntes": 0,
+   "umbralBajo": 0,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1085,6 +1103,11 @@
    900
   ],
   "POLVO-COMPACTO-VOGUE-LARGA-DURACION-MG221.png": [
+   160,
+   600,
+   900
+  ],
+  "PALETA-DE-SOMBRAS-VINTAGE-TRENDY-MG162.png": [
    160,
    600,
    900
