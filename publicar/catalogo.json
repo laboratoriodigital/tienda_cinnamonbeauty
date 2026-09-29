@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T23:05:42.697Z",
+ "generado": "2026-09-29T23:09:58.009Z",
  "productos": [
   {
    "id": "MG124",
@@ -860,6 +860,31 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG221",
+   "nombre": "Polvo Compacto Vogue Larga Duracion",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 17000,
+   "stock": 0,
+   "descripcion": "✨ POLVO COMPACTO VOGUE LARGA DURACIÓN 💄✨\n\nSu fórmula ayuda a lograr un acabado mate natural, uniforme y de larga duración. Con ácido hialurónico y filtros solares, ideal para complementar tu maquillaje y mantener un look impecable. 💕\n\n#PolvoCompacto #Vogue #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "POLVO-COMPACTO-VOGUE-LARGA-DURACION-MG221.png"
+   ],
+   "destacado": false,
+   "referencia": "POLVO COMPACTO VOGUE LARGA DURACIÓN",
+   "precioAntes": 0,
+   "umbralBajo": 0,
+   "ejes": [
+    {
+     "nombre": "Tonos",
+     "valores": [
+      "02"
+     ]
+    }
+   ],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1055,6 +1080,11 @@
    900
   ],
   "POLVO-COMPACTO-SAMY-MG222.png": [
+   160,
+   600,
+   900
+  ],
+  "POLVO-COMPACTO-VOGUE-LARGA-DURACION-MG221.png": [
    160,
    600,
    900
