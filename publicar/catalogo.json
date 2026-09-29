@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T00:22:03.913Z",
+ "generado": "2026-09-29T00:34:43.201Z",
  "productos": [
   {
    "id": "MG124",
@@ -190,6 +190,58 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG115",
+   "nombre": "Splash Corporal Fantiluna",
+   "formato": "Unidad",
+   "categoria": "Cremas-Mantequillas y Splash",
+   "precio": 22500,
+   "stock": 8,
+   "descripcion": "✨ SPLASH CORPORAL FANTILUNA 🍬💖\n\nUna fragancia corporal deliciosa y femenina que deja sobre tu piel un aroma dulce, agradable y encantador. Su presentación Bon Bon es perfecta para quienes disfrutan de aromas irresistibles y llenos de personalidad. 🌸✨\n\nIdeal para usar a diario y llevar contigo a cualquier lugar. 💕\n\n📲 Elige tu favorito y haz tu pedido.\n\n#SplashCorporal #Fantiluna #PerfumeriaFemenina #CinnamonBeauty",
+   "imagenes": [
+    "SPLASH-FANTILUNA-SANDIA-MG115.png",
+    "SPLASH-FANTILUNA-BONBON-MG115.png"
+   ],
+   "destacado": false,
+   "referencia": "SPLASH CORPORAL FANTILUNA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Aroma",
+     "valores": [
+      "sandia",
+      "bonbon"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-b08f55935c18",
+     "sku": "MG115-B08F55",
+     "opciones": {
+      "Aroma": "sandia"
+     },
+     "precio": 22500,
+     "stock": 5,
+     "imagenes": [
+      "SPLASH-FANTILUNA-SANDIA-MG115.png"
+     ]
+    },
+    {
+     "id": "var-64492ecfe78b",
+     "sku": "MG115-64492E",
+     "opciones": {
+      "Aroma": "bonbon"
+     },
+     "precio": 22500,
+     "stock": 3,
+     "imagenes": [
+      "SPLASH-FANTILUNA-BONBON-MG115.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -290,6 +342,16 @@
    900
   ],
   "CREMA-CORPORAL-FANTILUNA-BONBON-MG117.png": [
+   160,
+   600,
+   900
+  ],
+  "SPLASH-FANTILUNA-SANDIA-MG115.png": [
+   160,
+   600,
+   900
+  ],
+  "SPLASH-FANTILUNA-BONBON-MG115.png": [
    160,
    600,
    900
