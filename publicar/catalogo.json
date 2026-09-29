@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T22:50:25.445Z",
+ "generado": "2026-09-29T22:54:19.374Z",
  "productos": [
   {
    "id": "MG124",
@@ -714,6 +714,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FR608",
+   "nombre": "Rubor en Perlas Ushas Rosado",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 18800,
+   "stock": 12,
+   "descripcion": "✨ RUBOR EN PERLAS USHAS  ROSADO🌸✨\n\nAporta un toque de color fresco y luminoso a tus mejillas, ayudando a realzar el rostro y conseguir un acabado radiante y femenino. 💕 Ideal para complementar cualquier look de maquillaje.\n\n\n#RuborEnPerlas #Ushas #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "RUBOR-EN-PERLAS-USHAS-FR608.png"
+   ],
+   "destacado": false,
+   "referencia": "RUBORE N PERLAS USHAS",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -894,6 +912,11 @@
    900
   ],
   "KIT-RUBOR-TRENDY-MG173.png": [
+   160,
+   600,
+   900
+  ],
+  "RUBOR-EN-PERLAS-USHAS-FR608.png": [
    160,
    600,
    900
