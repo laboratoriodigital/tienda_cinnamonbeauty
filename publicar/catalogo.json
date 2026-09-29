@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T00:01:18.785Z",
+ "generado": "2026-09-29T00:22:03.913Z",
  "productos": [
   {
    "id": "MG124",
@@ -124,6 +124,72 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG117",
+   "nombre": "Crema Corporal Fantiluna",
+   "formato": "Unidad",
+   "categoria": "Cremas-Mantequillas y Splash",
+   "precio": 22500,
+   "stock": 17,
+   "descripcion": "✨ CREMAS CORPORALES FANTILUNA 💕✨\n\nDale a tu piel un toque de suavidad, hidratación y un delicioso aroma con las Cremas Corporales Fantiluna. Su presentación de 280 ml es ideal para el cuidado diario de manos y cuerpo. 🌸\n\n💕 Seducción: una opción femenina y encantadora con su delicado diseño.\n🍭 Bon bon: perfecta para quienes aman los aromas dulces y divertidos.\n💜 Chic: sofisticada y femenina, ideal para complementar tu rutina de cuidado personal.\n\nElige tu favorita y disfruta de una piel con una sensación suave y agradable. ✨\n\n#CremasCorporales #Fantiluna #CuidadoDeLaPiel #CinnamonBeauty",
+   "imagenes": [
+    "CREMA-CORPORAL-FANTILUNA-SEDUCCION-MG117.png",
+    "CREMA-CORPORAL-FANTILUNA-CHIC-MG117.png",
+    "CREMA-CORPORAL-FANTILUNA-BONBON-MG117.png"
+   ],
+   "destacado": false,
+   "referencia": "CREMA CORPORAL  FANTILUNA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Aroma",
+     "valores": [
+      "chic",
+      "seduccion",
+      "bonbon"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-c34e2515dbfc",
+     "sku": "MG117-C34E25",
+     "opciones": {
+      "Aroma": "chic"
+     },
+     "precio": 22500,
+     "stock": 6,
+     "imagenes": [
+      "CREMA-CORPORAL-FANTILUNA-CHIC-MG117.png"
+     ]
+    },
+    {
+     "id": "var-8e002a35e564",
+     "sku": "MG117-8E002A",
+     "opciones": {
+      "Aroma": "seduccion"
+     },
+     "precio": 22500,
+     "stock": 6,
+     "imagenes": [
+      "CREMA-CORPORAL-FANTILUNA-SEDUCCION-MG117.png"
+     ]
+    },
+    {
+     "id": "var-66ffca4bd405",
+     "sku": "MG117-66FFCA",
+     "opciones": {
+      "Aroma": "bonbon"
+     },
+     "precio": 22500,
+     "stock": 5,
+     "imagenes": [
+      "CREMA-CORPORAL-FANTILUNA-BONBON-MG117.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -159,7 +225,7 @@
   "color_secundario": "#BF9000",
   "color_alterno": "#CC0000",
   "pie_descripcion": "Tienda Virtual - Pago contraentrega en Medellin",
-  "como_compras": "Armas tu carrito aquí|Confirmas por WhatsApp|Realizas tu pago |Recibes en 24 a 72 horas",
+  "como_compras": "Armas tu carrito aquí|Realizas tu pago |Recibes en 24 a 72 horas",
   "empresa_razon": "Cinnamon Beauty",
   "empresa_nit": "[NIT O CÉDULA]",
   "empresa_correo": "cinnamonbeauty.tienda@gmail.com",
@@ -209,6 +275,21 @@
    900
   ],
   "MANTEQUILLA-CLICK-HAIR-MG228.png": [
+   160,
+   600,
+   900
+  ],
+  "CREMA-CORPORAL-FANTILUNA-SEDUCCION-MG117.png": [
+   160,
+   600,
+   900
+  ],
+  "CREMA-CORPORAL-FANTILUNA-CHIC-MG117.png": [
+   160,
+   600,
+   900
+  ],
+  "CREMA-CORPORAL-FANTILUNA-BONBON-MG117.png": [
    160,
    600,
    900
