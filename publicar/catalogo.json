@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-28T23:53:49.016Z",
+ "generado": "2026-09-29T00:01:18.785Z",
  "productos": [
   {
    "id": "MG124",
@@ -106,6 +106,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG228",
+   "nombre": "Mantequilla Click Hair",
+   "formato": "Unidad",
+   "categoria": "Cremas-Mantequillas y Splash",
+   "precio": 52000,
+   "stock": 6,
+   "descripcion": "✨ MANTEQUILLA CORPORAL CON GLITTER CLICK HAIR ✨💗\n\nHidrata y suaviza la piel, aportando un toque luminoso y radiante gracias a su efecto glitter. Ideal para lucir una piel hermosa, suave y con un brillo especial. ✨💕\n\n#MantequillaCorporal #GlitterCorporal #CuidadoCorporal #CinnamonBeauty",
+   "imagenes": [
+    "MANTEQUILLA-CLICK-HAIR-MG228.png"
+   ],
+   "destacado": false,
+   "referencia": "MANTEQUILLA CLICK HAIR",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -186,6 +204,11 @@
    900
   ],
   "MANTEQUILLA-FANTILUNA-CHIC-MG112.png": [
+   160,
+   600,
+   900
+  ],
+  "MANTEQUILLA-CLICK-HAIR-MG228.png": [
    160,
    600,
    900
