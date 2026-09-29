@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T22:45:43.327Z",
+ "generado": "2026-09-29T22:50:25.445Z",
  "productos": [
   {
    "id": "MG124",
@@ -696,6 +696,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG173",
+   "nombre": "Kit de Rubor Trendy",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 17300,
+   "stock": 6,
+   "descripcion": "✨ KIT DE RUBOR TRENDY 🌸💄\n\nDale a tu rostro un toque de color fresco y favorecedor con este práctico kit de rubor. Ideal para realzar las mejillas y complementar cualquier look de maquillaje. 💕\n\n\n#Rubor #KitDeMaquillaje #Trendy #CinnamonBeauty",
+   "imagenes": [
+    "KIT-RUBOR-TRENDY-MG173.png"
+   ],
+   "destacado": false,
+   "referencia": "KIT DE RUBOR TRENDY",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -871,6 +889,11 @@
    900
   ],
   "BLUSH-SHELL-ILUMINADOR-ROSADO-FM035.png": [
+   160,
+   600,
+   900
+  ],
+  "KIT-RUBOR-TRENDY-MG173.png": [
    160,
    600,
    900
