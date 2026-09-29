@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T21:42:46.149Z",
+ "generado": "2026-09-29T21:44:38.443Z",
  "productos": [
   {
    "id": "MG124",
@@ -352,7 +352,7 @@
    "formato": "Unidad",
    "categoria": "Maquillaje",
    "precio": 0,
-   "stock": 0,
+   "stock": 5,
    "descripcion": "✨ POLVO + CORRECTOR SAS ✨💄\n\nUn dúo práctico para lograr un maquillaje más uniforme y con un acabado bonito y natural. El corrector ayuda a disimular pequeñas imperfecciones y unificar el tono, mientras el polvo compacto aporta un acabado más pulido al maquillaje. 💕\n\nIdeal para llevar en tu cosmetiquera y crear tu look diario de manera fácil y rápida.\n\n📲 Completa tu maquillaje con SAS y pide el tuyo en CINNAMON BEAUTY.\n\n#PolvoCompacto #Corrector #Maquillaje #CinnamonBeauty",
    "imagenes": [
     "POLVO+CORRECTOR-SAS-FR610.png"
@@ -377,9 +377,11 @@
      "opciones": {
       "Tonos": "06"
      },
-     "precio": 0,
-     "stock": 0,
-     "imagenes": []
+     "precio": 20000,
+     "stock": 3,
+     "imagenes": [
+      "POLVO+CORRECTOR-SAS-FR610.png"
+     ]
     },
     {
      "id": "var-bdb6d2267601",
@@ -387,9 +389,11 @@
      "opciones": {
       "Tonos": "04"
      },
-     "precio": 0,
-     "stock": 0,
-     "imagenes": []
+     "precio": 20000,
+     "stock": 2,
+     "imagenes": [
+      "POLVO+CORRECTOR-SAS-FR610.png"
+     ]
     }
    ]
   }
