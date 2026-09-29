@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T00:52:41.791Z",
+ "generado": "2026-09-29T01:05:44.282Z",
  "productos": [
   {
    "id": "MG124",
@@ -38,7 +38,7 @@
      "precio": 38000,
      "stock": 1,
      "imagenes": [
-      "ARRURRU-AZUL-MG124.png"
+      "KIT-ARRURRU-AZUL-MG124.png"
      ]
     },
     {
