@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T22:03:07.283Z",
+ "generado": "2026-09-29T22:11:52.241Z",
  "productos": [
   {
    "id": "MG124",
@@ -432,6 +432,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM015",
+   "nombre": "Rubor e Iluminador  Bonshik",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 12500,
+   "stock": 6,
+   "descripcion": "🌸 RUBOR E ILUMINADOR  BONSHIK 💕✨\n\nDale a tus mejillas un toque de color natural, fresco y favorecedor con el Rubor BonShik. Su textura es ideal para aportar un acabado bonito y luminoso, perfecto para completar cualquier look de maquillaje. 💄🌷\n\n📲 Dale color a tu look y pide el tuyo en CINNAMON BEAUTY.\n\n#Rubor #RuborBonShik #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "RUBOR-5TONOS-BONSHIK-FM015.png"
+   ],
+   "destacado": false,
+   "referencia": "RUBOR E ILUMINADOR  BONSHIK",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -572,6 +590,11 @@
    900
   ],
   "POLVO-DE-HADAS-PURPURE-FM016.png": [
+   160,
+   600,
+   900
+  ],
+  "RUBOR-5TONOS-BONSHIK-FM015.png": [
    160,
    600,
    900
