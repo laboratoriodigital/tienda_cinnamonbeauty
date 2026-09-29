@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-29T22:44:04.784Z",
+ "generado": "2026-09-29T22:45:43.327Z",
  "productos": [
   {
    "id": "MG124",
@@ -678,6 +678,24 @@
    "umbralBajo": 0,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM035",
+   "nombre": "Blush shell Iluminador Rosado",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 18000,
+   "stock": 6,
+   "descripcion": "✨ BLUSH SHELL ILUMINADOR ROSADO 🌸✨\n\nAporta un hermoso toque de color y luminosidad al rostro, dejando un acabado fresco, radiante y femenino. Ideal para resaltar tus mejillas y darle vida a tu maquillaje. 💕✨\n\n\n#Blush #Iluminador #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "BLUSH-SHELL-ILUMINADOR-ROSADO-FM035.png"
+   ],
+   "destacado": false,
+   "referencia": "BLUSH SHELL ILUMINADOR ROSADO  BLOOMSHELL",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -848,6 +866,11 @@
    900
   ],
   "CORRECTOR-BLOOMSHELL-MG226.png": [
+   160,
+   600,
+   900
+  ],
+  "BLUSH-SHELL-ILUMINADOR-ROSADO-FM035.png": [
    160,
    600,
    900
