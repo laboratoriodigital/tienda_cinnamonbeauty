@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-09-30T00:37:25.191Z",
+ "generado": "2026-09-30T00:39:28.476Z",
  "productos": [
   {
    "id": "MG124",
@@ -923,7 +923,7 @@
    "formato": "Unidad",
    "categoria": "Maquillaje",
    "precio": 12500,
-   "stock": 0,
+   "stock": 12,
    "descripcion": "✨ PALETA DE SOMBRAS USHAS EYE SHADOW 💄✨\n\nUna paleta versátil con tonos ideales para crear diferentes looks, desde maquillajes naturales y delicados hasta estilos más intensos y llamativos. Perfecta para darle color y personalidad a tu mirada. 💕\n\n#SombrasUshas #EyeShadow #Maquillaje #CinnamonBeauty",
    "imagenes": [
     "PALETA-DE-SOMBRAS-USHAS-EYE-SHADOW-FR604.png"
@@ -950,7 +950,7 @@
       "Tonos": "04"
      },
      "precio": 12500,
-     "stock": 0,
+     "stock": 4,
      "imagenes": [
       "PALETA-DE-SOMBRAS-USHAS-EYE-SHADOW-FR604.png"
      ]
@@ -962,7 +962,7 @@
       "Tonos": "05"
      },
      "precio": 12500,
-     "stock": 0,
+     "stock": 4,
      "imagenes": [
       "PALETA-DE-SOMBRAS-USHAS-EYE-SHADOW-FR604.png"
      ]
@@ -974,7 +974,7 @@
       "Tonos": "06"
      },
      "precio": 12500,
-     "stock": 0,
+     "stock": 4,
      "imagenes": [
       "PALETA-DE-SOMBRAS-USHAS-EYE-SHADOW-FR604.png"
      ]
