@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T23:19:31.700Z",
+ "generado": "2026-10-01T23:21:52.746Z",
  "productos": [
   {
    "id": "MG124",
@@ -1196,6 +1196,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "mg202",
+   "nombre": "Lip Gloss Milk",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 5800,
+   "stock": 6,
+   "descripcion": "✨ LIP GLOSS MILK 💋\n\nDale a tus labios un toque de brillo y un acabado suave y jugoso. Ideal para complementar cualquier look y lucir unos labios frescos, delicados y encantadores. 💕\n\n#LipGloss #BrilloLabial #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "LIP-GLOSS-MILK-MG202.jpg"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS MILK",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1466,6 +1484,11 @@
    900
   ],
   "‬LIP-GLOSS-QUIN-BEAUTY-MG200.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-MILK-MG202.jpg": [
    160,
    600,
    900
