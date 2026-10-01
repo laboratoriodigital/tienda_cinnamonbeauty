@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T23:24:07.733Z",
+ "generado": "2026-10-01T23:27:17.170Z",
  "productos": [
   {
    "id": "MG124",
@@ -1228,6 +1228,24 @@
    ],
    "destacado": false,
    "referencia": "LIP-GLOSS-HUELLITA-MG201.png",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "MG203",
+   "nombre": "Lip Gloss Glitter",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 5800,
+   "stock": 6,
+   "descripcion": "✨ LIP GLOSS GLITTER  ✨💋\n\nDale a tus labios un toque de brillo y luminosidad con un acabado glitter, perfecto para destacar tu maquillaje y crear looks llamativos y llenos de glamour. 💖\n\n#LipGloss #GlitterGloss #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "LIP GLOSS GLITTER"
+   ],
+   "destacado": false,
+   "referencia": "LIP-GLOSS-GLITTER-MG203.jpg",
    "precioAntes": 0,
    "umbralBajo": 3,
    "ejes": [],
