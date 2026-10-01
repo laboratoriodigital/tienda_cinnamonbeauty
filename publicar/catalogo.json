@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T23:21:52.746Z",
+ "generado": "2026-10-01T23:24:07.733Z",
  "productos": [
   {
    "id": "MG124",
@@ -1198,7 +1198,7 @@
    "variantes": []
   },
   {
-   "id": "mg202",
+   "id": "MG202",
    "nombre": "Lip Gloss Milk",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
@@ -1210,6 +1210,24 @@
    ],
    "destacado": false,
    "referencia": "LIP GLOSS MILK",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "MG201",
+   "nombre": "Lip Gloss Huellitas",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 5800,
+   "stock": 6,
+   "descripcion": "✨ LIP GLOSS HUELLITA 🐾💋\n\nDale a tus labios un toque de brillo y un acabado jugoso, perfecto para complementar cualquier look. Su adorable diseño de huellita lo convierte en un detalle encantador para llevar siempre contigo. 💕\n\n#LipGloss #BrilloLabial #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "LIP-GLOSS-HUELLITA-MG201.png"
+   ],
+   "destacado": false,
+   "referencia": "LIP-GLOSS-HUELLITA-MG201.png",
    "precioAntes": 0,
    "umbralBajo": 3,
    "ejes": [],
@@ -1489,6 +1507,11 @@
    900
   ],
   "LIP-GLOSS-MILK-MG202.jpg": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-HUELLITA-MG201.png": [
    160,
    600,
    900
