@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T22:11:39.417Z",
+ "generado": "2026-10-01T22:15:04.065Z",
  "productos": [
   {
    "id": "MG124",
@@ -1052,6 +1052,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG156",
+   "nombre": "Patela de Sombras Uva Trendy",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 15300,
+   "stock": 3,
+   "descripcion": "✨ PALETA DE SOMBRAS UVA TRENDY 🍇💜\n\nUna paleta de tonos versátiles y femeninos, perfecta para crear looks suaves, intensos y llenos de personalidad. Ideal para darle un toque especial y sofisticado a tu mirada. ✨💕\n\n#PaletaDeSombras #UvaTrendy #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "PALETA-DE-SOMBRAS-UVA-TRENDY-MG156.png"
+   ],
+   "destacado": false,
+   "referencia": "PALETA DE SOMBRAS UVA TRENDY",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1282,6 +1300,11 @@
    900
   ],
   "PALETA-DE-SOMBRAS-ROCK-TRENDY-MG159.png": [
+   160,
+   600,
+   900
+  ],
+  "PALETA-DE-SOMBRAS-UVA-TRENDY-MG156.png": [
    160,
    600,
    900
