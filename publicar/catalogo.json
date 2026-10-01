@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T23:38:13.536Z",
+ "generado": "2026-10-01T23:55:24.417Z",
  "productos": [
   {
    "id": "MG124",
@@ -1322,6 +1322,42 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM030",
+   "nombre": "Labial Mate Con Aplicador",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 8500,
+   "stock": 12,
+   "descripcion": "✨ LABIAL MATE CON APLICADOR HUXIA HEXAGONAL 💄💋\n\nColor intenso y acabado mate para realzar tus labios y complementar diferentes estilos de maquillaje. Su práctico aplicador facilita una aplicación precisa y uniforme. 💕\n\n#LabialMate #Huxia #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "LABIAL-MATE-CON-APLICADOR-HUXIA-HEXAGONAL-FM030.png"
+   ],
+   "destacado": false,
+   "referencia": "LABIAL MATE CON APLICADOR HUXIA HEXAGONAL",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "MG131",
+   "nombre": "Brillo Hidratante Pop Bloom Con LLavero",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 23000,
+   "stock": 2,
+   "descripcion": "✨ BRILLO HIDRATANTE POP BLOOM CON LLAVERO 💕💋\n\nDale a tus labios un toque de brillo y una sensación de suavidad e hidratación. Su práctico diseño con llavero te permite llevarlo contigo a todas partes. ✨\n\n#BrilloLabial #PopBloom #CuidadoLabial #CinnamonBeauty",
+   "imagenes": [
+    "BRILLO-HIDRATANTE-POP-BLOOM-CON-LLAVERO-MG131.png"
+   ],
+   "destacado": false,
+   "referencia": "BRILLO HIDRATANTE POP BLOOM CON LLAVERO",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1622,6 +1658,16 @@
    900
   ],
   "SERUM-HIDRATANTE-DE-LABIOS-FM034.png": [
+   160,
+   600,
+   900
+  ],
+  "LABIAL-MATE-CON-APLICADOR-HUXIA-HEXAGONAL-FM030.png": [
+   160,
+   600,
+   900
+  ],
+  "BRILLO-HIDRATANTE-POP-BLOOM-CON-LLAVERO-MG131.png": [
    160,
    600,
    900
