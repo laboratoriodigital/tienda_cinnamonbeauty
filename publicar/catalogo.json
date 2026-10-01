@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T22:01:06.894Z",
+ "generado": "2026-10-01T22:09:38.612Z",
  "productos": [
   {
    "id": "MG124",
@@ -998,6 +998,42 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG160",
+   "nombre": "Paleta de Sombras Puppy Trendy",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 29000,
+   "stock": 3,
+   "descripcion": "✨ PALETA DE SOMBRAS PUPPY TRENDY 🐶💄\n\nUna paleta completa y versátil con tonos cálidos, acabados mate y satinados, además de iluminadores, rubor y contorno. Su textura suave y fácil de difuminar permite crear desde looks naturales hasta maquillajes más intensos. ✨💕\n\n#PaletaDeSombras #PuppyTrendy #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "PALETA-DE-SOMBRA-PUPPY- TRENDY-MG160.png"
+   ],
+   "destacado": false,
+   "referencia": "PALETA DE SOMBRAS PUPPY TRENDY",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "MG161",
+   "nombre": "Paleta de Sombras Atenea Rose",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 42000,
+   "stock": 4,
+   "descripcion": "✨ PALETA DE SOMBRAS ATENEA ROSE 🌹💄\n\nUna paleta elegante y versátil con tonos rosados y cálidos, perfecta para crear looks suaves, románticos o más intensos. Ideal para darle profundidad y luminosidad a tu mirada. ✨💕\n\n#PaletaDeSombras #AteneaRose #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "PALETA-DE-SOMBRAS-ATENEA-ROSE-MG161.png"
+   ],
+   "destacado": false,
+   "referencia": "PALETA DE SOMBRAS ATENEA ROSE",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1213,6 +1249,16 @@
    900
   ],
   "PALETA-DE-SOMBRAS-CLOUD-TRENDY-MG157.png": [
+   160,
+   600,
+   900
+  ],
+  "PALETA-DE-SOMBRA-PUPPY- TRENDY-MG160.png": [
+   160,
+   600,
+   900
+  ],
+  "PALETA-DE-SOMBRAS-ATENEA-ROSE-MG161.png": [
    160,
    600,
    900
