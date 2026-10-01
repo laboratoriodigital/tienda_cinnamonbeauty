@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T22:09:38.612Z",
+ "generado": "2026-10-01T22:11:39.417Z",
  "productos": [
   {
    "id": "MG124",
@@ -1034,6 +1034,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG159",
+   "nombre": "Paleta de Sombras Rock Trendy",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 15300,
+   "stock": 2,
+   "descripcion": "✨ PALETA DE SOMBRAS ROCK TRENDY 🎸💄\n\nUna paleta versátil con tonos ideales para crear looks intensos, modernos y llenos de personalidad. Perfecta para experimentar con diferentes combinaciones y darle un toque especial a tu mirada. ✨💕\n\n#PaletaDeSombras #RockTrendy #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "PALETA-DE-SOMBRAS-ROCK-TRENDY-MG159.png"
+   ],
+   "destacado": false,
+   "referencia": "PALETA DE SOMBRAS ROCK TRENDY",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1259,6 +1277,11 @@
    900
   ],
   "PALETA-DE-SOMBRAS-ATENEA-ROSE-MG161.png": [
+   160,
+   600,
+   900
+  ],
+  "PALETA-DE-SOMBRAS-ROCK-TRENDY-MG159.png": [
    160,
    600,
    900
