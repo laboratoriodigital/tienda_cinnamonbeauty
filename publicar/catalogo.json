@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T23:27:17.170Z",
+ "generado": "2026-10-01T23:34:40.817Z",
  "productos": [
   {
    "id": "MG124",
@@ -1250,6 +1250,60 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG104",
+   "nombre": "Lip Gloss Con Espejo Bloomshell",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 26000,
+   "stock": 3,
+   "descripcion": "✨ LIP GLOSS CON ESPEJO BLOOMSHELL 💕💋\n\nBrillo y color en un práctico diseño con espejo, perfecto para llevar contigo y retocar tu maquillaje en cualquier momento. Ideal para darle a tus labios un acabado brillante y femenino. ✨\n\n#LipGloss #Bloomshell #BrilloLabial #CinnamonBeauty",
+   "imagenes": [
+    "LIP-GLOSS-CON-ESPEJO-BLOOMSHELL-MG104.png"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS CON ESPEJO BLOOMSHELL",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "FM023",
+   "nombre": "Brillo Labial Con Espejito",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 8300,
+   "stock": 6,
+   "descripcion": "✨ BRILLO LABIAL CON ESPEJITO 💕💋\n\nDale a tus labios un toque de brillo y un acabado jugoso mientras llevas contigo un práctico espejito para retocar tu maquillaje en cualquier momento. ✨\n\n#BrilloLabial #LipGloss #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "LIP-GLOSS-CON-ESPEJITO-FM023.png"
+   ],
+   "destacado": false,
+   "referencia": "BRILLO LABIAL CON ESPEJITO",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "FM022",
+   "nombre": "Lip Gloss Huxia En Caja Con LLavero",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 8300,
+   "stock": 6,
+   "descripcion": "✨ GLOSS HUXIA EN CAJA CON LLAVERO 💋🎀\n\nUn práctico gloss con un encantador llavero, perfecto para llevar tu brillo labial siempre contigo. Ideal para darle a tus labios un toque de brillo y complementar cualquier look. 💕\n\n#GlossHuxia #LipGloss #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "GLOSS-HUXIA-EN-CAJA-CON-LLAVERO-FM022.png"
+   ],
+   "destacado": false,
+   "referencia": "GLOSS HUXIA EN CAJA CON LLAVERO",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1530,6 +1584,21 @@
    900
   ],
   "LIP-GLOSS-HUELLITA-MG201.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-CON-ESPEJO-BLOOMSHELL-MG104.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-CON-ESPEJITO-FM023.png": [
+   160,
+   600,
+   900
+  ],
+  "GLOSS-HUXIA-EN-CAJA-CON-LLAVERO-FM022.png": [
    160,
    600,
    900
