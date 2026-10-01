@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T22:15:04.065Z",
+ "generado": "2026-10-01T23:03:16.840Z",
  "productos": [
   {
    "id": "MG124",
@@ -1070,6 +1070,60 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FR605",
+   "nombre": "Paleta de Sombras Ushas",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 16500,
+   "stock": 4,
+   "descripcion": "✨ PALETA DE SOMBRAS USHAS 💄✨\n\nUna paleta versátil con tonos ideales para crear looks naturales, delicados o más intensos. Perfecta para combinar colores, darle profundidad a la mirada y crear diferentes estilos de maquillaje. 💕\n\n#PaletaDeSombras #Ushas #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "PALETA-DE-SOMBRAS-USHAS-FR605.png"
+   ],
+   "destacado": false,
+   "referencia": "PALETA DE SOMBRAS USHAS",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "MG183",
+   "nombre": "Endurecedor Uñas De Hierro",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 8000,
+   "stock": 6,
+   "descripcion": "✨ ENDURECEDOR UÑAS DE HIERRO 💅✨\n\nAyuda a fortalecer y proteger las uñas, ideal para complementar tu rutina de cuidado y mantenerlas con una apariencia más saludable y cuidada. 💕\n\n#EndurecedorDeUñas #UñasDeHierro #CuidadoDeUñas #CinnamonBeauty",
+   "imagenes": [
+    "ENDURECEDOR-DE-UÑAS-MG183.png"
+   ],
+   "destacado": false,
+   "referencia": "ENDURECEDOR  UÑAS DE HIERRO",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "FM001",
+   "nombre": "Tinta Tapa Corazon",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 4500,
+   "stock": 6,
+   "descripcion": "✨ TINTA TAPA CORAZÓN 💕💄\n\nDale a tus labios y mejillas un toque de color fresco y natural con esta práctica tinta. Su formato es ideal para llevar contigo y darle vida a tu look en cualquier momento. ✨\n\n#TintaLabial #TintaDeMejillas #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "TINTA-TAPA-CORAZON-FM001.png"
+   ],
+   "destacado": false,
+   "referencia": "TINTA TAPA CORAZÓN",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1305,6 +1359,21 @@
    900
   ],
   "PALETA-DE-SOMBRAS-UVA-TRENDY-MG156.png": [
+   160,
+   600,
+   900
+  ],
+  "PALETA-DE-SOMBRAS-USHAS-FR605.png": [
+   160,
+   600,
+   900
+  ],
+  "ENDURECEDOR-DE-UÑAS-MG183.png": [
+   160,
+   600,
+   900
+  ],
+  "TINTA-TAPA-CORAZON-FM001.png": [
    160,
    600,
    900
