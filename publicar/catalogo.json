@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T12:41:59.010Z",
+ "generado": "2026-10-01T22:01:06.894Z",
  "productos": [
   {
    "id": "MG124",
@@ -980,6 +980,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG157",
+   "nombre": "paleta de Sombras CLoud Trendy",
+   "formato": "Unidad",
+   "categoria": "Maquillaje",
+   "precio": 15300,
+   "stock": 4,
+   "descripcion": "✨ PALETA DE SOMBRAS CLOUD TRENDY ☁️💄\n\nUna paleta versátil con tonos mate y satinados, ideal para crear looks delicados, románticos o más intensos. Su textura sedosa facilita la aplicación y difuminación para lograr diferentes estilos de maquillaje. ✨\n\n#PaletaDeSombras #CloudTrendy #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "PALETA-DE-SOMBRAS-CLOUD-TRENDY-MG157.png"
+   ],
+   "destacado": false,
+   "referencia": "PALETA DE SOMBRAS CLOUD TRENDY",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1190,6 +1208,11 @@
    900
   ],
   "PALETA-DE-SOMBRAS-USHAS-EYE-SHADOW-FR604.png": [
+   160,
+   600,
+   900
+  ],
+  "PALETA-DE-SOMBRAS-CLOUD-TRENDY-MG157.png": [
    160,
    600,
    900
