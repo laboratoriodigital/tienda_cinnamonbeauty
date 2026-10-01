@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T23:34:40.817Z",
+ "generado": "2026-10-01T23:38:13.536Z",
  "productos": [
   {
    "id": "MG124",
@@ -1304,6 +1304,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM034",
+   "nombre": "Serum Hidratante De Labios",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 11500,
+   "stock": 8,
+   "descripcion": "✨ SÉRUM HIDRATANTE DE LABIOS FM034 💋✨\n\nAyuda a mantener los labios suaves, hidratados y con una apariencia saludable. Ideal para complementar tu rutina de cuidado labial y lucir unos labios más cuidados y bonitos. 💕\n\n#SerumLabial #CuidadoLabial #HidratacionLabial #CinnamonBeauty",
+   "imagenes": [
+    "SERUM-HIDRATANTE-DE-LABIOS-FM034.png"
+   ],
+   "destacado": false,
+   "referencia": "SÉRUM HIDRATANTE DE LABIOS",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1599,6 +1617,11 @@
    900
   ],
   "GLOSS-HUXIA-EN-CAJA-CON-LLAVERO-FM022.png": [
+   160,
+   600,
+   900
+  ],
+  "SERUM-HIDRATANTE-DE-LABIOS-FM034.png": [
    160,
    600,
    900
