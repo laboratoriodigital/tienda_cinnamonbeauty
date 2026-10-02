@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:10:07.806Z",
+ "generado": "2026-10-02T00:13:01.021Z",
  "productos": [
   {
    "id": "MG124",
@@ -1412,6 +1412,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM033",
+   "nombre": "Tinta Paleta",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 3600,
+   "stock": 6,
+   "descripcion": "✨ TINTA PALETA 💄💕\n\nUna práctica tinta para aportar un toque de color fresco y natural a tus labios y mejillas. Ideal para crear looks delicados, juveniles y fáciles de llevar. ✨\n\n#TintaLabial #TintaDeMejillas #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "TINTA-PALETA-FM033.png"
+   ],
+   "destacado": false,
+   "referencia": "TINTA PALETA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1742,6 +1760,11 @@
    900
   ],
   "BRILLO-PLUMP- VOLUMINIZADOR-FM029.png": [
+   160,
+   600,
+   900
+  ],
+  "TINTA-PALETA-FM033.png": [
    160,
    600,
    900
