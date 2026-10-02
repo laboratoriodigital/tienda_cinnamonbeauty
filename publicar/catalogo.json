@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:22:32.928Z",
+ "generado": "2026-10-02T00:32:06.734Z",
  "productos": [
   {
    "id": "MG124",
@@ -1466,6 +1466,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG224",
+   "nombre": "Tinta Labial Y Rubor En Gelatina",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 5600,
+   "stock": 3,
+   "descripcion": "✨ TINTA LABIAL Y RUBOR EN GELATINA 💕💄\n\nUn práctico 2 en 1 para darle un toque de color fresco y natural a tus labios y mejillas. Su textura tipo gelatina permite crear looks delicados, jugosos y llenos de color. ✨\n\n#TintaLabial #RuborEnGel #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "TINTA-LABIAL-Y-RUBOR-EN-GELATINA-MG224.png"
+   ],
+   "destacado": false,
+   "referencia": "TINTA LABIAL Y RUBOR EN GELATINA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1811,6 +1829,11 @@
    900
   ],
   "HIDRATANTE-DE-LABIOS-BONSHIK-DE-CEREZA-FM028.png": [
+   160,
+   600,
+   900
+  ],
+  "TINTA-LABIAL-Y-RUBOR-EN-GELATINA-MG224.png": [
    160,
    600,
    900
