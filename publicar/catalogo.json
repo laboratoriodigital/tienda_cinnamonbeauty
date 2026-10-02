@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:32:06.734Z",
+ "generado": "2026-10-02T00:54:00.978Z",
  "productos": [
   {
    "id": "MG124",
@@ -1484,6 +1484,86 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG216",
+   "nombre": "SKALAS",
+   "formato": "Unidad",
+   "categoria": "cuidado capilar",
+   "precio": 28000,
+   "stock": 12,
+   "descripcion": "",
+   "imagenes": [
+    "SKALA-MAIZ-MG216.png",
+    "SKALA-BABOSA-MG216.png",
+    "SKALA-BOMBA-DE-VITAMINAS-MG216.png",
+    "SKALA-DIVINO-POTAO-MG216.png"
+   ],
+   "destacado": false,
+   "referencia": "SKALAS",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Aroma",
+     "valores": [
+      "Babosa",
+      "BombaVitaminas",
+      "Maiz",
+      "DivinoPotao"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-214e664c321a",
+     "sku": "MG216-214E66",
+     "opciones": {
+      "Aroma": "Babosa"
+     },
+     "precio": 28000,
+     "stock": 3,
+     "imagenes": [
+      "SKALA-BABOSA-MG216.png"
+     ]
+    },
+    {
+     "id": "var-fa15b13bf28d",
+     "sku": "MG216-FA15B1",
+     "opciones": {
+      "Aroma": "BombaVitaminas"
+     },
+     "precio": 28000,
+     "stock": 3,
+     "imagenes": [
+      "SKALA-BOMBA-DE-VITAMINAS-MG216.png"
+     ]
+    },
+    {
+     "id": "var-04d7d2251c34",
+     "sku": "MG216-04D7D2",
+     "opciones": {
+      "Aroma": "Maiz"
+     },
+     "precio": 28000,
+     "stock": 3,
+     "imagenes": [
+      "SKALA-MAIZ-MG216.png"
+     ]
+    },
+    {
+     "id": "var-f4db36ce0872",
+     "sku": "MG216-F4DB36",
+     "opciones": {
+      "Aroma": "DivinoPotao"
+     },
+     "precio": 28000,
+     "stock": 3,
+     "imagenes": [
+      "SKALA-DIVINO-POTAO-MG216.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -1834,6 +1914,26 @@
    900
   ],
   "TINTA-LABIAL-Y-RUBOR-EN-GELATINA-MG224.png": [
+   160,
+   600,
+   900
+  ],
+  "SKALA-MAIZ-MG216.png": [
+   160,
+   600,
+   900
+  ],
+  "SKALA-BABOSA-MG216.png": [
+   160,
+   600,
+   900
+  ],
+  "SKALA-BOMBA-DE-VITAMINAS-MG216.png": [
+   160,
+   600,
+   900
+  ],
+  "SKALA-DIVINO-POTAO-MG216.png": [
    160,
    600,
    900
