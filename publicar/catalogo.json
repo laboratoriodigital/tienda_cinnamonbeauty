@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:00:35.304Z",
+ "generado": "2026-10-02T00:04:24.177Z",
  "productos": [
   {
    "id": "MG124",
@@ -1376,6 +1376,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM019",
+   "nombre": "Balsamo Acido HIaluronico Bioaqua",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 4000,
+   "stock": 12,
+   "descripcion": "✨ BÁLSAMO LABIAL HIALURÓNICO BIOAQUA 💋💧\n\nAyuda a mantener los labios suaves, hidratados y con una apariencia más cuidada. Ideal para complementar tu rutina diaria de cuidado labial. 💕\n\n#BalsamoLabial #Bioaqua #CuidadoLabial #CinnamonBeauty",
+   "imagenes": [
+    "BALSAMO-LABIAL-HIALURONICO-BIOAQUA-FM019.png"
+   ],
+   "destacado": false,
+   "referencia": "BÁLSAMO LABIAL HIALURÓNICO BIOAQUA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1691,6 +1709,11 @@
    900
   ],
   "BALSAMO-DE-LABIOS-SAMY-CON-LLAVERO-MG180.png": [
+   160,
+   600,
+   900
+  ],
+  "BALSAMO-LABIAL-HIALURONICO-BIOAQUA-FM019.png": [
    160,
    600,
    900
