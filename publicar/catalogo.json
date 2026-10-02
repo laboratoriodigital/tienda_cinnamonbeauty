@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:04:24.177Z",
+ "generado": "2026-10-02T00:10:07.806Z",
  "productos": [
   {
    "id": "MG124",
@@ -1234,24 +1234,6 @@
    "variantes": []
   },
   {
-   "id": "MG203",
-   "nombre": "Lip Gloss Glitter",
-   "formato": "Unidad",
-   "categoria": "Tintas y Glosess",
-   "precio": 5800,
-   "stock": 6,
-   "descripcion": "✨ LIP GLOSS GLITTER  ✨💋\n\nDale a tus labios un toque de brillo y luminosidad con un acabado glitter, perfecto para destacar tu maquillaje y crear looks llamativos y llenos de glamour. 💖\n\n#LipGloss #GlitterGloss #Maquillaje #CinnamonBeauty",
-   "imagenes": [
-    "LIP GLOSS GLITTER"
-   ],
-   "destacado": false,
-   "referencia": "LIP-GLOSS-GLITTER-MG203.jpg",
-   "precioAntes": 0,
-   "umbralBajo": 3,
-   "ejes": [],
-   "variantes": []
-  },
-  {
    "id": "MG104",
    "nombre": "Lip Gloss Con Espejo Bloomshell",
    "formato": "Unidad",
@@ -1390,6 +1372,42 @@
    ],
    "destacado": false,
    "referencia": "BÁLSAMO LABIAL HIALURÓNICO BIOAQUA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "MG203",
+   "nombre": "Lip Gloss Gliter",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 5800,
+   "stock": 8,
+   "descripcion": "✨ LIP GLOSS GLITTER  ✨💋\n\nDale a tus labios un toque de brillo y luminosidad con un acabado glitter, perfecto para resaltar tu maquillaje y crear looks llenos de glamour. 💖\n\n#LipGloss #GlitterGloss #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "LIP-GLOSS-GLITTER-MG203.jpg"
+   ],
+   "destacado": false,
+   "referencia": "LIP GLOSS GLITTER",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "FM029",
+   "nombre": "Lip Gloss Voluminizador Plump",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 6100,
+   "stock": 6,
+   "descripcion": "✨ BRILLO PLUMP VOLUMINIZADOR 💋✨\n\nDale a tus labios un acabado brillante, jugoso y visualmente más voluminoso. Perfecto para resaltar tus labios y complementar cualquier look de maquillaje. 💕\n\n#LipPlumper #BrilloLabial #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "BRILLO-PLUMP- VOLUMINIZADOR-FM029.png"
+   ],
+   "destacado": false,
+   "referencia": "BRILLO PLUMP VOLUMINIZADOR",
    "precioAntes": 0,
    "umbralBajo": 3,
    "ejes": [],
@@ -1714,6 +1732,16 @@
    900
   ],
   "BALSAMO-LABIAL-HIALURONICO-BIOAQUA-FM019.png": [
+   160,
+   600,
+   900
+  ],
+  "LIP-GLOSS-GLITTER-MG203.jpg": [
+   160,
+   600,
+   900
+  ],
+  "BRILLO-PLUMP- VOLUMINIZADOR-FM029.png": [
    160,
    600,
    900
