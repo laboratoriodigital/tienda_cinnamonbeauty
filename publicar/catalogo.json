@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:13:01.021Z",
+ "generado": "2026-10-02T00:16:46.284Z",
  "productos": [
   {
    "id": "MG124",
@@ -1430,6 +1430,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG132",
+   "nombre": "LLavero Bloom Bow Bloomshell Con Brillo",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 25000,
+   "stock": 1,
+   "descripcion": "✨ LLAVERO BLOOM BOW BRILLO BLOOMSHELL🎀💋\n\nUn adorable brillo labial con diseño de llavero, perfecto para llevarlo siempre contigo y darle a tus labios un toque de brillo y encanto. 💕\n\n#BrilloLabial #LipGloss #AccesoriosDeBelleza #CinnamonBeauty",
+   "imagenes": [
+    "LLAVERO-BLOOM-BOW-BRILLO-MG132.png"
+   ],
+   "destacado": false,
+   "referencia": "LLAVERO BLOOM BOW BRILLO BLOOMSHELL",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1765,6 +1783,11 @@
    900
   ],
   "TINTA-PALETA-FM033.png": [
+   160,
+   600,
+   900
+  ],
+  "LLAVERO-BLOOM-BOW-BRILLO-MG132.png": [
    160,
    600,
    900
