@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:55:14.484Z",
+ "generado": "2026-10-02T00:57:43.201Z",
  "productos": [
   {
    "id": "MG124",
@@ -1487,7 +1487,7 @@
   },
   {
    "id": "MG216",
-   "nombre": "SKALAS",
+   "nombre": "Skala",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
    "precio": 28000,
@@ -1564,6 +1564,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG146",
+   "nombre": "Shampoo de Miel Click Hair X 300ml",
+   "formato": "Unidad",
+   "categoria": "cuidado capilar",
+   "precio": 43000,
+   "stock": 6,
+   "descripcion": "✨ SHAMPOO DE MIEL CLICK HAIR 🍯✨\n\nLimpia suavemente el cabello mientras ayuda a dejarlo con una sensación de suavidad, nutrición y brillo. Ideal para complementar tu rutina de cuidado capilar y mantener tu cabello con una apariencia saludable y bonita. 💕\n\n#ShampooDeMiel #ClickHair #CuidadoDelCabello #CinnamonBeauty",
+   "imagenes": [
+    "SHAMPOO-DE-MIEL-CLICK HAIR-MG146.png"
+   ],
+   "destacado": false,
+   "referencia": "SHAMPOO DE MIEL CLICK HAIR",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1934,6 +1952,11 @@
    900
   ],
   "SKALA-DIVINO-POTAO-MG216.png": [
+   160,
+   600,
+   900
+  ],
+  "SHAMPOO-DE-MIEL-CLICK HAIR-MG146.png": [
    160,
    600,
    900
