@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-01T23:56:45.273Z",
+ "generado": "2026-10-02T00:00:35.304Z",
  "productos": [
   {
    "id": "MG124",
@@ -1358,6 +1358,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG180",
+   "nombre": "Balsamo De Labios Samy",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 16000,
+   "stock": 1,
+   "descripcion": "✨ BÁLSAMO DE LABIOS SAMY CON LLAVERO 💋🎀\n\nCuida y suaviza tus labios mientras llevas contigo un práctico y adorable llavero. Perfecto para tener siempre a mano y complementar tu rutina de cuidado labial. 💕\n\n#BalsamoLabial #Samy #CuidadoLabial #CinnamonBeauty",
+   "imagenes": [
+    "BALSAMO-DE-LABIOS-SAMY-CON-LLAVERO-MG180.png"
+   ],
+   "destacado": false,
+   "referencia": "BÁLSAMO DE LABIOS SAMY CON LLAVERO",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1668,6 +1686,11 @@
    900
   ],
   "BRILLO-HIDRATANTE-POP-BLOOM-CON-LLAVERO-MG131.png": [
+   160,
+   600,
+   900
+  ],
+  "BALSAMO-DE-LABIOS-SAMY-CON-LLAVERO-MG180.png": [
    160,
    600,
    900
