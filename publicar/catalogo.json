@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:57:43.201Z",
+ "generado": "2026-10-02T01:01:37.084Z",
  "productos": [
   {
    "id": "MG124",
@@ -1582,6 +1582,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM017",
+   "nombre": "Ampolleta de Rescate Rosada Milagros",
+   "formato": "Unidad",
+   "categoria": "cuidado capilar",
+   "precio": 18000,
+   "stock": 4,
+   "descripcion": "✨ SHAMPOO DE MIEL CLICK HAIR 🍯✨\n\nLimpia suavemente el cabello mientras ayuda a dejarlo con una sensación de suavidad, nutrición y brillo. Ideal para complementar tu rutina de cuidado capilar y mantener tu cabello con una apariencia saludable y bonita. 💕\n\n#ShampooDeMiel #ClickHair #CuidadoDelCabello #CinnamonBeauty",
+   "imagenes": [
+    "RESCATE-INSTANTANEO-MILAGROS-FM017.png"
+   ],
+   "destacado": false,
+   "referencia": "SHAMPOO DE MIEL CLICK HAIR",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1957,6 +1975,11 @@
    900
   ],
   "SHAMPOO-DE-MIEL-CLICK HAIR-MG146.png": [
+   160,
+   600,
+   900
+  ],
+  "RESCATE-INSTANTANEO-MILAGROS-FM017.png": [
    160,
    600,
    900
