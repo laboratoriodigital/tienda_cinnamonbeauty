@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T00:16:46.284Z",
+ "generado": "2026-10-02T00:22:32.928Z",
  "productos": [
   {
    "id": "MG124",
@@ -1448,6 +1448,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM028",
+   "nombre": "Hidratante De Labios Bonshik De Cereza",
+   "formato": "Unidad",
+   "categoria": "Tintas y Glosess",
+   "precio": 5600,
+   "stock": 3,
+   "descripcion": "✨ HIDRATANTE DE LABIOS BONSHIK DE CEREZA 🍒💋\n\nAyuda a mantener los labios suaves, hidratados y con una apariencia cuidada, acompañado de un delicioso toque de cereza. Ideal para llevar contigo y usar durante el día. 💕\n\n#HidratanteLabial #BonShik #CuidadoLabial #CinnamonBeauty",
+   "imagenes": [
+    "HIDRATANTE-DE-LABIOS-BONSHIK-DE-CEREZA-FM028.png"
+   ],
+   "destacado": false,
+   "referencia": "HIDRATANTE DE LABIOS BONSHIK DE CEREZA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -1788,6 +1806,11 @@
    900
   ],
   "LLAVERO-BLOOM-BOW-BRILLO-MG132.png": [
+   160,
+   600,
+   900
+  ],
+  "HIDRATANTE-DE-LABIOS-BONSHIK-DE-CEREZA-FM028.png": [
    160,
    600,
    900
