@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T01:05:55.215Z",
+ "generado": "2026-10-02T01:11:31.893Z",
  "productos": [
   {
    "id": "MG124",
@@ -1664,6 +1664,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG121",
+   "nombre": "Perfume Capilar De Miel Click Hair x100ml",
+   "formato": "Unidad",
+   "categoria": "cuidado capilar",
+   "precio": 59000,
+   "stock": 6,
+   "descripcion": "✨ PERFUME CAPILAR MIEL CLICK HAIR 🍯✨\n\nDeja en tu cabello un delicioso aroma a miel, aportando una sensación de frescura y cuidado. Ideal para perfumar tu cabello durante el día y mantenerlo con un aroma agradable. 💕🌸\n\n#PerfumeCapilar #ClickHair #CuidadoDelCabello #CinnamonBeauty",
+   "imagenes": [
+    "PERFUME-CAPILAR-MIEL-CLICK-HAIR-MG121.jpg"
+   ],
+   "destacado": false,
+   "referencia": "PERFUME CAPILAR MIEL CLICK HAIR",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -2049,6 +2067,11 @@
    900
   ],
   "PERFUME-CAPILAR-MILAGROS-MINI-MG119.png": [
+   160,
+   600,
+   900
+  ],
+  "PERFUME-CAPILAR-MIEL-CLICK-HAIR-MG121.jpg": [
    160,
    600,
    900
