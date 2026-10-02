@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T01:34:41.083Z",
+ "generado": "2026-10-02T01:39:54.328Z",
  "productos": [
   {
    "id": "MG124",
@@ -1861,6 +1861,57 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG106",
+   "nombre": "Perfume Termoprotector Origen Botanico Grande",
+   "formato": "",
+   "categoria": "cuidado capilar",
+   "precio": 24900,
+   "stock": 16,
+   "descripcion": "✨ PERFUME TERMOPROTECTOR ORIGEN BOTÁNICO 🌿✨\n\nPerfuma delicadamente tu cabello mientras ayuda a protegerlo del calor durante el uso de herramientas de peinado. Ideal para complementar tu rutina capilar y mantener tu cabello con un aroma agradable. 💕✨\n\n#PerfumeCapilar #Termoprotector #OrigenBotanico #CinnamonBeauty",
+   "imagenes": [
+    "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png"
+   ],
+   "destacado": false,
+   "referencia": "PERFUME TERMOPROTECTOR ORIGEN BOTÁNICO",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Aromas",
+     "valores": [
+      "Azul tentacion",
+      "Rosado Seduccion"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-458a88e03603",
+     "sku": "MG106-458A88",
+     "opciones": {
+      "Aromas": "Azul tentacion"
+     },
+     "precio": 24900,
+     "stock": 8,
+     "imagenes": [
+      "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png"
+     ]
+    },
+    {
+     "id": "var-7c357ce6792c",
+     "sku": "MG106-7C357C",
+     "opciones": {
+      "Aromas": "Rosado Seduccion"
+     },
+     "precio": 24900,
+     "stock": 8,
+     "imagenes": [
+      "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -2266,6 +2317,11 @@
    900
   ],
   "PERFUME-TERMOPROTECTOR-ORIGEN-BOTANICO-MG190.png": [
+   160,
+   600,
+   900
+  ],
+  "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png": [
    160,
    600,
    900
