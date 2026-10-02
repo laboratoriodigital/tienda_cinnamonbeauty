@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-09-20-5",
- "generado": "2026-10-02T01:19:28.147Z",
+ "generado": "2026-10-02T01:27:47.190Z",
  "productos": [
   {
    "id": "MG124",
@@ -1746,6 +1746,70 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG191",
+   "nombre": "Perfume Capilar  Click Hair CITRICOS",
+   "formato": "Unidad",
+   "categoria": "cuidado capilar",
+   "precio": 17000,
+   "stock": 18,
+   "descripcion": "PERFUME CAPILAR CLICK HAIR MINI  CITRICOS 💕🌸\n\nUna presentación práctica para perfumar delicadamente tu cabello y disfrutar de un aroma agradable durante el día. Ideal para llevar contigo y refrescar tu cabello en cualquier momento. ✨\n\n#PerfumeCapilar #ClickHair #CuidadoDelCabello #CinnamonBeauty",
+   "imagenes": [
+    "PERFUME-CAPILAR-CLICK-HAIR-MINI-MG191.png"
+   ],
+   "destacado": false,
+   "referencia": "PERFUME CAPILAR CLICK HAIR CITRICO MINI CON BRILLOS",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Aromas",
+     "valores": [
+      "Fresh Amber",
+      "Dream On Paradise",
+      "Fruit Explotion"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-c72cb28ad9a7",
+     "sku": "MG191-C72CB2",
+     "opciones": {
+      "Aromas": "Fresh Amber"
+     },
+     "precio": 17000,
+     "stock": 6,
+     "imagenes": [
+      "PERFUME-CAPILAR-CLICK-HAIR-MINI-MG191.png"
+     ]
+    },
+    {
+     "id": "var-1e931e3a4e98",
+     "sku": "MG191-1E931E",
+     "opciones": {
+      "Aromas": "Dream On Paradise"
+     },
+     "precio": 17000,
+     "stock": 6,
+     "imagenes": [
+      "PERFUME-CAPILAR-CLICK-HAIR-MINI-MG191.png"
+     ]
+    },
+    {
+     "id": "var-7e0ac6f93149",
+     "sku": "MG191-7E0AC6",
+     "opciones": {
+      "Aromas": "Fruit Explotion"
+     },
+     "precio": 17000,
+     "stock": 6,
+     "imagenes": [
+      "PERFUME-CAPILAR-CLICK-HAIR-MINI-MG191.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -2141,6 +2205,11 @@
    900
   ],
   "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-MG120.jpg": [
+   160,
+   600,
+   900
+  ],
+  "PERFUME-CAPILAR-CLICK-HAIR-MINI-MG191.png": [
    160,
    600,
    900
