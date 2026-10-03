@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<!-- Seguridad. La lista blanca es exactamente lo que la tienda usa hoy: sus propios
-     estilos, las fuentes de Google, imágenes data: (los marcadores SVG) y el Apps
-     Script. Si mañana cargas fotos desde otro dominio, agrégalo a img-src o no se ven.
+<!-- Seguridad. La lista blanca cubre sus propios estilos, las fuentes de Google,
+     imágenes data: (los marcadores SVG), Apps Script y, solo si se diligencian
+     sus IDs, Google Analytics o Meta Pixel. Si mañana cargas fotos desde otro
+     dominio, agrégalo a img-src o no se ven.
      frame-ancestors NO va aquí: el navegador lo ignora en <meta> y solo ensucia la
      consola. Vive en el archivo _headers, que es donde Cloudflare sí lo aplica.
 
@@ -16,7 +17,7 @@
      código: lo peor que puede hacer un tercero de esa lista es no responder. -->
 
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://checkout.bold.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://ik.imagekit.io https://imagedelivery.net; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://checkout.bold.co https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://res.cloudinary.com https://ik.imagekit.io https://imagedelivery.net https://www.facebook.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://connect.facebook.net https://www.facebook.com; form-action 'none'; base-uri 'none'">
 <!-- ═══ CONFIGURACIÓN DE ESTA TIENDA ═══
      Generado por generarConfiguracion() en el Apps Script.
      No lo edites a mano: cambia la pestaña Configuración y vuelve a generarlo. -->
@@ -602,7 +603,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNcOgnYTNnkKAO5qCDc
 
 // Debe coincidir con la constante VERSION de apps-script.gs. Si no coincide, la
 // tienda deja de sellar los pedidos y avisa por consola.
-const SCRIPT_VERSION = "2026-09-20-5";
+const SCRIPT_VERSION = "2026-10-03-1";
 
 // Los hosts de imagen que permite la política de seguridad de arriba. Si la
 // hoja pide otro, las fotos se sirven directo del origen y se avisa por

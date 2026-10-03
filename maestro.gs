@@ -137,7 +137,7 @@ function tokenMenu() {
   return t;
 }
 
-var VERSION = '2026-09-20-5';
+var VERSION = '2026-10-03-1';
 
 /* Antes esto era getActiveSpreadsheet(): el script vivía dentro de la hoja.
    Ahora abre la del cliente por su ID, y esa es toda la diferencia. */
@@ -445,15 +445,20 @@ function generarConfiguracion() {
   var icono = iconoDeLaTienda(c);
 
   var hosts = hostsDeFotos(c, url);
-  var csp = "default-src 'none'; script-src 'unsafe-inline' https://checkout.bold.co; " +
+  var medicion = medicionConfigurada(c);
+  /* Las cabeceras HTTP y esta etiqueta se intersectan: los orígenes de
+     medición se declaran en las dos aunque los IDs estén vacíos. Autorizar un
+     origen no envía datos; cargar su script sí, y eso solo ocurre abajo cuando
+     el comerciante diligenció una ID válida. */
+  var csp = "default-src 'none'; script-src 'unsafe-inline' https://checkout.bold.co https://www.googletagmanager.com https://connect.facebook.net; " +
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
             "font-src https://fonts.gstatic.com; " +
-            "img-src 'self' data:" + (hosts.length ? ' https://' + hosts.join(' https://') : '') + '; ' +
+            "img-src 'self' data:" + (hosts.length ? ' https://' + hosts.join(' https://') : '') + ' https://www.facebook.com; ' +
             /* 'self' hace falta desde que la vitrina lee su propio catalogo.json. Sin
                él la petición se bloquea sin decir por qué: la CSP no lanza un error de
                red, simplemente no deja salir, y la página cae al respaldo como si la
                hoja no hubiera contestado. */
-            "connect-src 'self' https://script.google.com https://script.googleusercontent.com; " +
+            "connect-src 'self' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://connect.facebook.net https://www.facebook.com; " +
             "form-action 'none'; base-uri 'none'";
 
   var bloque = [
@@ -477,9 +482,17 @@ function generarConfiguracion() {
     '<link rel="canonical" href="' + url + '">',
     '<meta name="theme-color" content="' + (c.color_principal || '#D0211C') + '">',
     '<link rel="icon" href="' + icono + '">',
-    '<link rel="apple-touch-icon" href="' + icono + '">',
+    '<link rel="apple-touch-icon" href="' + icono + '">'
+  ].concat(medicion.googleAnalytics ? [
+    '<!-- Google Analytics 4 -->',
+    '<script async src="https://www.googletagmanager.com/gtag/js?id=' + medicion.googleAnalytics + '"></script>',
+    '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag(\'js\',new Date());gtag(\'config\',\'' + medicion.googleAnalytics + '\');</script>'
+  ] : []).concat(medicion.metaPixel ? [
+    '<!-- Meta Pixel -->',
+    '<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version=\'2.0\';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,\'script\',\'https://connect.facebook.net/en_US/fbevents.js\');fbq(\'init\',\'' + medicion.metaPixel + '\');fbq(\'track\',\'PageView\');</script>'
+  ] : []).concat([
     '<!-- ═══ FIN DE LA CONFIGURACIÓN ═══ -->'
-  ].join('\n');
+  ]).join('\n');
 
   var js = [
     'const SCRIPT_URL     = "' + (urlLista() || 'PEGA_AQUÍ_LA_URL_QUE_TERMINA_EN_/exec') + '";',
@@ -515,6 +528,26 @@ function generarConfiguracion() {
 function hostDe(u) {
   var m = String(u || '').replace(/\{[a-z]+\}/g, 'x').match(/^https?:\/\/([^\/?#]+)/i);
   return m ? m[1].toLowerCase() : '';
+}
+
+/* Las IDs de medición son identificadores, no secretos. Una celda mal pegada
+   no puede convertirse en código: vacío significa "no medir" y un valor no
+   vacío inválido aparece como aviso no bloqueante durante el montaje. */
+function medicionConfigurada(c) {
+  var gaOriginal = String(c.medicion_google_analytics || '').trim();
+  var metaOriginal = String(c.medicion_meta_pixel || '').trim();
+  var ga = gaOriginal.toUpperCase();
+  var meta = metaOriginal;
+  var avisos = [];
+  if (ga && !/^G-[A-Z0-9]+$/.test(ga)) {
+    avisos.push({ clave: 'medicion_google_analytics', porQue: 'debe empezar por G- y ser el ID de medición de GA4' });
+    ga = '';
+  }
+  if (meta && !/^\d{5,20}$/.test(meta)) {
+    avisos.push({ clave: 'medicion_meta_pixel', porQue: 'debe ser el ID numérico del píxel de Meta, sin espacios ni URL' });
+    meta = '';
+  }
+  return { googleAnalytics: ga, metaPixel: meta, avisos: avisos };
 }
 
 /* Los proveedores de transformación que la política permite SIEMPRE, esté o no
@@ -1207,7 +1240,7 @@ var ESQUEMA = 3;
 function configPublica(cfg) {
   var limpia = {};
   Object.keys(cfg).forEach(function (k) {
-    if (k.indexOf('pago_') === 0) return;
+    if (k.indexOf('pago_') === 0 || k.indexOf('medicion_') === 0) return;
     limpia[k] = cfg[k];
   });
   /* El tope, ya leído como número. La página no tiene por qué saber que en la
@@ -2785,7 +2818,9 @@ function semillaDeConfiguracion() {
       ['pago_modo',         'pasarela', 'Cómo cierra la compra: pasarela cobra en línea; whatsapp envía el pedido al chat. Elige de la lista'],
       ['pago_proveedor',    'bold', 'Proveedor de la pasarela. Por ahora Bold; la lista crecerá al implementar otro adaptador'],
       ['pago_ambiente',     'sandbox', 'sandbox usa llaves de prueba; produccion cobra dinero real. Elige de la lista'],
-      ['pago_integracion',  'boton', 'boton usa Botón de pagos Bold; api_qr queda disponible cuando Bold active esas llaves']
+      ['pago_integracion',  'boton', 'boton usa Botón de pagos Bold; api_qr queda disponible cuando Bold active esas llaves'],
+      ['medicion_google_analytics', '', 'ID de medición de Google Analytics 4. Empieza por G-; vacío = no se carga Google Analytics'],
+      ['medicion_meta_pixel', '', 'ID numérico del píxel de Meta. Pégalo como texto; vacío = no se carga Meta Pixel']
   ];
 }
 
@@ -4091,6 +4126,7 @@ function revisarTienda(cfg) {
     if (!falta) return;
     (x.bloquea ? bloquean : avisan).push({ clave: x.clave, porQue: x.porQue });
   });
+  medicionConfigurada(c).avisos.forEach(function (aviso) { avisan.push(aviso); });
   return { lista: !bloquean.length && !avisan.length,
            puedeVender: !bloquean.length,
            bloquean: bloquean, avisan: avisan };
@@ -4253,6 +4289,8 @@ function presentarHojas() {
     validarPorClave(cfgH, 'pago_proveedor', lista(['bold'], false));
     validarPorClave(cfgH, 'pago_ambiente', lista(['sandbox', 'produccion'], false));
     validarPorClave(cfgH, 'pago_integracion', lista(['boton', 'api_qr'], false));
+    formatoTextoPorClave(cfgH, 'medicion_google_analytics');
+    formatoTextoPorClave(cfgH, 'medicion_meta_pixel');
     sincronizarColores();
   }
 
@@ -4377,6 +4415,18 @@ function validarPorClave(h, clave, regla) {
   for (var i = 0; i < datos.length; i++) {
     if (String(datos[i][0]).trim() === clave) {
       h.getRange(i + 2, 2).setDataValidation(regla);
+      return;
+    }
+  }
+}
+
+/* Las IDs de medición son identificadores, no cifras. El formato de texto
+   evita que Sheets convierta un Pixel largo a notación científica al pegarlo. */
+function formatoTextoPorClave(h, clave) {
+  var datos = filas(H_CONFIG);
+  for (var i = 0; i < datos.length; i++) {
+    if (String(datos[i][0]).trim() === clave) {
+      h.getRange(i + 2, 2).setNumberFormat('@');
       return;
     }
   }

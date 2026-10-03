@@ -87,7 +87,7 @@ function soloLoQueSePublica(d) {
      alguien cambie el primero sin acordarse de este archivo. */
   const config = {};
   Object.keys(d.config || {}).forEach(k => {
-    if (k.indexOf('pago_') === 0) return;
+    if (k.indexOf('pago_') === 0 || k.indexOf('medicion_') === 0) return;
     config[k] = String(d.config[k]);
   });
 

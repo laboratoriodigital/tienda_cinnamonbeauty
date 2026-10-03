@@ -17,6 +17,7 @@ pedido por chat para un comercio sin pasarela. Elige siempre de las listas.
 Si te saltas el segundo paso, la hoja dice una cosa y tu tienda otra. Sola se
 pone al día cada cuatro horas.
 
+**Medir visitas opcional:** en **Configuración** pega `medicion_google_analytics` (GA4: `G-…`) y/o `medicion_meta_pixel` (número de Meta), nunca código ni URL. Vacío no carga rastreadores; después usa **Publicar ahora** y mantén al día tu aviso de privacidad y consentimiento de cookies.
 ---
 
 ## Las tres cosas del día a día

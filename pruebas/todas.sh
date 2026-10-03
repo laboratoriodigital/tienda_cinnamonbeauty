@@ -71,7 +71,7 @@ pkill -f servidor.js 2>/dev/null; sleep 0.5
 BATERIAS=${BATERIAS:-"e2e.js movil.js enlace.js val.js fotos.js pag.js test.js config.js \
           cat.js version.js hoja.js sec2.js exif.js montaje.js panel.js \
           pedidos.js correo.js presentacion.js menu.js tablero.js esquema.js \
-          calendario.js respaldo.js pagos.js variantes.js seo.js variantes-ui.js pagos-ui.js identidad-cinnamon.js"}
+          calendario.js respaldo.js pagos.js variantes.js seo.js variantes-ui.js pagos-ui.js medicion.js identidad-cinnamon.js"}
 
 # Por defecto, uno por núcleo hasta cuatro. Más no ayuda: cada trabajador es un
 # Chromium, y a partir de ahí compiten por CPU y el reloj deja de bajar.

@@ -187,7 +187,9 @@
     "pago_modo",
     "pago_proveedor",
     "pago_ambiente",
-    "pago_integracion"
+    "pago_integracion",
+    "medicion_google_analytics",
+    "medicion_meta_pixel"
   ],
   "puertas": {
     "version": [

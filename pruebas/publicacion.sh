@@ -10,5 +10,5 @@
 # carga y configuración del index, catálogo/fotos, enlace móvil, respaldo,
 # checkout, variantes y los propios contratos del montaje. Sigue corriendo con
 # los cuatro procesos aislados de todas.sh y con el mismo criterio de salida.
-export BATERIAS="movil.js enlace.js fotos.js config.js hoja.js montaje.js respaldo.js seo.js variantes-ui.js pagos-ui.js identidad-cinnamon.js"
+export BATERIAS="movil.js enlace.js fotos.js config.js hoja.js montaje.js respaldo.js seo.js variantes-ui.js pagos-ui.js medicion.js identidad-cinnamon.js"
 exec "$(dirname "$0")/todas.sh"

@@ -327,7 +327,7 @@ Lo que llegó y no se pudo entender, y lo que se leyó mal. Existe para que un f
 
 ## 5. Las claves de `Configuración`
 
-Son 43. Ninguna es opcional para el maestro —`instalar()` las crea todas—, pero
+Son 45. Ninguna es opcional para el maestro —`instalar()` las crea todas—, pero
 **todas pueden estar vacías**: una tienda a medio configurar tiene que seguir
 sirviendo lo que sí sabe.
 
@@ -351,6 +351,7 @@ no pisar lo que el comerciante puso.
 | **La venta** | `envio_gratis_desde` |
 | **Dónde vive el sitio** | `repositorio` — dueño/repositorio en GitHub. Lo usa «Publicar ahora». No es un secreto; el permiso sí, y ese vive en las propiedades del script |
 | **Selección de cobro** | `pago_modo` · `pago_proveedor` · `pago_ambiente` · `pago_integracion` — listas al final del contrato; nunca contienen credenciales |
+| **Medición opcional — no sale por catálogo** | `medicion_google_analytics` · `medicion_meta_pixel` — IDs públicas, válidas solo como `G-…` y número respectivamente. El maestro las convierte en etiquetas del `<head>` durante la publicación; vacías no cargan nada |
 ---
 
 ## 6. Lo que sale por cada puerta
@@ -385,9 +386,10 @@ Y dentro de `?a=catalogo`:
 **cada envio** — `id`, `nombre`, `valor`
 
 `config` trae las claves de la pestaña `Configuración`, con esos mismos
-nombres, **menos las que empiezan por `pago_`**, que no salen nunca — ni por
-esta puerta ni al hornear `catalogo.json`. Ese filtro está aplicado dos veces a
-propósito y **no tiene excepciones**.
+nombres, **menos las que empiezan por `pago_` o `medicion_`**, que no salen por
+esta puerta ni al hornear `catalogo.json`. Las de pago son privadas; las de
+medición se usan solo para hornear el `<head>`. Ambos filtros se aplican dos
+veces a propósito y **no tienen excepciones**.
 
 Más una clave que no viene de la hoja con ese nombre:
 
@@ -474,6 +476,11 @@ se publican ni se versionan.
 
 El filtro es **por prefijo, no por lista**: una clave `pago_algo` que alguien
 agregue mañana queda protegida sin que nadie tenga que acordarse de volver aquí.
+
+**Las claves `medicion_*` tampoco salen por catálogo.** Son IDs públicas, pero
+solo el maestro las necesita para hornear Google Analytics 4 y Meta Pixel en el
+`<head>`. Una ID vacía no carga script alguno; una inválida se omite y el
+montaje dice cuál celda corregir.
 
 Las credenciales Bold ni siquiera pertenecen a esta pestaña: viven en
 Propiedades del script. La identidad puede viajar dentro del contrato

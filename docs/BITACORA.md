@@ -15,6 +15,23 @@ después vea que las decisiones raras del código tienen una cicatriz detrás.
 
 ---
 
+## Medición configurable sin romper la política de seguridad · 3 de octubre de 2026
+
+**Un ID de Analytics o de Pixel no puede vivir como código copiado en cada
+tienda.** Copiar etiquetas completas desde cada plataforma expone a pegar una
+clave equivocada y deja a las tiendas con implementaciones distintas. → La hoja
+solo admite los dos identificadores públicos, los valida y el maestro hornea
+las etiquetas oficiales en el `<head>`. Vacío no carga ningún rastreador; un ID
+inválido no se publica y aparece como aviso claro en el montaje. *(operación)*
+
+**La etiqueta HTML no podía autorizar por sí sola las conexiones.** Cloudflare
+aplica además `_headers`; una CSP vieja bloquearía el rastreo sin fallo de red.
+→ Google y Meta se permiten en las tres copias de la política y la regresión
+compara sus `script-src` y `connect-src`. Autorizar el origen no envía datos:
+los scripts solo se insertan con una ID válida. *(grave potencial)*
+
+---
+
 ## Dominio definitivo bloqueado por una prueba antigua · 25 de septiembre de 2026
 
 **Cinnamon cambió `sitio_url` del subdominio temporal de Workers al dominio

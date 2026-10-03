@@ -1,6 +1,15 @@
 # Actualizar una tienda que ya está montada
 
-## Cinnamon Beauty · paso de 3.0.0 a 3.6.1
+## La 3.6.2: medición opcional desde la hoja
+
+Actualiza `maestro.gs`, ejecuta `A0_instalar()` y publica una versión nueva de
+la aplicación web. Al final de `Configuración` aparecen
+`medicion_google_analytics` y `medicion_meta_pixel`; pega un ID GA4 que empiece
+por `G-` y/o el ID numérico del Pixel de Meta. No son secretos, pero no copies
+scripts, URLs ni claves. Déjalas vacías para no cargar medición. Por último usa
+**Publicar ahora**: es el paso que hornea las etiquetas en el `<head>`.
+
+## Cinnamon Beauty · paso de 3.0.0 a 3.6.2
 
 Esta réplica conserva `publicar/catalogo.json`, las fotos, la imagen social,
 el dominio, los colores, WhatsApp y la URL del Apps Script de Cinnamon. Durante
