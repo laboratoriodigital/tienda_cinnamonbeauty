@@ -1,0 +1,169 @@
+# Cortar una versión de la plantilla.
+#
+# Esto NO despliega nada. Publica una versión con nombre para que las tiendas
+# de los clientes puedan pedirla: cada una tiene su propio repositorio y su
+# propio ritmo, y ninguna se mueve hasta que alguien aprueba su pull request.
+#
+# La versión se lee de package.json: es el único lugar donde vive. Súbela en
+# la rama del cambio, fusiona, y entonces corre esto desde la pestaña Actions.
+#
+#   Los clientes piden la última con:
+#   https://github.com/laboratoriodigital/organico/releases/latest/download/index.html
+name: release
+
+on:
+  workflow_dispatch:
+
+# DE DÓNDE SALE LA PLANTILLA, ESCRITO UNA SOLA VEZ.
+env:
+  SEMILLA: laboratoriodigital/organico
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # ── ESTE FLUJO NO ES DE UNA TIENDA ────────────────────────────────────
+      # `release` corta la versión de la PLANTILLA. Una tienda no corta
+      # versiones: nace de la plantilla y consume la suya. Pero el flujo viaja
+      # dentro de la plantilla, así que aparece en la pestaña Actions de cada
+      # tienda — invitando a correrlo, que es exactamente lo razonable cuando
+      # alguien está comprobando el ciclo completo de una tienda nueva.
+      #
+      # Y cuando fallaba, el mensaje mandaba al sitio equivocado: «sube
+      # `version` en package.json». En una tienda ese consejo es falso, y es el
+      # patrón que cerró la tanda de la 2.10: un error que apunta al sitio
+      # equivocado cuesta más que uno que no dice nada. Pasó dos veces.
+      - name: ¿Este repositorio es la semilla?
+        run: |
+          if [ "$GITHUB_REPOSITORY" = "$SEMILLA" ]; then
+            echo "Sí: $GITHUB_REPOSITORY. Adelante."
+            exit 0
+          fi
+          {
+            echo "### \`release\` no es un flujo de tienda"
+            echo ""
+            echo "Este repositorio es **\`$GITHUB_REPOSITORY\`**, y \`release\` corta la"
+            echo "versión de la plantilla — eso solo se hace en **\`$SEMILLA\`**."
+            echo ""
+            echo "Una tienda no corta versiones: nace de la plantilla y consume la"
+            echo "suya. Este flujo aparece aquí porque viaja dentro de la plantilla,"
+            echo "no porque haga falta."
+            echo ""
+            echo "**Lo que sí se corre en una tienda:**"
+            echo ""
+            echo "| Para | Flujo |"
+            echo "|---|---|"
+            echo "| Traer lo que cambió en la hoja o en el Drive | \`montaje\` |"
+            echo "| Lo mismo, desde el botón de la hoja del comercio | \`fotos\` |"
+            echo "| Publicar \`maestro.gs\` | \`montaje\` con \`maestro\` + \`PUBLICAR\` |"
+            echo ""
+            echo "No se rompió nada: este flujo paró antes de tocar el repositorio."
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "::error::release corta la versión de la plantilla y este repositorio no es $SEMILLA."
+          exit 1
+
+      # `push` ya corre la suite completa sobre este SHA. Ejecutarla otra vez
+      # hacía que release tardara 2:19 aunque etiquetar y empaquetar toma 9 s.
+      # Aquí no se confía en que alguien la haya mirado: se consulta GitHub y
+      # se espera el verde del MISMO commit. Si no existe, no se publica.
+      - name: Confirmar las pruebas de este commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          limite=30
+          intento=1
+          while [ "$intento" -le "$limite" ]; do
+            corridas=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/pruebas.yml/runs?head_sha=$GITHUB_SHA&event=push&per_page=10")
+            exitos=$(echo "$corridas" | jq '[.workflow_runs[] | select(.conclusion == "success")] | length')
+            activas=$(echo "$corridas" | jq '[.workflow_runs[] | select(.status != "completed")] | length')
+
+            if [ "$exitos" -gt 0 ]; then
+              echo "La suite completa de este commit ya está verde. No se repite."
+              exit 0
+            fi
+            if [ "$activas" -eq 0 ] && [ "$intento" -gt 3 ]; then
+              echo "::error::Este commit no tiene una corrida exitosa de pruebas por push."
+              echo "Haz push, espera el flujo 'pruebas' y vuelve a ejecutar release." >&2
+              exit 1
+            fi
+            echo "Esperando las pruebas de $GITHUB_SHA ($intento/$limite)..."
+            sleep 10
+            intento=$((intento + 1))
+          done
+          echo "::error::Las pruebas de este commit no terminaron en cinco minutos."
+          exit 1
+
+      - name: Leer la versión
+        id: v
+        run: echo "v=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      # UNA CRUZ ROJA QUE SIGNIFICA "TODO BIEN" ES PEOR QUE NO AVISAR: enseña a
+      # ignorar las cruces rojas. Antes, volver a disparar esto sin haber
+      # cambiado nada fallaba, y eso no es un error — es que no hay nada que
+      # cortar. Lo que SÍ es un error es que la etiqueta exista apuntando a otro
+      # commit: ahí el código cambió y la versión no.
+      - name: ¿Hay algo que cortar?
+        id: hay
+        run: |
+          tag="v${{ steps.v.outputs.v }}"
+          # En una etiqueta anotada, el sha del ref es el del objeto etiqueta;
+          # el del commit está en la entrada pelada, la que termina en ^{}.
+          sha=$(git ls-remote --tags origin "$tag^{}" | awk '{print $1}' | head -1)
+          [ -z "$sha" ] && sha=$(git ls-remote --tags origin "$tag" | awk '{print $1}' | head -1)
+
+          if [ -z "$sha" ]; then
+            echo "corta=si" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "$sha" = "$(git rev-parse HEAD)" ]; then
+            {
+              echo "### $tag ya está publicada, y es exactamente este commit"
+              echo ""
+              echo "No hay nada que cortar. Esto no es un fallo: es que ya está hecho."
+              echo ""
+              echo "Para publicar otra versión, sube \`version\` en \`package.json\`"
+              echo "y vuelve. Se sube **solo cuando cambia algo que se despliega**:"
+              echo "\`maestro.gs\`, \`panel.gs\` o \`publicar/index.html\`."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "$tag ya está publicada en este mismo commit. Nada que hacer."
+            echo "corta=no" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          {
+            echo "### $tag ya existe, pero apunta a otro commit"
+            echo ""
+            echo "Cambió el código y la versión no. **Sube \`version\` en"
+            echo "\`package.json\` antes de cortar otra**, o quien pida"
+            echo "\`$tag\` se llevará algo distinto de lo que hay aquí."
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "$tag existe y apunta a $sha, no a este commit." >&2
+          exit 1
+
+      - name: Empaquetar lo que consume un cliente nuevo
+        if: steps.hay.outputs.corta == 'si'
+        run: |
+          mkdir -p entrega
+          cp publicar/index.html entrega/index.html
+          cp maestro.gs          entrega/maestro.gs
+          cp panel.gs            entrega/panel.gs
+          tar -czf entrega/publicar.tar.gz -C publicar .
+
+      - name: Etiqueta y publicación
+        if: steps.hay.outputs.corta == 'si'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.v.outputs.v }}" \
+            --target "${{ github.sha }}" \
+            --title "v${{ steps.v.outputs.v }}" \
+            --generate-notes \
+            entrega/index.html entrega/maestro.gs entrega/panel.gs \
+            entrega/publicar.tar.gz
