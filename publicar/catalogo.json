@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-05T12:43:19.025Z",
+ "generado": "2026-10-05T13:46:13.599Z",
  "productos": [
   {
    "id": "MG124",
@@ -1131,7 +1131,7 @@
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
    "precio": 10000,
-   "stock": 8,
+   "stock": 7,
    "descripcion": "✨ TINTA SCARLET TINT PURPURE TAPA CORAZÓN ❤️💄\n\nUna tinta de color intenso y encantador, perfecta para aportar un toque de color a tus labios y mejillas. Su diseño con tapa en forma de corazón le da un detalle femenino y especial. ✨💕\n\n#TintaLabial #ScarletTint #Maquillaje #CinnamonBeauty",
    "imagenes": [
     "TINTA-SCARLET-TINT-TAPA-CORAZON-FM031.png"
@@ -1942,7 +1942,7 @@
   "logo": "",
   "portada_titulo": "Cinnamon Beauty",
   "portada_texto": "Makeup Beauty - Professional Products",
-  "portada_puntos": "Oferta última unidad|Tienda virtual en medellin|Entregas en Medellin y Valle de Aburra|Pides y confirmas por WhatsApp",
+  "portada_puntos": "Oferta última unidad|Tienda virtual en medellin|Entregas en Medellin y Valle de Aburra",
   "color_principal": "#EA9999",
   "color_secundario": "#BF9000",
   "color_alterno": "#CC0000",
