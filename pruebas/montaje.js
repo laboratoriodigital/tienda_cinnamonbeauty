@@ -113,9 +113,22 @@ const configurar = (g, clave, valor) => {
   ok('  ...con la versión del contrato al día',
      r.html.indexOf('const SCRIPT_VERSION = "' + datos.valores.SCRIPT_VERSION + '";') !== -1);
   ok('  ...y el <head> que armó el maestro', r.html.indexOf(datos.head) !== -1);
+  function sinPartesDeTienda(s) {
+    return s
+      .replace(/<meta http-equiv="Content-Security-Policy"[\s\S]*?<!-- ═══ FIN DE LA CONFIGURACIÓN ═══ -->/, '<head de la tienda>')
+      .replace(/(\n\s*--rojo:)#[0-9A-Fa-f]{6}(;)/, '$1#COLOR$2')
+      .replace(/(\n\s*--verde:)#[0-9A-Fa-f]{6}(;)/, '$1#COLOR$2')
+      .replace(/(\n\s*--acento:)#[0-9A-Fa-f]{6}(;)/, '$1#COLOR$2')
+      .replace(/const SCRIPT_URL\s*=\s*"[^"]*";/, 'const SCRIPT_URL = "<SCRIPT_URL>";')
+      .replace(/const SCRIPT_VERSION\s*=\s*"[^"]*";/, 'const SCRIPT_VERSION = "<SCRIPT_VERSION>";')
+      .replace(/const FOTOS_HOSTS\s*=\s*\[[^\]]*\];/, 'const FOTOS_HOSTS = [<FOTOS_HOSTS>];')
+      .replace(/let\s+NEGOCIO\s*=\s*"[^"]*";/, 'let NEGOCIO = "<NEGOCIO>";')
+      .replace(/let\s+WHATSAPP\s*=\s*"[^"]*";/, 'let WHATSAPP = "<WHATSAPP>";');
+  }
   ok('  ...sin tocar nada más del archivo',
-     r.html.length > html.length - 4000 && r.html.indexOf('</html>') !== -1 &&
-     r.html.split('<script>').length === html.split('<script>').length);
+     r.html.indexOf('</html>') !== -1 &&
+     sinPartesDeTienda(r.html) === sinPartesDeTienda(html),
+     'solo pueden cambiar la configuración, la paleta y las constantes del montaje');
   ok('  ...y conservando los comentarios que explican el código',
      /Respaldo mínimo por si la hoja no contesta/.test(r.html));
 
