@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T21:19:39.511Z",
+ "generado": "2026-10-06T21:21:40.906Z",
  "productos": [
   {
    "id": "MG124",
@@ -2755,6 +2755,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG125",
+   "nombre": "Set Brochas De Sirena",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 8100,
+   "stock": 6,
+   "descripcion": "✨ SET DE BROCHAS SIRENA 🧜‍♀️💄\n\nUn práctico set de brochas para aplicar, difuminar y perfeccionar tu maquillaje. Ideal para crear diferentes looks y darle un toque especial a tu rutina de belleza. 💕\n\n#SetDeBrochas #BrochasDeMaquillaje #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "SET-BROCHAS-SIRENA-MG125.png"
+   ],
+   "destacado": false,
+   "referencia": "SET DE BROCHAS SIRENA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -3315,6 +3333,11 @@
    900
   ],
   "ENCRESPADOR-ENKOR-MG172.png": [
+   160,
+   600,
+   900
+  ],
+  "SET-BROCHAS-SIRENA-MG125.png": [
    160,
    600,
    900
