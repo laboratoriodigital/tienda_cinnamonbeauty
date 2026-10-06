@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:56:05.960Z",
+ "generado": "2026-10-06T18:27:28.349Z",
  "productos": [
   {
    "id": "MG124",
@@ -61,7 +61,7 @@
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
    "precio": 22500,
-   "stock": 9,
+   "stock": 10,
    "descripcion": "✨ MANTEQUILLA CORPORAL FANTILUNA ✨\n\nDisfruta de una piel suave, hidratada y delicadamente perfumada con la Mantequilla Corporal Fantiluna. 💕 Su textura cremosa es ideal para cuidar la piel y dejar una agradable sensación de suavidad y confort.\n\nPerfecta para incorporar a tu rutina diaria de cuidado corporal y disfrutar de un delicioso aroma que acompaña tu día. 🌸✨\n\n#Fantiluna #MantequillaCorporal #CuidadoCorporal #CinnamonBeauty",
    "imagenes": [
     "MANTEQUILLA-FANTILUNA-SANDIA-MG112.png",
@@ -100,7 +100,7 @@
       "Aroma": "sandia"
      },
      "precio": 22500,
-     "stock": 5,
+     "stock": 6,
      "imagenes": [
       "MANTEQUILLA-FANTILUNA-SANDIA-MG112.png"
      ]
@@ -1131,7 +1131,7 @@
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
    "precio": 10000,
-   "stock": 7,
+   "stock": 8,
    "descripcion": "✨ TINTA SCARLET TINT PURPURE TAPA CORAZÓN ❤️💄\n\nUna tinta de color intenso y encantador, perfecta para aportar un toque de color a tus labios y mejillas. Su diseño con tapa en forma de corazón le da un detalle femenino y especial. ✨💕\n\n#TintaLabial #ScarletTint #Maquillaje #CinnamonBeauty",
    "imagenes": [
     "TINTA-SCARLET-TINT-TAPA-CORAZON-FM031.png"
@@ -2717,7 +2717,7 @@
   "correo_resumen": "dcbs.1323@gmail.com",
   "correo_hora": "7",
   "correo_siempre": "No",
-  "correo_ultimo": "Mon Oct 05 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "correo_ultimo": "Tue Oct 06 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
   "fotos_origen": "https://cinnamonbeauty.laboratorio-digital.com/fotos",
   "fotos_cdn": "",
   "respaldo_carpeta": "https://drive.google.com/drive/folders/1VVXb4WTKB4tYk7EuWkluHHirQYlNhhc8?usp=sharing",
