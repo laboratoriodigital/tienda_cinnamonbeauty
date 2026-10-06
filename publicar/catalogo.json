@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T21:29:32.506Z",
+ "generado": "2026-10-06T21:42:40.160Z",
  "productos": [
   {
    "id": "MG124",
@@ -2809,6 +2809,124 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM011",
+   "nombre": "Brocha Bonshik",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 8900,
+   "stock": 6,
+   "descripcion": "✨ BROCHA BONSHIK  💄✨\n\nPráctica y versátil, ideal para aplicar y difuminar tus productos de maquillaje con facilidad. Perfecta para complementar tu kit de belleza y lograr un acabado uniforme y bonito. 💕\n\n#BrochaBonShik #BrochaDeMaquillaje #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "BROCHA-BONSHIK-FM011.png"
+   ],
+   "destacado": false,
+   "referencia": "BROCHA BONSHIK",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "FM014",
+   "nombre": "Set De Brochas Sweet X8",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 25500,
+   "stock": 6,
+   "descripcion": "✨ SET DE BROCHAS SWEET X8  💕💄\n\nUn completo set de 8 brochas ideal para aplicar, difuminar y perfeccionar diferentes productos de maquillaje. Perfecto para crear looks variados y complementar tu rutina de belleza. ✨\n\n#SetDeBrochas #BrochasDeMaquillaje #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "SET-DE-BROCHAS-SWEET-X8-FM014.png"
+   ],
+   "destacado": false,
+   "referencia": "SET DE BROCHAS SWEET X8",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Color",
+     "valores": [
+      "Rosado",
+      "Morado"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-dfdcf4afd232",
+     "sku": "FM014-DFDCF4",
+     "opciones": {
+      "Color": "Rosado"
+     },
+     "precio": 25500,
+     "stock": 3,
+     "imagenes": [
+      "SET-DE-BROCHAS-SWEET-X8-FM014.png"
+     ]
+    },
+    {
+     "id": "var-b2f48fb6f30f",
+     "sku": "FM014-B2F48F",
+     "opciones": {
+      "Color": "Morado"
+     },
+     "precio": 25500,
+     "stock": 3,
+     "imagenes": [
+      "SET-DE-BROCHAS-SWEET-X8-FM014.png"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "MG101",
+   "nombre": "Ondas Sin Calor",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 12600,
+   "stock": 0,
+   "descripcion": "✨ ONDAS SIN CALOR  💕✨\n\nCrea ondas y rizos de forma práctica sin necesidad de utilizar calor. Ideal para cambiar tu look y conseguir un estilo bonito y natural mientras cuidas tu cabello. 🌸💗\n\n#OndasSinCalor #RizosSinCalor #CuidadoDelCabello #CinnamonBeauty",
+   "imagenes": [],
+   "destacado": false,
+   "referencia": "ONDAS SIN CALOR",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Color",
+     "valores": [
+      "Rosado",
+      "negro"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-221b6b94ce42",
+     "sku": "MG101-221B6B",
+     "opciones": {
+      "Color": "Rosado"
+     },
+     "precio": 25500,
+     "stock": 0,
+     "imagenes": [
+      "ONDAS-SIN-CALOR-MG101.png"
+     ]
+    },
+    {
+     "id": "var-ef5cae5c5fed",
+     "sku": "MG101-EF5CAE",
+     "opciones": {
+      "Color": "negro"
+     },
+     "precio": 12600,
+     "stock": 0,
+     "imagenes": [
+      "ONDAS-SIN-CALOR-MG101.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -3384,6 +3502,16 @@
    900
   ],
   "SACAPUNTAS-DOBLE-FR611.png": [
+   160,
+   600,
+   900
+  ],
+  "BROCHA-BONSHIK-FM011.png": [
+   160,
+   600,
+   900
+  ],
+  "SET-DE-BROCHAS-SWEET-X8-FM014.png": [
    160,
    600,
    900
