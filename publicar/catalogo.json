@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T21:45:27.979Z",
+ "generado": "2026-10-06T22:01:20.617Z",
  "productos": [
   {
    "id": "MG124",
@@ -2816,7 +2816,7 @@
    "formato": "unidad",
    "categoria": "Accesorios",
    "precio": 8900,
-   "stock": 6,
+   "stock": 3,
    "descripcion": "✨ BROCHA BONSHIK  💄✨\n\nPráctica y versátil, ideal para aplicar y difuminar tus productos de maquillaje con facilidad. Perfecta para complementar tu kit de belleza y lograr un acabado uniforme y bonito. 💕\n\n#BrochaBonShik #BrochaDeMaquillaje #Maquillaje #CinnamonBeauty",
    "imagenes": [
     "BROCHA-BONSHIK-FM011.png"
@@ -2929,6 +2929,60 @@
      ]
     }
    ]
+  },
+  {
+   "id": "FM009",
+   "nombre": "Tohallitas Desmaquillantes Blomshell x30",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 11500,
+   "stock": 6,
+   "descripcion": "✨ TOHALLITAS DESMAQUILLANTES BLOOMSHELL 💕🫧\n\nPrácticas y suaves, ideales para ayudar a retirar el maquillaje y las impurezas de la piel. Perfectas para complementar tu rutina de limpieza facial y mantener tu piel fresca y limpia. ✨\n\n#TohallitasDesmaquillantes #Bloomshell #CuidadoFacial #CinnamonBeauty",
+   "imagenes": [
+    "TOHALLITAS-DESMAQUILLANTES-BLOOMSHELL-FM009.png"
+   ],
+   "destacado": false,
+   "referencia": "TOHALLITAS DESMAQUILLANTES BLOOMSHELL",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "MG129",
+   "nombre": "Cera Nativos",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 27500,
+   "stock": 6,
+   "descripcion": "✨ CERA NATIVOS  💇‍♀️✨\n\nIdeal para complementar tu rutina de peinado y ayudarte a definir y moldear el cabello. Perfecta para crear diferentes estilos y mantener tu look con un acabado cuidado. 💕\n\n#CeraParaCabello #Nativos #CuidadoDelCabello #CinnamonBeaut",
+   "imagenes": [
+    "CERA-NATIVOS-MG129.png"
+   ],
+   "destacado": false,
+   "referencia": "CERA NATIVOS",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "MG110",
+   "nombre": "Splash Moana De Hombre",
+   "formato": "unidad",
+   "categoria": "cuidado capilar",
+   "precio": 21600,
+   "stock": 3,
+   "descripcion": "✨ SPLASH MOHANA  🌸✨\n\nUna fragancia corporal fresca, femenina y encantadora, ideal para disfrutar durante el día y dejar sobre la piel un aroma agradable. Perfecta para llevar contigo y refrescarte en cualquier momento. 💕\n\n#SplashCorporal #Mohana #PerfumeriaFemenina #CinnamonBeauty",
+   "imagenes": [
+    "SPLASH-MOHANA-MG110.png"
+   ],
+   "destacado": false,
+   "referencia": "SPLASH MOHANA",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -3513,7 +3567,27 @@
    600,
    900
   ],
+  "SET-DE-BROCHAS-SWEET-X8-FM014.png": [
+   160,
+   600,
+   900
+  ],
   "ONDAS-SIN-CALOR-MG101.png": [
+   160,
+   600,
+   900
+  ],
+  "TOHALLITAS-DESMAQUILLANTES-BLOOMSHELL-FM009.png": [
+   160,
+   600,
+   900
+  ],
+  "CERA-NATIVOS-MG129.png": [
+   160,
+   600,
+   900
+  ],
+  "SPLASH-MOHANA-MG110.png": [
    160,
    600,
    900
