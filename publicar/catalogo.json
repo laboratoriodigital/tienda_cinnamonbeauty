@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:53:34.970Z",
+ "generado": "2026-10-06T00:56:05.960Z",
  "productos": [
   {
    "id": "MG124",
@@ -2650,6 +2650,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG179",
+   "nombre": "Tohallitas Desmaquillantes Bloomshel Mini",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 2100,
+   "stock": 12,
+   "descripcion": "✨ MINI PAÑITOS DESMAQUILLANTES BLOOMSHELL 💕🫧\n\nPrácticos y cómodos para retirar el maquillaje y mantener tu piel limpia y fresca. Su presentación mini es ideal para llevar contigo a cualquier lugar y tenerlos siempre a mano. ✨\n\n#PañitosDesmaquillantes #Bloomshell #CuidadoFacial #CinnamonBeauty",
+   "imagenes": [
+    "MINI-PAÑITOS-DESMAQUILLANTES-BLOOMSHELL-MG179.png"
+   ],
+   "destacado": false,
+   "referencia": "MINI PAÑITOS DESMAQUILLANTES BLOOMSHELL",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -3185,6 +3203,11 @@
    900
   ],
   "GORROS-SATIN-MG134.png": [
+   160,
+   600,
+   900
+  ],
+  "MINI-PAÑITOS-DESMAQUILLANTES-BLOOMSHELL-MG179.png": [
    160,
    600,
    900
