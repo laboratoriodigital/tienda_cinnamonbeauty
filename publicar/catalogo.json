@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T19:58:40.726Z",
+ "generado": "2026-10-06T21:08:27.429Z",
  "productos": [
   {
    "id": "MG124",
@@ -2668,6 +2668,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "MG170",
+   "nombre": "Perfiladores x3",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 3000,
+   "stock": 6,
+   "descripcion": "✨ PERFILADORES X3 💄✨\n\nUn práctico set de 3 perfiladores ideal para definir y perfeccionar tus labios con mayor precisión. Perfectos para complementar diferentes tonos de labial y crear looks impecables. 💕\n\n#PerfiladoresDeLabios #DelineadorDeLabios #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "PERFILADORES-X3-MG170.png"
+   ],
+   "destacado": false,
+   "referencia": "PERFILADORES X3",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -3213,6 +3231,11 @@
    900
   ],
   "COSMETIQUERA-MILAGROS-BEIGE-MG107.png": [
+   160,
+   600,
+   900
+  ],
+  "PERFILADORES-X3-MG170.png": [
    160,
    600,
    900
