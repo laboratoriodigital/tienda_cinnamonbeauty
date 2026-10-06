@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:28:53.434Z",
+ "generado": "2026-10-06T00:36:04.702Z",
  "productos": [
   {
    "id": "MG124",
@@ -2549,6 +2549,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG178",
+   "nombre": "Kit De Brochas Montoc",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 49000,
+   "stock": 1,
+   "descripcion": "✨ SET DE BROCHAS MONTOC💄✨\n\nUn práctico set de brochas ideal para aplicar, difuminar y perfeccionar tu maquillaje. Perfecto para crear diferentes looks y complementar tu rutina de belleza. 💕\n\n#SetDeBrochas #BrochasDeMaquillaje #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "SET-DE-BROCHAS-MONTOC-MG178.png"
+   ],
+   "destacado": false,
+   "referencia": "SET DE BROCHAS MONTOC",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -3074,6 +3092,11 @@
    900
   ],
   "ESPEJO-CON-CORREA-FM005.png": [
+   160,
+   600,
+   900
+  ],
+  "SET-DE-BROCHAS-MONTOC-MG178.png": [
    160,
    600,
    900
