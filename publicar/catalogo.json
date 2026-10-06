@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:18:31.566Z",
+ "generado": "2026-10-06T00:23:00.351Z",
  "productos": [
   {
    "id": "MG124",
@@ -2311,7 +2311,7 @@
   },
   {
    "id": "MG164",
-   "nombre": "Agua  De Rosas",
+   "nombre": "Agua  De Rosas 500ml",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
    "precio": 10800,
@@ -2329,7 +2329,7 @@
   },
   {
    "id": "MG165",
-   "nombre": "Agua  De Rosas",
+   "nombre": "Agua  De Rosas 250ml",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
    "precio": 6300,
@@ -2347,7 +2347,7 @@
   },
   {
    "id": "MG167",
-   "nombre": "Agua  De Rosas",
+   "nombre": "Agua  De Rosas 120ml",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
    "precio": 5300,
@@ -2477,6 +2477,57 @@
      "stock": 6,
      "imagenes": [
       "CEPILLO-CORAZON-FM004.png"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "MG107",
+   "nombre": "Cosmetiquera Milagros",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 27000,
+   "stock": 12,
+   "descripcion": "✨ COSMETIQUERA MILAGROS 💕✨\n\nPráctica y encantadora para organizar y llevar tus productos de belleza a todas partes. Ideal para guardar maquillaje, accesorios y tus esenciales de cuidado personal de forma cómoda y ordenada. 💄🌸\n\n#Cosmetiquera #Milagros #AccesoriosDeBelleza #CinnamonBeauty",
+   "imagenes": [
+    "COSMETIQUERA-MILAGROS-MG107.jpg"
+   ],
+   "destacado": false,
+   "referencia": "COSMETIQUERA MILAGROS",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Color",
+     "valores": [
+      "Beige",
+      "rosado"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-a5caa1b5d134",
+     "sku": "MG107-A5CAA1",
+     "opciones": {
+      "Color": "Beige"
+     },
+     "precio": 27000,
+     "stock": 6,
+     "imagenes": [
+      "COSMETIQUERA-MILAGROS-MG107.png"
+     ]
+    },
+    {
+     "id": "var-73778c53d2a4",
+     "sku": "MG107-73778C",
+     "opciones": {
+      "Color": "rosado"
+     },
+     "precio": 27000,
+     "stock": 6,
+     "imagenes": [
+      "COSMETIQUERA-MILAGROS-MG107.jpg"
      ]
     }
    ]
@@ -2990,6 +3041,16 @@
    900
   ],
   "CEPILLO-CORAZON-FM004.png": [
+   160,
+   600,
+   900
+  ],
+  "COSMETIQUERA-MILAGROS-MG107.jpg": [
+   160,
+   600,
+   900
+  ],
+  "COSMETIQUERA-MILAGROS-MG107.png": [
    160,
    600,
    900
