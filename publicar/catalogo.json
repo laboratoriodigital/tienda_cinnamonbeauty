@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T22:04:52.484Z",
+ "generado": "2026-10-06T22:53:21.286Z",
  "productos": [
   {
    "id": "MG124",
@@ -3050,12 +3050,12 @@
   {
    "id": "sur",
    "nombre": "envigado-itagui-sabaneta-caldas-estrella-san antonio de prado-san cristobal",
-   "valor": 20000
+   "valor": 25000
   },
   {
    "id": "norte",
    "nombre": "barbosa",
-   "valor": 18000
+   "valor": 25000
   }
  ],
  "config": {
