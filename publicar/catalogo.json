@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T21:08:27.429Z",
+ "generado": "2026-10-06T21:18:11.465Z",
  "productos": [
   {
    "id": "MG124",
@@ -2686,6 +2686,75 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG102",
+   "nombre": "Kit Viajero",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 10800,
+   "stock": 6,
+   "descripcion": "✨ KIT VIAJERO  🧳💕\n\nPráctico y funcional para llevar tus productos de cuidado personal y belleza de forma organizada durante tus viajes. Ideal para mantener tus esenciales siempre a mano, estés donde estés. ✨\n\n#KitViajero #AccesoriosDeBelleza #CuidadoPersonal #CinnamonBeauty",
+   "imagenes": [
+    "KIT-VIAJERO-MG102.png"
+   ],
+   "destacado": false,
+   "referencia": "KIT VIAJERO",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Color",
+     "valores": [
+      "rosado",
+      "verde"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-811424445148",
+     "sku": "MG102-811424",
+     "opciones": {
+      "Color": "rosado"
+     },
+     "precio": 10800,
+     "stock": 3,
+     "imagenes": [
+      "KIT-VIAJERO-MG102.png"
+     ]
+    },
+    {
+     "id": "var-bbcc9caf4677",
+     "sku": "MG102-BBCC9C",
+     "opciones": {
+      "Color": "verde"
+     },
+     "precio": 10800,
+     "stock": 3,
+     "imagenes": [
+      "KIT-VIAJERO-MG102.png"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "MG172",
+   "nombre": "Encrespador Enkor",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 5700,
+   "stock": 12,
+   "descripcion": "✨ ENCRESPADOR ENKOR  👁️✨\n\nRealza la mirada y ayuda a conseguir unas pestañas más curvas y definidas. Su diseño práctico es ideal para complementar tu rutina de maquillaje y lograr una mirada más impactante. 💕\n\n#EncrepadorDePestañas #Enkor #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "ENCRESPADOR-ENKOR-MG172.png"
+   ],
+   "destacado": false,
+   "referencia": "ENCRESPADOR ENKOR",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -3236,6 +3305,11 @@
    900
   ],
   "PERFILADORES-X3-MG170.png": [
+   160,
+   600,
+   900
+  ],
+  "KIT-VIAJERO-MG102.png": [
    160,
    600,
    900
