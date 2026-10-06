@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T22:01:20.617Z",
+ "generado": "2026-10-06T22:04:52.484Z",
  "productos": [
   {
    "id": "MG124",
@@ -2983,6 +2983,57 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG128",
+   "nombre": "Locion Refrescante Nativos Hombre",
+   "formato": "unidad",
+   "categoria": "Cuidado de la Piel",
+   "precio": 18,
+   "stock": 2,
+   "descripcion": "✨ LOCION REFRESCANTE NATIVOS HOMBRE 🧔🏻‍♂️✨\n\nUna loción refrescante ideal para complementar el cuidado personal masculino, dejando una agradable sensación de frescura y un aroma atractivo. Perfecta para usar a diario y sentirse fresco durante el día. 💙\n\n#LocionMasculina #Nativos #CuidadoMasculino #CinnamonBeauty",
+   "imagenes": [
+    "LOCION-REFRESCANTE-NATIVOS-HOMBRE-MG128.png"
+   ],
+   "destacado": false,
+   "referencia": "LOCION REFRESCANTE NATIVOS HOMBRE",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Color",
+     "valores": [
+      "Azul",
+      "Amarillo"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-98f08a51c8f7",
+     "sku": "MG128-98F08A",
+     "opciones": {
+      "Color": "Azul"
+     },
+     "precio": 19500,
+     "stock": 1,
+     "imagenes": [
+      "LOCION-REFRESCANTE-NATIVOS-HOMBRE-MG128.png"
+     ]
+    },
+    {
+     "id": "var-45890f043096",
+     "sku": "MG128-45890F",
+     "opciones": {
+      "Color": "Amarillo"
+     },
+     "precio": 19500,
+     "stock": 1,
+     "imagenes": [
+      "LOCION-REFRESCANTE-NATIVOS-HOMBRE-MG128.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -3588,6 +3639,11 @@
    900
   ],
   "SPLASH-MOHANA-MG110.png": [
+   160,
+   600,
+   900
+  ],
+  "LOCION-REFRESCANTE-NATIVOS-HOMBRE-MG128.png": [
    160,
    600,
    900
