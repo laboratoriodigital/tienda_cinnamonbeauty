@@ -1,4 +1,14 @@
 {
+  "AGUA-DE-ROSAS-MG164.png": {
+    "id": "1-QQmdZAhA0vF15yaf78sKSsuNbJdUUWI",
+    "modificado": "2026-09-22T20:34:39.431Z",
+    "bytes": 2260638
+  },
+  "AMPOLLA-BIO-REPARADORA-MG227.png": {
+    "id": "1anceyCit4jyEb0Kn-QJ4Xuyp5EnecFJ6",
+    "modificado": "2026-09-25T15:26:02.265Z",
+    "bytes": 2092310
+  },
   "BALSAMO-DE-LABIOS-SAMY-CON-LLAVERO-MG180.png": {
     "id": "1_fKYOiBL9KBc2MMk-s_sQB0yHj4ZYiZ1",
     "modificado": "2026-10-01T23:46:48.901Z",
@@ -19,6 +29,11 @@
     "modificado": "2026-09-08T11:53:22.996Z",
     "bytes": 1611074
   },
+  "BIO-REPOLARIZADOR-CAPILAR-MILAGROS-MG148.png": {
+    "id": "1gmb1dj4xKZlgM6rdPYp5UQ9AUQJm9DCr",
+    "modificado": "2026-09-22T21:10:38.028Z",
+    "bytes": 2409597
+  },
   "BLUSH-SHELL-ILUMINADOR-ROSADO-FM035.png": {
     "id": "1jayR1nFGloGT85sY6Y2HIU-t2sAuxusU",
     "modificado": "2026-09-14T20:41:58.099Z",
@@ -33,6 +48,26 @@
     "id": "1e2CXCLOSBTtnM9LeZH-EwhvUIocNLqU0",
     "modificado": "2026-09-19T21:39:49.667Z",
     "bytes": 1914996
+  },
+  "CEPILLO-CORAZON-FM004.png": {
+    "id": "1aVfAqu4LbQlKrIs_bwo8jtobqemNf-U3",
+    "modificado": "2026-09-14T11:54:41.820Z",
+    "bytes": 2043927
+  },
+  "CEPILLO-DESENRREDANTE-FM008.png": {
+    "id": "1DUJRGjB_9SfRnuNj9SaYeauucA-v4LLH",
+    "modificado": "2026-09-14T16:35:31.366Z",
+    "bytes": 2395730
+  },
+  "COLAGENO-BIOAQUA-FM038.png": {
+    "id": "15YNBJvuppdrOAbbQISYjdxIqSA0P7TPG",
+    "modificado": "2026-09-14T20:52:33.344Z",
+    "bytes": 2153321
+  },
+  "CONTORNO-DE-OJOS-BIOAQUA-FM027.png": {
+    "id": "1Z3MHtVDMUvRSfYIgWdUbvRFa53X1rDFV",
+    "modificado": "2026-09-14T20:32:15.316Z",
+    "bytes": 2145202
   },
   "CORRECTOR-ANIK-MG225.png": {
     "id": "1N5ThyfbjFJne0S9HgY3JgYwwrsDgzeUp",
@@ -59,10 +94,20 @@
     "modificado": "2026-09-29T00:09:58.398Z",
     "bytes": 2048580
   },
+  "DESODORANTE-PATY-NIÑAS-MG153.png": {
+    "id": "1duwDaxSRNlGk1keit4dCxsxCRuQNLrJv",
+    "modificado": "2026-09-08T11:28:16.731Z",
+    "bytes": 1641832
+  },
   "ENDURECEDOR-DE-UÑAS-MG183.png": {
     "id": "1L4sWvpO7n3ulzpg1zpR9lKgTtpdvApBP",
     "modificado": "2026-09-08T11:56:59.757Z",
     "bytes": 1880959
+  },
+  "ESPUMA-LIMPIADORA-DOLCE-BELLA-MG219.png": {
+    "id": "164zMtKcFA1Qe05eEfP7ojohHuBGsuBg9",
+    "modificado": "2026-09-25T14:58:52.524Z",
+    "bytes": 2171686
   },
   "EXFOLIANTE-FANTILUNA-MG152.png": {
     "id": "1iy32jBMQ7l77nC7kE7XAnN9yULRImBZ2",
@@ -94,6 +139,21 @@
     "modificado": "2026-09-08T11:44:26.977Z",
     "bytes": 1905588
   },
+  "KIT-SKIN-CARE-ACIDO-HIALURONICO-Y-ROSA-FM002.png": {
+    "id": "1cevUYnFxZydLd8rMmECYDUwQ3FAnbycQ",
+    "modificado": "2026-09-14T11:32:22.058Z",
+    "bytes": 1894405
+  },
+  "KIT-SKIN-CARE-ARROZ-MG100.png": {
+    "id": "1iahofIu9tQP0VaUhmARtLn9l4025qpng",
+    "modificado": "2026-09-14T11:40:38.686Z",
+    "bytes": 2060265
+  },
+  "KIT-SKIN-CARE-CAMELLIAS-FM003.png": {
+    "id": "146ooDsw5s0avFBFl-KwQif59QS4_nc4B",
+    "modificado": "2026-09-14T11:47:56.342Z",
+    "bytes": 2066028
+  },
   "LABIAL-MATE-CON-APLICADOR-HUXIA-HEXAGONAL-FM030.png": {
     "id": "1RnlaNhjwBZtbYHWvueCkVP11MIjUSVX0",
     "modificado": "2026-09-14T20:47:51.564Z",
@@ -110,7 +170,7 @@
     "bytes": 1983454
   },
   "LIP-GLOSS-GLITTER-MG203.jpg": {
-    "id": "11_4L4UG_b99kdGmsfFvsMTkwUxagv4rp",
+    "id": "1-aZMFaDR1vfddZ6UHR-tfcYfgkoW8UaR",
     "modificado": "2026-09-10T22:43:04.591Z",
     "bytes": 510735
   },
@@ -148,6 +208,31 @@
     "id": "157bwZHAdPV15LaUkLaC4BVXcbTlwVGOH",
     "modificado": "2026-09-28T23:48:06.139Z",
     "bytes": 1935499
+  },
+  "MASCARILLA-BOMBA-ORIGEN-BOTANICO-MG196.png": {
+    "id": "1P34uV6UzjLLGkVVglz9U29OwAjeVbkk6",
+    "modificado": "2026-09-18T21:05:42.187Z",
+    "bytes": 2071743
+  },
+  "MASCARILLA-DE-MIEL-CLICK-HAIR-MG130.png": {
+    "id": "1zLXPdofl6pcD5eUyS-EY6kIKr0ALt1dU",
+    "modificado": "2026-09-15T13:49:43.706Z",
+    "bytes": 1875850
+  },
+  "MIEL-CAPILAR-CLICK-HAIR-GRANDE-MG181.png": {
+    "id": "1RU4izDVkha64X0YjuWQewXFDvCOcXvG4",
+    "modificado": "2026-10-05T21:29:05.376Z",
+    "bytes": 1912937
+  },
+  "MIEL-CAPILAR-CLICK-HAIR-MG181.png": {
+    "id": "1m2RTtAbBtBAmro9R2UIO6hLKX8k-TqlO",
+    "modificado": "2026-09-10T21:13:09.980Z",
+    "bytes": 1900878
+  },
+  "MINI-ACONDICIONADOR-ANTIFRIZ-CEBOLLA-MILAGROS-MG149.png": {
+    "id": "1llUrsj203qGX5YdWEoJgICnOI9LHQvr2",
+    "modificado": "2026-09-22T21:21:23.473Z",
+    "bytes": 2345284
   },
   "PALETA-DE-SOMBRA-PUPPY- TRENDY-MG160.png": {
     "id": "1amBjpMu6XGnwtMYaUahfFiIzJk1OsIcj",
@@ -254,6 +339,11 @@
     "modificado": "2026-09-14T18:06:37.880Z",
     "bytes": 2117780
   },
+  "PROTECTOR-SOLAR-RETINOL-SPF50-FM041.png": {
+    "id": "1ksHKtQ9h5nkv1_Pjlcnr6b8v-KRp2GJH",
+    "modificado": "2026-09-14T19:58:10.033Z",
+    "bytes": 1831853
+  },
   "RESCATE-INSTANTANEO-MILAGROS-FM017.png": {
     "id": "19ShCyi4yLgjPhp493FZBg7Uglocl3PTC",
     "modificado": "2026-09-14T18:09:37.023Z",
@@ -278,6 +368,16 @@
     "id": "1lMy-gbfZE_4niv7T7cGRu-d8a0EVEFWz",
     "modificado": "2026-09-10T21:06:24.068Z",
     "bytes": 1905513
+  },
+  "SHAMPOO-EMERGENCIA-CAPILAR-MG150.png": {
+    "id": "1igDN1SijBDwAVs2XsPEbSUU48Gskevyl",
+    "modificado": "2026-09-22T21:27:16.627Z",
+    "bytes": 2306496
+  },
+  "SHAMPOO-ULTRA-NUTRITIVO-MILAGROS-MG151.png": {
+    "id": "1j4oMEM6TAlKCcSF9hRHVX124yZbKdSCa",
+    "modificado": "2026-09-22T21:39:17.909Z",
+    "bytes": 2410634
   },
   "SKALA-BABOSA-MG216.png": {
     "id": "1bibI03BX84Uos9NYFYsf_bKf560KXwVU",

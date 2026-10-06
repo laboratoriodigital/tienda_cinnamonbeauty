@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:14:40.678Z",
+ "generado": "2026-10-06T00:18:31.566Z",
  "productos": [
   {
    "id": "MG124",
@@ -2417,6 +2417,16 @@
      "imagenes": [
       "CEPILLO-DESENRREDANTE-FM008.png"
      ]
+    },
+    {
+     "id": "var-35c41144619f",
+     "sku": "FM008-35C411",
+     "opciones": {
+      "Color": "rosado"
+     },
+     "precio": 7000,
+     "stock": 0,
+     "imagenes": []
     }
    ]
   },
@@ -2426,7 +2436,7 @@
    "formato": "unidad",
    "categoria": "Accesorios",
    "precio": 7000,
-   "stock": 6,
+   "stock": 12,
    "descripcion": "✨ CEPILLO CORAZÓN 💗✨\n\nUn práctico accesorio para desenredar y peinar el cabello, ideal para facilitar tu rutina diaria de cuidado capilar. Su adorable diseño en forma de corazón le da un toque femenino y encantador. 💕\n\n#CepilloDeCabello #CepilloCorazon #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
     "CEPILLO-CORAZON-FM004.png"
@@ -2435,8 +2445,41 @@
    "referencia": "CEPILLO CORAZÓN",
    "precioAntes": 0,
    "umbralBajo": 3,
-   "ejes": [],
-   "variantes": []
+   "ejes": [
+    {
+     "nombre": "Color",
+     "valores": [
+      "lila",
+      "rosado"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-584d00f9c8da",
+     "sku": "FM004-584D00",
+     "opciones": {
+      "Color": "lila"
+     },
+     "precio": 7000,
+     "stock": 6,
+     "imagenes": [
+      "CEPILLO-CORAZON-FM004.png"
+     ]
+    },
+    {
+     "id": "var-a5ce195ea446",
+     "sku": "FM004-A5CE19",
+     "opciones": {
+      "Color": "rosado"
+     },
+     "precio": 7000,
+     "stock": 6,
+     "imagenes": [
+      "CEPILLO-CORAZON-FM004.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -2851,7 +2894,42 @@
    600,
    900
   ],
+  "MIEL-CAPILAR-CLICK-HAIR-MG181.png": [
+   160,
+   600,
+   900
+  ],
+  "MIEL-CAPILAR-CLICK-HAIR-GRANDE-MG181.png": [
+   160,
+   600,
+   900
+  ],
+  "MASCARILLA-DE-MIEL-CLICK-HAIR-MG130.png": [
+   160,
+   600,
+   900
+  ],
+  "MASCARILLA-BOMBA-ORIGEN-BOTANICO-MG196.png": [
+   160,
+   600,
+   900
+  ],
+  "SHAMPOO-ULTRA-NUTRITIVO-MILAGROS-MG151.png": [
+   160,
+   600,
+   900
+  ],
+  "MINI-ACONDICIONADOR-ANTIFRIZ-CEBOLLA-MILAGROS-MG149.png": [
+   160,
+   600,
+   900
+  ],
   "BIO-REPOLARIZADOR-CAPILAR-MILAGROS-MG148.png": [
+   160,
+   600,
+   900
+  ],
+  "SHAMPOO-EMERGENCIA-CAPILAR-MG150.png": [
    160,
    600,
    900
@@ -2861,7 +2939,52 @@
    600,
    900
   ],
+  "KIT-SKIN-CARE-CAMELLIAS-FM003.png": [
+   160,
+   600,
+   900
+  ],
+  "KIT-SKIN-CARE-ACIDO-HIALURONICO-Y-ROSA-FM002.png": [
+   160,
+   600,
+   900
+  ],
+  "KIT-SKIN-CARE-ARROZ-MG100.png": [
+   160,
+   600,
+   900
+  ],
+  "CONTORNO-DE-OJOS-BIOAQUA-FM027.png": [
+   160,
+   600,
+   900
+  ],
+  "COLAGENO-BIOAQUA-FM038.png": [
+   160,
+   600,
+   900
+  ],
+  "DESODORANTE-PATY-NIÑAS-MG153.png": [
+   160,
+   600,
+   900
+  ],
+  "PROTECTOR-SOLAR-RETINOL-SPF50-FM041.png": [
+   160,
+   600,
+   900
+  ],
   "AGUA-DE-ROSAS-MG164.png": [
+   160,
+   600,
+   900
+  ],
+  "ESPUMA-LIMPIADORA-DOLCE-BELLA-MG219.png": [
+   160,
+   600,
+   900
+  ],
+  "CEPILLO-DESENRREDANTE-FM008.png": [
    160,
    600,
    900
