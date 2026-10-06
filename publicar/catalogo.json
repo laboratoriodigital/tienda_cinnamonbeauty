@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:47:38.607Z",
+ "generado": "2026-10-06T00:53:34.970Z",
  "productos": [
   {
    "id": "MG124",
@@ -2586,6 +2586,70 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG134",
+   "nombre": "Gorro De Satin",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 8100,
+   "stock": 6,
+   "descripcion": "🎀✨GORROS DE SATIN✨ \n\nIdeales para ayudar a proteger el cabello durante el descanso y mantenerlo más organizado. Su tejido de satén es perfecto para complementar tu rutina de cuidado capilar y conservar tu peinado por más tiempo. 💕✨\n\n#GorroDeSatin #CuidadoDelCabello #AccesoriosDeBelleza #CinnamonBeauty",
+   "imagenes": [
+    "GORROS-SATIN-MG134.png"
+   ],
+   "destacado": false,
+   "referencia": "GORROS DE SATIN",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [
+    {
+     "nombre": "Color",
+     "valores": [
+      "negro",
+      "rosado",
+      "lila"
+     ]
+    }
+   ],
+   "variantes": [
+    {
+     "id": "var-718db28812e0",
+     "sku": "MG134-718DB2",
+     "opciones": {
+      "Color": "negro"
+     },
+     "precio": 8100,
+     "stock": 2,
+     "imagenes": [
+      "GORROS-SATIN-MG134.png"
+     ]
+    },
+    {
+     "id": "var-f4b3d89754e7",
+     "sku": "MG134-F4B3D8",
+     "opciones": {
+      "Color": "rosado"
+     },
+     "precio": 8100,
+     "stock": 2,
+     "imagenes": [
+      "GORROS-SATIN-MG134.png"
+     ]
+    },
+    {
+     "id": "var-120530e40587",
+     "sku": "MG134-120530",
+     "opciones": {
+      "Color": "lila"
+     },
+     "precio": 8100,
+     "stock": 2,
+     "imagenes": [
+      "GORROS-SATIN-MG134.png"
+     ]
+    }
+   ]
   }
  ],
  "envios": [
@@ -3116,6 +3180,11 @@
    900
   ],
   "BEAUTY-BLENDER-MG177.png": [
+   160,
+   600,
+   900
+  ],
+  "GORROS-SATIN-MG134.png": [
    160,
    600,
    900
