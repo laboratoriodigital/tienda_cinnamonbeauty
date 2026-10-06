@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:40:21.235Z",
+ "generado": "2026-10-06T00:41:47.088Z",
  "productos": [
   {
    "id": "MG124",
@@ -3082,7 +3082,17 @@
    600,
    900
   ],
+  "COSMETIQUERA-MILAGROS-ROSADA-MG107.jpg": [
+   160,
+   600,
+   900
+  ],
   "ESPEJO-CON-CORREA-FM005.png": [
+   160,
+   600,
+   900
+  ],
+  "SET-DE-BROCHAS-MONTOC-MG178.png": [
    160,
    600,
    900
