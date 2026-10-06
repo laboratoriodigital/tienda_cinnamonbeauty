@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T21:42:40.160Z",
+ "generado": "2026-10-06T21:45:27.979Z",
  "productos": [
   {
    "id": "MG124",
@@ -2885,9 +2885,11 @@
    "formato": "unidad",
    "categoria": "Accesorios",
    "precio": 12600,
-   "stock": 0,
+   "stock": 6,
    "descripcion": "✨ ONDAS SIN CALOR  💕✨\n\nCrea ondas y rizos de forma práctica sin necesidad de utilizar calor. Ideal para cambiar tu look y conseguir un estilo bonito y natural mientras cuidas tu cabello. 🌸💗\n\n#OndasSinCalor #RizosSinCalor #CuidadoDelCabello #CinnamonBeauty",
-   "imagenes": [],
+   "imagenes": [
+    "ONDAS-SIN-CALOR-MG101.png"
+   ],
    "destacado": false,
    "referencia": "ONDAS SIN CALOR",
    "precioAntes": 0,
@@ -2908,8 +2910,8 @@
      "opciones": {
       "Color": "Rosado"
      },
-     "precio": 25500,
-     "stock": 0,
+     "precio": 12600,
+     "stock": 3,
      "imagenes": [
       "ONDAS-SIN-CALOR-MG101.png"
      ]
@@ -2921,7 +2923,7 @@
       "Color": "negro"
      },
      "precio": 12600,
-     "stock": 0,
+     "stock": 3,
      "imagenes": [
       "ONDAS-SIN-CALOR-MG101.png"
      ]
@@ -3511,7 +3513,7 @@
    600,
    900
   ],
-  "SET-DE-BROCHAS-SWEET-X8-FM014.png": [
+  "ONDAS-SIN-CALOR-MG101.png": [
    160,
    600,
    900
