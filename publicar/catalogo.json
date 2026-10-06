@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T21:18:11.465Z",
+ "generado": "2026-10-06T21:19:39.511Z",
  "productos": [
   {
    "id": "MG124",
@@ -3310,6 +3310,11 @@
    900
   ],
   "KIT-VIAJERO-MG102.png": [
+   160,
+   600,
+   900
+  ],
+  "ENCRESPADOR-ENKOR-MG172.png": [
    160,
    600,
    900
