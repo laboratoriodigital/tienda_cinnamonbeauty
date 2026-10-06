@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:41:47.088Z",
+ "generado": "2026-10-06T00:43:49.429Z",
  "productos": [
   {
    "id": "MG124",
@@ -2568,6 +2568,24 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "MG177",
+   "nombre": "Beauty Blender Color Surtido",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 1800,
+   "stock": 12,
+   "descripcion": "✨ BEAUTY BLENDER  💕💄\n\nEsponja práctica para aplicar y difuminar productos de maquillaje, ayudando a conseguir un acabado uniforme, suave y natural. Ideal para bases, correctores y otros productos líquidos o cremosos.\n\n#BeautyBlender #EsponjaDeMaquillaje #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "BEAUTY-BLENDER-MG177.png"
+   ],
+   "destacado": false,
+   "referencia": "BEAUTY BLENDER",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -3093,6 +3111,11 @@
    900
   ],
   "SET-DE-BROCHAS-MONTOC-MG178.png": [
+   160,
+   600,
+   900
+  ],
+  "BEAUTY-BLENDER-MG177.png": [
    160,
    600,
    900
