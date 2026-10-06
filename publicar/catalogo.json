@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T21:21:40.906Z",
+ "generado": "2026-10-06T21:29:32.506Z",
  "productos": [
   {
    "id": "MG124",
@@ -2773,6 +2773,42 @@
    "umbralBajo": 3,
    "ejes": [],
    "variantes": []
+  },
+  {
+   "id": "FM006",
+   "nombre": "Brocha Efecto Diamante",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 7500,
+   "stock": 6,
+   "descripcion": "✨ BROCHA EFECTO DIAMANTE 💎💄\n\nUna brocha elegante y práctica, ideal para aplicar y difuminar tus productos de maquillaje con facilidad. Perfecta para complementar tu kit de belleza y lograr un acabado uniforme y profesional. ✨💕\n\n#BrochaDeMaquillaje #BrochaDiamante #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "BROCHA-EFECTO-DIAMANTE-FM006.png"
+   ],
+   "destacado": false,
+   "referencia": "BROCHA EFECTO DIAMANTE",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
+  },
+  {
+   "id": "FR611",
+   "nombre": "Sacapuntas Doble",
+   "formato": "unidad",
+   "categoria": "Accesorios",
+   "precio": 3600,
+   "stock": 6,
+   "descripcion": "✨ SACAPUNTAS DOBLE  ✏️💄\n\nPráctico accesorio de doble función, ideal para mantener tus lápices de maquillaje siempre bien definidos y listos para usar. Perfecto para delineadores de ojos y labios. 💕\n\n#SacapuntasDoble #AccesoriosDeMaquillaje #Maquillaje #CinnamonBeauty",
+   "imagenes": [
+    "SACAPUNTAS-DOBLE-FR611.png"
+   ],
+   "destacado": false,
+   "referencia": "SACAPUNTAS DOBLE",
+   "precioAntes": 0,
+   "umbralBajo": 3,
+   "ejes": [],
+   "variantes": []
   }
  ],
  "envios": [
@@ -3338,6 +3374,16 @@
    900
   ],
   "SET-BROCHAS-SIRENA-MG125.png": [
+   160,
+   600,
+   900
+  ],
+  "BROCHA-EFECTO-DIAMANTE-FM006.png": [
+   160,
+   600,
+   900
+  ],
+  "SACAPUNTAS-DOBLE-FR611.png": [
    160,
    600,
    900
