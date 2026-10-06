@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-06T00:36:04.702Z",
+ "generado": "2026-10-06T00:40:21.235Z",
  "productos": [
   {
    "id": "MG124",
@@ -1925,7 +1925,7 @@
     "MIEL-CAPILAR-CLICK-HAIR-MG181.png"
    ],
    "destacado": false,
-   "referencia": "MIEL CAPILAR CLICK HAIR",
+   "referencia": "MIEL CAPILAR CLICK HAIR|MIEL-CAPILAR-CLICK-HAIR-GRANDE-MG181.png",
    "precioAntes": 0,
    "umbralBajo": 3,
    "ejes": [
@@ -2490,7 +2490,8 @@
    "stock": 12,
    "descripcion": "✨ COSMETIQUERA MILAGROS 💕✨\n\nPráctica y encantadora para organizar y llevar tus productos de belleza a todas partes. Ideal para guardar maquillaje, accesorios y tus esenciales de cuidado personal de forma cómoda y ordenada. 💄🌸\n\n#Cosmetiquera #Milagros #AccesoriosDeBelleza #CinnamonBeauty",
    "imagenes": [
-    "COSMETIQUERA-MILAGROS-MG107.jpg"
+    "COSMETIQUERA-MILAGROS-MG107.jpg",
+    "COSMETIQUERA-MILAGROS-ROSADA-MG107.jpg"
    ],
    "destacado": false,
    "referencia": "COSMETIQUERA MILAGROS",
@@ -2527,7 +2528,7 @@
      "precio": 27000,
      "stock": 6,
      "imagenes": [
-      "COSMETIQUERA-MILAGROS-MG107.jpg"
+      "COSMETIQUERA-MILAGROS-ROSADA-MG107.jpg"
      ]
     }
    ]
@@ -3081,22 +3082,7 @@
    600,
    900
   ],
-  "COSMETIQUERA-MILAGROS-MG107.jpg": [
-   160,
-   600,
-   900
-  ],
-  "COSMETIQUERA-MILAGROS-MG107.png": [
-   160,
-   600,
-   900
-  ],
   "ESPEJO-CON-CORREA-FM005.png": [
-   160,
-   600,
-   900
-  ],
-  "SET-DE-BROCHAS-MONTOC-MG178.png": [
    160,
    600,
    900
