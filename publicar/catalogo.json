@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-08T15:42:18.404Z",
+ "generado": "2026-10-08T16:39:02.739Z",
  "productos": [
   {
    "id": "MG124",
@@ -112,7 +112,7 @@
    "nombre": "Mantequilla Click Hair",
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
-   "precio": 52000,
+   "precio": 51300,
    "stock": 6,
    "descripcion": "✨ MANTEQUILLA CORPORAL CON GLITTER CLICK HAIR ✨💗\n\nHidrata y suaviza la piel, aportando un toque luminoso y radiante gracias a su efecto glitter. Ideal para lucir una piel hermosa, suave y con un brillo especial. ✨💕\n\n#MantequillaCorporal #GlitterCorporal #CuidadoCorporal #CinnamonBeauty",
    "imagenes": [
@@ -130,7 +130,7 @@
    "nombre": "Crema Corporal Fantiluna",
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
-   "precio": 22500,
+   "precio": 19000,
    "stock": 17,
    "descripcion": "✨ CREMAS CORPORALES FANTILUNA 💕✨\n\nDale a tu piel un toque de suavidad, hidratación y un delicioso aroma con las Cremas Corporales Fantiluna. Su presentación de 280 ml es ideal para el cuidado diario de manos y cuerpo. 🌸\n\n💕 Seducción: una opción femenina y encantadora con su delicado diseño.\n🍭 Bon bon: perfecta para quienes aman los aromas dulces y divertidos.\n💜 Chic: sofisticada y femenina, ideal para complementar tu rutina de cuidado personal.\n\nElige tu favorita y disfruta de una piel con una sensación suave y agradable. ✨\n\n#CremasCorporales #Fantiluna #CuidadoDeLaPiel #CinnamonBeauty",
    "imagenes": [
@@ -196,7 +196,7 @@
    "nombre": "Splash Corporal Fantiluna",
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
-   "precio": 22500,
+   "precio": 19000,
    "stock": 8,
    "descripcion": "✨ SPLASH CORPORAL FANTILUNA 🍬💖\n\nUna fragancia corporal deliciosa y femenina que deja sobre tu piel un aroma dulce, agradable y encantador. Su presentación Bon Bon es perfecta para quienes disfrutan de aromas irresistibles y llenos de personalidad. 🌸✨\n\nIdeal para usar a diario y llevar contigo a cualquier lugar. 💕\n\n📲 Elige tu favorito y haz tu pedido.\n\n#SplashCorporal #Fantiluna #PerfumeriaFemenina #CinnamonBeauty",
    "imagenes": [
@@ -223,7 +223,7 @@
      "opciones": {
       "Aroma": "sandia"
      },
-     "precio": 22500,
+     "precio": 19000,
      "stock": 5,
      "imagenes": [
       "SPLASH-FANTILUNA-SANDIA-MG115.png"
@@ -235,7 +235,7 @@
      "opciones": {
       "Aroma": "bonbon"
      },
-     "precio": 22500,
+     "precio": 19000,
      "stock": 3,
      "imagenes": [
       "SPLASH-FANTILUNA-BONBON-MG115.png"
@@ -248,7 +248,7 @@
    "nombre": "Splash Corporal Fantiluna Infantil",
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
-   "precio": 14000,
+   "precio": 12500,
    "stock": 5,
    "descripcion": "🦄👑 SPLASH CORPORAL INFANTIL FANTILUNA 💕✨\n\nAromas dulces, delicados y encantadores para las más pequeñas. Presentado en dos diseños llenos de fantasía: Unicornio 🦄 y Princess 👑, perfectos para acompañar su rutina diaria con un toque divertido y especial. 🌸💖\n\nUna opción ideal para regalar y disfrutar después del baño.\n\n📲 Elige Unicornio o Princess y pide tu favorito en CINNAMON BEAUTY.\n\n#Fantiluna #SplashInfantil #PerfumeriaInfantil #CinnamonBeauty",
    "imagenes": [
@@ -275,7 +275,7 @@
      "opciones": {
       "Aroma": "unicornio"
      },
-     "precio": 14000,
+     "precio": 12500,
      "stock": 2,
      "imagenes": [
       "SPLASH-FANTILUNA-INFANTIL-UNICORNIO-MG223.png"
@@ -287,7 +287,7 @@
      "opciones": {
       "Aroma": "princess"
      },
-     "precio": 14000,
+     "precio": 12500,
      "stock": 3,
      "imagenes": [
       "SPLASH-FANTILUNA-INFANTIL-PRINCESS-MG223.png"
@@ -300,7 +300,7 @@
    "nombre": "Exfoliante Fantiluna",
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
-   "precio": 20000,
+   "precio": 16900,
    "stock": 3,
    "descripcion": "✨ EXFOLIANTE CORPORAL FANTILUNA ✨💕\n\nConsiente tu piel con una exfoliación que ayuda a retirar células muertas e impurezas, dejando una sensación de suavidad, frescura y piel renovada. 🫧🌸\n\nIdeal para complementar tu rutina de cuidado corporal y disfrutar una piel más suave y agradable al tacto. 💖\n\n📲 Dale a tu piel un momento de cuidado y pide el tuyo en CINNAMON BEAUTY.\n\n#ExfolianteCorporal #CuidadoCorporal #Fantiluna #CinnamonBeauty",
    "imagenes": [
@@ -326,7 +326,7 @@
      "opciones": {
       "Aroma": "sandia"
      },
-     "precio": 20000,
+     "precio": 16900,
      "stock": 1,
      "imagenes": [
       "EXFOLIANTE-FANTILUNA-MG152.png"
@@ -338,7 +338,7 @@
      "opciones": {
       "Aroma": "bonbon"
      },
-     "precio": 20000,
+     "precio": 16900,
      "stock": 2,
      "imagenes": [
       "EXFOLIANTE-FANTILUNA-MG152.png"
@@ -351,7 +351,7 @@
    "nombre": "Polvo Compacto + Corrector",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 20000,
+   "precio": 16900,
    "stock": 5,
    "descripcion": "✨ POLVO + CORRECTOR SAS ✨💄\n\nUn dúo práctico para lograr un maquillaje más uniforme y con un acabado bonito y natural. El corrector ayuda a disimular pequeñas imperfecciones y unificar el tono, mientras el polvo compacto aporta un acabado más pulido al maquillaje. 💕\n\nIdeal para llevar en tu cosmetiquera y crear tu look diario de manera fácil y rápida.\n\n📲 Completa tu maquillaje con SAS y pide el tuyo en CINNAMON BEAUTY.\n\n#PolvoCompacto #Corrector #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -377,7 +377,7 @@
      "opciones": {
       "Tonos": "06"
      },
-     "precio": 20000,
+     "precio": 16900,
      "stock": 3,
      "imagenes": [
       "POLVO+CORRECTOR-SAS-FR610.png"
@@ -389,7 +389,7 @@
      "opciones": {
       "Tonos": "04"
      },
-     "precio": 20000,
+     "precio": 16900,
      "stock": 2,
      "imagenes": [
       "POLVO+CORRECTOR-SAS-FR610.png"
@@ -402,7 +402,7 @@
    "nombre": "Polvo de Hadas Just Beauty",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 6500,
+   "precio": 5200,
    "stock": 8,
    "descripcion": "✨ POLVO DE HADAS JUST BEAUTY 🧚‍♀️✨\n\nDale a tu maquillaje un toque luminoso y mágico con el Polvo de Hadas Just Beauty. Su acabado aporta un efecto radiante y delicado, perfecto para resaltar tu look y darle ese toque especial a tu maquillaje. 💕✨\n\nIdeal para usar en ocasiones especiales o darle un extra de brillo a tu maquillaje diario.\n\n📲 Haz que tu look brille y pide el tuyo en CINNAMON BEAUTY.\n\n#PolvoDeHadas #Iluminador #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -420,7 +420,7 @@
    "nombre": "Polvo de Hadas Purpure",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 13900,
+   "precio": 12200,
    "stock": 6,
    "descripcion": "✨ POLVO DE HADAS PURPURE🧚‍♀️✨\n\nDale a tu maquillaje un toque luminoso y mágico con el Polvo de Hadas Purpure. Su acabado aporta un efecto radiante y delicado, perfecto para resaltar tu look y darle ese toque especial a tu maquillaje. 💕✨\n\nIdeal para usar en ocasiones especiales o darle un extra de brillo a tu maquillaje diario.\n\n📲 Haz que tu look brille y pide el tuyo en CINNAMON BEAUTY.\n\n#PolvoDeHadas #Iluminador #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -438,7 +438,7 @@
    "nombre": "Rubor e Iluminador  Bonshik",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 12500,
+   "precio": 10400,
    "stock": 6,
    "descripcion": "🌸 RUBOR E ILUMINADOR  BONSHIK 💕✨\n\nDale a tus mejillas un toque de color natural, fresco y favorecedor con el Rubor BonShik. Su textura es ideal para aportar un acabado bonito y luminoso, perfecto para completar cualquier look de maquillaje. 💄🌷\n\n📲 Dale color a tu look y pide el tuyo en CINNAMON BEAUTY.\n\n#Rubor #RuborBonShik #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -456,7 +456,7 @@
    "nombre": "Polvo Compacto Ushas",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 12500,
+   "precio": 10400,
    "stock": 12,
    "descripcion": "✨ POLVO COMPACTO USHAS ✨💄\n\nLogra un acabado uniforme, suave y natural con el Polvo Compacto Ushas. Ideal para sellar tu maquillaje, ayudar a controlar el brillo y darle a tu piel una apariencia más pulida y bonita. 💕✨\n\nPerfecto para llevar en tu cosmetiquera y retocar tu maquillaje durante el día.\n\n📲 Completa tu look y pide el tuyo en CINNAMON BEAUTY.\n\n#PolvoCompacto #Ushas #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -483,7 +483,7 @@
      "opciones": {
       "Tonos": "05"
      },
-     "precio": 12500,
+     "precio": 10400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-USHAS-FR609.png"
@@ -495,7 +495,7 @@
      "opciones": {
       "Tonos": "06"
      },
-     "precio": 12500,
+     "precio": 10400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-USHAS-FR609.png"
@@ -507,7 +507,7 @@
      "opciones": {
       "Tonos": "07"
      },
-     "precio": 12500,
+     "precio": 10400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-USHAS-FR609.png"
@@ -584,7 +584,7 @@
    "nombre": "Corrector Anik",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 19500,
+   "precio": 18300,
    "stock": 8,
    "descripcion": "✨ CORRECTOR ANI-K 💄✨\n\nAyuda a disimular pequeñas imperfecciones, unificar el tono y conseguir un acabado más uniforme y natural. Ideal para complementar tu maquillaje diario. 💕\n\n\n\n#Corrector #Maquillaje #AniK #CinnamonBeauty",
    "imagenes": [
@@ -602,7 +602,7 @@
    "nombre": "Base lula",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 23500,
+   "precio": 21600,
    "stock": 12,
    "descripcion": "✨ BASE LÍQUIDA LULA 💄✨\n\nBase de textura líquida que ayuda a unificar el tono de la piel y lograr un acabado uniforme y natural. Ideal para crear un maquillaje bonito y duradero para tu día a día. 💕\n\n\n#BaseLiquida #Maquillaje #BaseDeMaquillaje #CinnamonBeauty",
    "imagenes": [
@@ -629,7 +629,7 @@
      "opciones": {
       "Tonos": "01"
      },
-     "precio": 23500,
+     "precio": 21600,
      "stock": 4,
      "imagenes": [
       "BASE-LULA-MG185.png"
@@ -641,7 +641,7 @@
      "opciones": {
       "Tonos": "02"
      },
-     "precio": 23500,
+     "precio": 21600,
      "stock": 4,
      "imagenes": [
       "BASE-LULA-MG185.png"
@@ -653,7 +653,7 @@
      "opciones": {
       "Tonos": "03"
      },
-     "precio": 23500,
+     "precio": 21600,
      "stock": 4,
      "imagenes": [
       "BASE-LULA-MG185.png"
@@ -666,7 +666,7 @@
    "nombre": "Corrector Bloomshell",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 19900,
+   "precio": 18900,
    "stock": 12,
    "descripcion": "✨ CORRECTOR BLOOMSHELL 💄✨\n\nAyuda a disimular pequeñas imperfecciones, unificar el tono y lograr un acabado más uniforme y natural. Ideal para complementar tu rutina de maquillaje. 💕\n\n\n#Corrector #Bloomshell #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -684,7 +684,7 @@
    "nombre": "Blush shell Iluminador Rosado",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 18000,
+   "precio": 15400,
    "stock": 6,
    "descripcion": "✨ BLUSH SHELL ILUMINADOR ROSADO 🌸✨\n\nAporta un hermoso toque de color y luminosidad al rostro, dejando un acabado fresco, radiante y femenino. Ideal para resaltar tus mejillas y darle vida a tu maquillaje. 💕✨\n\n\n#Blush #Iluminador #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -702,7 +702,7 @@
    "nombre": "Kit de Rubor Trendy",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 17300,
+   "precio": 14600,
    "stock": 6,
    "descripcion": "✨ KIT DE RUBOR TRENDY 🌸💄\n\nDale a tu rostro un toque de color fresco y favorecedor con este práctico kit de rubor. Ideal para realzar las mejillas y complementar cualquier look de maquillaje. 💕\n\n\n#Rubor #KitDeMaquillaje #Trendy #CinnamonBeauty",
    "imagenes": [
@@ -720,7 +720,7 @@
    "nombre": "Rubor en Perlas Ushas Rosado",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 18800,
+   "precio": 15800,
    "stock": 12,
    "descripcion": "✨ RUBOR EN PERLAS USHAS  ROSADO🌸✨\n\nAporta un toque de color fresco y luminoso a tus mejillas, ayudando a realzar el rostro y conseguir un acabado radiante y femenino. 💕 Ideal para complementar cualquier look de maquillaje.\n\n\n#RuborEnPerlas #Ushas #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -738,7 +738,7 @@
    "nombre": "Polvo Compacto Nailen Con Espejo",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 13000,
+   "precio": 11400,
    "stock": 12,
    "descripcion": "✨ 💄✨\n\nSu textura compacta ayuda a conseguir un acabado uniforme, suave y natural. Ideal para complementar tu maquillaje y lucir una piel con apariencia más pulida. 💕\n\n POLVO COMPACTO NAILEN CON ESPEJO\n#PolvoCompacto #Nailen #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -765,7 +765,7 @@
      "opciones": {
       "Tonos": "01"
      },
-     "precio": 13000,
+     "precio": 11400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-NAILEN-MG220.png"
@@ -777,7 +777,7 @@
      "opciones": {
       "Tonos": "02"
      },
-     "precio": 13000,
+     "precio": 11400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-NAILEN-MG220.png"
@@ -789,7 +789,7 @@
      "opciones": {
       "Tonos": "03"
      },
-     "precio": 13000,
+     "precio": 11400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-NAILEN-MG220.png"
@@ -802,7 +802,7 @@
    "nombre": "Polvo Compacto  Samy Con Filtro Solar",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 13000,
+   "precio": 11400,
    "stock": 12,
    "descripcion": "✨ POLVO COMPACTO SAMY CON FILTRO SOLAR 💄✨\n\nSu textura micropulverizada ayuda a conseguir un acabado uniforme, suave y natural. Con vitamina E, filtro solar y fragancia hipoalergénica, ideal para complementar tu maquillaje diario. 💕\n\n#PolvoCompacto #Samy #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -829,7 +829,7 @@
      "opciones": {
       "Tonos": "01"
      },
-     "precio": 13000,
+     "precio": 11400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-SAMY-MG222.png"
@@ -841,7 +841,7 @@
      "opciones": {
       "Tonos": "02"
      },
-     "precio": 13000,
+     "precio": 11400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-SAMY-MG222.png"
@@ -853,7 +853,7 @@
      "opciones": {
       "Tonos": "03"
      },
-     "precio": 13000,
+     "precio": 11400,
      "stock": 4,
      "imagenes": [
       "POLVO-COMPACTO-SAMY-MG222.png"
@@ -866,7 +866,7 @@
    "nombre": "Polvo Compacto Vogue Larga Duracion",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 17000,
+   "precio": 16000,
    "stock": 1,
    "descripcion": "✨ POLVO COMPACTO VOGUE LARGA DURACIÓN 💄✨\n\nSu fórmula ayuda a lograr un acabado mate natural, uniforme y de larga duración. Con ácido hialurónico y filtros solares, ideal para complementar tu maquillaje y mantener un look impecable. 💕\n\n#PolvoCompacto #Vogue #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -891,7 +891,7 @@
      "opciones": {
       "Tonos": "02"
      },
-     "precio": 17000,
+     "precio": 16000,
      "stock": 1,
      "imagenes": [
       "POLVO-COMPACTO-VOGUE-LARGA-DURACION-MG221.png"
@@ -904,7 +904,7 @@
    "nombre": "Paleta de Sombras Vintage Trendy",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 32000,
+   "precio": 27000,
    "stock": 1,
    "descripcion": "✨ PALETA DE SOMBRAS VINTAGE TRENDY 💄✨\n\nUna paleta PALETA DE SOMBRAS VINTAGE TRENDY versátil con tonos ideales para crear looks naturales, intensos y llenos de personalidad. Perfecta para experimentar con diferentes estilos y darle color a tu maquillaje. 💕\n\n#PaletaDeSombras #SombrasTrendy #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -922,7 +922,7 @@
    "nombre": "Paleta de Sombras Ushas Eyeshadow",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 12500,
+   "precio": 10300,
    "stock": 12,
    "descripcion": "✨ PALETA DE SOMBRAS USHAS EYE SHADOW 💄✨\n\nUna paleta versátil con tonos ideales para crear diferentes looks, desde maquillajes naturales y delicados hasta estilos más intensos y llamativos. Perfecta para darle color y personalidad a tu mirada. 💕\n\n#SombrasUshas #EyeShadow #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -949,7 +949,7 @@
      "opciones": {
       "Tonos": "04"
      },
-     "precio": 12500,
+     "precio": 10300,
      "stock": 4,
      "imagenes": [
       "PALETA-DE-SOMBRAS-USHAS-EYE-SHADOW-FR604.png"
@@ -961,7 +961,7 @@
      "opciones": {
       "Tonos": "05"
      },
-     "precio": 12500,
+     "precio": 10300,
      "stock": 4,
      "imagenes": [
       "PALETA-DE-SOMBRAS-USHAS-EYE-SHADOW-FR604.png"
@@ -973,7 +973,7 @@
      "opciones": {
       "Tonos": "06"
      },
-     "precio": 12500,
+     "precio": 10300,
      "stock": 4,
      "imagenes": [
       "PALETA-DE-SOMBRAS-USHAS-EYE-SHADOW-FR604.png"
@@ -986,7 +986,7 @@
    "nombre": "paleta de Sombras CLoud Trendy",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 15300,
+   "precio": 13000,
    "stock": 4,
    "descripcion": "✨ PALETA DE SOMBRAS CLOUD TRENDY ☁️💄\n\nUna paleta versátil con tonos mate y satinados, ideal para crear looks delicados, románticos o más intensos. Su textura sedosa facilita la aplicación y difuminación para lograr diferentes estilos de maquillaje. ✨\n\n#PaletaDeSombras #CloudTrendy #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1004,7 +1004,7 @@
    "nombre": "Paleta de Sombras Puppy Trendy",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 29000,
+   "precio": 29500,
    "stock": 3,
    "descripcion": "✨ PALETA DE SOMBRAS PUPPY TRENDY 🐶💄\n\nUna paleta completa y versátil con tonos cálidos, acabados mate y satinados, además de iluminadores, rubor y contorno. Su textura suave y fácil de difuminar permite crear desde looks naturales hasta maquillajes más intensos. ✨💕\n\n#PaletaDeSombras #PuppyTrendy #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1022,7 +1022,7 @@
    "nombre": "Paleta de Sombras Atenea Rose",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 42000,
+   "precio": 43000,
    "stock": 4,
    "descripcion": "✨ PALETA DE SOMBRAS ATENEA ROSE 🌹💄\n\nUna paleta elegante y versátil con tonos rosados y cálidos, perfecta para crear looks suaves, románticos o más intensos. Ideal para darle profundidad y luminosidad a tu mirada. ✨💕\n\n#PaletaDeSombras #AteneaRose #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1040,7 +1040,7 @@
    "nombre": "Paleta de Sombras Rock Trendy",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 15300,
+   "precio": 13000,
    "stock": 2,
    "descripcion": "✨ PALETA DE SOMBRAS ROCK TRENDY 🎸💄\n\nUna paleta versátil con tonos ideales para crear looks intensos, modernos y llenos de personalidad. Perfecta para experimentar con diferentes combinaciones y darle un toque especial a tu mirada. ✨💕\n\n#PaletaDeSombras #RockTrendy #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1058,7 +1058,7 @@
    "nombre": "Patela de Sombras Uva Trendy",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 15300,
+   "precio": 13000,
    "stock": 3,
    "descripcion": "✨ PALETA DE SOMBRAS UVA TRENDY 🍇💜\n\nUna paleta de tonos versátiles y femeninos, perfecta para crear looks suaves, intensos y llenos de personalidad. Ideal para darle un toque especial y sofisticado a tu mirada. ✨💕\n\n#PaletaDeSombras #UvaTrendy #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1076,7 +1076,7 @@
    "nombre": "Paleta de Sombras Ushas",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 16500,
+   "precio": 13800,
    "stock": 4,
    "descripcion": "✨ PALETA DE SOMBRAS USHAS 💄✨\n\nUna paleta versátil con tonos ideales para crear looks naturales, delicados o más intensos. Perfecta para combinar colores, darle profundidad a la mirada y crear diferentes estilos de maquillaje. 💕\n\n#PaletaDeSombras #Ushas #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1094,7 +1094,7 @@
    "nombre": "Endurecedor Uñas De Hierro",
    "formato": "Unidad",
    "categoria": "Maquillaje",
-   "precio": 8000,
+   "precio": 6100,
    "stock": 6,
    "descripcion": "✨ ENDURECEDOR UÑAS DE HIERRO 💅✨\n\nAyuda a fortalecer y proteger las uñas, ideal para complementar tu rutina de cuidado y mantenerlas con una apariencia más saludable y cuidada. 💕\n\n#EndurecedorDeUñas #UñasDeHierro #CuidadoDeUñas #CinnamonBeauty",
    "imagenes": [
@@ -1112,7 +1112,7 @@
    "nombre": "Tinta Tapa Corazon",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 4500,
+   "precio": 3600,
    "stock": 6,
    "descripcion": "✨ TINTA TAPA CORAZÓN 💕💄\n\nDale a tus labios y mejillas un toque de color fresco y natural con esta práctica tinta. Su formato es ideal para llevar contigo y darle vida a tu look en cualquier momento. ✨\n\n#TintaLabial #TintaDeMejillas #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1130,7 +1130,7 @@
    "nombre": "Tinta Scarlet Tint Purpure Tapa Corazon",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 10000,
+   "precio": 8700,
    "stock": 8,
    "descripcion": "✨ TINTA SCARLET TINT PURPURE TAPA CORAZÓN ❤️💄\n\nUna tinta de color intenso y encantador, perfecta para aportar un toque de color a tus labios y mejillas. Su diseño con tapa en forma de corazón le da un detalle femenino y especial. ✨💕\n\n#TintaLabial #ScarletTint #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1148,7 +1148,7 @@
    "nombre": "Tinta Gelatina Jelly Blish",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 8000,
+   "precio": 6800,
    "stock": 8,
    "descripcion": "✨ TINTA GELATINA JELLY BLISH 💕✨\n\nDale a tus labios y mejillas un toque de color fresco, jugoso y natural. Su textura tipo gelatina permite crear un look delicado y luminoso, perfecto para resaltar tu belleza en cualquier ocasión. 🍓💄\n\n#TintaGelatina #JellyBlish #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1166,7 +1166,7 @@
    "nombre": "Lip Gloss Tapa Fresita",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 5800,
+   "precio": 4900,
    "stock": 8,
    "descripcion": "✨ LIP GLOSS TAPA FRESITA 🍓💋\n\nDale a tus labios un toque de brillo, frescura y un acabado jugoso. Su adorable diseño con tapa en forma de fresita lo convierte en un favorito para llevar siempre contigo. 💕\n\n#LipGloss #BrilloLabial #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1184,7 +1184,7 @@
    "nombre": "Lip Gloss Quin Beauty",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 5800,
+   "precio": 4900,
    "stock": 12,
    "descripcion": "✨ LIP GLOSS QUIN BEAUTY💋✨\n\nDale a tus labios un toque de brillo y un acabado jugoso para complementar cualquier look. Perfecto para llevar contigo y darle un toque especial a tu maquillaje. 💕\n\n#LipGloss #QuinBeauty #BrilloLabial #CinnamonBeauty",
    "imagenes": [
@@ -1202,7 +1202,7 @@
    "nombre": "Lip Gloss Milk",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 5800,
+   "precio": 4900,
    "stock": 6,
    "descripcion": "✨ LIP GLOSS MILK 💋\n\nDale a tus labios un toque de brillo y un acabado suave y jugoso. Ideal para complementar cualquier look y lucir unos labios frescos, delicados y encantadores. 💕\n\n#LipGloss #BrilloLabial #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1220,7 +1220,7 @@
    "nombre": "Lip Gloss Huellitas",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 5800,
+   "precio": 4900,
    "stock": 6,
    "descripcion": "✨ LIP GLOSS HUELLITA 🐾💋\n\nDale a tus labios un toque de brillo y un acabado jugoso, perfecto para complementar cualquier look. Su adorable diseño de huellita lo convierte en un detalle encantador para llevar siempre contigo. 💕\n\n#LipGloss #BrilloLabial #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1238,7 +1238,7 @@
    "nombre": "Lip Gloss Con Espejo Bloomshell",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 26000,
+   "precio": 24500,
    "stock": 3,
    "descripcion": "✨ LIP GLOSS CON ESPEJO BLOOMSHELL 💕💋\n\nBrillo y color en un práctico diseño con espejo, perfecto para llevar contigo y retocar tu maquillaje en cualquier momento. Ideal para darle a tus labios un acabado brillante y femenino. ✨\n\n#LipGloss #Bloomshell #BrilloLabial #CinnamonBeauty",
    "imagenes": [
@@ -1256,7 +1256,7 @@
    "nombre": "Brillo Labial Con Espejito",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 8300,
+   "precio": 7100,
    "stock": 6,
    "descripcion": "✨ BRILLO LABIAL CON ESPEJITO 💕💋\n\nDale a tus labios un toque de brillo y un acabado jugoso mientras llevas contigo un práctico espejito para retocar tu maquillaje en cualquier momento. ✨\n\n#BrilloLabial #LipGloss #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1292,7 +1292,7 @@
    "nombre": "Serum Hidratante De Labios",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 11500,
+   "precio": 10200,
    "stock": 8,
    "descripcion": "✨ SÉRUM HIDRATANTE DE LABIOS FM034 💋✨\n\nAyuda a mantener los labios suaves, hidratados y con una apariencia saludable. Ideal para complementar tu rutina de cuidado labial y lucir unos labios más cuidados y bonitos. 💕\n\n#SerumLabial #CuidadoLabial #HidratacionLabial #CinnamonBeauty",
    "imagenes": [
@@ -1310,7 +1310,7 @@
    "nombre": "Labial Mate Con Aplicador",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 8500,
+   "precio": 3600,
    "stock": 12,
    "descripcion": "✨ LABIAL MATE CON APLICADOR HUXIA HEXAGONAL 💄💋\n\nColor intenso y acabado mate para realzar tus labios y complementar diferentes estilos de maquillaje. Su práctico aplicador facilita una aplicación precisa y uniforme. 💕\n\n#LabialMate #Huxia #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1328,7 +1328,7 @@
    "nombre": "Brillo Hidratante Pop Bloom Con LLavero",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 23000,
+   "precio": 21600,
    "stock": 2,
    "descripcion": "✨ BRILLO HIDRATANTE POP BLOOM CON LLAVERO 💕💋\n\nDale a tus labios un toque de brillo y una sensación de suavidad e hidratación. Su práctico diseño con llavero te permite llevarlo contigo a todas partes. ✨\n\n#BrilloLabial #PopBloom #CuidadoLabial #CinnamonBeauty",
    "imagenes": [
@@ -1346,7 +1346,7 @@
    "nombre": "Balsamo De Labios Samy",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 16000,
+   "precio": 15000,
    "stock": 1,
    "descripcion": "✨ BÁLSAMO DE LABIOS SAMY CON LLAVERO 💋🎀\n\nCuida y suaviza tus labios mientras llevas contigo un práctico y adorable llavero. Perfecto para tener siempre a mano y complementar tu rutina de cuidado labial. 💕\n\n#BalsamoLabial #Samy #CuidadoLabial #CinnamonBeauty",
    "imagenes": [
@@ -1382,7 +1382,7 @@
    "nombre": "Lip Gloss Gliter",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 5800,
+   "precio": 4900,
    "stock": 8,
    "descripcion": "✨ LIP GLOSS GLITTER  ✨💋\n\nDale a tus labios un toque de brillo y luminosidad con un acabado glitter, perfecto para resaltar tu maquillaje y crear looks llenos de glamour. 💖\n\n#LipGloss #GlitterGloss #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1400,7 +1400,7 @@
    "nombre": "Lip Gloss Voluminizador Plump",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 6100,
+   "precio": 5200,
    "stock": 6,
    "descripcion": "✨ BRILLO PLUMP VOLUMINIZADOR 💋✨\n\nDale a tus labios un acabado brillante, jugoso y visualmente más voluminoso. Perfecto para resaltar tus labios y complementar cualquier look de maquillaje. 💕\n\n#LipPlumper #BrilloLabial #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1418,7 +1418,7 @@
    "nombre": "Tinta Paleta",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 3600,
+   "precio": 3000,
    "stock": 6,
    "descripcion": "✨ TINTA PALETA 💄💕\n\nUna práctica tinta para aportar un toque de color fresco y natural a tus labios y mejillas. Ideal para crear looks delicados, juveniles y fáciles de llevar. ✨\n\n#TintaLabial #TintaDeMejillas #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1436,7 +1436,7 @@
    "nombre": "LLavero Bloom Bow Bloomshell Con Brillo",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 25000,
+   "precio": 22700,
    "stock": 1,
    "descripcion": "✨ LLAVERO BLOOM BOW BRILLO BLOOMSHELL🎀💋\n\nUn adorable brillo labial con diseño de llavero, perfecto para llevarlo siempre contigo y darle a tus labios un toque de brillo y encanto. 💕\n\n#BrilloLabial #LipGloss #AccesoriosDeBelleza #CinnamonBeauty",
    "imagenes": [
@@ -1454,7 +1454,7 @@
    "nombre": "Hidratante De Labios Bonshik De Cereza",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 5600,
+   "precio": 4800,
    "stock": 3,
    "descripcion": "✨ HIDRATANTE DE LABIOS BONSHIK DE CEREZA 🍒💋\n\nAyuda a mantener los labios suaves, hidratados y con una apariencia cuidada, acompañado de un delicioso toque de cereza. Ideal para llevar contigo y usar durante el día. 💕\n\n#HidratanteLabial #BonShik #CuidadoLabial #CinnamonBeauty",
    "imagenes": [
@@ -1472,7 +1472,7 @@
    "nombre": "Tinta Labial Y Rubor En Gelatina",
    "formato": "Unidad",
    "categoria": "Tintas y Glosess",
-   "precio": 5600,
+   "precio": 4900,
    "stock": 3,
    "descripcion": "✨ TINTA LABIAL Y RUBOR EN GELATINA 💕💄\n\nUn práctico 2 en 1 para darle un toque de color fresco y natural a tus labios y mejillas. Su textura tipo gelatina permite crear looks delicados, jugosos y llenos de color. ✨\n\n#TintaLabial #RuborEnGel #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -1490,7 +1490,7 @@
    "nombre": "Skala",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 28000,
+   "precio": 26000,
    "stock": 12,
    "descripcion": "✨ TRATAMIENTOS CAPILARES SKALA 🌿✨\n\nCuida y transforma tu cabello con diferentes opciones de tratamiento Skala. Ideales para complementar tu rutina capilar y brindarle nutrición, hidratación, suavidad y vitalidad. 💕✨\n\n🌽 Maíz\n🌿 Babosa\n💜 Bomba de Vitaminas\n🌸 Divino Potão\n\nElige el tratamiento ideal para las necesidades de tu cabello. 💆‍♀️✨\n\n#Skala #TratamientoCapilar #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -1521,7 +1521,7 @@
      "opciones": {
       "Aroma": "Babosa"
      },
-     "precio": 28000,
+     "precio": 26000,
      "stock": 3,
      "imagenes": [
       "SKALA-BABOSA-MG216.png"
@@ -1533,7 +1533,7 @@
      "opciones": {
       "Aroma": "BombaVitaminas"
      },
-     "precio": 28000,
+     "precio": 26000,
      "stock": 3,
      "imagenes": [
       "SKALA-BOMBA-DE-VITAMINAS-MG216.png"
@@ -1545,7 +1545,7 @@
      "opciones": {
       "Aroma": "Maiz"
      },
-     "precio": 28000,
+     "precio": 26000,
      "stock": 3,
      "imagenes": [
       "SKALA-MAIZ-MG216.png"
@@ -1557,7 +1557,7 @@
      "opciones": {
       "Aroma": "DivinoPotao"
      },
-     "precio": 28000,
+     "precio": 26000,
      "stock": 3,
      "imagenes": [
       "SKALA-DIVINO-POTAO-MG216.png"
@@ -1570,7 +1570,7 @@
    "nombre": "Shampoo de Miel Click Hair X 300ml",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 43000,
+   "precio": 41000,
    "stock": 6,
    "descripcion": "✨ SHAMPOO DE MIEL CLICK HAIR 🍯✨\n\nLimpia suavemente el cabello mientras ayuda a dejarlo con una sensación de suavidad, nutrición y brillo. Ideal para complementar tu rutina de cuidado capilar y mantener tu cabello con una apariencia saludable y bonita. 💕\n\n#ShampooDeMiel #ClickHair #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -1588,9 +1588,9 @@
    "nombre": "Ampolleta de Rescate Rosada Milagros",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 18000,
+   "precio": 15800,
    "stock": 4,
-   "descripcion": "✨ SHAMPOO DE MIEL CLICK HAIR 🍯✨\n\nLimpia suavemente el cabello mientras ayuda a dejarlo con una sensación de suavidad, nutrición y brillo. Ideal para complementar tu rutina de cuidado capilar y mantener tu cabello con una apariencia saludable y bonita. 💕\n\n#ShampooDeMiel #ClickHair #CuidadoDelCabello #CinnamonBeauty",
+   "descripcion": "✨ RESCATE INSTANTÁNEO MILAGROS 💆‍♀️✨\n\nTratamiento capilar ideal para complementar el cuidado del cabello, ayudando a mejorar su apariencia y aportando una sensación de suavidad, nutrición y brillo. 💕✨\n\nPerfecto para darle a tu cabello un momento de cuidado y recuperación.\n\n#RescateInstantaneo #Milagros #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
     "RESCATE-INSTANTANEO-MILAGROS-FM017.png"
    ],
@@ -1606,7 +1606,7 @@
    "nombre": "Perfume Capilar Milagros Mini",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 12000,
+   "precio": 10200,
    "stock": 18,
    "descripcion": "✨ PERFUME CAPILAR MILAGROS MINI 💕🌸\n\nDale a tu cabello un toque delicioso de fragancia y frescura. Su presentación mini es práctica para llevar contigo y disfrutar de un cabello perfumado en cualquier momento. ✨\n\n#PerfumeCapilar #Milagros #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -1633,7 +1633,7 @@
      "opciones": {
       "Aromas": "Martina"
      },
-     "precio": 12000,
+     "precio": 10200,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-MILAGROS-MINI-MG119.png"
@@ -1645,7 +1645,7 @@
      "opciones": {
       "Aromas": "Majestuosa"
      },
-     "precio": 12000,
+     "precio": 10200,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-MILAGROS-MINI-MG119.png"
@@ -1657,7 +1657,7 @@
      "opciones": {
       "Aromas": "Gold"
      },
-     "precio": 12000,
+     "precio": 10200,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-MILAGROS-MINI-MG119.png"
@@ -1670,7 +1670,7 @@
    "nombre": "Perfume Capilar De Miel Click Hair x100ml",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 59000,
+   "precio": 57000,
    "stock": 6,
    "descripcion": "✨ PERFUME CAPILAR MIEL CLICK HAIR 🍯✨\n\nDeja en tu cabello un delicioso aroma a miel, aportando una sensación de frescura y cuidado. Ideal para perfumar tu cabello durante el día y mantenerlo con un aroma agradable. 💕🌸\n\n#PerfumeCapilar #ClickHair #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -1688,7 +1688,7 @@
    "nombre": "Perfume Capilar  Click Hair DULCES",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 17000,
+   "precio": 14500,
    "stock": 18,
    "descripcion": "✨ PERFUME CAPILAR CLICK HAIR DULCE MINI CON BRILLOS ✨💖\n\nPerfuma delicadamente tu cabello y aporta un toque especial a tu rutina de cuidado capilar. Su presentación mini es práctica para llevar contigo y disfrutar de un cabello con un aroma agradable en cualquier momento. 🌸💕\n\n#PerfumeCapilar #ClickHair #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -1715,7 +1715,7 @@
      "opciones": {
       "Aromas": "Candy Toy"
      },
-     "precio": 17000,
+     "precio": 14500,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-MG120.jpg"
@@ -1727,7 +1727,7 @@
      "opciones": {
       "Aromas": "Golden Toffy"
      },
-     "precio": 17000,
+     "precio": 14500,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-MG120.jpg"
@@ -1739,7 +1739,7 @@
      "opciones": {
       "Aromas": "Vanilla glaze"
      },
-     "precio": 17000,
+     "precio": 14500,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-CLICK-MINI-BRILLOS-MG120.jpg"
@@ -1752,7 +1752,7 @@
    "nombre": "Perfume Capilar  Click Hair CITRICOS",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 17000,
+   "precio": 14500,
    "stock": 18,
    "descripcion": "PERFUME CAPILAR CLICK HAIR MINI  CITRICOS 💕🌸\n\nUna presentación práctica para perfumar delicadamente tu cabello y disfrutar de un aroma agradable durante el día. Ideal para llevar contigo y refrescar tu cabello en cualquier momento. ✨\n\n#PerfumeCapilar #ClickHair #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -1779,7 +1779,7 @@
      "opciones": {
       "Aromas": "Fresh Amber"
      },
-     "precio": 17000,
+     "precio": 14500,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-CLICK-HAIR-MINI-MG191.png"
@@ -1791,7 +1791,7 @@
      "opciones": {
       "Aromas": "Dream On Paradise"
      },
-     "precio": 17000,
+     "precio": 14500,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-CLICK-HAIR-MINI-MG191.png"
@@ -1803,7 +1803,7 @@
      "opciones": {
       "Aromas": "Fruit Explotion"
      },
-     "precio": 17000,
+     "precio": 14500,
      "stock": 6,
      "imagenes": [
       "PERFUME-CAPILAR-CLICK-HAIR-MINI-MG191.png"
@@ -1816,7 +1816,7 @@
    "nombre": "Perfume Termoprotector Origen Botanico Mini",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 11000,
+   "precio": 9000,
    "stock": 16,
    "descripcion": "✨ PERFUME TERMOPROTECTOR ORIGEN BOTÁNICO MINI 🌿✨\n\nPerfuma delicadamente tu cabello mientras ayuda a protegerlo del calor durante el uso de herramientas de peinado. Ideal para complementar tu rutina capilar y mantener tu cabello con un aroma agradable. 💕✨\n\n#PerfumeCapilar #Termoprotector #OrigenBotanico #CinnamonBeauty",
    "imagenes": [
@@ -1842,7 +1842,7 @@
      "opciones": {
       "Aromas": "Azul tentacion"
      },
-     "precio": 11000,
+     "precio": 9000,
      "stock": 8,
      "imagenes": [
       "PERFUME-TERMOPROTECTOR-ORIGEN-BOTANICO-MG190.png"
@@ -1854,7 +1854,7 @@
      "opciones": {
       "Aromas": "Rosado Seduccion"
      },
-     "precio": 11000,
+     "precio": 9000,
      "stock": 8,
      "imagenes": [
       "PERFUME-TERMOPROTECTOR-ORIGEN-BOTANICO-MG190.png"
@@ -1867,7 +1867,7 @@
    "nombre": "Perfume Termoprotector Origen Botanico Grande",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 24900,
+   "precio": 21600,
    "stock": 16,
    "descripcion": "✨ PERFUME TERMOPROTECTOR ORIGEN BOTÁNICO 🌿✨\n\nPerfuma delicadamente tu cabello mientras ayuda a protegerlo del calor durante el uso de herramientas de peinado. Ideal para complementar tu rutina capilar y mantener tu cabello con un aroma agradable. 💕✨\n\n#PerfumeCapilar #Termoprotector #OrigenBotanico #CinnamonBeauty",
    "imagenes": [
@@ -1893,7 +1893,7 @@
      "opciones": {
       "Aromas": "Azul tentacion"
      },
-     "precio": 24900,
+     "precio": 21600,
      "stock": 8,
      "imagenes": [
       "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png"
@@ -1905,7 +1905,7 @@
      "opciones": {
       "Aromas": "Rosado Seduccion"
      },
-     "precio": 24900,
+     "precio": 21600,
      "stock": 8,
      "imagenes": [
       "PERFUME- TERMOPROTECTOR-ORIGEN-BOTANICO-MG106.png"
@@ -1918,7 +1918,7 @@
    "nombre": "Miel Capilar Click Hair",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 28800,
+   "precio": 26000,
    "stock": 6,
    "descripcion": "🍯✨ MIEL PARA EL CABELLO CLICK HAIR ✨🍯\n\nUna opción ideal para complementar el cuidado capilar, aportando una sensación de suavidad, nutrición y brillo al cabello. Perfecta para mantenerlo con una apariencia más bonita, cuidada y saludable. 💕✨\n\n#MielParaElCabello #ClickHair #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -1944,22 +1944,10 @@
      "opciones": {
       "Tamaño": "20ml"
      },
-     "precio": 28800,
+     "precio": 26000,
      "stock": 6,
      "imagenes": [
       "MIEL-CAPILAR-CLICK-HAIR-MG181.png"
-     ]
-    },
-    {
-     "id": "var-e9886745b040",
-     "sku": "MG181-E98867",
-     "opciones": {
-      "Tamaño": "50ml"
-     },
-     "precio": 28800,
-     "stock": 0,
-     "imagenes": [
-      "MIEL-CAPILAR-CLICK-HAIR-GRANDE-MG181.png"
      ]
     }
    ]
@@ -1987,7 +1975,7 @@
    "nombre": "Mascarilla  Bomba Origen Botanico",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 38000,
+   "precio": 37200,
    "stock": 6,
    "descripcion": "✨ MASCARILLA BOMBA ORIGEN BOTÁNICO 🌿✨\n\nTratamiento capilar ideal para complementar el cuidado del cabello, ayudando a aportar suavidad, nutrición y una apariencia más saludable. Perfecta para consentir tu cabello y darle un cuidado especial. 💕✨\n\n#MascarillaCapilar #OrigenBotanico #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -2005,7 +1993,7 @@
    "nombre": "Shampoo Ultranutritivo Milagros",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 15000,
+   "precio": 13000,
    "stock": 6,
    "descripcion": "✨ SHAMPOO ULTRA NUTRITIVO MILAGROS 🧴✨\n\nIdeal para complementar el cuidado diario del cabello, ayudando a mantenerlo limpio, suave y con una apariencia más cuidada. Su fórmula nutritiva es perfecta para consentir tu cabello en cada lavado. 💕✨\n\n#ShampooNutritivo #Milagros #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -2026,22 +2014,12 @@
    ],
    "variantes": [
     {
-     "id": "var-c2a20f1bc1ef",
-     "sku": "MG151-C2A20F",
-     "opciones": {
-      "Tamaño": "Grande"
-     },
-     "precio": 15000,
-     "stock": 0,
-     "imagenes": []
-    },
-    {
      "id": "var-4a0dddfbf650",
      "sku": "MG151-4A0DDD",
      "opciones": {
       "Tamaño": "Mini"
      },
-     "precio": 15000,
+     "precio": 13000,
      "stock": 6,
      "imagenes": [
       "SHAMPOO-ULTRA-NUTRITIVO-MILAGROS-MG151.png"
@@ -2054,7 +2032,7 @@
    "nombre": "Acondicionador de Cebolla Milagros",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 18000,
+   "precio": 16500,
    "stock": 4,
    "descripcion": "✨ MINI ACONDICIONADOR ANTIFRIZZ CEBOLLA MILAGROS 🧅✨\n\nAyuda a acondicionar y suavizar el cabello, contribuyendo a controlar el frizz y dejando una sensación de mayor suavidad. Su presentación mini es práctica para llevar contigo a cualquier lugar. 💕✨\n\n#Acondicionador #Antifrizz #Milagros #CinnamonBeauty",
    "imagenes": [
@@ -2072,7 +2050,7 @@
    "nombre": "Bio Repolarizador Milagros",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 0,
+   "precio": 13000,
    "stock": 6,
    "descripcion": "✨ BIO REPOLARIZADOR CAPILAR MILAGROS 💆‍♀️✨\n\nTratamiento capilar ideal para complementar el cuidado del cabello, ayudando a mejorar su apariencia, suavidad y brillo. Perfecto para consentir el cabello y darle un cuidado especial. 💕✨",
    "imagenes": [
@@ -2098,21 +2076,11 @@
      "opciones": {
       "Tamaño": "Mini"
      },
-     "precio": 15000,
+     "precio": 13000,
      "stock": 6,
      "imagenes": [
       "BIO-REPOLARIZADOR-CAPILAR-MILAGROS-MG148.png"
      ]
-    },
-    {
-     "id": "var-0236c2d85237",
-     "sku": "MG148-0236C2",
-     "opciones": {
-      "Tamaño": "Grande"
-     },
-     "precio": 0,
-     "stock": 0,
-     "imagenes": []
     }
    ]
   },
@@ -2121,7 +2089,7 @@
    "nombre": "Shampoo Emergencia Capilar Milagros",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 0,
+   "precio": 13000,
    "stock": 6,
    "descripcion": "✨ SHAMPOO EMERGENCIA CAPILAR 🚨💆‍♀️✨\n\nIdeal para complementar el cuidado del cabello y ayudar a mantenerlo limpio, suave y con una apariencia más saludable. Perfecto para incorporar a tu rutina capilar y darle a tu cabello el cuidado que necesita. 💕✨\n\n#ShampooCapilar #EmergenciaCapilar #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -2147,7 +2115,7 @@
      "opciones": {
       "Tamaño": "Mini"
      },
-     "precio": 15000,
+     "precio": 13000,
      "stock": 6,
      "imagenes": [
       "SHAMPOO-EMERGENCIA-CAPILAR-MG150.png"
@@ -2159,7 +2127,7 @@
      "opciones": {
       "Tamaño": "Grande"
      },
-     "precio": 0,
+     "precio": 13000,
      "stock": 0,
      "imagenes": []
     }
@@ -2170,7 +2138,7 @@
    "nombre": "Ampolla Bioreparadora",
    "formato": "Unidad",
    "categoria": "cuidado capilar",
-   "precio": 12000,
+   "precio": 10200,
    "stock": 12,
    "descripcion": "✨ AMPOLLA BIO REPARADORA 💕✨\n\nTratamiento capilar ideal para complementar el cuidado del cabello, ayudando a aportar hidratación, nutrición, brillo y suavidad. Perfecta para revitalizar el cabello y darle una apariencia más saludable y cuidada. 🌸✨\n\n#AmpollaCapilar #TratamientoCapilar #CuidadoDelCabello #CinnamonBeauty",
    "imagenes": [
@@ -2188,7 +2156,7 @@
    "nombre": "Skin Care Bioaqua Camellias",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 45000,
+   "precio": 43000,
    "stock": 12,
    "descripcion": "✨ KIT SKIN CARE CAMELLIAS 🌸✨\n\nUn completo kit de cuidado facial ideal para complementar tu rutina diaria. Ayuda a mantener la piel limpia, suave, hidratada y con una apariencia más luminosa y cuidada. 💕✨\n\nPerfecto para consentir tu piel y disfrutar de una rutina de skincare en casa.\n\n#KitSkincare #Camellias #CuidadoFacial #CinnamonBeauty",
    "imagenes": [
@@ -2206,7 +2174,7 @@
    "nombre": "Skin Care Bioaqua Acido Hialuronico",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 45000,
+   "precio": 43000,
    "stock": 12,
    "descripcion": "✨ KIT SKIN CARE ÁCIDO HIALURÓNICO Y ROSA 🌹💧✨\n\nUna completa rutina de cuidado facial que combina el poder hidratante del ácido hialurónico con las propiedades de la rosa. Ideal para ayudar a mantener la piel suave, hidratada, fresca y con una apariencia luminosa y cuidada. 💕✨\n\nPerfecto para consentir tu piel y disfrutar de una rutina de skincare en casa.\n\n#KitSkincare #AcidoHialuronico #CuidadoFacial #CinnamonBeauty",
    "imagenes": [
@@ -2224,7 +2192,7 @@
    "nombre": "Skin Care Bioaqua Arroz",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 45000,
+   "precio": 43000,
    "stock": 12,
    "descripcion": "✨ KIT SKIN CARE DE ARROZ 🍚✨\n\nUna rutina de cuidado facial ideal para ayudar a mantener la piel limpia, suave, hidratada y con una apariencia más luminosa y uniforme. 💕✨\n\nPerfecto para complementar tu rutina diaria de skincare y consentir tu piel en casa.\n\n#KitSkincare #KitDeArroz #CuidadoFacial #CinnamonBeauty",
    "imagenes": [
@@ -2242,7 +2210,7 @@
    "nombre": "Contorno De Ojos Bioaqua En Rollon",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 7500,
+   "precio": 6800,
    "stock": 4,
    "descripcion": "✨ CONTORNO DE OJOS BIOAQUA 👁️✨\n\nCuidado especial para la delicada zona del contorno de ojos. Ideal para complementar tu rutina facial y mantener esta área con una apariencia más suave, fresca y cuidada. 💕✨\n\n#ContornoDeOjos #Bioaqua #CuidadoFacial #CinnamonBeauty",
    "imagenes": [
@@ -2260,7 +2228,7 @@
    "nombre": "Colageno  Morado",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 10900,
+   "precio": 10200,
    "stock": 5,
    "descripcion": "✨ COLÁGENO BIOAQUA 💧✨\n\nUn producto ideal para complementar tu rutina de cuidado facial, ayudando a mantener la piel con una apariencia suave, hidratada y más cuidada. 💕✨\n\nPerfecto para incorporar a tu rutina diaria de skincare.\n\n#Colageno #Bioaqua #CuidadoFacial #CinnamonBeauty",
    "imagenes": [
@@ -2278,7 +2246,7 @@
    "nombre": "Desodorante Paty Para Niñas",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 13500,
+   "precio": 12200,
    "stock": 3,
    "descripcion": "✨ DESODORANTE PATY PARA NIÑAS 🌸💕\n\nUna opción práctica para complementar la rutina de cuidado personal de las más pequeñas, brindando una sensación agradable de frescura durante el día. Su presentación es ideal para acompañarlas en su día a día. ✨\n\n#DesodoranteInfantil #Paty #CuidadoPersonal #CinnamonBeauty",
    "imagenes": [
@@ -2296,7 +2264,7 @@
    "nombre": "Protector Solar Retinol",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 7000,
+   "precio": 6800,
    "stock": 5,
    "descripcion": "✨ PROTECTOR SOLAR RETINOL SPF 50 ☀️✨\n\nProtege tu piel de la exposición solar y ayuda a complementar tu rutina diaria de cuidado facial. Su fórmula con retinol y SPF 50 es ideal para incorporar protección y cuidado en un solo producto. 💕✨\n\n#ProtectorSolar #SPF50 #Retinol #CinnamonBeauty",
    "imagenes": [
@@ -2314,7 +2282,7 @@
    "nombre": "Agua  De Rosas 500ml",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 10800,
+   "precio": 9800,
    "stock": 6,
    "descripcion": "🌹✨ AGUA DE ROSAS ✨🌹\n\nRefresca y ayuda a mantener la piel suave, fresca y con una agradable sensación de bienestar. Ideal para complementar tu rutina diaria de cuidado facial. 💕\n\n#AguaDeRosas #CuidadoFacial #Skincare #CinnamonBeauty",
    "imagenes": [
@@ -2332,7 +2300,7 @@
    "nombre": "Agua  De Rosas 250ml",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 6300,
+   "precio": 5700,
    "stock": 6,
    "descripcion": "🌹✨ AGUA DE ROSAS ✨🌹\n\nRefresca y ayuda a mantener la piel suave, fresca y con una agradable sensación de bienestar. Ideal para complementar tu rutina diaria de cuidado facial. 💕\n\n#AguaDeRosas #CuidadoFacial #Skincare #CinnamonBeauty",
    "imagenes": [
@@ -2350,7 +2318,7 @@
    "nombre": "Agua  De Rosas 120ml",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 5300,
+   "precio": 3600,
    "stock": 6,
    "descripcion": "🌹✨ AGUA DE ROSAS ✨🌹\n\nRefresca y ayuda a mantener la piel suave, fresca y con una agradable sensación de bienestar. Ideal para complementar tu rutina diaria de cuidado facial. 💕\n\n#AguaDeRosas #CuidadoFacial #Skincare #CinnamonBeauty",
    "imagenes": [
@@ -2387,7 +2355,7 @@
    "formato": "unidad",
    "categoria": "Accesorios",
    "precio": 7000,
-   "stock": 6,
+   "stock": 8,
    "descripcion": "✨ CEPILLO DESENREDANTE 💕✨\n\nDiseñado para ayudar a desenredar el cabello de forma práctica y cómoda, facilitando el peinado y dejando una sensación de suavidad. Ideal para el uso diario y para complementar tu rutina de cuidado capilar. 💆‍♀️💗\n\n#CepilloDesenredante #CuidadoDelCabello #AccesoriosDeBelleza #CinnamonBeauty",
    "imagenes": [
     "CEPILLO-DESENRREDANTE-FM008.png"
@@ -2425,8 +2393,10 @@
       "Color": "rosado"
      },
      "precio": 7000,
-     "stock": 0,
-     "imagenes": []
+     "stock": 2,
+     "imagenes": [
+      "CEPILLO-DESENRREDANTE-FM008.png"
+     ]
     }
    ]
   },
@@ -2486,7 +2456,7 @@
    "nombre": "Espejo Con Correa",
    "formato": "unidad",
    "categoria": "Accesorios",
-   "precio": 13500,
+   "precio": 12200,
    "stock": 3,
    "descripcion": "✨ ESPEJO CON CORREA 🪞💕\n\nPráctico y cómodo para llevar contigo a cualquier lugar. Ideal para revisar y retocar tu maquillaje en cualquier momento, gracias a su diseño compacto y funcional. ✨\n\n#EspejoDeBolso #AccesoriosDeBelleza #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -2604,7 +2574,7 @@
    "nombre": "Tohallitas Desmaquillantes Bloomshel Mini",
    "formato": "unidad",
    "categoria": "Accesorios",
-   "precio": 2100,
+   "precio": 1900,
    "stock": 12,
    "descripcion": "✨ MINI PAÑITOS DESMAQUILLANTES BLOOMSHELL 💕🫧\n\nPrácticos y cómodos para retirar el maquillaje y mantener tu piel limpia y fresca. Su presentación mini es ideal para llevar contigo a cualquier lugar y tenerlos siempre a mano. ✨\n\n#PañitosDesmaquillantes #Bloomshell #CuidadoFacial #CinnamonBeauty",
    "imagenes": [
@@ -2674,7 +2644,7 @@
    "nombre": "Perfiladores x3",
    "formato": "unidad",
    "categoria": "Accesorios",
-   "precio": 3000,
+   "precio": 2800,
    "stock": 6,
    "descripcion": "✨ PERFILADORES X3 💄✨\n\nUn práctico set de 3 perfiladores ideal para definir y perfeccionar tus labios con mayor precisión. Perfectos para complementar diferentes tonos de labial y crear looks impecables. 💕\n\n#PerfiladoresDeLabios #DelineadorDeLabios #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -2743,7 +2713,7 @@
    "nombre": "Encrespador Enkor",
    "formato": "unidad",
    "categoria": "Accesorios",
-   "precio": 5700,
+   "precio": 5200,
    "stock": 12,
    "descripcion": "✨ ENCRESPADOR ENKOR  👁️✨\n\nRealza la mirada y ayuda a conseguir unas pestañas más curvas y definidas. Su diseño práctico es ideal para complementar tu rutina de maquillaje y lograr una mirada más impactante. 💕\n\n#EncrepadorDePestañas #Enkor #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -2797,7 +2767,7 @@
    "nombre": "Sacapuntas Doble",
    "formato": "unidad",
    "categoria": "Accesorios",
-   "precio": 3600,
+   "precio": 3400,
    "stock": 6,
    "descripcion": "✨ SACAPUNTAS DOBLE  ✏️💄\n\nPráctico accesorio de doble función, ideal para mantener tus lápices de maquillaje siempre bien definidos y listos para usar. Perfecto para delineadores de ojos y labios. 💕\n\n#SacapuntasDoble #AccesoriosDeMaquillaje #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -2815,7 +2785,7 @@
    "nombre": "Brocha Bonshik",
    "formato": "unidad",
    "categoria": "Accesorios",
-   "precio": 8900,
+   "precio": 8500,
    "stock": 3,
    "descripcion": "✨ BROCHA BONSHIK  💄✨\n\nPráctica y versátil, ideal para aplicar y difuminar tus productos de maquillaje con facilidad. Perfecta para complementar tu kit de belleza y lograr un acabado uniforme y bonito. 💕\n\n#BrochaBonShik #BrochaDeMaquillaje #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -2833,7 +2803,7 @@
    "nombre": "Set De Brochas Sweet X8",
    "formato": "unidad",
    "categoria": "Accesorios",
-   "precio": 25500,
+   "precio": 23000,
    "stock": 6,
    "descripcion": "✨ SET DE BROCHAS SWEET X8  💕💄\n\nUn completo set de 8 brochas ideal para aplicar, difuminar y perfeccionar diferentes productos de maquillaje. Perfecto para crear looks variados y complementar tu rutina de belleza. ✨\n\n#SetDeBrochas #BrochasDeMaquillaje #Maquillaje #CinnamonBeauty",
    "imagenes": [
@@ -2859,7 +2829,7 @@
      "opciones": {
       "Color": "Rosado"
      },
-     "precio": 25500,
+     "precio": 23000,
      "stock": 3,
      "imagenes": [
       "SET-DE-BROCHAS-SWEET-X8-FM014.png"
@@ -2871,7 +2841,7 @@
      "opciones": {
       "Color": "Morado"
      },
-     "precio": 25500,
+     "precio": 23000,
      "stock": 3,
      "imagenes": [
       "SET-DE-BROCHAS-SWEET-X8-FM014.png"
@@ -2973,7 +2943,7 @@
    "categoria": "cuidado capilar",
    "precio": 21600,
    "stock": 3,
-   "descripcion": "✨ SPLASH MOHANA  🌸✨\n\nUna fragancia corporal fresca y  masculina, ideal para disfrutar durante el día y dejar sobre la piel un aroma agradable. Perfecta para llevar contigo y refrescarte en cualquier momento. 💕\n\n#SplashCorporal #Mohana #PerfumeriaMasculina #CinnamonBeauty",
+   "descripcion": "✨ SPLASH MOHANA  HOMBRE🌸✨\n\nUna fragancia corporal fresca y  masculina, ideal para disfrutar durante el día y dejar sobre la piel un aroma agradable. Perfecta para llevar contigo y refrescarte en cualquier momento. 💕\n\n#SplashCorporal #Mohana #PerfumeriaMasculina #CinnamonBeauty",
    "imagenes": [
     "SPLASH-MOHANA-MG110.png"
    ],
@@ -2989,7 +2959,7 @@
    "nombre": "Locion Refrescante Nativos Hombre",
    "formato": "unidad",
    "categoria": "Cuidado de la Piel",
-   "precio": 18,
+   "precio": 18300,
    "stock": 2,
    "descripcion": "✨ LOCION REFRESCANTE NATIVOS HOMBRE 🧔🏻‍♂️✨\n\nUna loción refrescante ideal para complementar el cuidado personal masculino, dejando una agradable sensación de frescura y un aroma atractivo. Perfecta para usar a diario y sentirse fresco durante el día. 💙\n\n#LocionMasculina #Nativos #CuidadoMasculino #CinnamonBeauty",
    "imagenes": [
@@ -3015,7 +2985,7 @@
      "opciones": {
       "Color": "Azul"
      },
-     "precio": 19500,
+     "precio": 18300,
      "stock": 1,
      "imagenes": [
       "LOCION-REFRESCANTE-NATIVOS-HOMBRE-MG128.png"
@@ -3027,7 +2997,7 @@
      "opciones": {
       "Color": "Amarillo"
      },
-     "precio": 19500,
+     "precio": 18300,
      "stock": 1,
      "imagenes": [
       "LOCION-REFRESCANTE-NATIVOS-HOMBRE-MG128.png"
@@ -3449,11 +3419,6 @@
    900
   ],
   "MIEL-CAPILAR-CLICK-HAIR-MG181.png": [
-   160,
-   600,
-   900
-  ],
-  "MIEL-CAPILAR-CLICK-HAIR-GRANDE-MG181.png": [
    160,
    600,
    900
