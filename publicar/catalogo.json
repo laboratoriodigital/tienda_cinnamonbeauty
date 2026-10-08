@@ -1,7 +1,7 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-07T15:37:07.284Z",
+ "generado": "2026-10-08T12:53:34.131Z",
  "productos": [
   {
    "id": "MG124",
@@ -2973,7 +2973,7 @@
    "categoria": "cuidado capilar",
    "precio": 21600,
    "stock": 3,
-   "descripcion": "✨ SPLASH MOHANA  🌸✨\n\nUna fragancia corporal fresca, femenina y encantadora, ideal para disfrutar durante el día y dejar sobre la piel un aroma agradable. Perfecta para llevar contigo y refrescarte en cualquier momento. 💕\n\n#SplashCorporal #Mohana #PerfumeriaFemenina #CinnamonBeauty",
+   "descripcion": "✨ SPLASH MOHANA  🌸✨\n\nUna fragancia corporal fresca y  masculina, ideal para disfrutar durante el día y dejar sobre la piel un aroma agradable. Perfecta para llevar contigo y refrescarte en cualquier momento. 💕\n\n#SplashCorporal #Mohana #PerfumeriaMasculina #CinnamonBeauty",
    "imagenes": [
     "SPLASH-MOHANA-MG110.png"
    ],
@@ -3083,7 +3083,7 @@
   "correo_resumen": "dcbs.1323@gmail.com",
   "correo_hora": "7",
   "correo_siempre": "No",
-  "correo_ultimo": "Wed Oct 07 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
+  "correo_ultimo": "Thu Oct 08 2026 00:00:00 GMT-0500 (Colombia Standard Time)",
   "fotos_origen": "https://cinnamonbeauty.laboratorio-digital.com/fotos",
   "fotos_cdn": "",
   "respaldo_carpeta": "https://drive.google.com/drive/folders/1VVXb4WTKB4tYk7EuWkluHHirQYlNhhc8?usp=sharing",
