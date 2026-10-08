@@ -1,14 +1,14 @@
 {
  "esquema": 3,
  "version": "2026-10-03-1",
- "generado": "2026-10-08T12:53:34.131Z",
+ "generado": "2026-10-08T15:42:18.404Z",
  "productos": [
   {
    "id": "MG124",
    "nombre": "Kit Arruru X2",
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
-   "precio": 38000,
+   "precio": 35700,
    "stock": 9,
    "descripcion": "✨ KIT ARRURRÚ: Mantequilla + Splash ✨\n\nUna combinación deliciosa para consentir tu piel y dejarla con un aroma irresistible. 💖\nIncluye mantequilla corporal + splash, perfectos para complementar tu rutina de cuidado y disfrutar una sensación de suavidad y frescura durante el día. 🧴✨",
    "imagenes": [
@@ -35,7 +35,7 @@
      "opciones": {
       "color": "azul"
      },
-     "precio": 38000,
+     "precio": 35700,
      "stock": 1,
      "imagenes": [
       "KIT-ARRURRU-AZUL-MG124.png"
@@ -47,7 +47,7 @@
      "opciones": {
       "color": "rosado"
      },
-     "precio": 38000,
+     "precio": 35700,
      "stock": 8,
      "imagenes": [
       "KIT-ARRURRU-ROSADO-MG124.png"
@@ -60,7 +60,7 @@
    "nombre": "Mantequilla Fantiluna Grande",
    "formato": "Unidad",
    "categoria": "Cremas-Mantequillas y Splash",
-   "precio": 22500,
+   "precio": 19000,
    "stock": 10,
    "descripcion": "✨ MANTEQUILLA CORPORAL FANTILUNA ✨\n\nDisfruta de una piel suave, hidratada y delicadamente perfumada con la Mantequilla Corporal Fantiluna. 💕 Su textura cremosa es ideal para cuidar la piel y dejar una agradable sensación de suavidad y confort.\n\nPerfecta para incorporar a tu rutina diaria de cuidado corporal y disfrutar de un delicioso aroma que acompaña tu día. 🌸✨\n\n#Fantiluna #MantequillaCorporal #CuidadoCorporal #CinnamonBeauty",
    "imagenes": [
@@ -87,7 +87,7 @@
      "opciones": {
       "Aroma": "chic"
      },
-     "precio": 22500,
+     "precio": 19000,
      "stock": 4,
      "imagenes": [
       "MANTEQUILLA-FANTILUNA-CHIC-MG112.png"
@@ -99,7 +99,7 @@
      "opciones": {
       "Aroma": "sandia"
      },
-     "precio": 22500,
+     "precio": 19000,
      "stock": 6,
      "imagenes": [
       "MANTEQUILLA-FANTILUNA-SANDIA-MG112.png"
@@ -159,7 +159,7 @@
      "opciones": {
       "Aroma": "chic"
      },
-     "precio": 22500,
+     "precio": 19000,
      "stock": 6,
      "imagenes": [
       "CREMA-CORPORAL-FANTILUNA-CHIC-MG117.png"
@@ -171,7 +171,7 @@
      "opciones": {
       "Aroma": "seduccion"
      },
-     "precio": 22500,
+     "precio": 19000,
      "stock": 6,
      "imagenes": [
       "CREMA-CORPORAL-FANTILUNA-SEDUCCION-MG117.png"
@@ -183,7 +183,7 @@
      "opciones": {
       "Aroma": "bonbon"
      },
-     "precio": 22500,
+     "precio": 19000,
      "stock": 5,
      "imagenes": [
       "CREMA-CORPORAL-FANTILUNA-BONBON-MG117.png"
